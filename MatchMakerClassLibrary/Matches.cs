@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace MatchMakerClassLibrary
 {
-    public class Class1
+    public class Matches
     {
+        public User FindPotentialMatch()
+        {
+            return null;
+        }
     }
 }
