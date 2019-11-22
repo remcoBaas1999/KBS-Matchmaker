@@ -14,9 +14,13 @@ namespace MatchMakerClassLibrary
         //methods
         public void LogIn(string password)
         {
-            bool login = false;
+            bool login = true;
             //Unhash password
             //Insert code for trying to log in
+            if(Email == "" || password == "")
+            {
+                login = false;
+            }
             LoggedIn = login;
         }
         public void LogOut()
