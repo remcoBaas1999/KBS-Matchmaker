@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AAccount.cs" />
+    <Compile Include="Account.cs" />
     <Compile Include="Admin.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="User.cs" />

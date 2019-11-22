@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchMakerClassLibrary
 {
-    public abstract class AAccount
-    //ToDo
-    //Almost All Methods
-    //Login
+    public  class Account
     {
         //properties
         public bool LoggedIn { get; set; }
@@ -27,14 +24,6 @@ namespace MatchMakerClassLibrary
             LoggedIn = false;
         }
         public void RequestPasswordChange()
-        {
-
-        }
-        public void RemoveOwnAccount()
-        {
-
-        }
-        public void EditOwnAccountData()
         {
 
         }

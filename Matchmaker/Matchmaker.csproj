@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MatchMakerClassLibrary\MatchMakerClassLibrary.csproj">
+      <Project>{b3030dd6-895a-40c5-b619-8ddfc3fdccb7}</Project>
+      <Name>MatchMakerClassLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

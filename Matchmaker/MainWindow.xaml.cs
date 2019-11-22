@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MatchMakerClassLibrary;
+
 
 namespace Matchmaker
 {
@@ -23,6 +25,22 @@ namespace Matchmaker
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Account account = new Account();
+            account.Email = AccountEmail.Text;
+            account.LogIn(AccountPassBox.Password);
+            if(account.LoggedIn)
+            {
+                MessageBox.Show("Ingelogd");
+            }
+            else
+            {
+                AccountEmail.BorderBrush = Brushes.Red;
+                AccountPassBox.BorderBrush = Brushes.Red;
+            }
         }
     }
 }

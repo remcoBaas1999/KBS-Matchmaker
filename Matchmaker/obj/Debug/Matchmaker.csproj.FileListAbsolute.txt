@@ -12,3 +12,6 @@ C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\obj\Debug\Matc
 C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csproj.GenerateResource.cache
 C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.exe
 C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.pdb
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\bin\Debug\MatchMakerClassLibrary.dll
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\bin\Debug\MatchMakerClassLibrary.pdb
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csproj.CopyComplete

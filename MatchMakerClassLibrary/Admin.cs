@@ -6,12 +6,23 @@ using System.Threading.Tasks;
 
 namespace MatchMakerClassLibrary
 {
-    public class Admin : AAccount
+    public class Admin : Account
     {
+        
+        public void RemoveOwnAccount()
+        {
+
+        }
+        public void EditOwnAccountData()
+        {
+
+        }
+
         public void DeleteAccount(User user)
         {
 
         }
+
         public void CreateAdminAccount()
         {
 
