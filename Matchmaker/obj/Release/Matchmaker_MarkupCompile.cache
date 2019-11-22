@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\Users\patri\source\repos\KBS-Matchmaker\Matchmaker\obj\Debug\
+C:\Users\patri\source\repos\KBS-Matchmaker\Matchmaker\obj\Release\
 Matchmaker
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\patri\source\repos\KBS-Matchmaker\Matchmaker\App.xaml
 11151548125
 
