@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace MatchMakerClassLibrary
 {
-    public  class Account
+    public class Account
     {
         //properties
         public bool LoggedIn { get; set; }
         public string Email { get; set; }
+
         //methods
         public void LogIn(string password)
         {
@@ -23,6 +24,11 @@ namespace MatchMakerClassLibrary
             }
             LoggedIn = login;
         }
+
+		public boolean Authenticate (string password) {
+			return MatchmakerAPI_Client.Authenticate(this.email, password)
+		}
+
         public void LogOut()
         {
             LoggedIn = false;
