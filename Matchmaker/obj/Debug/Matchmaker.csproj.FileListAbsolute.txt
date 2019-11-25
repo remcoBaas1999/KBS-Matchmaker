@@ -38,29 +38,18 @@ C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.p
 C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\MatchMakerClassLibrary.dll
 C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\MatchMakerClassLibrary.pdb
 C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csproj.CopyComplete
-C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\Matchmaker.exe.config
-C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\Matchmaker.exe
-C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\Matchmaker.pdb
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\MatchMakerClassLibrary.dll
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\MatchMakerClassLibrary.pdb
-C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csprojAssemblyReference.cache
-C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\MainWindow.g.cs
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\RegisterWindow.g.cs
 >>>>>>> flokDev
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\App.g.cs
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker_MarkupCompile.cache
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker_MarkupCompile.lref
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\MainWindow.baml
-<<<<<<< HEAD
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.g.resources
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.Properties.Resources.resources
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csproj.GenerateResource.cache
-=======
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\RegisterWindow.baml
-C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.g.resources
-C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.Properties.Resources.resources
-C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csproj.GenerateResource.cache
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csproj.CopyComplete
->>>>>>> flokDev
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.exe
 C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.pdb
