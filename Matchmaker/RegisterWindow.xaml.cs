@@ -81,7 +81,7 @@ namespace Matchmaker
                 pWSucceed=true;
             }
             //Regex check
-            string regexString = @"(?=\S *[A - Z])(?=\S *[a - z])(?=\S *[@$!% *#?~&\d])[A-Za-z@$!%*#?~&\d]{8,}";
+            string regexString = @"(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[@$!%*#?~&\d])[A-Za-z@$!%*#?~&\d]{8,}";
             Regex regex = new Regex(regexString);
             if (regex.IsMatch(pw)) {
                 pWRegex = true;
