@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,6 +26,9 @@ namespace Matchmaker
         //To Do: Fix Registration
         //Fix Date
         //ErrorMSG Image
+        private const int saltSize = 16;
+        private const int hashSize = 16;
+        private const int iterations = 100000;
         public RegisterWindow()
         {
             InitializeComponent();
@@ -48,6 +53,7 @@ namespace Matchmaker
         {
             //bools for checking if account creation succeeds
             bool pWSucceed = false;
+            bool pWRegex = false;
             bool noEmptyFields = false;
             bool emailSucceed = false;
             bool dateSucceed = false;
@@ -74,6 +80,12 @@ namespace Matchmaker
             {
                 pWSucceed=true;
             }
+            //Regex check
+            string regexString = @"(?=\S *[A - Z])(?=\S *[a - z])(?=\S *[@$!% *#?~&\d])[A-Za-z@$!%*#?~&\d]{8,}";
+            Regex regex = new Regex(regexString);
+            if (regex.IsMatch(pw)) {
+                pWRegex = true;
+            }
             //checks if all fields are filled in
             if (name!=""&&pw!=""&&email!="")
             {
@@ -89,9 +101,12 @@ namespace Matchmaker
             {
                 dateSucceed = true;
             }
-            if (pWSucceed&&noEmptyFields&&emailSucceed&&dateSucceed&&nameSucceed&&tOS)
+            if (pWSucceed&&pWRegex&&noEmptyFields&&emailSucceed&&dateSucceed&&nameSucceed&&tOS)
             {
                 //Do Something With User
+
+                
+
                 this.Close();
             }
             else 
@@ -104,6 +119,9 @@ namespace Matchmaker
                 if (!pWSucceed)
                 {
                     errorMSG += "\nYour Passwords Don't Match!";
+                }
+                if (!pWRegex) {
+                    errorMSG += "\nYour password is invalid! Password requires 8 characters with at least 1 lowercase character, at least 1 uppercase character and at least 1 number or special character.";
                 }
                 if (!emailSucceed&&noEmptyFields)
                 {
@@ -124,6 +142,16 @@ namespace Matchmaker
                 errorMSG = errorMSG.Substring(1);
                 ErrorMessage.Text = errorMSG;
             }
+        }
+        public static byte[] CreateHash(string input) {
+            //Generate random salt
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            byte[] salt = new byte[saltSize];
+            provider.GetBytes(salt);
+
+            //Generate hash
+            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(input, salt, iterations);
+            return PBKDF2.GetBytes(hashSize);
         }
     }
 }
