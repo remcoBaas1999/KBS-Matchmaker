@@ -7,6 +7,36 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.RowSpan="1" Background="#cbd1cc">
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1" HorizontalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Margin="0, 100, 15, 0" HorizontalAlignment="Left">
+                <TextBlock Text="Log in to your account" FontWeight="Bold" FontSize="20" FontFamily="Roboto"/>
+                <Button Content="Create account >" Width="100" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF7910AA" HorizontalAlignment="Right" FontFamily="Roboto" Margin="0,5,0,0"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Margin="0,100,0,0">
+                <TextBlock Text="Email Address" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
+                <TextBox MinWidth="175" BorderBrush="#FFCFCCCC" Background="{x:Null}" BorderThickness="0,0,0,2" Margin="0,0,0,10" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
+                <TextBlock Text="Password" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
+                <PasswordBox MinWidth="175" MaxWidth="175" HorizontalAlignment="left" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Margin="0,0,0,10" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
+                <Button Content="LOGIN" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FF7910AA" HorizontalAlignment="Left" FontWeight="Bold" FontFamily="Roboto"/>
+                <Button Content="Forgot password" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFCFCCCC" FontWeight="Bold" HorizontalAlignment="Left" FontFamily="Roboto" Padding="8" Margin="8"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
