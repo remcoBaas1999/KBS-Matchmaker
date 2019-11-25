@@ -31,10 +31,16 @@
                         <Button x:Name="CreateAccBtn" Content="Create account >" Width="auto" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF7910AA" HorizontalAlignment="Right" FontFamily="Roboto" Margin="0,12,8,0" Padding="8" Click="CreateAccBtn_Click"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Margin="0,100,0,0">
-                        <TextBlock Text="Email Address" Foreground="#FF5B5A5A" FontFamily="Roboto"/>
-                        <TextBox x:Name="AccountEmail" MinWidth="175" BorderBrush="#FFDEDCDC" Background="{x:Null}" Padding="0,8" BorderThickness="0,0,0,1" Margin="0,12,0,12" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto" FontSize="16"/>
-                        <TextBlock Text="Password" Foreground="#FF5B5A5A" FontFamily="Roboto" Margin="0,8,0,0"/>
-                        <PasswordBox x:Name="AccountPassBox" MinWidth="175" MaxWidth="175" HorizontalAlignment="left" BorderThickness="0,0,0,1" Background="{x:Null}" BorderBrush="#FFDEDCDC" Margin="0,12,0,12" Padding="0,8" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto" FontSize="16"/>
+                        <Grid>
+                            <TextBlock Text="Email Address" Foreground="#FF5B5A5A" FontFamily="Roboto"/>
+                            <TextBox x:Name="AccountEmail" MinWidth="175" MaxWidth="175" BorderBrush="#FFDEDCDC" Background="{x:Null}" Padding="0,8" BorderThickness="0,0,0,1" Margin="0,12,0,12" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto" FontSize="16" TextChanged="AccountEmail_TextChanged"/>
+                            <WrapPanel x:Name="EmailError"></WrapPanel>
+                        </Grid>
+                        <Grid>
+                            <TextBlock Text="Password" Foreground="#FF5B5A5A" FontFamily="Roboto" Margin="0,8,0,0"/>
+                            <PasswordBox x:Name="AccountPassBox" MinWidth="175" MaxWidth="175" HorizontalAlignment="left" BorderThickness="0,0,0,1" Background="{x:Null}" BorderBrush="#FFDEDCDC" Margin="0,12,0,12" Padding="0,8" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto" FontSize="16"/>
+                            <WrapPanel x:Name="PasswordError"></WrapPanel>
+                        </Grid>
                         <WrapPanel x:Name="LoginErrorText">
                             
                         </WrapPanel>

@@ -14,6 +14,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MatchMakerClassLibrary;
 
+// Todo
+// - error messages
+// - add image through code
+// - reverse error colors back to original
 
 namespace Matchmaker
 {
@@ -22,6 +26,8 @@ namespace Matchmaker
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -68,6 +74,26 @@ namespace Matchmaker
         private void ForgotPasswordBtn_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("This area is not availlable right now");
+        }
+
+        private void AccountEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(AccountEmail.Text == "")
+            {
+                TextBlock emailReq = new TextBlock();
+                emailReq.Text = "The email field is required.";
+                emailReq.Foreground = Brushes.Red;
+                EmailError.Children.Add(emailReq);
+            }
+            AccountEmail.BorderBrush = HexToBrushes("#FFBDBBBB");
+            AccountEmail.Foreground = HexToBrushes("#FFBDBBBB");
+        }
+
+        private SolidColorBrush HexToBrushes(string hexCode)
+        {
+            SolidColorBrush brushes = new SolidColorBrush();
+            brushes = (SolidColorBrush)(new BrushConverter().ConvertFromString(hexCode));
+            return brushes;
         }
     }
 }
