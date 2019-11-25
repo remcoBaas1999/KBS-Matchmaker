@@ -121,7 +121,7 @@ namespace Matchmaker
                     errorMSG += "\nYour Passwords Don't Match!";
                 }
                 if (!pWRegex) {
-                    errorMSG += "\nYour password is invalid! Password requires 8 characters with at least 1 lowercase character, at least 1 uppercase character and at least 1 number or special character.";
+                    errorMSG += "\nYour password is invalid! Password requires:\n- At least 8 characters\n- At least 1 lowercase character\n- At least 1 uppercase character\n- At least 1 number or special character.";
                 }
                 if (!emailSucceed&&noEmptyFields)
                 {
