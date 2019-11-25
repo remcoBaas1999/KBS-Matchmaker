@@ -103,9 +103,18 @@ namespace Matchmaker
             }
             if (pWSucceed&&pWRegex&&noEmptyFields&&emailSucceed&&dateSucceed&&nameSucceed&&tOS)
             {
-                //Do Something With User
+                //Salt and hash the password and store it in the database
+                //Generate random salt
+                RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+                byte[] salt = new byte[saltSize];
+                provider.GetBytes(salt);
 
-                
+                //Generate hash
+                Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(pw, salt, iterations);
+                byte[] hash = PBKDF2.GetBytes(hashSize);
+
+                //Store salt and hash in the database
+
 
                 this.Close();
             }
@@ -142,16 +151,6 @@ namespace Matchmaker
                 errorMSG = errorMSG.Substring(1);
                 ErrorMessage.Text = errorMSG;
             }
-        }
-        public static byte[] CreateHash(string input) {
-            //Generate random salt
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[saltSize];
-            provider.GetBytes(salt);
-
-            //Generate hash
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(input, salt, iterations);
-            return PBKDF2.GetBytes(hashSize);
         }
     }
 }
