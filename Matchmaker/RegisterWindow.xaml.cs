@@ -23,9 +23,11 @@ namespace Matchmaker
     /// </summary>
     public partial class RegisterWindow : Window
     {
-        //To Do: Fix Registration
-        //Fix Date
+        //To Do: Fix Registration (DB-Side)
+        //DB-Side Email Uniqueness Verification
         //ErrorMSG Image
+        //Think About: Close (Animation Before Closing?)
+        private const int minimumAge = 16;
         private const int saltSize = 16;
         private const int hashSize = 16;
         private const int iterations = 100000;
@@ -58,12 +60,36 @@ namespace Matchmaker
             bool emailSucceed = false;
             bool dateSucceed = false;
             bool nameSucceed = false;
+            bool oldEnough = false;
+            bool emailExists = false;
             bool tOS = (bool)ToSCheckBox.IsChecked;
-            //checks if passwords are equal
+            //strings with inputdata
             string name = NameField.Text;
             string email = EmailField.Text;
             string pw = PasswordField.Password;
             string pwA = PasswordAgainField.Password;
+            //datefield extraction
+            ComboBoxItem selectedItem = (ComboBoxItem) MonthOfBirth.SelectedItem;
+            int dOBM = Int32.Parse(selectedItem.Tag.ToString());
+            int dOBY;
+            int dOBD;
+            if (YearOfBirth.Text == "")
+            {
+                dOBY = 0;
+            }
+            else
+            {
+                dOBY = Int32.Parse(YearOfBirth.Text);
+            }
+            if (DayOfBirth.Text == "")
+            {
+                dOBD = 0;
+            }
+            else
+            {
+                dOBD = Int32.Parse(DayOfBirth.Text);
+            }            
+            //check name validity
             if (name.Contains(' '))
             {
                 string[] nameSplit = name.Split(' ');
@@ -81,32 +107,54 @@ namespace Matchmaker
                 pWSucceed=true;
             }
             //Regex check
-            string regexString = @"(?=\S *[A - Z])(?=\S *[a - z])(?=\S *[@$!% *#?~&\d])[A-Za-z@$!%*#?~&\d]{8,}";
+            string regexString = @"(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[@$!%*#?~&\d])[A-Za-z@$!%*#?~&\d]{8,}";
             Regex regex = new Regex(regexString);
             if (regex.IsMatch(pw)) {
                 pWRegex = true;
             }
             //checks if all fields are filled in
-            if (name!=""&&pw!=""&&email!="")
+            if (name!=""&&pw!=""&&email!=""&&pwA!="")
             {
                 noEmptyFields = true;
             }
             //checks for valid email
-            if (new EmailAddressAttribute().IsValid(email))
+            string regexEmailString = @"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$";
+            Regex regexEmail = new Regex(regexEmailString);
+            if (regexEmail.IsMatch(email))
             {
-                emailSucceed = true;              
+                emailSucceed = true;
+                emailExists = EmailExists(email);
             }
-            //checks date UNIMPLEMENTED
-            if (1 == 1)
+            //checks date
+            
+            if (ValidDateChecker(dOBD,dOBM,dOBY))
             {
                 dateSucceed = true;
+                int currentYear = Int32.Parse(DateTime.Now.ToString("yyyy"));
+                int currentMinimumYear = currentYear - minimumAge;
+                int currentMonth= Int32.Parse(DateTime.Now.ToString("MM"));
+                int currentDay= Int32.Parse(DateTime.Now.ToString("dd"));
+                if (dOBY==currentMinimumYear)
+                {
+                    if (dOBM == currentMonth)
+                    {
+                        if (dOBD<=currentDay)
+                        {
+                            oldEnough = true;
+                        }
+                    }else if (dOBM<currentMonth)
+                    {
+                        oldEnough = true;
+                    }
+                } else if(dOBY < currentMinimumYear)
+                {
+                    oldEnough = true;
+                }
             }
-            if (pWSucceed&&pWRegex&&noEmptyFields&&emailSucceed&&dateSucceed&&nameSucceed&&tOS)
+            //check succes
+            if (pWSucceed&&pWRegex&&noEmptyFields&&emailSucceed&&dateSucceed&&nameSucceed&&tOS&&oldEnough)
             {
                 //Do Something With User
-
-                
-
                 this.Close();
             }
             else 
@@ -120,16 +168,27 @@ namespace Matchmaker
                 {
                     errorMSG += "\nYour Passwords Don't Match!";
                 }
-                if (!pWRegex) {
-                    errorMSG += "\nYour password is invalid! Password requires 8 characters with at least 1 lowercase character, at least 1 uppercase character and at least 1 number or special character.";
+                if (!pWRegex&&noEmptyFields&&pWSucceed) {
+                    errorMSG += "\nYour Password Is Invalid!\nPassword Requires 8 Characters With At Least:" +
+                        "\n-1 Lowercase Character" +
+                        "\n-1 Uppercase Character " +
+                        "\n-1 Number Or Special Character";
                 }
                 if (!emailSucceed&&noEmptyFields)
                 {
                     errorMSG += "\nYour Email Is Invalid!";
+                } else if (emailExists)
+                {
+                    errorMSG += "\nYour Email Is Already In Use!";
                 }
                 if (!dateSucceed)
                 {
                     errorMSG += "\nYour Date Of Birth Is Invalid!";
+                }
+                if (dateSucceed&&!oldEnough)
+                {
+                    errorMSG += "\nYou're Too Young To Use This Application!" +
+                        $"\n(Minimum Age Is {minimumAge})";
                 }
                 if (!nameSucceed&&noEmptyFields)
                 {
@@ -152,6 +211,43 @@ namespace Matchmaker
             //Generate hash
             Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(input, salt, iterations);
             return PBKDF2.GetBytes(hashSize);
+        }
+        public static bool ValidDate(int day, int month, int year)
+        {
+            int[] days31 = new int[] { 1,3,5,7,8,10,12};
+            //Checks if day fits in month
+            if (month == 2)
+            {
+                if (year%4==0)
+                {
+                    return (day <= 28 && day > 0);
+                }
+                else
+                {
+                    return (day <= 29 && day > 0);
+                }
+            } 
+            else if (days31.Contains(month))
+            {
+                return (day <= 31 && day > 0);
+            }
+            else
+            {
+                return (day <= 30 && day > 0);
+            }
+        }
+        public bool ValidDateChecker(int day, int month, int year)
+        {
+            int currentYear = Int32.Parse(DateTime.Now.ToString("yyyy"));
+            int currentMonth = Int32.Parse(DateTime.Now.ToString("MM"));
+            int currentDay = Int32.Parse(DateTime.Now.ToString("dd"));
+            //returns true if date is in between 1880 and now
+            return ValidDate(day, month, year) && !(year <= 1880 || year > currentYear || (currentYear == year && month > currentMonth) || (currentYear == year && currentMonth == month && day > currentDay));
+        }
+        public bool EmailExists(string email)
+        {
+            //return DATABASEMEUK;
+            return false;
         }
     }
 }
