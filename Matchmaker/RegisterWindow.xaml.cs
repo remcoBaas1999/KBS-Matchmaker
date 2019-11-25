@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -26,9 +25,6 @@ namespace Matchmaker
         //To Do: Fix Registration
         //Fix Date
         //ErrorMSG Image
-        private const int saltSize = 16;
-        private const int hashSize = 16;
-        private const int iterations = 100000;
         public RegisterWindow()
         {
             InitializeComponent();
@@ -103,20 +99,10 @@ namespace Matchmaker
             }
             if (pWSucceed&&pWRegex&&noEmptyFields&&emailSucceed&&dateSucceed&&nameSucceed&&tOS)
             {
-                //Salt and hash the password and store it in the database
-                //Generate random salt
-                RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-                byte[] salt = new byte[saltSize];
-                provider.GetBytes(salt);
+                //Store the password in the database (salted and hashed)
+                Password.StorePassword(pw);
 
-                //Generate hash
-                Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(pw, salt, iterations);
-                byte[] hash = PBKDF2.GetBytes(hashSize);
-
-                //Store salt and hash in the database
-
-
-                this.Close();
+                //this.Close();
             }
             else 
             {
