@@ -200,6 +200,7 @@ namespace Matchmaker
                 }
                 errorMSG = errorMSG.Substring(1);
                 ErrorMessage.Text = errorMSG;
+                ErrorMessageImage.Visibility = Visibility.Visible;
             }
         }
         public static byte[] CreateHash(string input) {
