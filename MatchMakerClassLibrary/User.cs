@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchMakerClassLibrary
 {
-    public class User : AAccount
+    public class User : Account
     //What needs to be done: Dismiss/Confirm Match
     //Update Pictures/Interests
     //ShowUserData
