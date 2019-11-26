@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Matchmaker.API;
 
 namespace MatchMakerClassLibrary
@@ -11,10 +10,6 @@ namespace MatchMakerClassLibrary
     public static class MatchmakerAPI_Client
     {
 		public static void yeetpassword(string password, string salt) { }
-
-		public static UserData DeserializeUserData(string json) {
-			return JsonConvert.DeserializeObject<UserData>(json);
-		}
 
 		public static string GetUserData(int id) {
 			return Get($@"http://145.44.233.207:80/get/user?id={id}");
