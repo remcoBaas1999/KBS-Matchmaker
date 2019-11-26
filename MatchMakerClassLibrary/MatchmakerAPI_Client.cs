@@ -11,6 +11,10 @@ namespace MatchMakerClassLibrary
     {
 		public static void yeetpassword(string password, string salt) { }
 
+		public static UserData DeserializeUserData(string json) {
+			return JsonConvert.DeserializeObject<UserData>(json);
+		}
+
 		public static string GetUserData(int id) {
 			return Get($@"http://145.44.233.207:80/get/user?id={id}");
 		}
