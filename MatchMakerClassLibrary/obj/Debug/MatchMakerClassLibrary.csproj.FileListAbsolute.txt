@@ -1,0 +1,5 @@
+D:\C# projects\Matchmaker\MatchMakerClassLibrary\bin\Debug\MatchMakerClassLibrary.dll
+D:\C# projects\Matchmaker\MatchMakerClassLibrary\bin\Debug\MatchMakerClassLibrary.pdb
+D:\C# projects\Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.csprojAssemblyReference.cache
+D:\C# projects\Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.dll
+D:\C# projects\Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.pdb
