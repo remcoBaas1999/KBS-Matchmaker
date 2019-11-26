@@ -20,19 +20,18 @@ using System.Windows.Shapes;
 namespace Matchmaker
 {
     /// <summary>
-    /// Interaction logic for RegisterWindow.xaml
+    /// Interaction logic for RegisterPage.xaml
     /// </summary>
-    public partial class RegisterWindow : Window
+    public partial class RegisterPage : Page
     {
         //To Do: Fix Registration (DB-Side)
         //DB-Side Email Uniqueness Verification
-        //ErrorMSG Image
-        //Think About: Close (Animation Before Closing?)
+        //BACK TO LOGIN
         private const int minimumAge = 16;
         private const int saltSize = 16;
         private const int hashSize = 16;
         private const int iterations = 100000;
-        public RegisterWindow()
+        public RegisterPage()
         {
             InitializeComponent();
         }
@@ -48,9 +47,7 @@ namespace Matchmaker
         }
         private void BackToLogin_Click(object sender, RoutedEventArgs e)
         {
-            Window window = new MainWindow();
-            this.Close();
-            window.Show();
+            //BACKTOLOGIN
         }
         private void CreateAccount_Click(object sender, RoutedEventArgs e)
         {
@@ -70,7 +67,7 @@ namespace Matchmaker
             string pw = PasswordField.Password;
             string pwA = PasswordAgainField.Password;
             //datefield extraction
-            ComboBoxItem selectedItem = (ComboBoxItem) MonthOfBirth.SelectedItem;
+            ComboBoxItem selectedItem = (ComboBoxItem)MonthOfBirth.SelectedItem;
             int dOBM = Int32.Parse(selectedItem.Tag.ToString());
             int dOBY;
             int dOBD;
@@ -89,7 +86,7 @@ namespace Matchmaker
             else
             {
                 dOBD = Int32.Parse(DayOfBirth.Text);
-            }            
+            }
             //check name validity
             if (name.Contains(' '))
             {
@@ -101,20 +98,21 @@ namespace Matchmaker
                     {
                         nameSucceed = false;
                     }
-                }                
+                }
             }
             if (pw.Equals(pwA))
             {
-                pWSucceed=true;
+                pWSucceed = true;
             }
             //Regex check
             string regexString = @"(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[@$!%*#?~&\d])[A-Za-z@$!%*#?~&\d]{8,}";
             Regex regex = new Regex(regexString);
-            if (regex.IsMatch(pw)) {
+            if (regex.IsMatch(pw))
+            {
                 pWRegex = true;
             }
             //checks if all fields are filled in
-            if (name!=""&&pw!=""&&email!=""&&pwA!="")
+            if (name != "" && pw != "" && email != "" && pwA != "")
             {
                 noEmptyFields = true;
             }
@@ -127,30 +125,29 @@ namespace Matchmaker
                 emailExists = EmailExists(email);
             }
             //checks date
-            
-            if (ValidDateChecker(dOBD,dOBM,dOBY))
+
+            if (ValidDateChecker(dOBD, dOBM, dOBY))
             {
                 dateSucceed = true;
                 int currentYear = Int32.Parse(DateTime.Now.ToString("yyyy"));
                 int currentMinimumYear = currentYear - minimumAge;
-                int currentMonth= Int32.Parse(DateTime.Now.ToString("MM"));
-                int currentDay= Int32.Parse(DateTime.Now.ToString("dd"));
+                int currentMonth = Int32.Parse(DateTime.Now.ToString("MM"));
+                int currentDay = Int32.Parse(DateTime.Now.ToString("dd"));
                 //checks if person is old enough (matches minimal age)
-                if (dOBY<currentMinimumYear||(dOBY==currentMinimumYear&&((dOBM==currentMonth&&dOBD<=currentDay)||dOBM<currentMonth)))
+                if (dOBY < currentMinimumYear || (dOBY == currentMinimumYear && ((dOBM == currentMonth && dOBD <= currentDay) || dOBM < currentMonth)))
                 {
                     oldEnough = true;
                 }
             }
             //check succes
-            if (pWSucceed&&pWRegex&&noEmptyFields&&emailSucceed&&dateSucceed&&nameSucceed&&tOS&&oldEnough)
+            if (pWSucceed && pWRegex && noEmptyFields && emailSucceed && dateSucceed && nameSucceed && tOS && oldEnough)
             {
                 //Make Errorgrid go away
                 ErrorGrid.Visibility = Visibility.Collapsed;
                 //Do Something With User
-                //Close appp
-                //this.Close();
+                //Close Page
             }
-            else 
+            else
             {
                 string errorMSG = "";
                 if (!noEmptyFields)
@@ -161,16 +158,18 @@ namespace Matchmaker
                 {
                     errorMSG += "\nYour Passwords Don't Match!";
                 }
-                if (!pWRegex&&noEmptyFields&&pWSucceed) {
+                if (!pWRegex && noEmptyFields && pWSucceed)
+                {
                     errorMSG += "\nYour Password Is Invalid!\nPassword Requires 8 Characters With At Least:" +
                         "\n-1 Lowercase Character" +
                         "\n-1 Uppercase Character " +
                         "\n-1 Number Or Special Character";
                 }
-                if (!emailSucceed&&noEmptyFields)
+                if (!emailSucceed && noEmptyFields)
                 {
                     errorMSG += "\nYour Email Is Invalid!";
-                } else if (emailExists)
+                }
+                else if (emailExists)
                 {
                     errorMSG += "\nYour Email Is Already In Use!";
                 }
@@ -178,16 +177,16 @@ namespace Matchmaker
                 {
                     errorMSG += "\nYour Date Of Birth Is Invalid!";
                 }
-                if (dateSucceed&&!oldEnough)
+                if (dateSucceed && !oldEnough)
                 {
                     errorMSG += "\nYou're Too Young To Use This Application!" +
                         $"\n(Minimum Age Is {minimumAge})";
                 }
-                if (!nameSucceed&&noEmptyFields)
+                if (!nameSucceed && noEmptyFields)
                 {
                     errorMSG += "\nYour Name Is Invalid!";
                 }
-                if (!tOS&&noEmptyFields)
+                if (!tOS && noEmptyFields)
                 {
                     errorMSG += "\nPlease Accept Our ToS!";
                 }
@@ -196,7 +195,8 @@ namespace Matchmaker
                 ErrorGrid.Visibility = Visibility.Visible;
             }
         }
-        public static byte[] CreateHash(string input) {
+        public static byte[] CreateHash(string input)
+        {
             //Generate random salt
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             byte[] salt = new byte[saltSize];
@@ -208,11 +208,11 @@ namespace Matchmaker
         }
         public static bool ValidDate(int day, int month, int year)
         {
-            int[] days31 = new int[] { 1,3,5,7,8,10,12};
+            int[] days31 = new int[] { 1, 3, 5, 7, 8, 10, 12 };
             //Checks if day fits in month
             if (month == 2)
             {
-                if (year%4==0)
+                if (year % 4 == 0)
                 {
                     return (day <= 28 && day > 0);
                 }
@@ -220,7 +220,7 @@ namespace Matchmaker
                 {
                     return (day <= 29 && day > 0);
                 }
-            } 
+            }
             else if (days31.Contains(month))
             {
                 return (day <= 31 && day > 0);
@@ -240,10 +240,8 @@ namespace Matchmaker
         }
         public bool EmailExists(string email)
         {
-            //return DATABASEMEUK;
-            /*
-            return MatchmakerAPI_Client.GetUserData(email)!=null;
-            */
+            MatchmakerAPI_Client.GetUserData(email);
+            //return MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email)).email!=null;            
             return false;
         }
     }
