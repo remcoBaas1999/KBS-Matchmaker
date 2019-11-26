@@ -20,11 +20,14 @@ namespace MatchmakerAPI.Controllers
 			using (StreamReader r = new StreamReader("/home/guus/users.json"))
 		    {
 		        string json = r.ReadToEnd();
+				try {
+					var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
+					test.id = id;
+					return test;
+				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					return new UserData();
+				}
 
-				var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
-				test.id = id;
-
-				return test;
 		    }
         }
 
