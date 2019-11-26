@@ -74,7 +74,7 @@
 
         <Label x:Name="RecommendedActivities" Content="Recommended activities" HorizontalAlignment="Center" Margin="396,434,422,0" VerticalAlignment="Top" FontFamily="Roboto" FontWeight="Bold" Height="36" Width="254" FontSize="22" Grid.Column="1" RenderTransformOrigin="0.201,0.472"/>
 
-        <Border x:Name="Activity1" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="169" Margin="20,480,0,0" VerticalAlignment="Top" Width="240" CornerRadius="15" MouseDown="Activity1_MouseDown">
+        <Border x:Name="Activity1" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="169" Margin="20,480,0,0" VerticalAlignment="Top" Width="240" CornerRadius="15">
             <Border.OpacityMask>
                 <SolidColorBrush Color="Black"/>
             </Border.OpacityMask>
@@ -98,7 +98,7 @@
                 <ImageBrush ImageSource="Images/location.png" Stretch="Uniform"/>
             </Image.OpacityMask>
         </Image>
-        <Border x:Name="Activity1Tag" BorderBrush="#00350C25" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="140,615,0,0" VerticalAlignment="Top" Width="68" CornerRadius="10" MouseDown="Activity1Tag_MouseDown">
+        <Border x:Name="Activity1Tag" BorderBrush="#00350C25" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="140,615,0,0" VerticalAlignment="Top" Width="68" CornerRadius="10">
             <Border.Background>
                 <SolidColorBrush Color="#FF8F8F8F" Opacity="0.57"/>
             </Border.Background>
@@ -115,7 +115,7 @@
         </Border>
         <Label x:Name="Activity2OpenSpots" Content="Unlimited spots" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="291,589,0,0" VerticalAlignment="Top" Width="120" Background="#00000000" Foreground="#FFE0E0E0" FontWeight="Bold" FontStretch="Condensed">
         </Label>
-        <Border x:Name="Activity2Tag" BorderBrush="#00350C25" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="396,614,0,0" VerticalAlignment="Top" Width="68" CornerRadius="10" MouseDown="Activity1Tag_MouseDown">
+        <Border x:Name="Activity2Tag" BorderBrush="#00350C25" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="396,614,0,0" VerticalAlignment="Top" Width="68" CornerRadius="10">
             <Border.Background>
                 <SolidColorBrush Color="#FF8F8F8F" Opacity="0.57"/>
             </Border.Background>
@@ -169,7 +169,7 @@
             </Image>
         </Border>
         <Label x:Name="Location4Title" Content="Zwolle" FontFamily="Roboto" HorizontalAlignment="Left" Margin="842,610,0,0" VerticalAlignment="Top" Foreground="White" Height="34" Width="74" VerticalContentAlignment="Center" Grid.Column="1" RenderTransformOrigin="0.372,-0.318"/>
-        <Border x:Name="Activity4Tag" BorderBrush="#00350C25" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="920,614,0,0" VerticalAlignment="Top" Width="68" CornerRadius="10" MouseDown="Activity1Tag_MouseDown">
+        <Border x:Name="Activity4Tag" BorderBrush="#00350C25" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="920,614,0,0" VerticalAlignment="Top" Width="68" CornerRadius="10">
             <Border.Background>
                 <SolidColorBrush Color="#FF8F8F8F" Opacity="0.57"/>
             </Border.Background>
