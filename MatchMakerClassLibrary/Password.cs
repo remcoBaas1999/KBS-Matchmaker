@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MatchMakerClassLibrary {
     public static class Password {
-        private const int saltSize = 32;
-        private const int hashSize = 32;
+        private const int saltSize = 16;
+        private const int hashSize = 16;
         private const int iterations = 100000;
         public static void StorePassword(string password) {
             //Generate salt
@@ -16,36 +16,44 @@ namespace MatchMakerClassLibrary {
             byte[] salt = new byte[saltSize];
             provider.GetBytes(salt);
 
-            //Generate hash
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(password, salt, iterations);
+            //Convert salt to string
+            string saltString = Convert.ToBase64String(salt);
+
+            //Combine password and salt
+            string passSalt = password + saltString;
+
+            //Hash the combined string
+            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passSalt, salt, iterations);
             byte[] hash = PBKDF2.GetBytes(hashSize);
 
-            //Convert salt and hash to strings
-            string saltString = BitConverter.ToString(salt);
-            string hashString = BitConverter.ToString(hash);
+            //Convert the hash to string
+            string hashString = Convert.ToBase64String(hash);
 
-            //Store salt and hash in the database
-            //...
+            //Store the salt (string) and the hash (string)
+            MatchmakerAPI_Client.yeetpassword(hashString, saltString);
         }
         public static bool CheckPassword(string email, string password) {
             bool check = false;
 
-            //Get salt and hashed password from database using email
-            string saltStringStored = ""; //...
-            string hashStringStored = ""; //...
+            //Get salt and hash from database using email
+            string saltRetrievedString = ""; //...
+            string hashRetrievedString = ""; //...
 
-            //Convert salt back to byte array
-            byte[] saltStored = Encoding.ASCII.GetBytes(saltStringStored);
+            //Convert salt to string
+            byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
 
-            //hash the provided password using the stored salt
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(password, saltStored, iterations);
-            byte[] hashProvided = PBKDF2.GetBytes(hashSize);
+            //Combine password and salt
+            string passSalt = password + saltRetrievedString;
 
-            //convert hash to string
-            string hashStringProvided = BitConverter.ToString(hashProvided);
+            //Hash the combined string
+            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passSalt, saltRetrieved, iterations);
+            byte[] hash = PBKDF2.GetBytes(hashSize);
 
-            //if the hash of the provided password matches the hash of the stored password, return true
-            if (hashStringProvided == hashStringStored) {
+            //Convert the hash to string
+            string hashString = Convert.ToBase64String(hash);
+
+            //Compare the new and old hash
+            if (hashString == hashRetrievedString) {
                 check = true;
             }
             return check;

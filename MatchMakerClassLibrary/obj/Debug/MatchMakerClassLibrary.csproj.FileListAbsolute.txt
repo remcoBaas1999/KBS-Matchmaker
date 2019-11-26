@@ -3,3 +3,8 @@ C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\
 C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.csprojAssemblyReference.cache
 C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.dll
 C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.pdb
+C:\Users\Siem\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\MatchMakerClassLibrary.dll
+C:\Users\Siem\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\MatchMakerClassLibrary.pdb
+C:\Users\Siem\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.csprojAssemblyReference.cache
+C:\Users\Siem\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.dll
+C:\Users\Siem\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.pdb

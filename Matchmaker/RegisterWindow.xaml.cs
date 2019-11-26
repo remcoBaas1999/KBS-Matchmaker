@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -97,12 +98,11 @@ namespace Matchmaker
             {
                 dateSucceed = true;
             }
-            if (pWSucceed&&pWRegex&&noEmptyFields&&emailSucceed&&dateSucceed&&nameSucceed&&tOS)
-            {
+            if (pWSucceed && pWRegex && noEmptyFields && emailSucceed && dateSucceed && nameSucceed && tOS) {
                 //Store the password in the database (salted and hashed)
                 Password.StorePassword(pw);
 
-                //this.Close();
+                this.Close();
             }
             else 
             {
