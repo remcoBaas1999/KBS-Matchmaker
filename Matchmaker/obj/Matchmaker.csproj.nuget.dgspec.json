@@ -1,0 +1,44 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/guus/Code/projects/school/KBS-Matchmaker/Matchmaker/Matchmaker.csproj": {}
+  },
+  "projects": {
+    "/home/guus/Code/projects/school/KBS-Matchmaker/Matchmaker/Matchmaker.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/guus/Code/projects/school/KBS-Matchmaker/Matchmaker/Matchmaker.csproj",
+        "projectName": "Matchmaker",
+        "projectPath": "/home/guus/Code/projects/school/KBS-Matchmaker/Matchmaker/Matchmaker.csproj",
+        "packagesPath": "/home/guus/.nuget/packages/",
+        "outputPath": "/home/guus/Code/projects/school/KBS-Matchmaker/Matchmaker/obj/",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "/home/guus/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            }
+          }
+        }
+      }
+    }
+  }
+}
