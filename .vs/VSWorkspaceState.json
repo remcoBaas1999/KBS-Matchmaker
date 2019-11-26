@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Matchmaker",
+    "\\MatchMakerClassLibrary"
   ],
+  "SelectedNode": "\\MatchMakerClassLibrary",
   "PreviewInSolutionExplorer": false
 }
