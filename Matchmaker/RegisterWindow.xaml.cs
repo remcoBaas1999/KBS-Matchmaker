@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+//using Matchmaker.API;
 
 namespace Matchmaker
 {
@@ -134,19 +135,8 @@ namespace Matchmaker
                 int currentMinimumYear = currentYear - minimumAge;
                 int currentMonth= Int32.Parse(DateTime.Now.ToString("MM"));
                 int currentDay= Int32.Parse(DateTime.Now.ToString("dd"));
-                if (dOBY==currentMinimumYear)
-                {
-                    if (dOBM == currentMonth)
-                    {
-                        if (dOBD<=currentDay)
-                        {
-                            oldEnough = true;
-                        }
-                    }else if (dOBM<currentMonth)
-                    {
-                        oldEnough = true;
-                    }
-                } else if(dOBY < currentMinimumYear)
+                //checks if person is old enough (matches minimal age)
+                if (dOBY<currentMinimumYear||(dOBY==currentMinimumYear&&((dOBM==currentMonth&&dOBD<=currentDay)||dOBM<currentMonth)))
                 {
                     oldEnough = true;
                 }
@@ -154,8 +144,11 @@ namespace Matchmaker
             //check succes
             if (pWSucceed&&pWRegex&&noEmptyFields&&emailSucceed&&dateSucceed&&nameSucceed&&tOS&&oldEnough)
             {
+                //Make Errorgrid go away
+                ErrorGrid.Visibility = Visibility.Collapsed;
                 //Do Something With User
-                this.Close();
+                //Close appp
+                //this.Close();
             }
             else 
             {
@@ -200,7 +193,7 @@ namespace Matchmaker
                 }
                 errorMSG = errorMSG.Substring(1);
                 ErrorMessage.Text = errorMSG;
-                ErrorMessageImage.Visibility = Visibility.Visible;
+                ErrorGrid.Visibility = Visibility.Visible;
             }
         }
         public static byte[] CreateHash(string input) {
@@ -248,6 +241,9 @@ namespace Matchmaker
         public bool EmailExists(string email)
         {
             //return DATABASEMEUK;
+            /*
+            return MatchmakerAPI_Client.GetUserData(email)!=null;
+            */
             return false;
         }
     }

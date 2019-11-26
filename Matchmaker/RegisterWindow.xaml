@@ -358,12 +358,12 @@
                         <Run Foreground="#673ab7" Text="Terms Of Service"/>
                     </TextBlock>
                 </Grid>
-                <Grid Margin="0,0,5,0">
+                <Grid Margin="0,0,5,0" Visibility="Collapsed" x:Name="ErrorGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Name="ErrorMessageImage" Visibility="Collapsed" Stretch="UniformToFill" Source="Images/shield-error-icon.png"/>
+                    <Image Grid.Column="0" Name="ErrorMessageImage" Stretch="UniformToFill" Source="Images/shield-error-icon.png"/>
                     <TextBlock Grid.Column="1" Name="ErrorMessage" FontFamily="Roboto" Foreground="#F44336" VerticalAlignment="Center"/>
                 </Grid>
                 <Button x:Name="CreateAccount" Padding="0,5,0,0" Content="CREATE ACCOUNT" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#673ab7" HorizontalAlignment="Left" FontWeight="Bold" FontFamily="Roboto" Click="CreateAccount_Click"/>
