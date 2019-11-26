@@ -44,6 +44,8 @@
     <Compile Include="Account.cs" />
     <Compile Include="Admin.cs" />
     <Compile Include="Comment.cs" />
+    <Compile Include="MatchmakerAPI_Client.cs" />
+    <Compile Include="Password.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Matches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

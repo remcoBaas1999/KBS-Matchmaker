@@ -4,17 +4,25 @@
 winexe
 C#
 .cs
-C:\Users\Siem\source\repos\KBS-Matchmaker\Matchmaker\obj\Release\
+C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Release\
 Matchmaker
 none
 false
 TRACE
-C:\Users\Siem\source\repos\KBS-Matchmaker\Matchmaker\App.xaml
+C:\Users\Siem\Source\Repos\KBS-Matchmaker\Matchmaker\App.xaml
+<<<<<<< HEAD
 11151548125
 
 5-2017746502
 13-1505183044
 MainWindow.xaml;
+=======
+21019166891
+
+61099588017
+16-1338941403
+MainWindow.xaml;RegisterWindow.xaml;
+>>>>>>> flokDev
 
 True
 
