@@ -30,23 +30,12 @@ namespace Matchmaker
 
         private void Button_Click_1(object sender, RoutedEventArgs e) {
         }
-
-        private void Activity1_MouseDown(object sender, MouseButtonEventArgs e) {
-            Window win2 = new Window();
-            win2.Show();
-        }
-
-
-        private void Profile1Picture1_MouseDown(object sender, MouseButtonEventArgs e) { //When clicked open profile
+        private void Profile1Picture1_MouseDown(object sender, MouseButtonEventArgs e) { //When clicked on profilepicture, open profile
             Window Profile = new Window();
             Profile.Title = "Profile: Jeff Anderson";
             Profile.Show();
+
         }
 
-        private void Activity1Tag_MouseDown(object sender, MouseButtonEventArgs e) {
-            Window tag = new Window();
-            tag.Title = "Tag: Creative";
-            tag.Show();
-        }
     }
 }
