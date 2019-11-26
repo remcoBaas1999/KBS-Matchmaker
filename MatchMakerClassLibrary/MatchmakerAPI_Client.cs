@@ -31,7 +31,7 @@ namespace MatchMakerClassLibrary
 		public static boolean Authenticate(string email, string password) {
 
 			// 1. Retrieve data
-			UserData response = GetUserData(email);
+			UserData response = DeserializeUserData(GetUserData(email));
 
 			// 2. Deserialize data into UserData object
 
