@@ -17,7 +17,7 @@ namespace MatchmakerAPI.Controllers
         [HttpGet("id={id}")]
         public UserData GetByID(int id)
         {
-			using (StreamReader r = new StreamReader("/home/guus/users.json"))
+			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
 		    {
 		        string json = r.ReadToEnd();
 				try {
@@ -34,7 +34,7 @@ namespace MatchmakerAPI.Controllers
 		[HttpGet("email={email}")]
         public UserData GetByEmail(string email)
         {
-			using (StreamReader r = new StreamReader("/home/guus/userMap.json"))
+			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
 		        string json = r.ReadToEnd();
 
