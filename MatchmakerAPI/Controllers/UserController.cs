@@ -21,10 +21,10 @@ namespace MatchmakerAPI.Controllers
 			using (StreamReader r = new StreamReader("/home/guus/users.json"))
 		    {
 		        string json = r.ReadToEnd();
-				// string json = @"{10: {""email"": ""info@guusapeldoorn.nl"", ""password"": ""737d5a7b64b234d1da5add7caf59e447"", ""salt"": ""aaa"", ""realName"": ""Guus Apeldoorn"", ""about"": ""lorem ipsum"", ""address"": { ""city"": ""Emmeloord"" }, ""hobbies"": [""h100"", ""h200""], ""eventsAtt"": [""e110""], ""eventsOrg"": [""e330""], ""pictures"": [""p2000"", ""p3000""], ""profilePicture"": ""p1000"",""matches"": [""m1100""], ""chats"": [""c1110"", ""c2220""] }}";
 
 				var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
 				test.id = id;
+
 				return test;
 		    }
 
@@ -35,14 +35,16 @@ namespace MatchmakerAPI.Controllers
         }
 
 		[HttpGet("email={email}")]
-        public string GetByEmail(string email)
+        public UserData GetByEmail(string email)
         {
-            return "fuck";
-			// new UserData
-            // {
-            //     Date = DateTime.Now
-            // }
-            // .ToArray();
+			using (StreamReader r = new StreamReader("/home/guus/userMap.json"))
+		    {
+		        string json = r.ReadToEnd();
+
+				var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
+
+				return GetByID(id);
+		    }
         }
     }
 }
