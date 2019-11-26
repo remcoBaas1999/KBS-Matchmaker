@@ -22,15 +22,15 @@ namespace MatchMakerClassLibrary
 		}
 
 		public static string GetUserData(int id) {
-			return Get($@"http://145.44.233.207:80/get/user?id={id}");
+			return Get($@"http://145.44.233.207:80/get/user/id={id}");
 		}
 
 		public static string GetUserData(string email) {
-			return Get($@"http://145.44.233.207:80/get/user?e={email}");
+			return Get($@"http://145.44.233.207:80/get/user/email={email}");
 		}
 
 		public static string GetEventData(int id) {
-			return Get($@"http://145.44.233.207:80/get/event?id={id}");
+			return Get($@"http://145.44.233.207:80/get/event/id={id}");
 		}
 
 		public static bool Authenticate(string email, string password) {
