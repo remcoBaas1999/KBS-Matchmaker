@@ -5,7 +5,6 @@ C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\Matchmaker.exe
 C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\Matchmaker.pdb
 C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\Newtonsoft.Json.dll
 C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\Newtonsoft.Json.xml
-C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csprojAssemblyReference.cache
 C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\MainWindow.g.cs
 C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\App.g.cs
 C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker_MarkupCompile.cache

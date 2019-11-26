@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using MatchMakerClassLibrary;
+using System.Net;
+using System.IO;
+
+
+
 
 namespace MatchMakerClassLibrary
 {
@@ -28,7 +33,7 @@ namespace MatchMakerClassLibrary
 			return Get($@"http://145.44.233.207:80/get/event?id={id}");
 		}
 
-		public static boolean Authenticate(string email, string password) {
+		public static bool Authenticate(string email, string password) {
 
 			// 1. Retrieve data
 			UserData response = DeserializeUserData(GetUserData(email));
@@ -61,15 +66,6 @@ namespace MatchMakerClassLibrary
 		    using(StreamReader reader = new StreamReader(stream))
 		    {
 		        return reader.ReadToEnd();
-		    }
-		}
-
-		public void LoadJson()
-		{
-		    using (StreamReader r = new StreamReader("file.json"))
-		    {
-		        string json = r.ReadToEnd();
-		        List<Item> items = JsonConvert.DeserializeObject<List<Item>>(json);
 		    }
 		}
 	}
