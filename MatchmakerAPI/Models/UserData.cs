@@ -4,12 +4,19 @@ namespace MatchmakerAPI
 {
     public class UserData
     {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-
-        public string Summary { get; set; }
+        public string email { get; set; }
+		public string password { get; set; }
+		public string salt { get; set; }
+		public string realName { get; set; }
+		public string about { get; set; }
+		public string city { get; set; }
+		public string[] hobbies { get; set; }
+		public string[] eventsAtt { get; set; }
+		public string[] eventsOrg { get; set; }
+		public string profilePicture { get; set; }
+		public string[] pictures { get; set; }
+		public string[] matches { get; set; }
+		public string[] chats { get; set; }
+		public int id { get; set; }
     }
 }
