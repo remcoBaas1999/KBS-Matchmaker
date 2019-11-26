@@ -94,5 +94,42 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ProfileBackground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ProfilePicture.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\NoProfilePicture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ProfilePicture3.jpeg" />
+    <Resource Include="Images\ProfilePicture4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\painting.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\location.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\console.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\schaatsen.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fietsen.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
