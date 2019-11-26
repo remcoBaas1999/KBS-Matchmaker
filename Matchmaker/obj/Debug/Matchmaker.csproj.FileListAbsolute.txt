@@ -16,3 +16,4 @@ C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.cspro
 C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csproj.CopyComplete
 C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.exe
 C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.pdb
+C:\Users\patri\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csprojAssemblyReference.cache
