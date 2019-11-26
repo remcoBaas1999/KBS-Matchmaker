@@ -15,4 +15,4 @@ C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\obj\Debug\Matc
 C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\bin\Debug\MatchMakerClassLibrary.dll
 C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\bin\Debug\MatchMakerClassLibrary.pdb
 C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker.csproj.CopyComplete
-C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\obj\Debug\Matchmaker_Content.g.cs
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\Matchmaker\bin\Debug\System.Drawing.Common.dll

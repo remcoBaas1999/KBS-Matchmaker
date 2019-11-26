@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+using System.Net.Mail;
 
 namespace MatchMakerClassLibrary
 {
@@ -12,16 +15,33 @@ namespace MatchMakerClassLibrary
         public bool LoggedIn { get; set; }
         public string Email { get; set; }
         //methods
-        public void LogIn(string password)
+        public bool LogIn(string password)
         {
-            bool login = true;
-            //Unhash password
-            //Insert code for trying to log in
-            if(Email == "" || password == "")
+            bool login = false;
+            try
             {
-                login = false;
+                login = ValidEmail(Email);
+                LoggedIn = login;
+
+                return login;
             }
-            LoggedIn = login;
+            catch (Exception)
+            {
+                return false;
+            }
+            
+        }
+        public bool ValidEmail(string email)
+        {
+            try
+            {
+                MailAddress mail = new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
         public void LogOut()
         {
