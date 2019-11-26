@@ -17,7 +17,6 @@ namespace MatchmakerAPI.Controllers
         [HttpGet("id={id}")]
         public UserData GetByID(int id)
         {
-			// var users = new Dictionary<int, string>();
 			using (StreamReader r = new StreamReader("/home/guus/users.json"))
 		    {
 		        string json = r.ReadToEnd();
@@ -27,11 +26,6 @@ namespace MatchmakerAPI.Controllers
 
 				return test;
 		    }
-
-			// 1. Retrieve user data from database
-
-			// 2. Yeet the user data back
-            // return JsonConvert.DeserializeObject<string>(json);
         }
 
 		[HttpGet("email={email}")]
