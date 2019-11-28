@@ -16,10 +16,10 @@
         <Button x:Name="MatchesButton" Content="Matches" HorizontalAlignment="Left" Height="34" Margin="617,2,341,0" VerticalAlignment="Top" Width="114" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="1"/>
         <Button x:Name="ActivitiesButton" Content="Activities" HorizontalAlignment="Left" Height="34" Margin="483,2,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.044,-2.382" Grid.Column="1"/>
         <Label x:Name="RecommendedPeople" Content="People you might like" HorizontalAlignment="Center" Margin="416,58,422,0" VerticalAlignment="Top" FontFamily="Roboto" FontWeight="Bold" Height="36" Width="234" FontSize="22" Grid.Column="1" RenderTransformOrigin="0.201,0.472"/>
-        <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Height="43" Margin="483,99,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" FontFamily="Roboto" Foreground="#FF2566D6" Background="{x:Null}" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.044,-2.382" Grid.Column="1" BorderBrush="{x:Null}"/>
+        <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Height="43" Margin="483,99,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" FontFamily="Roboto" Foreground="#FF2566D6" Background="{x:Null}" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.044,-2.382" Grid.Column="1" BorderBrush="{x:Null}" MouseDown="RefreshButton_MouseDown"/>
 
 
-        <Border x:Name="Profile1BackgroundPicture" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="238" Margin="115,160,0,0" VerticalAlignment="Top" Width="180" CornerRadius="15">
+        <Border x:Name="Profile1BackgroundPicture" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="238" Margin="115,160,0,0" VerticalAlignment="Top" Width="180" CornerRadius="15" MouseDown="Profile1BackgroundPicture_MouseDown">
             <Border.Background>
                 <ImageBrush ImageSource="Images\ProfileBackground.jpg" Stretch="UniformToFill"/>
             </Border.Background>
@@ -79,12 +79,12 @@
                 <SolidColorBrush Color="Black"/>
             </Border.OpacityMask>
             <Border.BorderBrush>
-                <SolidColorBrush Color="White"/>
+                <SolidColorBrush/>
             </Border.BorderBrush>
             <Border.Background>
                 <ImageBrush Stretch="UniformToFill" ImageSource="Images/painting.jpg"/>
             </Border.Background>
-            <Border x:Name="Activity1Border_Copy" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,0" Padding="0" UseLayoutRounding="False" CornerRadius="15">
+            <Border x:Name="Activity1Border_Copy" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.5" Padding="0" UseLayoutRounding="False" CornerRadius="15">
                 <Label Content="Painting workshop" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.895,0.981" Margin="9,84,0,0" Width="152" FontWeight="Bold" FontSize="16"/>
             </Border>
         </Border>
@@ -109,7 +109,7 @@
             <Border.Background>
                 <ImageBrush ImageSource="Images/console.png" Stretch="UniformToFill"/>
             </Border.Background>
-            <Border x:Name="Activity2Border" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,0" Padding="0" UseLayoutRounding="False" CornerRadius="15">
+            <Border x:Name="Activity2Border" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.25" Padding="0" UseLayoutRounding="False" CornerRadius="15">
                 <Label Content="Gaming week" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.895,0.981" Margin="9,84,0,0" Width="152" FontWeight="Bold" FontSize="16"/>
             </Border>
         </Border>
@@ -156,7 +156,7 @@
             <Border.Background>
                 <ImageBrush ImageSource="Images/fietsen.jpg" Stretch="UniformToFill"/>
             </Border.Background>
-            <Border x:Name="Activity4Border" BorderThickness="1" Background="#8E000000" Margin="-0.5,-2,-2.083,-2.667" Padding="0" UseLayoutRounding="False" CornerRadius="15">
+            <Border x:Name="Activity4Border" BorderThickness="1" Background="#8E000000" Margin="-0.5,-2,-2.083,-0.917" Padding="0" UseLayoutRounding="False" CornerRadius="15">
                 <Label Content="Bicycle race" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.895,0.981" Margin="9,84,0,0" Width="152" FontWeight="Bold" FontSize="16"/>
             </Border>
         </Border>
@@ -175,6 +175,5 @@
             </Border.Background>
             <Label x:Name="Tag4Title" FontFamily="Roboto" Content="Sports" Height="30" VerticalAlignment="Bottom" Foreground="#FFF9F5F5" HorizontalContentAlignment="Center" Margin="1,-1,-1,-5" RenderTransformOrigin="-0.02,0.667"/>
         </Border>
-
     </Grid>
 </Page>
