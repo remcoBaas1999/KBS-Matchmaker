@@ -44,8 +44,13 @@
         <TextBlock Text="age" Grid.Column="4" Grid.Row="1" Height="20" Width="30"/>
         <TextBlock Grid.Row="2" Grid.Column="4" Width="50" Name="age" />
         <!-- location text and editing section-->
-        <TextBlock Text="Location:" Grid.Column="6" Grid.Row="1" Height="20" Width="50"/>
-        <TextBlock Grid.Row="2" Grid.Column="6" Width="50" Name="city" />
+        <TextBlock Text="Location:" Grid.Column="6" Grid.Row="1" Height="20" Width="50" />
+        <TextBlock Grid.Row="2" Grid.Column="6" Width="50" Name="city" Visibility="Visible"/>
+        <ComboBox Grid.Row="2" Grid.Column="6"  Width="130" Name="citySelection" Visibility="Collapsed">
+            <ComboBoxItem>Zwolle</ComboBoxItem>
+            <ComboBoxItem>Moscow</ComboBoxItem>
+            <ComboBoxItem>Arkhangelsk</ComboBoxItem>
+        </ComboBox>
 
         <!-- bio text and editing section-->
         <TextBlock Grid.Row="4" Grid.Column="4" Height="20" Width="100" Text="About me" Margin="4" />
