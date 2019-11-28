@@ -85,16 +85,23 @@ namespace Matchmaker
                     }
                     //Uri uri = new Uri("Images/error.png", UriKind.Relative);
                     //errorImage.Source = new BitmapImage(uri);
-                    Image errorImage = new Image();
-                    BitmapImage src = new BitmapImage();
-                    src.BeginInit();
+                    //Image errorImage = new Image();
+                    //BitmapImage src = new BitmapImage();
+                    //src.BeginInit();
                     //src.UriSource = new Uri((System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "Images/error.png"), UriKind.Absolute);
-                    src.EndInit();
-                    errorImage.Source = src;
-                    errorImage.Stretch = Stretch.Uniform;
-                    errorImage.Height = 16;
-                    LoginErrorText.Children.Add(errorImage);
+                    //src.EndInit();
+                    //errorImage.Source = src;
+                    //errorImage.Stretch = Stretch.Uniform;
+                    //errorImage.Height = 16;
+                    //LoginErrorText.Children.Add(errorImage);
                     LoginErrorText.Children.Add(GeneralError[0]);
+                }
+                else
+                {
+                    AccountPassBox.BorderBrush = Brushes.Red;
+                    PasswordError.Children.Add(GeneralError[1]);
+                    AccountEmail.BorderBrush = Brushes.Red;
+                    EmailError.Children.Add(GeneralError[2]);
                 }
 
 

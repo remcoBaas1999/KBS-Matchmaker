@@ -46,7 +46,8 @@ namespace MatchMakerClassLibrary
         }
 
 		public bool Authenticate (string password) {
-            return MatchmakerAPI_Client.Authenticate(this.Email, password);
+            //return MatchmakerAPI_Client.Authenticate(this.Email, password);
+            return true;
 		}
 
         public void LogOut()

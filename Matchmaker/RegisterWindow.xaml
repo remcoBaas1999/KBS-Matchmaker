@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Matchmaker"
         xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="Matchmaker.RegisterWindow"
         mc:Ignorable="d"
-        Title="RegisterWindow" Height="450" Width="800">
+        Title="RegisterWindow" Height="720" Width="1280" WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
 

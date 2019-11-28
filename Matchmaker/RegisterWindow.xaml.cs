@@ -100,7 +100,7 @@ namespace Matchmaker
             }
             if (pWSucceed && pWRegex && noEmptyFields && emailSucceed && dateSucceed && nameSucceed && tOS) {
                 //Store the password in the database (salted and hashed)
-                Password.StorePassword(email, pw);
+                //Password.StorePassword(email, pw);
 
                 this.Close();
             }
