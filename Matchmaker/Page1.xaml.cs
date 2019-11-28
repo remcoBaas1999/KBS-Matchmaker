@@ -10,19 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Matchmaker
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Page1 : Page
     {
-        public Window1()
+        public Page1()
         {
             InitializeComponent();
-            NavigationFrame.Navigate(new Uri(("Page1.xaml"), UriKind.Relative));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("RegisterPage.xaml", UriKind.Relative));
         }
     }
 }

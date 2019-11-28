@@ -2,8 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\Matchmaker",
-    "\\MatchMakerClassLibrary"
+    "\\MatchMakerClassLibrary",
+    "\\Matchmaker\\bin",
+    "\\Matchmaker\\bin\\Debug",
+    "\\Matchmaker\\bin\\Release",
+    "\\Matchmaker\\Images",
+    "\\Matchmaker\\obj"
   ],
-  "SelectedNode": "\\MatchMakerClassLibrary",
+  "SelectedNode": "\\MatchMakerClassLibrary\\MatchmakerAPI_Client.cs",
   "PreviewInSolutionExplorer": false
 }

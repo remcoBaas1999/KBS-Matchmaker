@@ -14,6 +14,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 //using Matchmaker.API;
 
@@ -26,7 +27,7 @@ namespace Matchmaker
     {
         //To Do: Fix Registration (DB-Side)
         //DB-Side Email Uniqueness Verification
-        //BACK TO LOGIN
+        private const string toLogin = "Page1.xaml";
         private const int minimumAge = 16;
         private const int saltSize = 16;
         private const int hashSize = 16;
@@ -47,7 +48,7 @@ namespace Matchmaker
         }
         private void BackToLogin_Click(object sender, RoutedEventArgs e)
         {
-            //BACKTOLOGIN
+            NavigationService.Navigate(new Uri(toLogin, UriKind.Relative));
         }
         private void CreateAccount_Click(object sender, RoutedEventArgs e)
         {

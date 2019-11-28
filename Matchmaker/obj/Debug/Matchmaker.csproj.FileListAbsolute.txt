@@ -55,3 +55,5 @@ C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\bin\Debug\Newtonsoft.J
 C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\RegisterPage.baml
 C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Window1.baml
 C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\App.baml
+C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Page1.g.cs
+C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\Matchmaker\obj\Debug\Page1.baml
