@@ -56,7 +56,7 @@ namespace Matchmaker
                 Account account = new Account();
                 account.Email = AccountEmail.Text;
                 account.LogIn(AccountPassBox.Password);
-                if (true)
+                if (account.LoggedIn)
                 {
                     // Go to the user dashboard
                     MessageBox.Show("Ingelogd");
