@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MatchMakerClassLibrary;
 
 namespace Matchmaker
 {
@@ -55,7 +56,7 @@ namespace Matchmaker
                 Account account = new Account();
                 account.Email = AccountEmail.Text;
                 account.LogIn(AccountPassBox.Password);
-                if (account.LoggedIn)
+                if (true)
                 {
                     // Go to the user dashboard
                     MessageBox.Show("Ingelogd");

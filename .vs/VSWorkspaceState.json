@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Matchmaker"
   ],
-  "SelectedNode": "\\.gitignore",
+  "SelectedNode": "\\Matchmaker\\App.xaml.cs",
   "PreviewInSolutionExplorer": false
 }
