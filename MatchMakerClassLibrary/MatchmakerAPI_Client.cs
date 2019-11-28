@@ -15,7 +15,15 @@ namespace MatchMakerClassLibrary
 {
     public static class MatchmakerAPI_Client
     {
-		public static void yeetpassword(string password, string salt) { }
+		public static void yeetpassword(string email, string password, string salt) { }
+
+        public static string asksalt(string email) {
+            return "";
+        }
+        
+        public static string askhash(string email) {
+            return "";
+        }
 
 		public static UserData DeserializeUserData(string json) {
 			return JsonConvert.DeserializeObject<UserData>(json);
