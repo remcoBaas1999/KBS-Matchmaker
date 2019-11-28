@@ -1,6 +1,14 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Matchmaker",
+    "\\MatchMakerClassLibrary",
+    "\\Matchmaker\\bin",
+    "\\Matchmaker\\bin\\Debug",
+    "\\Matchmaker\\bin\\Release",
+    "\\Matchmaker\\Images",
+    "\\Matchmaker\\obj"
   ],
+  "SelectedNode": "\\.gitignore",
   "PreviewInSolutionExplorer": false
 }
