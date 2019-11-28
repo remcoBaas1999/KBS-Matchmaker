@@ -1,8 +1,8 @@
-C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\MatchMakerClassLibrary.dll
-C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\MatchMakerClassLibrary.pdb
-C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.csprojAssemblyReference.cache
-C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.dll
-C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.pdb
-C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Gebruiker\Source\Repos\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.csproj.CopyComplete
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\MatchMakerClassLibrary.dll
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\MatchMakerClassLibrary.pdb
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.dll
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.pdb
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.csprojAssemblyReference.cache
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\Newtonsoft.Json.dll
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\MatchMakerClassLibrary\bin\Debug\Newtonsoft.Json.xml
+C:\Users\remco\Documents\KBS-Matchmaker\KBS-Matchmaker\MatchMakerClassLibrary\obj\Debug\MatchMakerClassLibrary.csproj.CopyComplete

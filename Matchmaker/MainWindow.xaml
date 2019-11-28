@@ -175,6 +175,5 @@
             </Border.Background>
             <Label x:Name="Tag4Title" FontFamily="Roboto" Content="Sports" Height="30" VerticalAlignment="Bottom" Foreground="#FFF9F5F5" HorizontalContentAlignment="Center" Margin="1,-1,-1,-5" RenderTransformOrigin="-0.02,0.667"/>
         </Border>
-
     </Grid>
 </Page>

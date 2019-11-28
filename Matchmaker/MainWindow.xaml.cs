@@ -12,6 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MatchMakerClassLibrary;
+
+// Todo
+// - add image through code
+// - reverse error colors back to original
 
 namespace Matchmaker
 {
@@ -19,7 +24,8 @@ namespace Matchmaker
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class HomePage : Page {
-        public HomePage() {
+        public HomePage()
+        {
             InitializeComponent();
 
         }
