@@ -30,32 +30,33 @@ namespace MatchMakerClassLibrary {
             string hashString = Convert.ToBase64String(hash);
 
             //Store the salt (string) and the hash (string)
-            MatchmakerAPI_Client.yeetpassword(email, hashString, saltString);
+           // MatchmakerAPI_Client.yeetpassword(email, hashString, saltString);
         }
-        public static bool CheckPassword(string email, string password) {
+        public static bool CheckPassword(string email, string password)
+        {
             bool check = false;
 
             //Get salt and hash from database using email
-            string saltRetrievedString = MatchmakerAPI_Client.asksalt(email);
-            string hashRetrievedString = MatchmakerAPI_Client.askhash(email);
+            //string saltRetrievedString = MatchmakerAPI_Client.asksalt(email);
+            //string hashRetrievedString = MatchmakerAPI_Client.askhash(email);
 
             //Convert salt to string
-            byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
+            //byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
 
             //Combine password and salt
-            string passSalt = password + saltRetrievedString;
+            //string passSalt = password + saltRetrievedString;
 
             //Hash the combined string
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passSalt, saltRetrieved, iterations);
-            byte[] hash = PBKDF2.GetBytes(hashSize);
+            //Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passSalt, saltRetrieved, iterations);
+            //byte[] hash = PBKDF2.GetBytes(hashSize);
 
             //Convert the hash to string
-            string hashString = Convert.ToBase64String(hash);
+            //string hashString = Convert.ToBase64String(hash);
 
             //Compare the new and old hash
-            if (hashString == hashRetrievedString) {
-                check = true;
-            }
+            //if (hashString == hashRetrievedString) {
+                
+            //}
             return check;
         }
     }
