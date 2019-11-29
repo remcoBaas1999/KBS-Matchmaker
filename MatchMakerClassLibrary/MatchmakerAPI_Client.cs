@@ -8,6 +8,7 @@ using MatchMakerClassLibrary;
 using System.Net;
 using System.IO;
 using System.Security.Cryptography;
+using System.Net.Http;
 
 namespace MatchMakerClassLibrary
 {
@@ -75,7 +76,25 @@ namespace MatchMakerClassLibrary
 		        return reader.ReadToEnd();
 		    }
 		}
-	}
+        private static bool PostNewUserData(UserData newUserData) {
+            string uri = @"";
+            string result = Post(uri, newUserData).Result;
+            //doe wat met result
+            return true;
+        }
+        private static async Task<string> Post(string uri, object data) {
+            string result;
+            var json = JsonConvert.SerializeObject(data);
+            var dataString = new StringContent(json, Encoding.UTF8, "application/json");
+            using (client) {
+
+                var response = await client.PostAsync(uri, dataString);
+
+                result = response.Content.ReadAsStringAsync().Result;
+            }
+            return result;
+        }
+    }
 
 	public class UserData
     {
