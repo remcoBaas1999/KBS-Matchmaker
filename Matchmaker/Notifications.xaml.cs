@@ -14,11 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Matchmaker {
-    /// <summary>
-    /// Interaction logic for Page2.xaml
-    /// </summary>
-    public partial class Page2 : Page {
-        public Page2() {
+
+    public partial class Notifications : Page {
+        public Notifications() {
             InitializeComponent();
         }
     }
