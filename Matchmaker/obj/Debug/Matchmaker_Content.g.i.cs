@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/fietsen.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/close.svg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/full-screen.svg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/minimize.svg")]
 
 

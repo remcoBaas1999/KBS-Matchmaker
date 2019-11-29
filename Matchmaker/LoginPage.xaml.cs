@@ -121,7 +121,7 @@ namespace Matchmaker
             }
             catch(Exception)
             {
-
+                MessageBox.Show("Sorry, this page is unavaillable.");
             }
         }
 

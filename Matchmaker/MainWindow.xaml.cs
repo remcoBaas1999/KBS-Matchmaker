@@ -26,5 +26,20 @@ namespace Matchmaker
             LoginPage login = new LoginPage();
             MainFrame.Navigate(login);
         }
+
+        private void CloseAppClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void MinimizeClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Maximized;
+        }
     }
 }
