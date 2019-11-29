@@ -11,19 +11,23 @@ using System.Runtime.Serialization;
 namespace MatchmakerAPI.Controllers
 {
     [ApiController]
-    [Route("/get/user/")]
-    public class UserController : ControllerBase
+    [Route("/get/auth/")]
+    public class AuthController : ControllerBase
     {
         [HttpGet("id={id}")]
-        public UserData UserById(int id)
+        public AuthData AuthById(int id)
         {
 			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
 		    {
 		        string json = r.ReadToEnd();
 				try {
 					var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
-					test.id = id;
-					return test;
+					var data = new AuthData {
+						email = test.email,
+						password = test.password,
+						salt = test.salt
+					};
+					return data;
 				} catch (System.Collections.Generic.KeyNotFoundException e) {
 					return null;
 				}
@@ -32,7 +36,7 @@ namespace MatchmakerAPI.Controllers
         }
 
 		[HttpGet("email={email}")]
-        public UserData UserByEmail(string email)
+        public AuthData AuthByEmail(string email)
         {
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
@@ -40,7 +44,7 @@ namespace MatchmakerAPI.Controllers
 
 				var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
 
-				return UserById(id);
+				return AuthById(id);
 		    }
         }
     }
