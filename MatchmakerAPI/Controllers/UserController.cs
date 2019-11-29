@@ -11,10 +11,10 @@ using System.Runtime.Serialization;
 namespace MatchmakerAPI.Controllers
 {
     [ApiController]
-    [Route("/get/user/")]
+    [Route("/user/")]
     public class UserController : ControllerBase
     {
-        [HttpGet("id={id}")]
+        [HttpGet("get/id={id}")]
         public UserData UserById(int id)
         {
 			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
@@ -25,13 +25,13 @@ namespace MatchmakerAPI.Controllers
 					test.id = id;
 					return test;
 				} catch (System.Collections.Generic.KeyNotFoundException e) {
-					return null;
+					return new UserData();
 				}
 
 		    }
         }
 
-		[HttpGet("email={email}")]
+		[HttpGet("get/email={email}")]
         public UserData UserByEmail(string email)
         {
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
@@ -43,5 +43,9 @@ namespace MatchmakerAPI.Controllers
 				return UserById(id);
 		    }
         }
+
+		[HttpPost("post/new")]
+		public bool AddNewUser(NewUserData data)
+		{}
     }
 }

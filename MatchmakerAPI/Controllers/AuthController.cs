@@ -11,13 +11,13 @@ using System.Runtime.Serialization;
 namespace MatchmakerAPI.Controllers
 {
     [ApiController]
-    [Route("/get/auth/")]
+    [Route("/auth/")]
     public class AuthController : ControllerBase
     {
-        [HttpGet("id={id}")]
+        [HttpGet("get/id={id}")]
         public AuthData AuthById(int id)
         {
-			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
+			using (StreamReader r = new StreamReader("/home/guus/users.json"))
 		    {
 		        string json = r.ReadToEnd();
 				try {
@@ -29,13 +29,13 @@ namespace MatchmakerAPI.Controllers
 					};
 					return data;
 				} catch (System.Collections.Generic.KeyNotFoundException e) {
-					return null;
+					return new AuthData();
 				}
 
 		    }
         }
 
-		[HttpGet("email={email}")]
+		[HttpGet("get/email={email}")]
         public AuthData AuthByEmail(string email)
         {
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
