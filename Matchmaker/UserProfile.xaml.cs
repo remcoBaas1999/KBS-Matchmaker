@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Matchmaker.HomePage;
 
 namespace Matchmaker
 {
@@ -31,13 +32,13 @@ namespace Matchmaker
         {
             InitializeComponent();
             DateTime now = DateTime.Now;
-            var a = now.Year - Account.birthdate.Year;
+            var a = now.Year - activeUser.birthdate.Year;
             age.Text = a.ToString();
-            city.Text = Account.location;
-            accountText.Text = Account.bio;
-            bioText.Text = Account.bio;
-            name.Text = Account.firstName + " " + Account.lastName;
-            showName.Text = Account.firstName + " " + Account.lastName; ;
+            city.Text = activeUser.location;
+            accountText.Text = activeUser.bio;
+            bioText.Text = activeUser.bio;
+            name.Text = activeUser.firstName + " " + activeUser.lastName;
+            showName.Text = activeUser.firstName + " " + activeUser.lastName; ;
         }
         public void EditBio(string bio)
         {
@@ -78,7 +79,7 @@ namespace Matchmaker
         {
 
         }
-
+            
         public void removePicture()
         {
 
@@ -103,8 +104,8 @@ namespace Matchmaker
             var firstSpaceIndex = name.Text.IndexOf(" ");
             string firstName = name.Text.Substring(0,firstSpaceIndex);
             string lastname = name.Text.Substring(firstSpaceIndex+1);
-            Account.firstName = firstName;
-            Account.lastName = lastname;
+            activeUser.firstName = firstName;
+            activeUser.lastName = lastname;
             showName.Text = name.Text;
             showName.Visibility = Visibility.Visible;
             editName.Visibility = Visibility.Visible;
@@ -127,7 +128,7 @@ namespace Matchmaker
 
         private void confirmBioChange_Click(object sender, RoutedEventArgs e)
         {
-            Account.bio = accountText.Text;
+            activeUser.bio = accountText.Text;
             bioText.Text = accountText.Text;
             denyBioChange.Visibility = Visibility.Collapsed;
             confirmBioChange.Visibility = Visibility.Collapsed;
