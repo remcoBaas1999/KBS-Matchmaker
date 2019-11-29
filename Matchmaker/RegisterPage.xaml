@@ -5,46 +5,44 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Matchmaker"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="720" d:DesignWidth="1280"
       Title="RegisterPage">
 
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.RowSpan="1" Background="#cbd1cc" />
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="auto" MinWidth="226"/>
-                <ColumnDefinition Width="auto" MinWidth="226"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="1" Margin="0, 100, 8, 0" HorizontalAlignment="Right" Width="211">
-                <TextBlock Text="Create A New Account" FontWeight="Bold" FontSize="20" FontFamily="Roboto"/>
-                <Button x:Name="BackToLogin" Content="&lt; LOG IN" Width="100" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF7910AA" HorizontalAlignment="Right" FontWeight="Bold" FontFamily="Roboto" Margin="0,5,0,0" Click="BackToLogin_Click"/>
+            <StackPanel Grid.Column="1" Margin="0, 100, 8, 0">
+                <TextBlock Text="Create A New Account" FontWeight="Bold" FontSize="20" FontFamily="Roboto" Margin="0,0, 12, 0" Padding="0, 0, 8 ,0"/>
+                <Button x:Name="BackToLogin" Content="&lt;    LOG IN" Width="100" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF7910AA" HorizontalAlignment="Right" FontWeight="Bold" FontFamily="Roboto" Margin="0,12,0,0" Padding="8" Click="BackToLogin_Click"/>
             </StackPanel>
             <StackPanel Grid.Column="2" Margin="8,100,0,0">
                 <TextBlock Text="Real Name" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
-                <TextBox x:Name="NameField" MinWidth="175" BorderBrush="#FFCFCCCC" Background="{x:Null}" BorderThickness="0,0,0,2" Margin="0,0,0,10" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
+                <TextBox x:Name="NameField" MinWidth="175" BorderBrush="#FFCFCCCC" Background="{x:Null}" BorderThickness="0,0,0,2" Padding="0,8" Margin="0,12,0,12" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto" FontSize="16"/>
                 <TextBlock Text="Email Address" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
-                <TextBox x:Name="EmailField" MinWidth="175" BorderBrush="#FFCFCCCC" Background="{x:Null}" BorderThickness="0,0,0,2" Margin="0,0,0,10" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
+                <TextBox x:Name="EmailField" MinWidth="175" BorderBrush="#FFCFCCCC" Background="{x:Null}" BorderThickness="0,0,0,2" Padding="0,8" Margin="0,12,0,12" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto" FontSize="16"/>
                 <TextBlock Text="Password" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
-                <PasswordBox x:Name="PasswordField" MinWidth="175" MaxWidth="175" HorizontalAlignment="left" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Margin="0,0,0,10" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
+                <PasswordBox x:Name="PasswordField" MinWidth="175" MaxWidth="175" HorizontalAlignment="left" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Padding="0,8" Margin="0,12,0,12" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto" FontSize="16"/>
                 <TextBlock Text="Password (Again)" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
-                <PasswordBox x:Name="PasswordAgainField" MinWidth="175" MaxWidth="175" HorizontalAlignment="left" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Margin="0,0,0,10" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
-                <TextBlock Text="Date of birth" Foreground="#FFBDBBBB" FontFamily="Roboto"/>
+                <PasswordBox x:Name="PasswordAgainField" MinWidth="175" MaxWidth="175" HorizontalAlignment="left" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Padding="0,8" Margin="0,12,0,12" SelectionBrush="#FF7910AA" Foreground="#FFBDBBBB" FontFamily="Roboto" FontSize="16"/>
+                <TextBlock Text="Date of birth" Foreground="#FFBDBBBB" FontFamily="Roboto" Margin="0,5,0,5"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="DayOfBirth" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Margin="0,0,0,10" Foreground="#FFBDBBBB" FontFamily="Roboto" PreviewKeyDown="DayOfBirth_PreviewKeyDown" MaxLength="2" Text="1"/>
-                    <TextBox x:Name="YearOfBirth" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Margin="0,0,0,10"  Foreground="#FFBDBBBB" FontFamily="Roboto" PreviewKeyDown="DayOfBirth_PreviewKeyDown" MaxLength="4" Text="2000"/>
+                    <TextBox x:Name="DayOfBirth" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Margin="0,0,0,10" Foreground="#FFBDBBBB" FontFamily="Roboto" PreviewKeyDown="DayOfBirth_PreviewKeyDown" MaxLength="2" Text="1" FontSize="16"/>
+                    <TextBox x:Name="YearOfBirth" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Margin="0,0,0,10"  Foreground="#FFBDBBBB" FontFamily="Roboto" PreviewKeyDown="DayOfBirth_PreviewKeyDown" MaxLength="4" Text="2000" FontSize="16"/>
 
-                    <ComboBox SelectedIndex="0" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Margin="0,0,0,10"  x:Name="MonthOfBirth" Grid.Column="1" Foreground="#FFBDBBBB" FontFamily="Roboto" Style="{DynamicResource DropDownMenuStyle}">
+                    <ComboBox SelectedIndex="0" BorderThickness="0,0,0,2" Background="{x:Null}" BorderBrush="#FFCFCCCC" Margin="0,0,0,10"  x:Name="MonthOfBirth" Grid.Column="1" Foreground="#FFBDBBBB" FontFamily="Roboto" Style="{DynamicResource DropDownMenuStyle}" FontSize="16">
                         <ComboBoxItem Content="January" Tag="1"/>
                         <ComboBoxItem Content="February" Tag="2"/>
                         <ComboBoxItem Content="March" Tag="3"/>
@@ -59,7 +57,7 @@
                         <ComboBoxItem Content="December" Tag="12"/>
                     </ComboBox>
                 </Grid>
-                <Grid>
+                <Grid Margin="0,5,0,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -68,7 +66,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <CheckBox x:Name="ToSCheckBox" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="28" VerticalAlignment="Bottom"/>
+                    <CheckBox x:Name="ToSCheckBox" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="28" Margin="8" VerticalAlignment="Bottom"/>
                     <TextBlock FontFamily="Roboto" Grid.Row="0" Grid.Column="1" >
                         <Run Foreground="#000000" Text="I Agree To"/>
                         <Run Foreground="#673ab7" Text="The Privacy Statement"/>

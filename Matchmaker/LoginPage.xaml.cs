@@ -113,7 +113,16 @@ namespace Matchmaker
 
         private void CreateAccBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This area is not availlable right now");
+            try
+            {
+                RegisterPage registerPage = new RegisterPage();
+                NavigationService.Navigate(registerPage);
+                NavigationService.RemoveBackEntry();
+            }
+            catch(Exception)
+            {
+
+            }
         }
 
         private void ForgotPasswordBtn_Click(object sender, RoutedEventArgs e)
