@@ -1,9 +1,7 @@
 ﻿<Page x:Class="Matchmaker.HomePage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
+         
         WindowTitle="Friendr" WindowHeight="720" WindowWidth="1280">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -174,5 +172,15 @@
             </Border.Background>
             <Label x:Name="Tag4Title" FontFamily="Roboto" Content="Sports" Height="30" VerticalAlignment="Bottom" Foreground="#FFF9F5F5" HorizontalContentAlignment="Center" Margin="1,-1,-1,-5" RenderTransformOrigin="-0.02,0.667"/>
         </Border>
+        <Ellipse x:Name="MyProfile" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="26" Margin="1000,6,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="26" MouseDown="Ellipse_MouseDown">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="36" Margin="960,2,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" MouseDown="Ellipse_MouseDown_1">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
+            </Ellipse.Fill>
+        </Ellipse>
     </Grid>
 </Page>
