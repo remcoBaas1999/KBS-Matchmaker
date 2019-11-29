@@ -16,9 +16,8 @@ namespace MatchMakerClassLibrary
     {
         private const int hashSize = 16;
         private const int iterations = 100000;
-        public static void yeetpassword(string email, string password, string salt) {
-            
-        }
+
+        public static readonly HttpClient client = new HttpClient();
 
 		public static UserData DeserializeUserData(string json) {
 			return JsonConvert.DeserializeObject<UserData>(json);
@@ -52,8 +51,7 @@ namespace MatchMakerClassLibrary
             string passAndSalt = password + saltRetrievedString;
 
             //Hash the combined string
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passAndSalt, saltRetrieved, iterations);
-            byte[] hash = PBKDF2.GetBytes(hashSize);
+            byte[] hash = Password.GenerateHash(passAndSalt, saltRetrieved);
 
             //Convert the hash to string
             string hashString = Convert.ToBase64String(hash);
