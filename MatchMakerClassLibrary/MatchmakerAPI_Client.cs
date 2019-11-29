@@ -67,7 +67,7 @@ namespace MatchMakerClassLibrary
 		        return reader.ReadToEnd();
 		    }
 		}
-        private static bool PostNewUserData(UserData newUserData)
+        public static bool PostNewUserData(UserData newUserData)
         {
             string uri = @"";
             string result = Post(uri, newUserData).Result;
@@ -97,6 +97,6 @@ namespace MatchMakerClassLibrary
         public string salt { get; set; }
         public string realName { get; set; }
         public int id { get; set; }
-        public int birthdate { get; set; }
+        public long birthdate { get; set; }
     }
 }

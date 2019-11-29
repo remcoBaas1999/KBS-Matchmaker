@@ -146,6 +146,23 @@ namespace Matchmaker
                 //Make Errorgrid go away
                 ErrorGrid.Visibility = Visibility.Collapsed;
                 //Do Something With User
+                DateTime dtBd = new DateTime();
+                DateTime.TryParse($"{dOBM}/{dOBD}/{dOBY}", out dtBd);;
+                var dateTimeOffset = new DateTimeOffset(dtBd);
+                var unixDateTime = dateTimeOffset.ToUnixTimeSeconds();
+
+                var userData = new UserData
+                {
+                    email = email,
+                    password = pw,
+                    //salt = salt,
+                    realName = name,
+                    birthdate = unixDateTime
+                };
+                if (MatchmakerAPI_Client.PostNewUserData(userData))
+                {
+                    NavigationService.Navigate("MainPage.xaml", UriKind.Relative);
+                }
                 //Close Page
             }
             else
