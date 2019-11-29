@@ -31,30 +31,40 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
+        <Rectangle x:Name="purpleRectangle" Fill="Purple" Grid.Column="0" Grid.ColumnSpan="9" Grid.Row="0" Grid.RowSpan="6"/>
+        <!-- Close account page-->
+
+        <Button Name="exit" Width="50" Height="30" Click="exit_Click" BorderBrush="{x:Null}" Background="{x:Null}" Grid.RowSpan="2" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+            <Image Source="Images/ic_close-png-24px.png" ></Image>
+        </Button>
+        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Margin="0,25.6,0,0" Grid.Row="4" Grid.RowSpan="3" Grid.Column="1">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="Images\ProfilePicture.jpg" Stretch="UniformToFill"/>
+            </Ellipse.Fill>
+        </Ellipse>
+
         <!-- name text and editing section-->
-        <Button Content="x" Height="20" Width="20" FontSize="18" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" Name="exit" Click="exit_Click"/>
-        
-        <TextBlock Text="Name:" Height="20" Width="30" Grid.Column="1" Grid.Row="1" />
-        <TextBox Grid.Row="2" Grid.Column="1" Width="200"  Margin="2" Name="name" Visibility="Collapsed"/>
-        <TextBlock Grid.Row="2" Grid.Column="1" Width="200"  Margin="2" Name="showName" Visibility="Visible"/>
+        <TextBlock Foreground="LightGray" Text="Name:" Height="20" FontFamily="Roboto" Width="30" Grid.Column="1" Grid.Row="1" />
+        <TextBox   Grid.Row="2" Foreground="White" Grid.Column="1" FontFamily="Roboto" Width="200"  Margin="2" Name="name" Visibility="Collapsed" FontSize="20" BorderBrush="{x:Null}" Background="{x:Null}" />
+        <TextBlock Foreground="White" Grid.Row="2" Grid.Column="1" FontFamily="Roboto" Width="200"  Margin="2" Name="showName" Visibility="Visible" FontSize="20" TextAlignment="Center"/>
         <Button Grid.Column="2" Grid.Row="2" Height="20" Width="30" Content="Edit" Margin="2" Name="editName" Click="editName_Click" Visibility="Visible"/>
         <Button Grid.Column="2" Grid.Row="2" Height="20" Width="15" Content="Y" Margin="2" Name="confirmNameChange" Click="confirmNameChange_Click" Visibility="Collapsed"/>
         <Button Grid.Column="2" Grid.Row="2" Height="20" Width="15"  Content="N" Grid.ColumnSpan="3" Name="denymNameChange" Click="denymNameChange_Click"  Margin="19,2,285.2,2" Visibility="Collapsed"/>
         <!-- age text and editing section-->
-        <TextBlock Text="age" Grid.Column="4" Grid.Row="1" Height="20" Width="30"/>
-        <TextBlock Grid.Row="2" Grid.Column="4" Width="50" Name="age" />
+        <TextBlock Text="age" Foreground="LightGray" Grid.Column="4" FontFamily="Roboto" Grid.Row="1" Height="20" Width="30"/>
+        <TextBlock Grid.Row="2" Grid.Column="4" Foreground="White" FontFamily="Roboto" Width="50" Name="age" />
         <!-- location text and editing section-->
-        <TextBlock Text="Location:" Grid.Column="6" Grid.Row="1" Height="20" Width="50" />
-        <TextBlock Grid.Row="2" Grid.Column="6" Width="50" Name="city" Visibility="Collapsed"/>
-        <ComboBox Grid.Row="2" Grid.Column="6"  Width="130" Name="citySelection" Visibility="Visible" Loaded="citySelection_Loaded"/>
+        <TextBlock Text="Location:" Foreground="LightGray" Grid.Column="6" FontFamily="Roboto" Grid.Row="1" Height="20" Width="50" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="2" Foreground="White" Grid.Column="6" FontFamily="Roboto" Width="50" Name="city" Visibility="Collapsed" HorizontalAlignment="Right"/>
+        <ComboBox  BorderBrush="{x:Null}" Background="{x:Null}" Grid.Row="2" Grid.Column="6" FontFamily="Roboto"  Width="130" Name="citySelection" Visibility="Visible" Loaded="citySelection_Loaded" HorizontalAlignment="Right"/>
 
         <!-- bio text and editing section-->
-        <TextBlock Grid.Row="4" Grid.Column="4" Height="20" Width="100" Text="About me" Margin="4" />
-        <Button Grid.Column="4" Grid.Row="5" Height="20" Width="30" Content="edit" Margin="105.8,2,179.2,2" Name="editBio" Click="editBio_Click" Visibility="Visible"/>
-        <Button Grid.Column="4" Grid.Row="5" Height="20" Width="15" Content="Y" Margin="105.8,2,179.2,2" Name="confirmBioChange" Click="confirmBioChange_Click" Visibility="Hidden"/>
-        <Button Grid.Column="4" Grid.Row="5" Height="20" Width="15"  Content="N" Margin="125.8,2,159.2,2" Name="denyBioChange" Click="denyBioChange_Click" Visibility="Hidden"/>
-        <TextBox Grid.Row="6" Grid.Column="4" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
-        <TextBlock Grid.Row="6" Grid.Column="4" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
+        <TextBlock Grid.Row="7" Grid.Column="4" FontFamily="Roboto" Height="20" Width="100" Text="About me" Margin="107.6,28.267,92.4,158.133" />
+        <Button Grid.Column="7" Grid.Row="5" Height="20" Width="30" Content="edit" Margin="105.8,2,179.2,2" Name="editBio" Click="editBio_Click" Visibility="Visible"/>
+        <Button Grid.Column="7" Grid.Row="5" Height="20" Width="15" Content="Y" Margin="105.8,2,179.2,2" Name="confirmBioChange" Click="confirmBioChange_Click" Visibility="Hidden"/>
+        <Button Grid.Column="7" Grid.Row="5" Height="20" Width="15"  Content="N" Margin="125.8,2,159.2,2" Name="denyBioChange" Click="denyBioChange_Click" Visibility="Hidden"/>
+        <TextBox  Grid.Row="7" Grid.Column="4" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
+        <TextBlock Grid.Row="7" Grid.Column="4" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
     </Grid>
 </Page>
     

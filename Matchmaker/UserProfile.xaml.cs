@@ -158,14 +158,14 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Collapsed;
         }
 
-        private void exit_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void citySelection_Loaded(object sender, RoutedEventArgs e)
         {
             citySelection.ItemsSource = new List<string> { "Zwolle", "Amsterdam", "Arkhangelsk" };
+
+        }
+
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
