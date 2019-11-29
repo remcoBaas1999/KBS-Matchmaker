@@ -22,6 +22,9 @@ namespace Matchmaker
         public MainWindow()
         {
             InitializeComponent();
+
+            LoginPage login = new LoginPage();
+            MainFrame.Navigate(login);
         }
     }
 }

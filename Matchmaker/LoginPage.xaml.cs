@@ -21,8 +21,9 @@ namespace Matchmaker
     /// </summary>
     public partial class LoginPage : Page
     {
-        private List<TextBlock> GeneralError = new List<TextBlock>();
+        private List<TextBlock> GeneralError = new List<TextBlock>(); // List of all errors in textblock.
 
+        // Setup everything for the loginpage that is important.
         public LoginPage()
         {
             InitializeComponent();
@@ -43,135 +44,131 @@ namespace Matchmaker
             GeneralError.Add(EmailError);
         }
 
-       
-
-            private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (LoginErrorText.Children.Count > 0)
             {
-                if (LoginErrorText.Children.Count > 0)
-                {
-
-                    LoginErrorText.Children.RemoveAt(0);
-                }
-
-                Account account = new Account();
-                account.Email = AccountEmail.Text;
-                account.LogIn(AccountPassBox.Password);
-                if (account.LoggedIn)
-                {
-                    // Go to the user dashboard
-                    MessageBox.Show("Ingelogd");
-                }
-                else
-                {
-                    AccountEmail.BorderBrush = Brushes.Red;
-                    AccountEmail.Foreground = Brushes.Red;
-                    AccountPassBox.BorderBrush = Brushes.Red;
-                    AccountPassBox.Foreground = Brushes.Red;
-
-                    if (AccountEmail.Text != "" && AccountPassBox.Password != "")
-                    {
-                        if (EmailError.Children.Count > 0)
-                        {
-                            EmailError.Children.Remove(GeneralError[2]);
-                        }
-                        if (PasswordError.Children.Count > 0)
-                        {
-                            PasswordError.Children.Remove(GeneralError[1]);
-                        }
-                        //Uri uri = new Uri("Images/error.png", UriKind.Relative);
-                        //errorImage.Source = new BitmapImage(uri);
-                        //Image errorImage = new Image();
-                        //BitmapImage src = new BitmapImage();
-                        //src.BeginInit();
-                        //src.UriSource = new Uri((System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "Images/error.png"), UriKind.Absolute);
-                        //src.EndInit();
-                        //errorImage.Source = src;
-                        //errorImage.Stretch = Stretch.Uniform;
-                        //errorImage.Height = 16;
-                        //LoginErrorText.Children.Add(errorImage);
-                        LoginErrorText.Children.Add(GeneralError[0]);
-                    }
-                    else
-                    {
-                        AccountPassBox.BorderBrush = Brushes.Red;
-                        PasswordError.Children.Add(GeneralError[1]);
-                        AccountEmail.BorderBrush = Brushes.Red;
-                        EmailError.Children.Add(GeneralError[2]);
-                    }
-
-
-                    // Image for the error message needs to be implemented here.
-
-                }
+                LoginErrorText.Children.RemoveAt(0);
+            }
+            if (EmailError.Children.Count > 0)
+            {
+                EmailError.Children.RemoveAt(0);
+            }
+            if (PasswordError.Children.Count > 0)
+            {
+                PasswordError.Children.RemoveAt(0);
             }
 
-            private void CreateAccBtn_Click(object sender, RoutedEventArgs e)
+            Account account = new Account();
+            account.Email = AccountEmail.Text;
+            account.LogIn(AccountPassBox.Password);
+            if (account.LoggedIn)
             {
-                MessageBox.Show("This area is not availlable right now");
+                // Go to the user dashboard
+                MessageBox.Show("Ingelogd");
             }
-
-            private void ForgotPasswordBtn_Click(object sender, RoutedEventArgs e)
+            else
             {
-                MessageBox.Show("This area is not availlable right now");
-            }
+                AccountEmail.BorderBrush = Brushes.Red;
+                AccountEmail.Foreground = Brushes.Red;
+                AccountPassBox.BorderBrush = Brushes.Red;
+                AccountPassBox.Foreground = Brushes.Red;
 
-            // Convert a string containing a hexcode to a solidcolorbrush
-            // todo: add a regex check to make sure it is a hex code
-            private SolidColorBrush HexToBrushes(string hexCode)
-            {
-                SolidColorBrush brushes = new SolidColorBrush();
-                brushes = (SolidColorBrush)(new BrushConverter().ConvertFromString(hexCode));
-                return brushes;
-            }
-
-            private void AccountEmail_TextChanged(object sender, TextChangedEventArgs e)
-            {
-                LoginErrorText.Children.Remove(GeneralError[0]);
-
-                if (AccountEmail.Text == "")
+                if (AccountEmail.Text != "" && AccountPassBox.Password != "")
                 {
-                    AccountEmail.BorderBrush = Brushes.Red;
-                    EmailError.Children.Add(GeneralError[2]);
-                }
-
-                else
-                {
-                    if (AccountEmail.Text != "")
-                    {
-                        AccountEmail.BorderBrush = HexToBrushes("#FFBDBBBB");
-                        AccountEmail.Foreground = HexToBrushes("#FFBDBBBB");
-                    }
-
-
                     if (EmailError.Children.Count > 0)
                     {
                         EmailError.Children.Remove(GeneralError[2]);
-                    }
-
-                }
-            }
-
-            private void AccountPassBox_PasswordChanged(object sender, RoutedEventArgs e)
-            {
-                LoginErrorText.Children.Remove(GeneralError[0]);
-
-                if (AccountPassBox.Password == "")
-                {
-                    AccountPassBox.BorderBrush = Brushes.Red;
-                    PasswordError.Children.Add(GeneralError[1]);
-                }
-                else
-                {
-                    if (AccountPassBox.Password != "")
-                    {
-                        AccountPassBox.BorderBrush = HexToBrushes("#FFBDBBBB");
-                        AccountPassBox.Foreground = HexToBrushes("#FFBDBBBB");
                     }
                     if (PasswordError.Children.Count > 0)
                     {
                         PasswordError.Children.Remove(GeneralError[1]);
                     }
+
+                    LoginErrorText.Children.Add(GeneralError[0]);
+                }
+                else
+                {
+                    AccountPassBox.BorderBrush = Brushes.Red;
+                    PasswordError.Children.Add(GeneralError[1]);
+                    AccountEmail.BorderBrush = Brushes.Red;
+                    EmailError.Children.Add(GeneralError[2]);
+                }
+
+
+                // Image for the error message needs to be implemented here.
+
+            }
+        }
+
+        private void CreateAccBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This area is not availlable right now");
+        }
+
+        private void ForgotPasswordBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This area is not availlable right now");
+        }
+
+        // Convert a string containing a hexcode to a solidcolorbrush
+        // todo: add a regex check to make sure it is a hex code
+        private SolidColorBrush HexToBrushes(string hexCode)
+        {
+            SolidColorBrush brushes = new SolidColorBrush();
+            brushes = (SolidColorBrush)(new BrushConverter().ConvertFromString(hexCode));
+
+            return brushes;
+        }
+
+        private void AccountEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            LoginErrorText.Children.Remove(GeneralError[0]);
+
+            if (AccountEmail.Text == "")
+            {
+                AccountEmail.BorderBrush = Brushes.Red;
+                EmailError.Children.Add(GeneralError[2]);
+            }
+
+            else
+            {
+                if (AccountEmail.Text != "")
+                {
+                    AccountEmail.BorderBrush = HexToBrushes("#FFBDBBBB");
+                    AccountEmail.Foreground = HexToBrushes("#FFBDBBBB");
+                }
+
+
+                if (EmailError.Children.Count > 0)
+                {
+                    EmailError.Children.Remove(GeneralError[2]);
+                }
+
+            }
+        }
+
+        private void AccountPassBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            LoginErrorText.Children.Remove(GeneralError[0]);
+
+            if (AccountPassBox.Password == "")
+            {
+                AccountPassBox.BorderBrush = Brushes.Red;
+                PasswordError.Children.Add(GeneralError[1]);
+            }
+            else
+            {
+                if (AccountPassBox.Password != "")
+                {
+                    AccountPassBox.BorderBrush = HexToBrushes("#FFBDBBBB");
+                    AccountPassBox.Foreground = HexToBrushes("#FFBDBBBB");
+                }
+                if (PasswordError.Children.Count > 0)
+                {
+                    PasswordError.Children.Remove(GeneralError[1]);
                 }
             }
         }
+    }
 }
