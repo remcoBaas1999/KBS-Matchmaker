@@ -7,23 +7,16 @@ using Newtonsoft.Json;
 using MatchMakerClassLibrary;
 using System.Net;
 using System.IO;
-
-
-
+using System.Security.Cryptography;
 
 namespace MatchMakerClassLibrary
 {
     public static class MatchmakerAPI_Client
     {
-		public static void yeetpassword(string email, string password, string salt) { }
+        private const int hashSize = 16;
+        private const int iterations = 100000;
 
-        public static string asksalt(string email) {
-            return "";
-        }
-        
-        public static string askhash(string email) {
-            return "";
-        }
+        public static void yeetpassword(string email, string password, string salt) { }
 
 		public static UserData DeserializeUserData(string json) {
 			return JsonConvert.DeserializeObject<UserData>(json);
@@ -42,26 +35,33 @@ namespace MatchMakerClassLibrary
 		}
 
 		public static bool Authenticate(string email, string password) {
+            bool check = false;
 
-			// 1. Retrieve data
-			UserData response = DeserializeUserData(GetUserData(email));
+            //Retrieve data
+            UserData response = DeserializeUserData(GetUserData(email));
 
-			// 2. Deserialize data into UserData object
+            //Get salt and hash from database using email
+            string saltRetrievedString = response.salt;
+            string hashRetrievedString = response.password;
 
+            //Convert salt to string
+            byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
 
-			// 3. Hash the entered password using the provided salt
-			string salt = response.salt;
+            //Combine password and salt
+            string passAndSalt = password + saltRetrievedString;
 
-			// 4. Compare the UserData object to the entered data
-			if (password == response.password) {
-				// 4a. Return 'true' if the passwords match
-				return true;
-			}
-			else {
-				// 4b. Return 'false' if they don't match
-				return false;
-			}
+            //Hash the combined string
+            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passAndSalt, saltRetrieved, iterations);
+            byte[] hash = PBKDF2.GetBytes(hashSize);
 
+            //Convert the hash to string
+            string hashString = Convert.ToBase64String(hash);
+
+            //Compare the new and old hash
+            if (hashString == hashRetrievedString) {
+                check = true;
+            }
+            return check;
 		}
 
 		private static string Get(string uri)
