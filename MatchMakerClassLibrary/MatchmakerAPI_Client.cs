@@ -15,7 +15,9 @@ namespace MatchMakerClassLibrary
     {
         private const int hashSize = 16;
         private const int iterations = 100000;
-        public static void yeetpassword(string email, string password, string salt) { }
+        public static void yeetpassword(string email, string password, string salt) {
+            
+        }
 
 		public static UserData DeserializeUserData(string json) {
 			return JsonConvert.DeserializeObject<UserData>(json);

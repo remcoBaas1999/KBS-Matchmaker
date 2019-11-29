@@ -107,12 +107,12 @@ namespace Matchmaker
 
             private void CreateAccBtn_Click(object sender, RoutedEventArgs e)
             {
-                MessageBox.Show("This area is not availlable right now");
+                MessageBox.Show("This area is not available right now");
             }
 
             private void ForgotPasswordBtn_Click(object sender, RoutedEventArgs e)
             {
-                MessageBox.Show("This area is not availlable right now");
+                MessageBox.Show("This area is not available right now");
             }
 
             // Convert a string containing a hexcode to a solidcolorbrush
