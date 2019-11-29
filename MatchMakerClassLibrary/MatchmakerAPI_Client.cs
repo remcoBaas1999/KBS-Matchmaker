@@ -7,15 +7,14 @@ using Newtonsoft.Json;
 using MatchMakerClassLibrary;
 using System.Net;
 using System.IO;
-
-
-
+using System.Net.Http;
 
 namespace MatchMakerClassLibrary
 {
     public static class MatchmakerAPI_Client
     {
-		public static void yeetpassword(string password, string salt) { }
+        public static readonly HttpClient client = new HttpClient();
+        public static void yeetpassword(string password, string salt) { }
 
 		public static UserData DeserializeUserData(string json) {
 			return JsonConvert.DeserializeObject<UserData>(json);
@@ -68,23 +67,36 @@ namespace MatchMakerClassLibrary
 		        return reader.ReadToEnd();
 		    }
 		}
-	}
+        private static bool PostNewUserData(UserData newUserData)
+        {
+            string uri = @"";
+            string result = Post(uri, newUserData).Result;
+            //doe wat met result
+            return true;
+        }
+        private static async Task<string> Post(string uri, object data)
+        {
+            string result;
+            var json = JsonConvert.SerializeObject(data);
+            var dataString = new StringContent(json, Encoding.UTF8, "application/json");
+            using (client)
+            {
 
-	public class UserData
+                var response = await client.PostAsync(uri, dataString);
+
+                result = response.Content.ReadAsStringAsync().Result;
+            }
+            return result;
+        }
+    }
+
+    public class UserData
     {
         public string email { get; set; }
-		public string password { get; set; }
-		public string salt { get; set; }
-		public string realName { get; set; }
-		public string about { get; set; }
-		public string city { get; set; }
-		public string[] hobbies { get; set; }
-		public string[] eventsAtt { get; set; }
-		public string[] eventsOrg { get; set; }
-		public string profilePicture { get; set; }
-		public string[] pictures { get; set; }
-		public string[] matches { get; set; }
-		public string[] chats { get; set; }
-		public int id { get; set; }
+        public string password { get; set; }
+        public string salt { get; set; }
+        public string realName { get; set; }
+        public int id { get; set; }
+        public int birthdate { get; set; }
     }
 }
