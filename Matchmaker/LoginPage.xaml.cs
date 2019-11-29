@@ -65,7 +65,17 @@ namespace Matchmaker
             if (account.LoggedIn)
             {
                 // Go to the user dashboard
-                MessageBox.Show("Ingelogd");
+                //MessageBox.Show("Ingelogd");
+                try
+                {
+                    HomePage homePage = new HomePage();
+                    NavigationService.Navigate(homePage);
+                    NavigationService.RemoveBackEntry();
+                }
+                catch(Exception)
+                {
+                    MessageBox.Show("Something went wrong while logging you in. Please try again.", "Login error");
+                }
             }
             else
             {
