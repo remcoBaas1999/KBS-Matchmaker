@@ -14,9 +14,6 @@ namespace MatchMakerClassLibrary
 {
     public static class MatchmakerAPI_Client
     {
-        private const int hashSize = 16;
-        private const int iterations = 100000;
-
         public static readonly HttpClient client = new HttpClient();
 
 		public static UserData DeserializeUserData(string json) {
@@ -74,7 +71,7 @@ namespace MatchMakerClassLibrary
 		        return reader.ReadToEnd();
 		    }
 		}
-        private static bool PostNewUserData(UserData newUserData) {
+        public static bool PostNewUserData(UserData newUserData) {
             string uri = @"";
             string result = Post(uri, newUserData).Result;
             //doe wat met result
@@ -101,6 +98,6 @@ namespace MatchMakerClassLibrary
         public string salt { get; set; }
         public string realName { get; set; }
         public int id { get; set; }
-        public int birthdate { get; set; }
+        public long birthdate { get; set; }
     }
 }
