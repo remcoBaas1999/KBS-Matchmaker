@@ -15,6 +15,8 @@ namespace MatchMakerClassLibrary
         public bool LoggedIn { get; set; }
         public string Email { get; set; }
 
+        public string FirstName { get; set; }
+
         //methods
         public bool LogIn(string password)
         {
