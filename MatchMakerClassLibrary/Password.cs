@@ -32,7 +32,8 @@ namespace MatchMakerClassLibrary {
             //Store the salt (string) and the hash (string)
             MatchmakerAPI_Client.yeetpassword(email, hashString, saltString);
         }
-        public static bool CheckPassword(string email, string password) {
+        public static bool CheckPassword(string email, string password)
+        {
             bool check = false;
 
             //Get salt and hash from database using email
