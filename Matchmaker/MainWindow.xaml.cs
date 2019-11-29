@@ -45,16 +45,19 @@ namespace Matchmaker
             Profile1Picture1_MouseDown(sender, e);
         }
 
-        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e) {
-            LoginPage loginPage = new LoginPage();
+        private void myProfile(object sender, MouseButtonEventArgs e) {
+            /*LoginPage loginPage = new LoginPage();
             Page MyProfile = new Page();
-            NavigationService.Navigate(loginPage);
+            NavigationService.Navigate(loginPage);*/
         }
 
         private void Ellipse_MouseDown_1(object sender, MouseButtonEventArgs e) {
             //show notification page
             Notifications notifications = new Notifications();
+            notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
+
+      
     }
 }

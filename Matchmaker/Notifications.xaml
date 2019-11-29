@@ -1,17 +1,20 @@
 ﻿<Page x:Class="Matchmaker.Notifications"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"   
-      WindowTitle="Friendr"
+      WindowTitle="Notifications"
       WindowHeight="720" WindowWidth="1280">
 
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*"/>
-            <ColumnDefinition Width="268*"/>
-            <ColumnDefinition Width="25*"/>
-        </Grid.ColumnDefinitions>
-        <Label Content="Notifications" HorizontalAlignment="Center" FontFamily="Roboto" Margin="335,93,336,318" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
-        <Rectangle HorizontalAlignment="Left" Height="40" Margin="193,153,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="402" Fill="#FFE8E8E8"/>
-        <Label Content="You are up to date!" FontFamily="Roboto" HorizontalAlignment="Left" Margin="324,158,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
+        <Grid HorizontalAlignment="Center" Height="446" Margin="60,47,28,-51" VerticalAlignment="Top" Width="624">
+            <Rectangle HorizontalAlignment="Left" Height="40" Margin="101,181,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="402" Fill="#FFE8E8E8"/>
+            <Label Content="You are up to date!" FontFamily="Roboto" HorizontalAlignment="Left" Margin="237,187,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
+            <Label Content="Notifications" HorizontalAlignment="Center" FontFamily="Roboto" Margin="233,117,262,292" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
+            <Image HorizontalAlignment="Left" Height="42" Margin="351,112,0,0" VerticalAlignment="Top" Width="42" Source="Images/notification.jpg">
+                <Image.OpacityMask>
+                    <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill"/>
+                </Image.OpacityMask>
+            </Image>
+        </Grid>
     </Grid>
 </Page>

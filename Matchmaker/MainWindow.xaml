@@ -172,7 +172,7 @@
             </Border.Background>
             <Label x:Name="Tag4Title" FontFamily="Roboto" Content="Sports" Height="30" VerticalAlignment="Bottom" Foreground="#FFF9F5F5" HorizontalContentAlignment="Center" Margin="1,-1,-1,-5" RenderTransformOrigin="-0.02,0.667"/>
         </Border>
-        <Ellipse x:Name="MyProfile" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="26" Margin="1000,6,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="26" MouseDown="Ellipse_MouseDown">
+        <Ellipse x:Name="MyProfile" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="26" Margin="1000,6,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="26" MouseDown="myProfile">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
             </Ellipse.Fill>
