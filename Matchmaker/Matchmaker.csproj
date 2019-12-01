@@ -166,5 +166,14 @@
   <ItemGroup>
     <Resource Include="Images\notification.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\return.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\settings.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

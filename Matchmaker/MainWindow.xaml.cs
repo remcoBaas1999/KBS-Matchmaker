@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Matchmaker
 {
     public partial class HomePage : Page {
         public HomePage() {
             InitializeComponent();
-
         }
         private void Button_Click(object sender, RoutedEventArgs e) {
         }
@@ -46,9 +46,7 @@ namespace Matchmaker
         }
 
         private void myProfile(object sender, MouseButtonEventArgs e) {
-            /*LoginPage loginPage = new LoginPage();
-            Page MyProfile = new Page();
-            NavigationService.Navigate(loginPage);*/
+            
         }
 
         private void Ellipse_MouseDown_1(object sender, MouseButtonEventArgs e) {
@@ -58,6 +56,16 @@ namespace Matchmaker
             NavigationService.Navigate(notifications);
         }
 
-      
+        private void Logout_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No) {
+                //do not logout
+            }
+            else {
+                //do logout
+                LoginPage loginPage = new LoginPage();
+                Page MyProfile = new Page();
+                NavigationService.Navigate(loginPage);
+            }
+        }
     }
 }
