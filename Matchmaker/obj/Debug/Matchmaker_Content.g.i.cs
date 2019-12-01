@@ -12,5 +12,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/full-screen.svg")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/maximize.svg")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/minimize.svg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/restore.svg")]
 
 

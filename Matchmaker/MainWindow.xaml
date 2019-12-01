@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Matchmaker"
         mc:Ignorable="d"
-        Title="Friendr" Height="720" Width="1280" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
-    <Grid>
+        Title="Friendr" Height="720" Width="1280" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="False" SizeChanged="FullscreenCheck">
+   <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#cbd1cc">
             <WrapPanel HorizontalAlignment="Right">
-                <Button  Padding="5,0,5,0" BorderThickness="0" Background="Transparent" Click="MinimizeClick">
+                <Button Width="50" Padding="5,0,5,0" BorderThickness="0" Background="Transparent" Click="MinimizeClick">
                     <!--Minimalize the screen-->
                     <Canvas Width="20" Height="20">
                   <Path Data="M171.36,148.8L22.72,0L0,22.72l148.8,148.64H75.36v32h112c8.837,0,16-7.163,16-16v-112h-32V148.8z" Fill="#FF5B5A5A" StrokeThickness="0" Stretch="Uniform" Width="6" />
@@ -24,14 +24,14 @@
 				C203.36,306.523,196.197,299.36,187.36,299.36z" Fill="#FF5B5A5A" StrokeThickness="0"  Width="6" Stretch="Uniform" Canvas.Bottom="0" Canvas.Left="0" />
                     </Canvas>
                 </Button>
-                <Button Padding="5" BorderThickness="0" Background="Transparent" Click="MaximizeClick">
+                <Button Width="50" Padding="5" BorderThickness="0" Background="Transparent" Click="MaximizeClick">
                     <!--Maximize the screen-->
                     <Canvas Width="20" Height="20">
-                  <Path Data="M 512 0 L 98.226562 0 L 98.226562 284.359375 L 0 284.359375 L 0 512 L 226.453125 512 L 226.453125 414.117188 L 512 414.117188 Z M 196.453125 481.976562 L 30 481.976562 L 30 314.386719 L 98.226562 314.386719 L 98.226562 414.117188 L 196.453125 414.117188 Z M 196.453125 384.089844 L 128.226562 384.089844 L 128.226562 314.386719 L 196.453125 314.386719 Z M 482 384.089844 L 226.453125 384.089844 L 226.453125 305.632812 L 403.328125 130.214844 L 403.328125 184.28125 L 433.328125 184.28125 L 433.328125 79.191406 L 328.320312 79.191406 L 328.320312 109.214844 L 381.878906 109.214844 L 205.277344 284.359375 L 128.226562 284.359375 L 128.226562 30.023438 L 482 30.023438 Z M 482 384.089844" Fill="#FF5B5A5A"
+                  <Path x:Name="ChangeScreen" Data="M 512 0 L 98.226562 0 L 98.226562 284.359375 L 0 284.359375 L 0 512 L 226.453125 512 L 226.453125 414.117188 L 512 414.117188 Z M 196.453125 481.976562 L 30 481.976562 L 30 314.386719 L 98.226562 314.386719 L 98.226562 414.117188 L 196.453125 414.117188 Z M 196.453125 384.089844 L 128.226562 384.089844 L 128.226562 314.386719 L 196.453125 314.386719 Z M 482 384.089844 L 226.453125 384.089844 L 226.453125 305.632812 L 403.328125 130.214844 L 403.328125 184.28125 L 433.328125 184.28125 L 433.328125 79.191406 L 328.320312 79.191406 L 328.320312 109.214844 L 381.878906 109.214844 L 205.277344 284.359375 L 128.226562 284.359375 L 128.226562 30.023438 L 482 30.023438 Z M 482 384.089844" Fill="#FF5B5A5A"
                         StrokeThickness="0" Stretch="Fill" Width="15" Height="15" Canvas.Left="2.5"/>
                     </Canvas>
                 </Button>
-                <Button Padding="5" Click="CloseAppClick" BorderThickness="0" Background="Transparent">
+                <Button Width="50" Padding="5" Click="CloseAppClick" BorderThickness="0" Background="Transparent">
                     <!--Close button-->
                     <Path Data="M28.228,23.986L47.092,5.122c1.172-1.171,1.172-3.071,0-4.242c-1.172-1.172-3.07-1.172-4.242,0L23.986,19.744L5.121,0.88
 		c-1.172-1.172-3.07-1.172-4.242,0c-1.172,1.171-1.172,3.071,0,4.242l18.865,18.864L0.879,42.85c-1.172,1.171-1.172,3.071,0,4.242

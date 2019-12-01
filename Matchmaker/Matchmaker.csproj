@@ -175,6 +175,7 @@
     <Content Include="Images\full-screen.svg" />
     <Content Include="Images\maximize.svg" />
     <Content Include="Images\minimize.svg" />
+    <Content Include="Images\restore.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
