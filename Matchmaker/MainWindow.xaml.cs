@@ -39,7 +39,7 @@ namespace Matchmaker
 
         private void MaximizeClick(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Maximized;
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Matchmaker"
         mc:Ignorable="d"
-        Title="Friendr" Height="720" Width="1280" WindowStyle="None" ResizeMode="CanResizeWithGrip">
+        Title="Friendr" Height="720" Width="1280" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
