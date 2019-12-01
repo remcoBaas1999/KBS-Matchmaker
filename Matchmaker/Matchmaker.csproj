@@ -173,6 +173,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Content>
     <Content Include="Images\full-screen.svg" />
+    <Content Include="Images\maximize.svg" />
     <Content Include="Images\minimize.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

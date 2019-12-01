@@ -7,9 +7,9 @@
         WindowTitle="Friendr" WindowHeight="720" WindowWidth="1280">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*"/>
-            <ColumnDefinition Width="268*"/>
-            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Button x:Name="HomeButton" Content="Home" HorizontalAlignment="Left" Height="34" Margin="359,2,0,0" VerticalAlignment="Top" Width="86" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="1"/>
         <Button x:Name="MatchesButton" Content="Matches" HorizontalAlignment="Left" Height="34" Margin="617,2,341,0" VerticalAlignment="Top" Width="114" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="1"/>

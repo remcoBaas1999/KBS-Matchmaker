@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Matchmaker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280" WindowStyle="None">
+        Title="Friendr" Height="720" Width="1280" WindowStyle="None" ResizeMode="CanResizeWithGrip">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -16,21 +16,19 @@
                 <Button  Padding="5,0,5,0" BorderThickness="0" Background="Transparent" Click="MinimizeClick">
                     <!--Minimalize the screen-->
                     <Canvas Width="20" Height="20">
-                        <Path Data="M171.36,148.8L22.72,0L0,22.72l148.8,148.64H75.36v32h112c8.837,0,16-7.163,16-16v-112h-32V148.8z" Fill="White" StrokeThickness="0" Stretch="Uniform" Width="6" />
+                  <Path Data="M171.36,148.8L22.72,0L0,22.72l148.8,148.64H75.36v32h112c8.837,0,16-7.163,16-16v-112h-32V148.8z" Fill="#FF5B5A5A" StrokeThickness="0" Stretch="Uniform" Width="6" />
                         <Path Data="M315.36,203.36h112v-32h-73.44L502.56,22.72L480,0L331.36,148.8V75.36h-32v112
-				C299.36,196.197,306.523,203.36,315.36,203.36z" Fill="White" StrokeThickness="0" Stretch="Uniform" Width="6" Canvas.Right="0" />
-                        <Path Data="M427.36,331.36v-32h-112c-8.837,0-16,7.163-16,16v112h32v-73.44L480,502.56L502.56,480L353.92,331.36H427.36z" Fill="White" StrokeThickness="0"  Width="6" Stretch="Uniform" Canvas.Bottom="0" Canvas.Right="0" />
+				C299.36,196.197,306.523,203.36,315.36,203.36z" Fill="#FF5B5A5A" StrokeThickness="0" Stretch="Uniform" Width="6" Canvas.Right="0" />
+                  <Path Data="M427.36,331.36v-32h-112c-8.837,0-16,7.163-16,16v112h32v-73.44L480,502.56L502.56,480L353.92,331.36H427.36z" Fill="#FF5B5A5A" StrokeThickness="0"  Width="6" Stretch="Uniform" Canvas.Bottom="0" Canvas.Right="0" />
                         <Path Data="M187.36,299.36h-112v32h73.44L0,480l22.56,22.56l148.8-148.64v73.44h32v-112
-				C203.36,306.523,196.197,299.36,187.36,299.36z" Fill="White" StrokeThickness="0"  Width="6" Stretch="Uniform" Canvas.Bottom="0" Canvas.Left="0" />
+				C203.36,306.523,196.197,299.36,187.36,299.36z" Fill="#FF5B5A5A" StrokeThickness="0"  Width="6" Stretch="Uniform" Canvas.Bottom="0" Canvas.Left="0" />
                     </Canvas>
                 </Button>
-                <Button Padding="5,0,5,0" BorderThickness="0" Background="Transparent" Click="MaximizeClick">
+                <Button Padding="5" BorderThickness="0" Background="Transparent" Click="MaximizeClick">
                     <!--Maximize the screen-->
                     <Canvas Width="20" Height="20">
-                        <Path Data="M128,32V0H16C7.163,0,0,7.163,0,16v112h32V54.56L180.64,203.2l22.56-22.56L54.56,32H128z" Fill="white" StrokeThickness="0" Stretch="Uniform" Width="6"/>
-                        <Path Data="M496,0H384v32h73.44L308.8,180.64l22.56,22.56L480,54.56V128h32V16C512,7.163,504.837,0,496,0z" Fill="white" StrokeThickness="0" Stretch="Uniform" Width="6" Canvas.Right="0"/>
-                        <Path Data="M480,457.44L331.36,308.8l-22.56,22.56L457.44,480H384v32h112c8.837,0,16-7.163,16-16V384h-32V457.44z" Fill="white" StrokeThickness="0" Stretch="Uniform" Width="6" Canvas.Right="0" Canvas.Bottom="0"/>
-                        <Path Data="M180.64,308.64L32,457.44V384H0v112c0,8.837,7.163,16,16,16h112v-32H54.56L203.2,331.36L180.64,308.64z" Fill="white" StrokeThickness="0" Stretch="Uniform" Width="6" Canvas.Bottom="0"/>
+                  <Path Data="M 512 0 L 98.226562 0 L 98.226562 284.359375 L 0 284.359375 L 0 512 L 226.453125 512 L 226.453125 414.117188 L 512 414.117188 Z M 196.453125 481.976562 L 30 481.976562 L 30 314.386719 L 98.226562 314.386719 L 98.226562 414.117188 L 196.453125 414.117188 Z M 196.453125 384.089844 L 128.226562 384.089844 L 128.226562 314.386719 L 196.453125 314.386719 Z M 482 384.089844 L 226.453125 384.089844 L 226.453125 305.632812 L 403.328125 130.214844 L 403.328125 184.28125 L 433.328125 184.28125 L 433.328125 79.191406 L 328.320312 79.191406 L 328.320312 109.214844 L 381.878906 109.214844 L 205.277344 284.359375 L 128.226562 284.359375 L 128.226562 30.023438 L 482 30.023438 Z M 482 384.089844" Fill="#FF5B5A5A"
+                        StrokeThickness="0" Stretch="Fill" Width="15" Height="15" Canvas.Left="2.5"/>
                     </Canvas>
                 </Button>
                 <Button Padding="5" Click="CloseAppClick" BorderThickness="0" Background="Transparent">
@@ -38,7 +36,7 @@
                     <Path Data="M28.228,23.986L47.092,5.122c1.172-1.171,1.172-3.071,0-4.242c-1.172-1.172-3.07-1.172-4.242,0L23.986,19.744L5.121,0.88
 		c-1.172-1.172-3.07-1.172-4.242,0c-1.172,1.171-1.172,3.071,0,4.242l18.865,18.864L0.879,42.85c-1.172,1.171-1.172,3.071,0,4.242
 		C1.465,47.677,2.233,47.97,3,47.97s1.535-0.293,2.121-0.879l18.865-18.864L42.85,47.091c0.586,0.586,1.354,0.879,2.121,0.879
-		s1.535-0.293,2.121-0.879c1.172-1.171,1.172-3.071,0-4.242L28.228,23.986z" Fill="White" StrokeThickness="0" Stretch="Fill" Width="15"/>
+		s1.535-0.293,2.121-0.879c1.172-1.171,1.172-3.071,0-4.242L28.228,23.986z" Fill="#FF5B5A5A" StrokeThickness="0" Stretch="Fill" Width="15"/>
                 </Button>
             </WrapPanel>
         </Grid>
