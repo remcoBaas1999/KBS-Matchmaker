@@ -39,6 +39,7 @@ namespace Matchmaker
             bioText.Text = activeUser.bio;
             name.Text = activeUser.firstName + " " + activeUser.lastName;
             showName.Text = activeUser.firstName + " " + activeUser.lastName; ;
+            
         }
         public void EditBio(string bio)
         {
@@ -160,13 +161,52 @@ namespace Matchmaker
 
         private void citySelection_Loaded(object sender, RoutedEventArgs e)
         {
-            citySelection.ItemsSource = new List<string> { "Zwolle", "Amsterdam", "Arkhangelsk" };
+            citySelection.Text = city.Text;
+            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Arkhangelsk" };
+            foreach (string item in locations)
+            {
+                
+                citySelection.Items.Add(item);
+            }
 
         }
 
         private void exit_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void editLocation_Click(object sender, RoutedEventArgs e)
+        {
+            citySelection.SelectedItem = city.Text;
+            confirmNewLocation.Visibility = Visibility.Visible;
+            denyLocationChange.Visibility = Visibility.Visible;
+            editLocation.Visibility = Visibility.Collapsed;
+            citySelection.Visibility = Visibility.Visible;
+            city.Visibility = Visibility.Collapsed;
+        }
+
+        private void confirmNewLocation_Click(object sender, RoutedEventArgs e)
+        {
+            citySelection.SelectedValue = city.Text;
+            string newCity = citySelection.Text;
+            city.Text = newCity;
+            activeUser.location = newCity;
+            confirmNewLocation.Visibility = Visibility.Collapsed;
+            denyLocationChange.Visibility = Visibility.Collapsed;
+            editLocation.Visibility = Visibility.Visible;
+            citySelection.Visibility = Visibility.Collapsed;
+            city.Visibility = Visibility.Visible;
+        }
+
+        private void denyLocationChange_Click(object sender, RoutedEventArgs e)
+        {
+            citySelection.SelectedValue = city.Text;
+            confirmNewLocation.Visibility = Visibility.Collapsed;
+            denyLocationChange.Visibility = Visibility.Collapsed;
+            editLocation.Visibility = Visibility.Visible;
+            citySelection.Visibility = Visibility.Collapsed;
+            city.Visibility = Visibility.Visible;
         }
     }
 }

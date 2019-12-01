@@ -174,5 +174,31 @@
       <Name>MatchMakerClassLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ic_chevron_left-png-24px.png" />
+    <Resource Include="Images\ic_chevron_left-png-48px.png" />
+    <Resource Include="Images\ic_chevron_right-png-24px.png" />
+    <Resource Include="Images\ic_chevron_right-png-48px.png" />
+    <Resource Include="Images\ic_close-png-24px.png" />
+    <Resource Include="Images\ic_close-png-48px.png" />
+    <Resource Include="Images\ic_drop_down-png-24px.png" />
+    <Resource Include="Images\ic_drop_down-png-48px.png" />
+    <Resource Include="Images\ic_edit-png-24px.png" />
+    <Resource Include="Images\ic_edit-png-48px.png" />
+    <Resource Include="Images\ic_join_event-png-24px.png" />
+    <Resource Include="Images\ic_join_event-png-48px.png" />
+    <Resource Include="Images\ic_leave_event-png-24px.png" />
+    <Resource Include="Images\ic_leave_event-png-48px.png" />
+    <Resource Include="Images\ic_log_out-png-24px.png" />
+    <Resource Include="Images\ic_log_out-png-48px.png" />
+    <Resource Include="Images\ic_more-png-24px.png" />
+    <Resource Include="Images\ic_more-png-48px.png" />
+    <Resource Include="Images\ic_notifications-png-24px.png" />
+    <Resource Include="Images\ic_notifications-png-48px.png" />
+    <Resource Include="Images\ic_profile-png-24px.png" />
+    <Resource Include="Images\ic_profile-png-48px.png" />
+    <Resource Include="Images\ic_settings-png-24px.png" />
+    <Resource Include="Images\ic_settings-png-48px.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
