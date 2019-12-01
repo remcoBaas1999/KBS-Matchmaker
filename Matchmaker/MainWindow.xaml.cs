@@ -63,9 +63,13 @@ namespace Matchmaker
             else {
                 //do logout
                 LoginPage loginPage = new LoginPage();
-                Page MyProfile = new Page();
                 NavigationService.Navigate(loginPage);
             }
+        }
+
+        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e) {
+            Settings settings = new Settings();
+            NavigationService.Navigate(settings);
         }
     }
 }

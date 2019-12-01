@@ -187,7 +187,7 @@
                 <ImageBrush ImageSource="Images/exit.png" Stretch="UniformToFill"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Ellipse Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="29" Margin="1001,5,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="29">
+        <Ellipse Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="29" Margin="1001,5,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="29" MouseDown="Ellipse_MouseDown">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="Images/settings.png"/>
             </Ellipse.Fill>
