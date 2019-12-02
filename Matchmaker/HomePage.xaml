@@ -177,7 +177,7 @@
                 <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
             </Ellipse.Fill>
         </Ellipse>
-        <Ellipse Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="36" Margin="942,3,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" MouseDown="Ellipse_MouseDown_1">
+        <Ellipse Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="36" Margin="938,3,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" MouseDown="Ellipse_MouseDown_1">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
             </Ellipse.Fill>
