@@ -98,7 +98,6 @@ namespace Matchmaker
             confirmNameChange.Visibility = Visibility.Collapsed;
             denymNameChange.Visibility = Visibility.Collapsed;
             //Save to account in database function
-            //close textbox for updated textblock
         }
 
         private void denymNameChange_Click(object sender, RoutedEventArgs e)
@@ -120,7 +119,7 @@ namespace Matchmaker
             accountText.Visibility = Visibility.Collapsed;
             bioText.Visibility = Visibility.Visible;
             editBio.Visibility = Visibility.Visible;
-            //Save account text to bio
+            //Save account text to database
             
         }
 
@@ -176,6 +175,7 @@ namespace Matchmaker
             string newCity = citySelection.Text;
             city.Text = newCity;
             activeUser.city = newCity;
+            //Save to database
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
