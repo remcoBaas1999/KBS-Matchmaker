@@ -21,7 +21,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1" Margin="0, 100, 8, 0">
                 <TextBlock Text="Create A New Account" FontWeight="Bold" FontSize="20" FontFamily="Roboto" Margin="0,0, 12, 0" Padding="0, 0, 8 ,0"/>
-                <Button x:Name="BackToLogin" Content="&lt;    LOG IN" Width="100" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#6947A3" HorizontalAlignment="Right" FontFamily="Roboto" Margin="0,12,0,0" Padding="8" Click="BackToLogin_Click"/>
+                <Button x:Name="BackToLogin" Content="&lt;    LOG IN" Width="100" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#673AB7" HorizontalAlignment="Right" FontFamily="Roboto" Margin="0,12,0,0" Padding="8" Click="BackToLogin_Click"/>
             </StackPanel>
             <StackPanel Grid.Column="2" Margin="8,100,0,0">
                 <TextBlock Text="Real Name" Foreground="#A3A3A3" FontFamily="Roboto"/>
@@ -69,11 +69,11 @@
                     <CheckBox x:Name="ToSCheckBox" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="28" Margin="8" VerticalAlignment="Bottom"/>
                     <TextBlock FontFamily="Roboto" Grid.Row="0" Grid.Column="1" >
                         <Run Foreground="#A3A3A3" Text="I Agree To"/>
-                        <Run Foreground="#654E98" Text="The Privacy Statement"/>
+                        <Run Foreground="#673AB7" Text="The Privacy Statement"/>
                     </TextBlock>
                     <TextBlock FontFamily="Roboto" Grid.Row="1" Grid.Column="1">
                         <Run Foreground="#A3A3A3" Text="And"/>
-                        <Run Foreground="#654E98" Text="Terms Of Service"/>
+                        <Run Foreground="#673AB7" Text="Terms Of Service"/>
                     </TextBlock>
                 </Grid>
                 <Grid Margin="0,0,5,0" Visibility="Collapsed" x:Name="ErrorGrid">
@@ -84,7 +84,7 @@
                     <Image Grid.Column="0" Name="ErrorMessageImage" Stretch="None" Source="Images/shield-error-icon.png"/>
                     <TextBlock Grid.Column="1" Name="ErrorMessage" FontFamily="Roboto" Foreground="#F44336" VerticalAlignment="Center"/>
                 </Grid>
-                <Button x:Name="CreateAccount" Padding="0,5,0,0" Content="CREATE ACCOUNT" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#A99CC8" HorizontalAlignment="Left" FontFamily="Roboto" Click="CreateAccount_Click"/>
+                <Button x:Name="CreateAccount" Padding="0,5,0,0" Content="CREATE ACCOUNT" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#673AB7" HorizontalAlignment="Left" FontFamily="Roboto" Click="CreateAccount_Click"/>
             </StackPanel>
         </Grid>
     </Grid>
