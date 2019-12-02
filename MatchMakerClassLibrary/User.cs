@@ -12,13 +12,13 @@ namespace MatchMakerClassLibrary
     //ShowUserData
     {
         //properties
-        public int Age { get; set; }
+        public DateTime Age { get; set; }
         public string Bio { get; set; }
         public string PostalCode { get; set; }
         public string city { get; set; }
         public string ProfilePicture { get; set; }
         public string Country { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
         //attributes
         private List<string> interests = new List<string>();
         private List<string> pictures = new List<string>();

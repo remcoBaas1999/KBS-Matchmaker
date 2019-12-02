@@ -22,50 +22,39 @@ namespace Matchmaker
     /// </summary>
     /// 
 
-    
+
 
     public partial class UserProfile : Page
     {
         //needs to get the currently active account 
-        public User account = new User();
+        public UserProfile(User user)
+        {
+            InitializeComponent();
+
+            editBio.Visibility = Visibility.Collapsed;
+            editLocation.Visibility = Visibility.Collapsed;
+            editName.Visibility = Visibility.Collapsed;
+            DateTime now = DateTime.Now;
+            var a = now.Year - user.Age.Year;
+            years.Text = a.ToString();
+            city.Text = user.city;
+            accountText.Text = user.Bio;
+            bioText.Text = user.Bio;
+            name.Text = user.Name;
+            showName.Text = user.Name;
+            
+
+        }
         public UserProfile()
         {
             InitializeComponent();
-            DateTime now = DateTime.Now;
-            var a = now.Year - activeUser.birthdate.Year;
-            age.Text = a.ToString();
-            city.Text = activeUser.location;
-            accountText.Text = activeUser.bio;
-            bioText.Text = activeUser.bio;
-            name.Text = activeUser.firstName + " " + activeUser.lastName;
-            showName.Text = activeUser.firstName + " " + activeUser.lastName; ;
-            
+            years.Text = (DateTime.Now.Year - activeUser.Age.Year).ToString();
+            city.Text = activeUser.city;
+            accountText.Text = activeUser.Bio;
+            bioText.Text = activeUser.Bio;
+            name.Text = activeUser.name;
+            showName.Text = activeUser.name;
         }
-        public void EditBio(string bio)
-        {
-            account.Bio = bio;
-        }
-
-        public void changeFirstName(string name)
-        {
-            account.FirstName = name;
-        }
-
-        public void ChangePostalCode(string code)
-        {
-            account.PostalCode = code;
-        }
-
-        public void ChangeCountry(string country)
-        {
-            account.Country = country;
-        }
-
-        public void ChangeCity(string city)
-        {
-            account.Country = city;
-        }
-
         public void addtag()
         {
             
@@ -101,12 +90,7 @@ namespace Matchmaker
 
         private void confirmNameChange_Click(object sender, RoutedEventArgs e)
         {
-            
-            var firstSpaceIndex = name.Text.IndexOf(" ");
-            string firstName = name.Text.Substring(0,firstSpaceIndex);
-            string lastname = name.Text.Substring(firstSpaceIndex+1);
-            activeUser.firstName = firstName;
-            activeUser.lastName = lastname;
+            activeUser.name = name.Text;
             showName.Text = name.Text;
             showName.Visibility = Visibility.Visible;
             editName.Visibility = Visibility.Visible;
@@ -129,7 +113,7 @@ namespace Matchmaker
 
         private void confirmBioChange_Click(object sender, RoutedEventArgs e)
         {
-            activeUser.bio = accountText.Text;
+            activeUser.Bio = accountText.Text;
             bioText.Text = accountText.Text;
             denyBioChange.Visibility = Visibility.Collapsed;
             confirmBioChange.Visibility = Visibility.Collapsed;
@@ -191,7 +175,7 @@ namespace Matchmaker
             citySelection.SelectedValue = city.Text;
             string newCity = citySelection.Text;
             city.Text = newCity;
-            activeUser.location = newCity;
+            activeUser.city = newCity;
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
