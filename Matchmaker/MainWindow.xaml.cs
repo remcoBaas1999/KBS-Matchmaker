@@ -18,15 +18,15 @@ namespace Matchmaker
 {
     public partial class HomePage : Page {
         public HomePage() {
+            //Start application
             InitializeComponent();
+
+            //Log into users account
         }
         private void Button_Click(object sender, RoutedEventArgs e) {
         }
         private void RefreshButton_MouseDown(object sender, MouseButtonEventArgs e) {
             //Refresh recommended profiles
-
-            //Refresh Profile1
-            Profile1Tag.Content = "";
         }
         private void Profile1Picture1_MouseDown(object sender, MouseButtonEventArgs e) { 
             
@@ -67,7 +67,7 @@ namespace Matchmaker
             }
         }
 
-        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e) {
+        private void Settings_MouseDown(object sender, MouseButtonEventArgs e) {
             Settings settings = new Settings();
             NavigationService.Navigate(settings);
         }
