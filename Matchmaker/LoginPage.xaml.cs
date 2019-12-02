@@ -56,7 +56,7 @@ namespace Matchmaker
                 Account account = new Account();
                 account.Email = AccountEmail.Text;
                 account.LogIn(AccountPassBox.Password);
-                if (true)
+                if (account.LoggedIn)
                 {
                     // Go to the user dashboard
                     MessageBox.Show("Ingelogd");
@@ -107,12 +107,12 @@ namespace Matchmaker
 
             private void CreateAccBtn_Click(object sender, RoutedEventArgs e)
             {
-                MessageBox.Show("This area is not availlable right now");
+                MessageBox.Show("This area is not available right now");
             }
 
             private void ForgotPasswordBtn_Click(object sender, RoutedEventArgs e)
             {
-                MessageBox.Show("This area is not availlable right now");
+                MessageBox.Show("This area is not available right now");
             }
 
             // Convert a string containing a hexcode to a solidcolorbrush

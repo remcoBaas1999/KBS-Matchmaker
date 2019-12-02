@@ -15,13 +15,15 @@ namespace MatchMakerClassLibrary
         public bool LoggedIn { get; set; }
         public string Email { get; set; }
 
+        public string FirstName { get; set; }
+
         //methods
         public bool LogIn(string password)
         {
-            bool login = false;
+            bool login;
             try
             {
-                login = ValidEmail(Email);
+                login = (ValidEmail(Email) && Authenticate(password));
                 LoggedIn = login;
 
                 return login;
@@ -46,8 +48,8 @@ namespace MatchMakerClassLibrary
         }
 
 		public bool Authenticate (string password) {
-            //return MatchmakerAPI_Client.Authenticate(this.Email, password);
-            return true;
+            return MatchmakerAPI_Client.Authenticate(this.Email, password);
+            //return true;
 		}
 
         public void LogOut()

@@ -7,15 +7,14 @@ using Newtonsoft.Json;
 using MatchMakerClassLibrary;
 using System.Net;
 using System.IO;
-
-
-
+using System.Security.Cryptography;
+using System.Net.Http;
 
 namespace MatchMakerClassLibrary
 {
     public static class MatchmakerAPI_Client
     {
-		public static void yeetpassword(string password, string salt) { }
+        public static readonly HttpClient client = new HttpClient();
 
 		public static UserData DeserializeUserData(string json) {
 			return JsonConvert.DeserializeObject<UserData>(json);
@@ -32,30 +31,34 @@ namespace MatchMakerClassLibrary
 		public static string GetEventData(int id) {
 			return Get($@"http://145.44.233.207:80/get/event?id={id}");
 		}
+        public static bool Authenticate(string email, string password) {
+            bool check = false;
 
-		public static bool Authenticate(string email, string password) {
+            //Retrieve data
+            UserData response = DeserializeUserData(GetUserData(email));
 
-			// 1. Retrieve data
-			UserData response = DeserializeUserData(GetUserData(email));
+            //Get salt and hash from database using email
+            string saltRetrievedString = response.salt;
+            string hashRetrievedString = response.password;
 
-			// 2. Deserialize data into UserData object
+            //Convert salt to string
+            byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
 
+            //Combine password and salt
+            string passAndSalt = password + saltRetrievedString;
 
-			// 3. Hash the entered password using the provided salt
-			string salt = response.salt;
+            //Hash the combined string
+            byte[] hash = Password.GenerateHash(passAndSalt, saltRetrieved);
 
-			// 4. Compare the UserData object to the entered data
-			if (password == response.password) {
-				// 4a. Return 'true' if the passwords match
-				return true;
-			}
-			else {
-				// 4b. Return 'false' if they don't match
-				return false;
-			}
+            //Convert the hash to string
+            string hashString = Convert.ToBase64String(hash);
 
-		}
-
+            //Compare the new and old hash
+            if (hashString == hashRetrievedString) {
+                check = true;
+            }
+            return check;
+        }
 		private static string Get(string uri)
 		{
 		    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
@@ -68,23 +71,33 @@ namespace MatchMakerClassLibrary
 		        return reader.ReadToEnd();
 		    }
 		}
-	}
+        public static bool PostNewUserData(UserData newUserData) {
+            string uri = @"";
+            string result = Post(uri, newUserData).Result;
+            //doe wat met result
+            return true;
+        }
+        private static async Task<string> Post(string uri, object data) {
+            string result;
+            var json = JsonConvert.SerializeObject(data);
+            var dataString = new StringContent(json, Encoding.UTF8, "application/json");
+            using (client) {
 
-	public class UserData
+                var response = await client.PostAsync(uri, dataString);
+
+                result = response.Content.ReadAsStringAsync().Result;
+            }
+            return result;
+        }
+    }
+
+    public class UserData
     {
         public string email { get; set; }
-		public string password { get; set; }
-		public string salt { get; set; }
-		public string realName { get; set; }
-		public string about { get; set; }
-		public string city { get; set; }
-		public string[] hobbies { get; set; }
-		public string[] eventsAtt { get; set; }
-		public string[] eventsOrg { get; set; }
-		public string profilePicture { get; set; }
-		public string[] pictures { get; set; }
-		public string[] matches { get; set; }
-		public string[] chats { get; set; }
-		public int id { get; set; }
+        public string password { get; set; }
+        public string salt { get; set; }
+        public string realName { get; set; }
+        public int id { get; set; }
+        public long birthdate { get; set; }
     }
 }

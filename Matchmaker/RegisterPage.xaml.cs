@@ -146,9 +146,24 @@ namespace Matchmaker
                 //Make Errorgrid go away
                 ErrorGrid.Visibility = Visibility.Collapsed;
                 //Do Something With User
+                string[] hashAndSalt = Password.HashPassword(pw);
+                DateTime dtBd = new DateTime();
+                DateTime.TryParse($"{dOBM}/{dOBD}/{dOBY}", out dtBd); ;
+                var dateTimeOffset = new DateTimeOffset(dtBd);
+                var unixDateTime = dateTimeOffset.ToUnixTimeSeconds();
+
+                var userData = new UserData {
+                    email = email,
+                    password = hashAndSalt[0],
+                    salt = hashAndSalt[1],
+                    realName = name,
+                    birthdate = unixDateTime
+                };
+                if (MatchmakerAPI_Client.PostNewUserData(userData)) {
+                    NavigationService.Navigate("MainPage.xaml", UriKind.Relative);
+                }
                 //Close Page
-            }
-            else
+            } else
             {
                 string errorMSG = "";
                 if (!noEmptyFields)
@@ -195,17 +210,6 @@ namespace Matchmaker
                 ErrorMessage.Text = errorMSG;
                 ErrorGrid.Visibility = Visibility.Visible;
             }
-        }
-        public static byte[] CreateHash(string input)
-        {
-            //Generate random salt
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[saltSize];
-            provider.GetBytes(salt);
-
-            //Generate hash
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(input, salt, iterations);
-            return PBKDF2.GetBytes(hashSize);
         }
         public static bool ValidDate(int day, int month, int year)
         {
