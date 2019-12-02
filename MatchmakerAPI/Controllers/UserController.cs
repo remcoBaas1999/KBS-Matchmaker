@@ -37,9 +37,8 @@ namespace MatchmakerAPI.Controllers
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
 		        string json = r.ReadToEnd();
-
-				var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
 				try {
+					var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
 					return UserById(id);
 				} catch (System.Collections.Generic.KeyNotFoundException e) {
 					return new UserData();
