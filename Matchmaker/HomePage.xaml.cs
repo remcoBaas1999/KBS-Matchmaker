@@ -21,6 +21,8 @@ namespace Matchmaker {
             InitializeComponent();
 
             //Log into users account
+            
+
         }
         private void Button_Click(object sender, RoutedEventArgs e) {
         }
