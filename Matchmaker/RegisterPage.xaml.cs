@@ -29,9 +29,6 @@ namespace Matchmaker
         //DB-Side Email Uniqueness Verification
         private const string toLogin = "Page1.xaml";
         private const int minimumAge = 16;
-        private const int saltSize = 16;
-        private const int hashSize = 16;
-        private const int iterations = 100000;
         public RegisterPage()
         {
             InitializeComponent();
@@ -50,7 +47,7 @@ namespace Matchmaker
         {
             NavigationService.Navigate(new Uri(toLogin, UriKind.Relative));
         }
-        private void CreateAccount_Click(object sender, RoutedEventArgs e)
+        private async void CreateAccount_Click(object sender, RoutedEventArgs e)
         {
             //bools for checking if account creation succeeds
             bool pWSucceed = false;
@@ -101,17 +98,12 @@ namespace Matchmaker
                     }
                 }
             }
-            if (pw.Equals(pwA))
-            {
-                pWSucceed = true;
-            }
+            //check if passwords match
+            pWSucceed = pw.Equals(pwA);
             //Regex check
             string regexString = @"(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[@$!%*#?~&\d])[A-Za-z@$!%*#?~&\d]{8,}";
             Regex regex = new Regex(regexString);
-            if (regex.IsMatch(pw))
-            {
-                pWRegex = true;
-            }
+            pWRegex = regex.IsMatch(pw);
             //checks if all fields are filled in
             if (name != "" && pw != "" && email != "" && pwA != "")
             {
@@ -126,7 +118,6 @@ namespace Matchmaker
                 emailExists = EmailExists(email);
             }
             //checks date
-
             if (ValidDateChecker(dOBD, dOBM, dOBY))
             {
                 dateSucceed = true;
@@ -152,6 +143,7 @@ namespace Matchmaker
                 var dateTimeOffset = new DateTimeOffset(dtBd);
                 var unixDateTime = dateTimeOffset.ToUnixTimeSeconds();
 
+                //make userdata
                 var userData = new UserData {
                     email = email,
                     password = hashAndSalt[0],
@@ -159,7 +151,7 @@ namespace Matchmaker
                     realName = name,
                     birthdate = unixDateTime
                 };
-                if (MatchmakerAPI_Client.PostNewUserData(userData)) {
+                if (await MatchmakerAPI_Client.PostNewUserDataAsync(userData)) {
                     NavigationService.Navigate("MainPage.xaml", UriKind.Relative);
                 }
                 //Close Page

@@ -9,27 +9,31 @@ using System.Net;
 using System.IO;
 using System.Security.Cryptography;
 using System.Net.Http;
+using System.Net.Security;
 
 namespace MatchMakerClassLibrary
 {
     public static class MatchmakerAPI_Client
     {
-        public static readonly HttpClient client = new HttpClient();
+        //public static readonly HttpClient client = new HttpClient();
+        public static HttpClient client = new HttpClient();
+
 
 		public static UserData DeserializeUserData(string json) {
 			return JsonConvert.DeserializeObject<UserData>(json);
 		}
 
 		public static string GetUserData(int id) {
-			return Get($@"http://145.44.233.207:80/get/user?id={id}");
+			return Get($@"https://145.44.233.207/user/get/id={id}");
 		}
 
 		public static string GetUserData(string email) {
-			return Get($@"http://145.44.233.207:80/get/user?e={email}");
+			return Get($@"https://145.44.233.207/user/get/email={email}");
 		}
 
 		public static string GetEventData(int id) {
-			return Get($@"http://145.44.233.207:80/get/event?id={id}");
+            //return Get($@"https://145.44.233.207/get/event?id={id}");
+            return null;
 		}
         public static bool Authenticate(string email, string password) {
             bool check = false;
@@ -61,7 +65,8 @@ namespace MatchMakerClassLibrary
         }
 		private static string Get(string uri)
 		{
-		    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
 		    request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
 		    using(HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -71,22 +76,20 @@ namespace MatchMakerClassLibrary
 		        return reader.ReadToEnd();
 		    }
 		}
-        public static bool PostNewUserData(UserData newUserData) {
-            string uri = @"";
-            string result = Post(uri, newUserData).Result;
+        public static async Task<bool> PostNewUserDataAsync(UserData newUserData) {
+            string uri = @"https://145.44.233.207/user/post/new";
+            var result = await Post(uri, newUserData);
             //doe wat met result
             return true;
         }
         private static async Task<string> Post(string uri, object data) {
+            
             string result;
             var json = JsonConvert.SerializeObject(data);
             var dataString = new StringContent(json, Encoding.UTF8, "application/json");
-            using (client) {
+            var response = await client.PostAsync(uri, dataString);
 
-                var response = await client.PostAsync(uri, dataString);
-
-                result = response.Content.ReadAsStringAsync().Result;
-            }
+            result = response.Content.ReadAsStringAsync().Result;
             return result;
         }
     }
