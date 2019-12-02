@@ -39,8 +39,8 @@ namespace Matchmaker
             years.Text = a.ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
-            
-
+            city.Text = user.location;
+            bioText.Text = user.about;
         }
         public UserProfile()
         {
@@ -119,7 +119,7 @@ namespace Matchmaker
         private void citySelection_Loaded(object sender, RoutedEventArgs e)
         {
             citySelection.Text = city.Text;
-            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht" };
+            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord" };
             foreach (string item in locations)
             {
                 

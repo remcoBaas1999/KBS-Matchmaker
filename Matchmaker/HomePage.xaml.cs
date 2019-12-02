@@ -1,9 +1,11 @@
 ﻿using MatchMakerClassLibrary;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -36,16 +38,19 @@ namespace Matchmaker {
         }
         private void Profile1Picture1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
-            //When MouseDown on a users profilepicture
-
-            //1. Open new page
-            Page page = new Page();
+            JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+            Dictionary<string, Object> dict = (Dictionary<string, Object>)json_serializer.DeserializeObject(MatchmakerAPI_Client.GetUserData("info@guusapeldoorn.nl"));
+            UserData user = new UserData();
+            user.email = dict["email"].ToString();
+            user.realName = dict["realName"].ToString();
+            long date = Convert.ToInt64(dict["birthdate"].ToString());
+            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
+            DateTime birthDay = start.AddMilliseconds(date).ToLocalTime();
+            user.birthdate = date;
+            user.location = dict["city"].ToString();
+            user.about = dict["about"].ToString();
+            Page page = new UserProfile(user);
             NavigationService.Navigate(page);
-
-            //2. Open profile and display
-
-
         }
 
         private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)

@@ -127,6 +127,8 @@ namespace MatchMakerClassLibrary
         public string realName { get; set; }
         public int id { get; set; }
         public long birthdate { get; set; }
+        public string about { get; set; }
+        public string location { get; set; }
     }
     public class AuthData {
         public string email { get; set; }
