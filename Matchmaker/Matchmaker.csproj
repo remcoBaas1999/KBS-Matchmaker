@@ -66,6 +66,9 @@
     <Compile Include="RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserProfile.xaml.cs">
+      <DependentUpon>UserProfile.xaml</DependentUpon>
+    </Compile>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +108,10 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserProfile.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Notifications.xaml.cs">
@@ -201,6 +208,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Content>
     <Content Include="Images\full-screen.svg" />
+    <Resource Include="Images\ic_chevron_left-png-24px.png" />
     <Content Include="Images\maximize.svg" />
     <Content Include="Images\minimize.svg" />
     <Content Include="Images\restore.svg" />

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MatchMakerClassLibrary.Models
 {
@@ -10,7 +11,7 @@ namespace MatchMakerClassLibrary.Models
 		public string realName { get; set; }
 		public string about { get; set; }
 		public string city { get; set; }
-		public string[] hobbies { get; set; }
+		public List<string> hobbies { get; set; }
 		public string[] eventsAtt { get; set; }
 		public string[] eventsOrg { get; set; }
 		public string profilePicture { get; set; }
@@ -18,5 +19,6 @@ namespace MatchMakerClassLibrary.Models
 		public string[] matches { get; set; }
 		public string[] chats { get; set; }
 		public int id { get; set; }
+        public DateTime birthday { get; set; }
     }
 }

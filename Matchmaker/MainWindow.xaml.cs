@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MatchMakerClassLibrary;
 
 namespace Matchmaker
 {
@@ -59,9 +60,7 @@ namespace Matchmaker
             {
                 ChangeScreen.Data = Geometry.Parse("M58.152,58.152H0V0h58.152V58.152z M3,55.152h52.152V3H3V55.152z");
             }
-            
         }
-
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -69,5 +68,15 @@ namespace Matchmaker
                 this.DragMove();
             }
         }
+
+    }
+    public static class activeUser
+    {
+
+        public static string name { get; set; } = "Hans Gruber";
+        public static string city { get; set; } = "Zwolle";
+        public static DateTime Age { get; set; } = new DateTime(1996, 6, 3);
+        public static string Bio { get; set; } = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum dolor semper nibh ullamcorper, eu bibendum diam venenatis. Sed ut mi dui. Praesent nec efficitur neque, sed interdum mauris. Etiam suscipit dui at sem cursus, vel blandit metus tempor. Cras id turpis massa. Praesent pulvinar, velit et vestibulum consequat, sem diam convallis magna, porta ultrices sapien enim non tellus. In egestas, dolor at dictum semper, est nisi porttitor metus, sit amet posuere enim ex non magna. Suspendisse maximus libero ut lectus scelerisque viverra. Nam et tempus tellus. Mauris vel consectetur erat, a dictum eros. ";
     }
 }
+

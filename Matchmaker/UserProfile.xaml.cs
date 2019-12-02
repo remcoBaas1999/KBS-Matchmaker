@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Matchmaker.HomePage;
 
 namespace Matchmaker
 {
@@ -21,49 +22,39 @@ namespace Matchmaker
     /// </summary>
     /// 
 
-    
+
 
     public partial class UserProfile : Page
     {
         //needs to get the currently active account 
-        public User account = new User();
+        public UserProfile(UserData user)
+        {
+            InitializeComponent();
+
+            editBio.Visibility = Visibility.Collapsed;
+            editLocation.Visibility = Visibility.Collapsed;
+            editName.Visibility = Visibility.Collapsed;
+            DateTime now = DateTime.Now;
+            var a = now.Year - user.birthday.Year;
+            years.Text = a.ToString();
+            city.Text = user.city;
+            accountText.Text = user.about;
+            bioText.Text = user.about;
+            name.Text = user.realName;
+            showName.Text = user.realName;
+            
+
+        }
         public UserProfile()
         {
             InitializeComponent();
-            DateTime now = DateTime.Now;
-            var a = now.Year - Account.birthdate.Year;
-            age.Text = a.ToString();
-            city.Text = Account.location;
-            accountText.Text = Account.bio;
-            bioText.Text = Account.bio;
-            name.Text = Account.firstName + " " + Account.lastName;
-            showName.Text = Account.firstName + " " + Account.lastName; ;
+            years.Text = (DateTime.Now.Year - activeUser.Age.Year).ToString();
+            city.Text = activeUser.city;
+            accountText.Text = activeUser.Bio;
+            bioText.Text = activeUser.Bio;
+            name.Text = activeUser.name;
+            showName.Text = activeUser.name;
         }
-        public void EditBio(string bio)
-        {
-            account.Bio = bio;
-        }
-
-        public void changeFirstName(string name)
-        {
-            account.FirstName = name;
-        }
-
-        public void ChangePostalCode(string code)
-        {
-            account.PostalCode = code;
-        }
-
-        public void ChangeCountry(string country)
-        {
-            account.Country = country;
-        }
-
-        public void ChangeCity(string city)
-        {
-            account.Country = city;
-        }
-
         public void addtag()
         {
             
@@ -78,7 +69,7 @@ namespace Matchmaker
         {
 
         }
-
+            
         public void removePicture()
         {
 
@@ -99,12 +90,7 @@ namespace Matchmaker
 
         private void confirmNameChange_Click(object sender, RoutedEventArgs e)
         {
-            
-            var firstSpaceIndex = name.Text.IndexOf(" ");
-            string firstName = name.Text.Substring(0,firstSpaceIndex);
-            string lastname = name.Text.Substring(firstSpaceIndex+1);
-            Account.firstName = firstName;
-            Account.lastName = lastname;
+            activeUser.name = name.Text;
             showName.Text = name.Text;
             showName.Visibility = Visibility.Visible;
             editName.Visibility = Visibility.Visible;
@@ -112,7 +98,6 @@ namespace Matchmaker
             confirmNameChange.Visibility = Visibility.Collapsed;
             denymNameChange.Visibility = Visibility.Collapsed;
             //Save to account in database function
-            //close textbox for updated textblock
         }
 
         private void denymNameChange_Click(object sender, RoutedEventArgs e)
@@ -127,14 +112,14 @@ namespace Matchmaker
 
         private void confirmBioChange_Click(object sender, RoutedEventArgs e)
         {
-            Account.bio = accountText.Text;
+            activeUser.Bio = accountText.Text;
             bioText.Text = accountText.Text;
             denyBioChange.Visibility = Visibility.Collapsed;
             confirmBioChange.Visibility = Visibility.Collapsed;
             accountText.Visibility = Visibility.Collapsed;
             bioText.Visibility = Visibility.Visible;
             editBio.Visibility = Visibility.Visible;
-            //Save account text to bio
+            //Save account text to database
             
         }
 
@@ -157,15 +142,59 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Collapsed;
         }
 
-        private void exit_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void citySelection_Loaded(object sender, RoutedEventArgs e)
         {
-            citySelection.ItemsSource = new List<string> { "Zwolle", "Amsterdam", "Arkhangelsk" };
+            citySelection.Text = city.Text;
+            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Arkhangelsk" };
+            foreach (string item in locations)
+            {
+                
+                citySelection.Items.Add(item);
+            }
 
+        }
+
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void editLocation_Click(object sender, RoutedEventArgs e)
+        {
+            citySelection.SelectedItem = city.Text;
+            confirmNewLocation.Visibility = Visibility.Visible;
+            denyLocationChange.Visibility = Visibility.Visible;
+            editLocation.Visibility = Visibility.Collapsed;
+            citySelection.Visibility = Visibility.Visible;
+            city.Visibility = Visibility.Collapsed;
+        }
+
+        private void confirmNewLocation_Click(object sender, RoutedEventArgs e)
+        {
+            citySelection.SelectedValue = city.Text;
+            string newCity = citySelection.Text;
+            city.Text = newCity;
+            activeUser.city = newCity;
+            //Save to database
+            confirmNewLocation.Visibility = Visibility.Collapsed;
+            denyLocationChange.Visibility = Visibility.Collapsed;
+            editLocation.Visibility = Visibility.Visible;
+            citySelection.Visibility = Visibility.Collapsed;
+            city.Visibility = Visibility.Visible;
+        }
+
+        private void denyLocationChange_Click(object sender, RoutedEventArgs e)
+        {
+            citySelection.SelectedValue = city.Text;
+            confirmNewLocation.Visibility = Visibility.Collapsed;
+            denyLocationChange.Visibility = Visibility.Collapsed;
+            editLocation.Visibility = Visibility.Visible;
+            citySelection.Visibility = Visibility.Collapsed;
+            city.Visibility = Visibility.Visible;
+        }
+        private void Return(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }
