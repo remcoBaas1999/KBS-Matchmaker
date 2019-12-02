@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Matchmaker"
+    "\\Matchmaker",
+    "\\MatchMakerClassLibrary",
+    "\\Matchmaker\\Images"
   ],
   "SelectedNode": "\\Matchmaker\\Matchmaker.csproj",
   "PreviewInSolutionExplorer": false

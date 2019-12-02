@@ -40,10 +40,12 @@ namespace Matchmaker
                 case WindowState.Maximized:
                     WindowState = WindowState.Normal;
                     ChangeScreen.Data = Geometry.Parse("M58.152,58.152H0V0h58.152V58.152z M3,55.152h52.152V3H3V55.152z");
+                    ScreenBtn.ToolTip = "Maximize";
                     break;
                 default:
                     WindowState = WindowState.Maximized;
                     ChangeScreen.Data = Geometry.Parse("M114.279,0v114.274H0v378.034h378.039V378.029h114.269V0H114.279z M358.346,472.615H19.692V133.966h338.654V472.615z    M472.615,358.337h-94.577V114.274H133.971V19.692h338.644V358.337z");
+                    ScreenBtn.ToolTip = "Restore Down";
                     break;
             }
         }
@@ -54,9 +56,11 @@ namespace Matchmaker
             if (WindowState == WindowState.Maximized)
             {
                 ChangeScreen.Data = Geometry.Parse("M114.279,0v114.274H0v378.034h378.039V378.029h114.269V0H114.279z M358.346,472.615H19.692V133.966h338.654V472.615z    M472.615,358.337h-94.577V114.274H133.971V19.692h338.644V358.337z");
+                ScreenBtn.ToolTip = "Restore Down";
             }
             else
             {
+                ScreenBtn.ToolTip = "Maximize";
                 ChangeScreen.Data = Geometry.Parse("M58.152,58.152H0V0h58.152V58.152z M3,55.152h52.152V3H3V55.152z");
             }
             

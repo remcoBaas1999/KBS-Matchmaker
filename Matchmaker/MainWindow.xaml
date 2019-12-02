@@ -13,21 +13,21 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#cbd1cc">
             <WrapPanel HorizontalAlignment="Right">
-                <Button Width="50" Padding="5,0,5,0" BorderThickness="0" Background="Transparent" Click="MinimizeClick">
+                <Button Width="50" Padding="5,0,5,0" BorderThickness="0" Background="Transparent" Click="MinimizeClick" ToolTip="Minimize" x:Name="MinimizeBtn">
                     <!--Minimalize the screen-->
                     <Canvas Width="20" Height="20">
                   <Path Data="M492,236H20c-11.046,0-20,8.954-20,20c0,11.046,8.954,20,20,20h472c11.046,0,20-8.954,20-20S503.046,236,492,236z" Fill="#FF5B5A5A"
                         Stretch="Fill" StrokeThickness="0" Width="15" Height="2" Canvas.Left="3" Canvas.Top="9"/>
                </Canvas>
                 </Button>
-                <Button Width="50"  BorderThickness="0" Background="Transparent" Click="MaximizeClick">
+                <Button Width="50"  BorderThickness="0" Background="Transparent" Click="MaximizeClick" ToolTip="Maximize" x:Name="ScreenBtn">
                     <!--Maximize the screen-->
                     <Canvas Width="20" Height="20">
                   <Path x:Name="ChangeScreen" Data="M58.152,58.152H0V0h58.152V58.152z M3,55.152h52.152V3H3V55.152z" Fill="#FF5B5A5A"
                         StrokeThickness="0" Stretch="Fill" Width="14" Height="14" Canvas.Left="3" Canvas.Top="3"/>
                     </Canvas>
                 </Button>
-                <Button Width="50" Padding="5" Click="CloseAppClick" BorderThickness="0" Background="Transparent">
+                <Button Width="50" Padding="5" Click="CloseAppClick" BorderThickness="0" Background="Transparent" ToolTip="Close" x:Name="CloseBtn">
                     <!--Close button-->
                     <Path Data="M28.228,23.986L47.092,5.122c1.172-1.171,1.172-3.071,0-4.242c-1.172-1.172-3.07-1.172-4.242,0L23.986,19.744L5.121,0.88
 		c-1.172-1.172-3.07-1.172-4.242,0c-1.172,1.171-1.172,3.071,0,4.242l18.865,18.864L0.879,42.85c-1.172,1.171-1.172,3.071,0,4.242
