@@ -17,7 +17,7 @@ namespace MatchmakerAPI.Controllers
         [HttpGet("get/id={id}")]
         public AuthData AuthById(int id)
         {
-			using (StreamReader r = new StreamReader("/home/guus/users.json"))
+			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
 		    {
 		        string json = r.ReadToEnd();
 				try {
@@ -38,13 +38,18 @@ namespace MatchmakerAPI.Controllers
 		[HttpGet("get/email={email}")]
         public AuthData AuthByEmail(string email)
         {
+			Console.WriteLine(email);
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
 		        string json = r.ReadToEnd();
+				try {
+					var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
 
-				var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
-
-				return AuthById(id);
+					return AuthById(id);
+				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					Console.WriteLine("key not found");
+					return new AuthData();
+				}
 		    }
         }
     }
