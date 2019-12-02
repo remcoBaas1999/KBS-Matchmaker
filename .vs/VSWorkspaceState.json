@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Matchmaker"
+    "\\Matchmaker",
+    "\\MatchMakerClassLibrary"
   ],
-  "SelectedNode": "\\Matchmaker\\Matchmaker.csproj",
+  "SelectedNode": "\\Matchmaker\\HomePage.xaml",
   "PreviewInSolutionExplorer": false
 }
