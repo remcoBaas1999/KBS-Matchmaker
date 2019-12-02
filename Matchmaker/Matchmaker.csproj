@@ -143,6 +143,9 @@
     <Resource Include="Images\ProfileBackground.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\return.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Images\ProfilePicture.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +178,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\fietsen.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\settings.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MatchMakerClassLibrary\MatchMakerClassLibrary.csproj">
