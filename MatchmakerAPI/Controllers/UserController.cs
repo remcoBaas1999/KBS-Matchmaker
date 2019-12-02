@@ -37,10 +37,12 @@ namespace MatchmakerAPI.Controllers
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
 		        string json = r.ReadToEnd();
-
-				var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
-
-				return UserById(id);
+				try {
+					var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
+					return UserById(id);
+				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					return new UserData();
+				}
 		    }
         }
 
@@ -74,7 +76,11 @@ namespace MatchmakerAPI.Controllers
 				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
 		    }
 
-			return CreatedAtAction($"{data.email}", new { success = true });
+			try {
+				return CreatedAtAction("AddNewUser", new { success = true });
+			} catch (System.InvalidOperationException) {
+				return null;
+			}
 		}
     }
 }
