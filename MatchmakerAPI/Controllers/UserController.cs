@@ -47,7 +47,7 @@ namespace MatchmakerAPI.Controllers
 		[HttpPost("post/new")]
 		public CreatedAtActionResult AddNewUser(NewUserData data)
 		{
-			using (StreamReader r = new StreamReader("/home/guus/users.json"))
+			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
 		    {
 		        string json = r.ReadToEnd();
 

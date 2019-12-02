@@ -18,6 +18,6 @@ namespace MatchmakerAPI
 		public int[] matches { get; set; }
 		public int[] chats { get; set; }
 		public int id { get; set; }
-		public int birthdate { get; set; }
+		public long birthdate { get; set; }
     }
 }
