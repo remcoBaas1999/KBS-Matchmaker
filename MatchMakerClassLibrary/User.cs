@@ -39,14 +39,8 @@ namespace MatchMakerClassLibrary
 
         }
         //get
-        public List<string> getInterests()
-        {
-            return interests;
-        }
-        public List<string> getPictures()
-        {
-            return pictures;
-        }
+        public List<string> GetInterests() => interests;
+        public List<string> GetPictures() => pictures;
         //update
         public void UpdateInterests()
         {

@@ -25,7 +25,7 @@
                 <WrapPanel Grid.ColumnSpan="2" Grid.Column="1" MaxWidth="500">
                     <StackPanel Grid.Column="1" Margin="0, 100, 15, 0" HorizontalAlignment="Left">
                         <TextBlock Text="Log in to your account" FontWeight="Bold" FontSize="20" FontFamily="Roboto" Margin="0,0, 8, 0" Padding="0, 0, 8 ,0"/>
-                        <Button x:Name="CreateAccBtn" Content="Create account >" Width="auto" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF7910AA" HorizontalAlignment="Right" FontFamily="Roboto" Margin="0,12,8,0" Padding="8" Click="CreateAccBtn_Click"/>
+                        <Button x:Name="CreateAccBtn" Content="Create account >" Width="auto" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#673AB7" HorizontalAlignment="Right" FontFamily="Roboto" Margin="0,12,8,0" Padding="8" Click="CreateAccBtn_Click"/>
                     </StackPanel>
                <StackPanel Grid.Column="2" Margin="0,100,0,0">
                   <StackPanel>
@@ -39,8 +39,8 @@
                      <WrapPanel x:Name="PasswordError" VerticalAlignment="Bottom"></WrapPanel>
                   </StackPanel>
                   <WrapPanel x:Name="LoginErrorText"></WrapPanel>
-                  <Button x:Name="LoginBtn" Content="LOGIN" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FF7910AA" HorizontalAlignment="Left" FontFamily="Roboto" Margin="0,8,0,8" Padding="0,8,0,8" Click="LoginBtn_Click"/>
-                  <Button x:Name="ForgotPasswordBtn" Content="FORGOT PASSWORD" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF5B5A5A" HorizontalAlignment="Left" FontFamily="Roboto" Padding="0,8,0,8" Margin="0,8,0,8" Click="ForgotPasswordBtn_Click"/>
+                  <Button x:Name="LoginBtn" Content="LOGIN" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#673AB7" HorizontalAlignment="Left" FontFamily="Roboto" Margin="0,8,0,8" Padding="0,8,0,8" Click="LoginBtn_Click"/>
+                  <!--<Button x:Name="ForgotPasswordBtn" Content="FORGOT PASSWORD" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF5B5A5A" HorizontalAlignment="Left" FontFamily="Roboto" Padding="0,8,0,8" Margin="0,8,0,8" Click="ForgotPasswordBtn_Click"/>-->
                     </StackPanel>
                 </WrapPanel>
             </Grid>
