@@ -19,5 +19,11 @@ namespace Matchmaker {
         public Notifications() {
             InitializeComponent();
         }
+
+        private void goBack_MouseDown(object sender, MouseButtonEventArgs e) {
+            //Go back to homepage
+            NavigationService.GoBack();
+            
+        }
     }
 }
