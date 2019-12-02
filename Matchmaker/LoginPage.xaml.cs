@@ -21,25 +21,19 @@ namespace Matchmaker
     /// </summary>
     public partial class LoginPage : Page
     {
-        private List<TextBlock> GeneralError = new List<TextBlock>(); // List of all errors in textblock.
+        private List<TextBlock> GeneralError = new List<TextBlock>();
 
-        // Setup everything for the loginpage that is important.
         public LoginPage()
         {
             InitializeComponent();
-            TextBlock MainError = new TextBlock
-            {
-                Text = "Invalid email or password."
-            };
 
-            TextBlock EmailError = new TextBlock
-            {
-                Text = "Email is required."
-            };
-            TextBlock PasswordError = new TextBlock
-            {
-                Text = "Password is required."
-            };
+            TextBlock EmailError = new TextBlock();
+            TextBlock PasswordError = new TextBlock();
+            TextBlock MainError = new TextBlock();
+
+            MainError.Text = "Invalid email or password.";
+            EmailError.Text = "Email is required.";
+            PasswordError.Text = "Password is required.";
             MainError.Foreground = Brushes.Red;
             EmailError.Foreground = Brushes.Red;
             PasswordError.Foreground = Brushes.Red;
@@ -49,7 +43,9 @@ namespace Matchmaker
             GeneralError.Add(EmailError);
         }
 
-        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+
+
+        private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
             if (LoginErrorText.Children.Count > 0)
             {
@@ -68,33 +64,33 @@ namespace Matchmaker
             {
                 Email = AccountEmail.Text
             };
-            account.LogIn(AccountPassBox.Password);
-            switch (account.LoggedIn)
+            //account.LogIn(AccountPassBox.Password);
+
+            try
             {
-                case true:
+                var pw = MatchmakerAPI_Client.AuthenticateAsync(account.Email, AccountPassBox.Password);
+                if (await pw)
+                {
+                    account.LoggedIn = true;
+
+                    try
                     {
-                        // Go to the user dashboard
-                        //MessageBox.Show("Ingelogd");
-                        try
-                        {
-                            HomePage homePage = new HomePage();
-                            NavigationService.Navigate(homePage);
-                            NavigationService.RemoveBackEntry();
-                        }
-                        catch (Exception)
-                        {
-                            TextBlock LoginTryError = new TextBlock
-                            {
-                                Text = "Sorry, something went wrong during the process. Please try again.",
-                                Foreground = Brushes.Red
-                            };
-                            LoginErrorText.Children.Add(LoginTryError);
-                        }
-
-                        break;
+                        HomePage homePage = new HomePage();
+                        NavigationService.Navigate(homePage);
+                        NavigationService.RemoveBackEntry();
                     }
-
-                default:
+                    catch (Exception)
+                    {
+                        TextBlock LoginTryError = new TextBlock
+                        {
+                            Text = "Sorry, something went wrong during the process. Please try again.",
+                            Foreground = Brushes.Red
+                        };
+                        LoginErrorText.Children.Add(LoginTryError);
+                    }
+                }
+                else
+                {
                     AccountEmail.BorderBrush = Brushes.Red;
                     AccountEmail.Foreground = Brushes.Red;
                     AccountPassBox.BorderBrush = Brushes.Red;
@@ -110,7 +106,6 @@ namespace Matchmaker
                         {
                             PasswordError.Children.Remove(GeneralError[1]);
                         }
-
                         LoginErrorText.Children.Add(GeneralError[0]);
                     }
                     else
@@ -120,28 +115,27 @@ namespace Matchmaker
                         AccountEmail.BorderBrush = Brushes.Red;
                         EmailError.Children.Add(GeneralError[2]);
                     }
+                }
+                // Image for the error message needs to be implemented here.
 
-                    break;
+            }
+            catch (System.ArgumentNullException)
+            {
+                Console.WriteLine(MatchmakerAPI_Client.AuthenticateAsync(account.Email, AccountPassBox.Password));
             }
         }
 
+
         private void CreateAccBtn_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                RegisterPage registerPage = new RegisterPage();
-                NavigationService.Navigate(registerPage);
-                NavigationService.RemoveBackEntry();
-            }
-            catch(Exception)
-            {
-                MessageBox.Show("Sorry, this page is unavaillable.");
-            }
+            RegisterPage registerPage = new RegisterPage();
+            NavigationService.Navigate(registerPage);
+            NavigationService.RemoveBackEntry();
         }
 
         private void ForgotPasswordBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This area is not availlable right now");
+            MessageBox.Show("This area is not available right now");
         }
 
         // Convert a string containing a hexcode to a solidcolorbrush
@@ -149,8 +143,7 @@ namespace Matchmaker
         private SolidColorBrush HexToBrushes(string hexCode)
         {
             SolidColorBrush brushes = new SolidColorBrush();
-            brushes = (SolidColorBrush)new BrushConverter().ConvertFromString(hexCode);
-
+            brushes = (SolidColorBrush)(new BrushConverter().ConvertFromString(hexCode));
             return brushes;
         }
 
@@ -158,26 +151,25 @@ namespace Matchmaker
         {
             LoginErrorText.Children.Remove(GeneralError[0]);
 
-            switch (AccountEmail.Text)
+            if (AccountEmail.Text == "")
             {
-                case "":
-                    AccountEmail.BorderBrush = Brushes.Red;
-                    EmailError.Children.Add(GeneralError[2]);
-                    break;
-                default:
-                    if (AccountEmail.Text != "")
-                    {
-                        AccountEmail.BorderBrush = HexToBrushes("#FFBDBBBB");
-                        AccountEmail.Foreground = HexToBrushes("#FFBDBBBB");
-                    }
+                AccountEmail.BorderBrush = Brushes.Red;
+                EmailError.Children.Add(GeneralError[2]);
+            }
+            else
+            {
+                if (AccountEmail.Text != "")
+                {
+                    AccountEmail.BorderBrush = HexToBrushes("#FFBDBBBB");
+                    AccountEmail.Foreground = HexToBrushes("#FFBDBBBB");
+                }
 
 
-                    if (EmailError.Children.Count > 0)
-                    {
-                        EmailError.Children.Remove(GeneralError[2]);
-                    }
+                if (EmailError.Children.Count > 0)
+                {
+                    EmailError.Children.Remove(GeneralError[2]);
+                }
 
-                    break;
             }
         }
 
@@ -185,24 +177,22 @@ namespace Matchmaker
         {
             LoginErrorText.Children.Remove(GeneralError[0]);
 
-            switch (AccountPassBox.Password)
+            if (AccountPassBox.Password == "")
             {
-                case "":
-                    AccountPassBox.BorderBrush = Brushes.Red;
-                    PasswordError.Children.Add(GeneralError[1]);
-                    break;
-                default:
-                    if (AccountPassBox.Password != "")
-                    {
-                        AccountPassBox.BorderBrush = HexToBrushes("#FFBDBBBB");
-                        AccountPassBox.Foreground = HexToBrushes("#FFBDBBBB");
-                    }
-                    if (PasswordError.Children.Count > 0)
-                    {
-                        PasswordError.Children.Remove(GeneralError[1]);
-                    }
-
-                    break;
+                AccountPassBox.BorderBrush = Brushes.Red;
+                PasswordError.Children.Add(GeneralError[1]);
+            }
+            else
+            {
+                if (AccountPassBox.Password != "")
+                {
+                    AccountPassBox.BorderBrush = HexToBrushes("#FFBDBBBB");
+                    AccountPassBox.Foreground = HexToBrushes("#FFBDBBBB");
+                }
+                if (PasswordError.Children.Count > 0)
+                {
+                    PasswordError.Children.Remove(GeneralError[1]);
+                }
             }
         }
     }

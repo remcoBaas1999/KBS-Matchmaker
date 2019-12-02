@@ -11,11 +11,11 @@ using System.Runtime.Serialization;
 namespace MatchmakerAPI.Controllers
 {
     [ApiController]
-    [Route("/get/user/")]
+    [Route("/user/")]
     public class UserController : ControllerBase
     {
-        [HttpGet("id={id}")]
-        public UserData GetByID(int id)
+        [HttpGet("get/id={id}")]
+        public UserData UserById(int id)
         {
 			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
 		    {
@@ -31,17 +31,66 @@ namespace MatchmakerAPI.Controllers
 		    }
         }
 
-		[HttpGet("email={email}")]
-        public UserData GetByEmail(string email)
+		[HttpGet("get/email={email}")]
+        public UserData UserByEmail(string email)
         {
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
 		        string json = r.ReadToEnd();
-
-				var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
-
-				return GetByID(id);
+				try {
+					var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
+					return UserById(id);
+				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					return new UserData();
+				}
 		    }
         }
+
+		[HttpPost("post/new")]
+		public CreatedAtActionResult AddNewUser(NewUserData data)
+		{
+			int key;
+
+			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
+		    {
+		        string json = r.ReadToEnd();
+
+				var users = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json);
+
+				var rng = new Random();
+
+				do {
+					key = rng.Next();
+				} while (users.ContainsKey(key));
+
+				var udata = new UserData {
+					email = data.email,
+					password = data.password,
+					salt = data.salt,
+					realName = data.realName,
+					birthdate = data.birthdate
+				};
+
+				users.Add(key, udata);
+
+				var text = JsonConvert.SerializeObject(users);
+				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
+		    }
+			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
+		    {
+		        string json = r.ReadToEnd();
+				var userMap = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+				userMap.Add(data.email, key);
+				var text = JsonConvert.SerializeObject(userMap);
+
+				System.IO.File.WriteAllText(@"/home/student/data/userMap.json", text);
+			}
+
+			try {
+				return CreatedAtAction("AddNewUser", new { success = true });
+			} catch (System.InvalidOperationException) {
+				return null;
+			}
+		}
     }
 }

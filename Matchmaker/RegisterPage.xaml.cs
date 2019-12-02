@@ -29,9 +29,6 @@ namespace Matchmaker
         //DB-Side Email Uniqueness Verification
         private const string toLogin = "Page1.xaml";
         private const int minimumAge = 16;
-        private const int saltSize = 16;
-        private const int hashSize = 16;
-        private const int iterations = 100000;
         public RegisterPage()
         {
             InitializeComponent();
@@ -53,7 +50,7 @@ namespace Matchmaker
             NavigationService.Navigate(loginPage);
             NavigationService.RemoveBackEntry();
         }
-        private void CreateAccount_Click(object sender, RoutedEventArgs e)
+        private async void CreateAccount_Click(object sender, RoutedEventArgs e)
         {
             //bools for checking if account creation succeeds
             bool pWSucceed = false;
@@ -104,17 +101,12 @@ namespace Matchmaker
                     }
                 }
             }
-            if (pw.Equals(pwA))
-            {
-                pWSucceed = true;
-            }
+            //check if passwords match
+            pWSucceed = pw.Equals(pwA);
             //Regex check
             string regexString = @"(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[@$!%*#?~&\d])[A-Za-z@$!%*#?~&\d]{8,}";
             Regex regex = new Regex(regexString);
-            if (regex.IsMatch(pw))
-            {
-                pWRegex = true;
-            }
+            pWRegex = regex.IsMatch(pw);
             //checks if all fields are filled in
             if (name != "" && pw != "" && email != "" && pwA != "")
             {
@@ -129,7 +121,6 @@ namespace Matchmaker
                 emailExists = EmailExists(email);
             }
             //checks date
-
             if (ValidDateChecker(dOBD, dOBM, dOBY))
             {
                 dateSucceed = true;
@@ -149,9 +140,25 @@ namespace Matchmaker
                 //Make Errorgrid go away
                 ErrorGrid.Visibility = Visibility.Collapsed;
                 //Do Something With User
+                string[] hashAndSalt = Password.HashPassword(pw);
+                DateTime dtBd = new DateTime();
+                DateTime.TryParse($"{dOBM}/{dOBD}/{dOBY}", out dtBd); ;
+                var dateTimeOffset = new DateTimeOffset(dtBd);
+                var unixDateTime = dateTimeOffset.ToUnixTimeSeconds();
+
+                //make userdata
+                var userData = new UserData {
+                    email = email,
+                    password = hashAndSalt[0],
+                    salt = hashAndSalt[1],
+                    realName = name,
+                    birthdate = unixDateTime
+                };
+                if (await MatchmakerAPI_Client.PostNewUserDataAsync(userData)) {
+                    NavigationService.Navigate("MainPage.xaml", UriKind.Relative);
+                }
                 //Close Page
-            }
-            else
+            } else
             {
                 string errorMSG = "";
                 if (!noEmptyFields)
@@ -198,17 +205,6 @@ namespace Matchmaker
                 ErrorMessage.Text = errorMSG;
                 ErrorGrid.Visibility = Visibility.Visible;
             }
-        }
-        public static byte[] CreateHash(string input)
-        {
-            //Generate random salt
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[saltSize];
-            provider.GetBytes(salt);
-
-            //Generate hash
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(input, salt, iterations);
-            return PBKDF2.GetBytes(hashSize);
         }
         public static bool ValidDate(int day, int month, int year)
         {

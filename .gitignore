@@ -4,3 +4,5 @@
 
 /.vs/Matchmaker/v16
 */obj/*
+*/bin/*
+!*.dll

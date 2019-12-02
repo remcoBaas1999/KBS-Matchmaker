@@ -10,14 +10,14 @@ namespace MatchmakerAPI
 		public string realName { get; set; }
 		public string about { get; set; }
 		public string city { get; set; }
-		public string[] hobbies { get; set; }
-		public string[] eventsAtt { get; set; }
-		public string[] eventsOrg { get; set; }
-		public string profilePicture { get; set; }
-		public string[] pictures { get; set; }
-		public string[] matches { get; set; }
-		public string[] chats { get; set; }
+		public int[] hobbies { get; set; }
+		public int[] eventsAtt { get; set; }
+		public int[] eventsOrg { get; set; }
+		public int profilePicture { get; set; }
+		public int[] pictures { get; set; }
+		public int[] matches { get; set; }
+		public int[] chats { get; set; }
 		public int id { get; set; }
-		public int birthdate { get; set; }
+		public long birthdate { get; set; }
     }
 }
