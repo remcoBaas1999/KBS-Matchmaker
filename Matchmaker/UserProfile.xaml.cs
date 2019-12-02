@@ -37,9 +37,6 @@ namespace Matchmaker
             DateTime now = DateTime.Now;
             var a = now.Year - new DateTime(user.birthdate).Year;
             years.Text = a.ToString();
-            //city.Text = user.city;
-            //accountText.Text = user.about;
-            //bioText.Text = user.about;
             name.Text = user.realName;
             showName.Text = user.realName;
             
@@ -54,29 +51,6 @@ namespace Matchmaker
             bioText.Text = activeUser.Bio;
             name.Text = activeUser.name;
             showName.Text = activeUser.name;
-        }
-        public void addtag()
-        {
-            
-        }
-
-        public void removeTag()
-        {
-
-        }
-
-        public void addPicture()
-        {
-
-        }
-            
-        public void removePicture()
-        {
-
-        }
-        public void uploadPicture()
-        {
-
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)
@@ -145,7 +119,7 @@ namespace Matchmaker
         private void citySelection_Loaded(object sender, RoutedEventArgs e)
         {
             citySelection.Text = city.Text;
-            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Arkhangelsk" };
+            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht" };
             foreach (string item in locations)
             {
                 

@@ -75,8 +75,8 @@ namespace Matchmaker
 
         public static string name { get; set; } = "Hans Gruber";
         public static string city { get; set; } = "Zwolle";
-        public static DateTime Age { get; set; } = new DateTime(1996, 6, 3);
-        public static string Bio { get; set; } = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum dolor semper nibh ullamcorper, eu bibendum diam venenatis. Sed ut mi dui. Praesent nec efficitur neque, sed interdum mauris. Etiam suscipit dui at sem cursus, vel blandit metus tempor. Cras id turpis massa. Praesent pulvinar, velit et vestibulum consequat, sem diam convallis magna, porta ultrices sapien enim non tellus. In egestas, dolor at dictum semper, est nisi porttitor metus, sit amet posuere enim ex non magna. Suspendisse maximus libero ut lectus scelerisque viverra. Nam et tempus tellus. Mauris vel consectetur erat, a dictum eros. ";
+        public static DateTime Age { get; set; } = new DateTime(1970, 6, 3);
+        public static string Bio { get; set; } = "Tell something about yourself...";
     }
 }
 
