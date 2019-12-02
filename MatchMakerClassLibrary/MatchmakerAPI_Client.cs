@@ -8,62 +8,88 @@ using MatchMakerClassLibrary;
 using System.Net;
 using System.IO;
 using System.Security.Cryptography;
+using System.Net.Http;
+using System.Net.Security;
 
 namespace MatchMakerClassLibrary
 {
     public static class MatchmakerAPI_Client
     {
-        private const int hashSize = 16;
-        private const int iterations = 100000;
-        public static void yeetpassword(string email, string password, string salt) { }
+        //public static readonly HttpClient client = new HttpClient();
+        public static HttpClient client = new HttpClient();
 
 		public static UserData DeserializeUserData(string json) {
 			return JsonConvert.DeserializeObject<UserData>(json);
 		}
 
+        public static AuthData DeserializeAuthData(string json) {
+            return JsonConvert.DeserializeObject<AuthData>(json);
+        }
+
 		public static string GetUserData(int id) {
-			return Get($@"http://145.44.233.207:80/get/user?id={id}");
+			return Get($@"https://145.44.233.207/user/get/id={id}");
 		}
 
 		public static string GetUserData(string email) {
-			return Get($@"http://145.44.233.207:80/get/user?e={email}");
+			return Get($@"https://145.44.233.207/user/get/email={email}");
 		}
 
-		public static string GetEventData(int id) {
-			return Get($@"http://145.44.233.207:80/get/event?id={id}");
+        public static async Task<AuthData> GetAuthDataAsync(string email) {
+            try {
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+                var uri = $@"https://145.44.233.207/auth/get/email=" + email;
+                var response = await client.GetAsync(uri);
+                var authData = JsonConvert.DeserializeObject<AuthData>(await response.Content.ReadAsStringAsync());
+                return authData;
+            } catch (Exception) {
+                return new AuthData();
+            }
+        }
+
+        public static string GetEventData(int id) {
+            //return Get($@"https://145.44.233.207/get/event?id={id}");
+            return null;
 		}
-        public static bool Authenticate(string email, string password) {
+        public static async Task<bool> AuthenticateAsync(string email, string password) {
             bool check = false;
 
             //Retrieve data
-            UserData response = DeserializeUserData(GetUserData(email));
+            try { 
+                AuthData response = await GetAuthDataAsync(email);
+                //Get salt and hash from database using email
+                string saltRetrievedString = response.salt;
+                string hashRetrievedString = response.password;
 
-            //Get salt and hash from database using email
-            string saltRetrievedString = response.salt;
-            string hashRetrievedString = response.password;
+                //Convert salt to string
+                byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
 
-            //Convert salt to string
-            byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
+                //Combine password and salt
+                string passAndSalt = password + saltRetrievedString;
 
-            //Combine password and salt
-            string passAndSalt = password + saltRetrievedString;
+                //Hash the combined string
+                byte[] hash = Password.GenerateHash(passAndSalt, saltRetrieved);
 
-            //Hash the combined string
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passAndSalt, saltRetrieved, iterations);
-            byte[] hash = PBKDF2.GetBytes(hashSize);
+                //Convert the hash to string
+                string hashString = Convert.ToBase64String(hash);
 
-            //Convert the hash to string
-            string hashString = Convert.ToBase64String(hash);
-
-            //Compare the new and old hash
-            if (hashString == hashRetrievedString) {
-                check = true;
+                //Compare the new and old hash
+                if (hashString == hashRetrievedString) {
+                    check = true;
+                }
+                return check;
             }
-            return check;
+            catch (ArgumentNullException) {
+                Console.WriteLine(GetAuthDataAsync(email));
+            }
+
+
+            
+            return false;
         }
 		private static string Get(string uri)
 		{
-		    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
 		    request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
 		    using(HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -73,24 +99,38 @@ namespace MatchMakerClassLibrary
 		        return reader.ReadToEnd();
 		    }
 		}
-	}
 
-	public class UserData
+  
+        public static async Task<bool> PostNewUserDataAsync(UserData newUserData) {
+            string uri = @"https://145.44.233.207/user/post/new";
+            var result = await Post(uri, newUserData);
+            //doe wat met result
+            return true;
+        }
+        private static async Task<string> Post(string uri, object data) {
+
+            string result;
+            var json = JsonConvert.SerializeObject(data);
+            var dataString = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(uri, dataString);
+
+            result = response.Content.ReadAsStringAsync().Result;
+            return result;
+        }
+    }
+
+    public class UserData
     {
         public string email { get; set; }
         public string password { get; set; }
         public string salt { get; set; }
         public string realName { get; set; }
-        public string about { get; set; }
-        public string city { get; set; }
-        public List<string> hobbies { get; set; }
-        public string[] eventsAtt { get; set; }
-        public string[] eventsOrg { get; set; }
-        public string profilePicture { get; set; }
-        public string[] pictures { get; set; }
-        public string[] matches { get; set; }
-        public string[] chats { get; set; }
         public int id { get; set; }
-        public DateTime birthday { get; set; }
+        public long birthdate { get; set; }
+    }
+    public class AuthData {
+        public string email { get; set; }
+        public string password { get; set; }
+        public string salt { get; set; }
     }
 }

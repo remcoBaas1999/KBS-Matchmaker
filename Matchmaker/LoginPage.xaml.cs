@@ -100,21 +100,16 @@ namespace Matchmaker
                     AccountPassBox.BorderBrush = Brushes.Red;
                     AccountPassBox.Foreground = Brushes.Red;
 
-                    if (AccountEmail.Text != "" && AccountPassBox.Password != "")
-                    {
-                        if (EmailError.Children.Count > 0)
-                        {
+                    if (AccountEmail.Text != "" && AccountPassBox.Password != "") {
+                        if (EmailError.Children.Count > 0) {
                             EmailError.Children.Remove(GeneralError[2]);
                         }
-                        if (PasswordError.Children.Count > 0)
-                        {
+                        if (PasswordError.Children.Count > 0) {
                             PasswordError.Children.Remove(GeneralError[1]);
                         }
 
                         LoginErrorText.Children.Add(GeneralError[0]);
-                    }
-                    else
-                    {
+                    } else {
                         AccountPassBox.BorderBrush = Brushes.Red;
                         PasswordError.Children.Add(GeneralError[1]);
                         AccountEmail.BorderBrush = Brushes.Red;
@@ -172,10 +167,10 @@ namespace Matchmaker
                     }
 
 
-                    if (EmailError.Children.Count > 0)
-                    {
-                        EmailError.Children.Remove(GeneralError[2]);
-                    }
+                if (EmailError.Children.Count > 0)
+                {
+                    EmailError.Children.Remove(GeneralError[2]);
+                }
 
                     break;
             }

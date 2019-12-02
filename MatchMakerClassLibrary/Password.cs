@@ -10,57 +10,38 @@ namespace MatchMakerClassLibrary {
         private const int saltSize = 16;
         private const int hashSize = 16;
         private const int iterations = 100000;
-        public static void StorePassword(string email, string password) {
+        public static string[] HashPassword(string password) {
             //Generate salt
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[saltSize];
-            provider.GetBytes(salt);
+            byte[] salt = GenerateSalt();
 
             //Convert salt to string
             string saltString = Convert.ToBase64String(salt);
 
             //Combine password and salt
-            string passSalt = password + saltString;
+            string passAndSalt = password + saltString;
 
             //Hash the combined string
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passSalt, salt, iterations);
-            byte[] hash = PBKDF2.GetBytes(hashSize);
+            byte[] hash = GenerateHash(passAndSalt, salt);
 
             //Convert the hash to string
             string hashString = Convert.ToBase64String(hash);
 
-            //Store the salt (string) and the hash (string)
-            MatchmakerAPI_Client.yeetpassword(email, hashString, saltString);
+            //Return the salt (string) and the hash (string)
+            string[] hashAndSalt = new string[2];
+            hashAndSalt[0] = hashString;
+            hashAndSalt[1] = saltString;
+            return hashAndSalt;
         }
-        /*
-        public static bool CheckPassword(string email, string password)
-        {
-            bool check = false;
-
-            //Get salt and hash from database using email
-            string saltRetrievedString = MatchmakerAPI_Client.asksalt(email);
-            string hashRetrievedString = MatchmakerAPI_Client.askhash(email);
-
-            //Convert salt to string
-            byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
-
-            //Combine password and salt
-            string passSalt = password + saltRetrievedString;
-
-            //Hash the combined string
-            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passSalt, saltRetrieved, iterations);
+        private static byte[] GenerateSalt() {
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            byte[] salt = new byte[saltSize];
+            provider.GetBytes(salt);
+            return salt;
+        }
+        public static byte[] GenerateHash(string passAndSalt, byte[] salt) {
+            Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passAndSalt, salt, iterations);
             byte[] hash = PBKDF2.GetBytes(hashSize);
-
-            //Convert the hash to string
-            string hashString = Convert.ToBase64String(hash);
-
-            //Compare the new and old hash
-            if (hashString == hashRetrievedString)
-            {
-                check = true;
-            }
-            return check;
+            return hash;
         }
-        */
     }
 }
