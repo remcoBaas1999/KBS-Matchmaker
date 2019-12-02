@@ -128,7 +128,9 @@ namespace Matchmaker
 
         private void CreateAccBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This area is not available right now");
+            RegisterPage registerPage = new RegisterPage();
+            NavigationService.Navigate(registerPage);
+            NavigationService.RemoveBackEntry();
         }
 
         private void ForgotPasswordBtn_Click(object sender, RoutedEventArgs e)
