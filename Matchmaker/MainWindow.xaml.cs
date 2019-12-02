@@ -15,8 +15,8 @@ using System.Windows.Shapes;
 
 namespace Matchmaker
 {
-    public partial class HomePage : Page {
-        public HomePage() {
+    public partial class MainWindow : Window {
+        public MainWindow() {
             InitializeComponent();
 
             LoginPage login = new LoginPage();
