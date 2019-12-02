@@ -39,8 +39,11 @@ namespace MatchmakerAPI.Controllers
 		        string json = r.ReadToEnd();
 
 				var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
-
-				return UserById(id);
+				try {
+					return UserById(id);
+				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					return new UserData();
+				}
 		    }
         }
 
