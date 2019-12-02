@@ -18,20 +18,9 @@ namespace MatchMakerClassLibrary
         public string FirstName { get; set; }
 
         //methods
-        public bool LogIn(string password)
+        public async Task<bool> LogInAsync(string password)
         {
-            bool login;
-            try
-            {
-                login = (ValidEmail(Email) && Authenticate(password));
-                LoggedIn = login;
-
-                return login;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return await MatchmakerAPI_Client.AuthenticateAsync(this.Email, password);
             
         }
         public bool ValidEmail(string email)
@@ -47,8 +36,8 @@ namespace MatchMakerClassLibrary
             }
         }
 
-		public bool Authenticate (string password) {
-            return MatchmakerAPI_Client.Authenticate(this.Email, password);
+		public async Task<bool> Authenticate (string password) {
+            return await MatchmakerAPI_Client.AuthenticateAsync(this.Email, password);
             //return true;
 		}
 

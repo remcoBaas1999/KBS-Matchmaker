@@ -23,6 +23,10 @@ namespace MatchMakerClassLibrary
 			return JsonConvert.DeserializeObject<UserData>(json);
 		}
 
+        public static AuthData DeserializeAuthData(string json) {
+            return JsonConvert.DeserializeObject<AuthData>(json);
+        }
+
 		public static string GetUserData(int id) {
 			return Get($@"https://145.44.233.207/user/get/id={id}");
 		}
@@ -31,37 +35,57 @@ namespace MatchMakerClassLibrary
 			return Get($@"https://145.44.233.207/user/get/email={email}");
 		}
 
-		public static string GetEventData(int id) {
+        public static async Task<AuthData> GetAuthDataAsync(string email) {
+            try {
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+                var uri = $@"https://145.44.233.207/auth/get/email=" + email;
+                var response = await client.GetAsync(uri);
+                var authData = JsonConvert.DeserializeObject<AuthData>(await response.Content.ReadAsStringAsync());
+                return authData;
+            } catch (Exception) {
+                return new AuthData();
+            }
+        }
+
+        public static string GetEventData(int id) {
             //return Get($@"https://145.44.233.207/get/event?id={id}");
             return null;
 		}
-        public static bool Authenticate(string email, string password) {
+        public static async Task<bool> AuthenticateAsync(string email, string password) {
             bool check = false;
 
             //Retrieve data
-            UserData response = DeserializeUserData(GetUserData(email));
+            try { 
+                AuthData response = await GetAuthDataAsync(email);
+                //Get salt and hash from database using email
+                string saltRetrievedString = response.salt;
+                string hashRetrievedString = response.password;
 
-            //Get salt and hash from database using email
-            string saltRetrievedString = response.salt;
-            string hashRetrievedString = response.password;
+                //Convert salt to string
+                byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
 
-            //Convert salt to string
-            byte[] saltRetrieved = Convert.FromBase64String(saltRetrievedString);
+                //Combine password and salt
+                string passAndSalt = password + saltRetrievedString;
 
-            //Combine password and salt
-            string passAndSalt = password + saltRetrievedString;
+                //Hash the combined string
+                byte[] hash = Password.GenerateHash(passAndSalt, saltRetrieved);
 
-            //Hash the combined string
-            byte[] hash = Password.GenerateHash(passAndSalt, saltRetrieved);
+                //Convert the hash to string
+                string hashString = Convert.ToBase64String(hash);
 
-            //Convert the hash to string
-            string hashString = Convert.ToBase64String(hash);
-
-            //Compare the new and old hash
-            if (hashString == hashRetrievedString) {
-                check = true;
+                //Compare the new and old hash
+                if (hashString == hashRetrievedString) {
+                    check = true;
+                }
+                return check;
             }
-            return check;
+            catch (ArgumentNullException) {
+                Console.WriteLine(GetAuthDataAsync(email));
+            }
+
+
+            
+            return false;
         }
 		private static string Get(string uri)
 		{
@@ -76,6 +100,8 @@ namespace MatchMakerClassLibrary
 		        return reader.ReadToEnd();
 		    }
 		}
+
+  
         public static async Task<bool> PostNewUserDataAsync(UserData newUserData) {
             string uri = @"https://145.44.233.207/user/post/new";
             var result = await Post(uri, newUserData);
@@ -102,5 +128,10 @@ namespace MatchMakerClassLibrary
         public string realName { get; set; }
         public int id { get; set; }
         public long birthdate { get; set; }
+    }
+    public class AuthData {
+        public string email { get; set; }
+        public string password { get; set; }
+        public string salt { get; set; }
     }
 }
