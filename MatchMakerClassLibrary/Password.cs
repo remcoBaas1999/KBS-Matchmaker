@@ -55,7 +55,8 @@ namespace MatchMakerClassLibrary {
             string hashString = Convert.ToBase64String(hash);
 
             //Compare the new and old hash
-            if (hashString == hashRetrievedString) {
+            if (hashString == hashRetrievedString)
+            {
                 check = true;
             }
             return check;
