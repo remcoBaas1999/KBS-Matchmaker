@@ -18,7 +18,6 @@ namespace MatchMakerClassLibrary
         //public static readonly HttpClient client = new HttpClient();
         public static HttpClient client = new HttpClient();
 
-
 		public static UserData DeserializeUserData(string json) {
 			return JsonConvert.DeserializeObject<UserData>(json);
 		}
@@ -83,7 +82,7 @@ namespace MatchMakerClassLibrary
             return true;
         }
         private static async Task<string> Post(string uri, object data) {
-            
+
             string result;
             var json = JsonConvert.SerializeObject(data);
             var dataString = new StringContent(json, Encoding.UTF8, "application/json");

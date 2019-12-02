@@ -38,6 +38,7 @@ namespace MatchmakerAPI.Controllers
 		[HttpGet("get/email={email}")]
         public AuthData AuthByEmail(string email)
         {
+			Console.WriteLine(email);
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
 		        string json = r.ReadToEnd();
@@ -46,6 +47,7 @@ namespace MatchmakerAPI.Controllers
 
 					return AuthById(id);
 				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					Console.WriteLine("key not found");
 					return new AuthData();
 				}
 		    }
