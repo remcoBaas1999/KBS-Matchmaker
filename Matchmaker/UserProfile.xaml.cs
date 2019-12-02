@@ -35,11 +35,11 @@ namespace Matchmaker
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
             DateTime now = DateTime.Now;
-            var a = now.Year - user.birthday.Year;
+            var a = now.Year - new DateTime(user.birthdate).Year;
             years.Text = a.ToString();
-            city.Text = user.city;
-            accountText.Text = user.about;
-            bioText.Text = user.about;
+            //city.Text = user.city;
+            //accountText.Text = user.about;
+            //bioText.Text = user.about;
             name.Text = user.realName;
             showName.Text = user.realName;
             
