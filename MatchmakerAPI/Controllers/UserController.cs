@@ -49,6 +49,8 @@ namespace MatchmakerAPI.Controllers
 		[HttpPost("post/new")]
 		public CreatedAtActionResult AddNewUser(NewUserData data)
 		{
+			int key;
+
 			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
 		    {
 		        string json = r.ReadToEnd();
@@ -56,7 +58,6 @@ namespace MatchmakerAPI.Controllers
 				var users = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json);
 
 				var rng = new Random();
-				int key;
 
 				do {
 					key = rng.Next();
@@ -75,6 +76,15 @@ namespace MatchmakerAPI.Controllers
 				var text = JsonConvert.SerializeObject(users);
 				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
 		    }
+			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
+		    {
+		        string json = r.ReadToEnd();
+				var userMap = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+				userMap.Add(data.email, key);
+				var text = JsonConvert.SerializeObject(userMap);
+
+				System.IO.File.WriteAllText(@"/home/student/data/userMap.json", text);
+			}
 
 			try {
 				return CreatedAtAction("AddNewUser", new { success = true });
