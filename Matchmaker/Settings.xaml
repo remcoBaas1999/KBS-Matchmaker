@@ -23,7 +23,7 @@
             </Rectangle.Fill>
         </Rectangle>
         <Label Content="Password" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="238,64,0,0" VerticalAlignment="Top" Width="64" Foreground="#FF686868"/>
-        <Label Content="Change" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="296,64,0,0" VerticalAlignment="Top" Width="56" FontWeight="Bold" Foreground="#FF00BDDA"/>
+        <Label x:Name="ChangePassword" Content="Change" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="296,64,0,0" VerticalAlignment="Top" Width="56" FontWeight="Bold" Foreground="#FF00BDDA" MouseEnter="ChangePassword_MouseEnter" MouseLeave="ChangePassword_MouseLeave"/>
         <Label Content="Profile display" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="240,103,0,0" VerticalAlignment="Top" Width="122" FontSize="16" FontWeight="Bold"/>
         <Label Content="Show personal interests" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="152,139,0,0" VerticalAlignment="Top" Width="192" Foreground="#FF707070"/>
         <Label Content="Show activities you are attending to others" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="152,161,0,0" VerticalAlignment="Top" Width="240" Foreground="#FF686868"/>
@@ -33,7 +33,7 @@
         <RadioButton x:Name="UseNotificationsNO" Content="No, I do not want any notifications." FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="18" Margin="158,299,0,0" VerticalAlignment="Top" Width="202" IsChecked="False" IsThreeState="True"/>
         <CheckBox x:Name="PersonalInterests" Grid.Column="1" HorizontalAlignment="Left" Height="18" Margin="402,141,0,0" VerticalAlignment="Top" Width="17"/>
         <CheckBox x:Name="AttendingActivities" Grid.Column="1" HorizontalAlignment="Left" Height="18" Margin="402,166,0,0" VerticalAlignment="Top" Width="17"/>
-        <Label x:Name="SaveButton" Content="SAVE AND EXIT" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="232,333,0,0" VerticalAlignment="Top" Width="138" Background="#00000000" Foreground="#FF8000B0" RenderTransformOrigin="1.289,0.34" MouseEnter="SaveButton_MouseEnter" MouseLeave="SaveButton_MouseLeave" FontSize="16" MouseDown="SaveButton_MouseDown"/>
+        <Label x:Name="SaveButton" Content="SAVE AND EXIT" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Center" Height="28" Margin="222,331,200,0" VerticalAlignment="Top" Width="138" Background="#00000000" Foreground="#FF8000B0" RenderTransformOrigin="1.289,0.34" MouseEnter="SaveButton_MouseEnter" MouseLeave="SaveButton_MouseLeave" FontSize="16" MouseDown="SaveButton_MouseDown"/>
         <Label x:Name="SaveMessage" Visibility="Hidden"  Content="Succesfully saved!" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="245,367,0,0" VerticalAlignment="Top" Width="114" FontWeight="Bold"/>
 
     </Grid>

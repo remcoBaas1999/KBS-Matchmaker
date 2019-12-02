@@ -93,5 +93,13 @@ namespace Matchmaker {
             SaveButton.Foreground = new SolidColorBrush(Color.FromRgb(128, 0, 176));
             SaveButton.FontSize = 16;
         }
+
+        private void ChangePassword_MouseEnter(object sender, MouseEventArgs e) {
+            ChangePassword.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+        }
+
+        private void ChangePassword_MouseLeave(object sender, MouseEventArgs e) {
+            ChangePassword.Foreground = new SolidColorBrush(Color.FromRgb(0, 189, 218));
+        }
     }
 }
