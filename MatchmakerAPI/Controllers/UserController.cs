@@ -75,8 +75,11 @@ namespace MatchmakerAPI.Controllers
 				var text = JsonConvert.SerializeObject(users);
 				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
 		    }
-
-			return CreatedAtAction($"{data.email}", new { success = true });
+			try {
+				return CreatedAtAction("Created new user", new { success = true });
+			} catch (System.InvalidOperationException) {
+				return null;
+			}
 		}
     }
 }
