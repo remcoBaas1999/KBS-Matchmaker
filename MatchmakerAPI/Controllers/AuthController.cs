@@ -17,7 +17,7 @@ namespace MatchmakerAPI.Controllers
         [HttpGet("get/id={id}")]
         public AuthData AuthById(int id)
         {
-			using (StreamReader r = new StreamReader("/home/guus/users.json"))
+			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
 		    {
 		        string json = r.ReadToEnd();
 				try {
