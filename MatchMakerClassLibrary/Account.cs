@@ -18,12 +18,14 @@ namespace MatchMakerClassLibrary
         public string FirstName { get; set; }
 
         //methods
+
+        // Log the user in to the system based on the requirements.
         public bool LogIn(string password)
         {
-            bool login = false;
             try
             {
-                login = ValidEmail(Email);
+                bool login;
+                login = (login = ValidEmail(Email)) ? Email == "test@gmail.com" && password == "Test100#" : false;
                 LoggedIn = login;
 
                 return login;
@@ -32,8 +34,9 @@ namespace MatchMakerClassLibrary
             {
                 return false;
             }
-            
         }
+
+        // Check if the value is a valid email.
         public bool ValidEmail(string email)
         {
             try
@@ -52,10 +55,7 @@ namespace MatchMakerClassLibrary
             return true;
 		}
 
-        public void LogOut()
-        {
-            LoggedIn = false;
-        }
+        public void LogOut() => LoggedIn = false;
         public void RequestPasswordChange()
         {
 

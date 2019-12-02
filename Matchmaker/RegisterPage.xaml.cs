@@ -48,7 +48,10 @@ namespace Matchmaker
         }
         private void BackToLogin_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri(toLogin, UriKind.Relative));
+            //NavigationService.Navigate(new Uri(toLogin, UriKind.Relative));
+            LoginPage loginPage = new LoginPage();
+            NavigationService.Navigate(loginPage);
+            NavigationService.RemoveBackEntry();
         }
         private void CreateAccount_Click(object sender, RoutedEventArgs e)
         {

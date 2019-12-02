@@ -1,70 +1,82 @@
-﻿using MatchMakerClassLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MatchMakerClassLibrary;
 
 namespace Matchmaker
 {
-    public partial class HomePage : Page {
-        public HomePage() {
+    public partial class MainWindow : Window {
+        public MainWindow() {
             InitializeComponent();
 
-        }
-        private void Button_Click(object sender, RoutedEventArgs e) {
-        }
-        private void RefreshButton_MouseDown(object sender, MouseButtonEventArgs e) {
-            //Refresh recommended profiles
-
-            //Refresh Profile1
-            Profile1Tag.Content = "";
-        }
-        private void Profile1Picture1_MouseDown(object sender, MouseButtonEventArgs e) { 
-            
-            //When MouseDown on a users profilepicture
-            
-            //1. Open new page
-            Page page = new Page();
-            NavigationService.Navigate(page);
-
-            //2. Open profile and display
-            
-
+            LoginPage login = new LoginPage();
+            MainFrame.Navigate(login);
         }
 
-        private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Profile1Picture1_MouseDown(sender, e);
-        }
-        public static class activeUser
+        private void CloseAppClick(object sender, RoutedEventArgs e)
         {
-
-
-            public static string name { get; set; } = "Hans Gruber";
-            public static string city { get; set; } = "Zwolle";
-            public static DateTime Age { get; set; } = new DateTime(1996, 6, 3);
-            public static string Bio { get; set; } = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum dolor semper nibh ullamcorper, eu bibendum diam venenatis. Sed ut mi dui. Praesent nec efficitur neque, sed interdum mauris. Etiam suscipit dui at sem cursus, vel blandit metus tempor. Cras id turpis massa. Praesent pulvinar, velit et vestibulum consequat, sem diam convallis magna, porta ultrices sapien enim non tellus. In egestas, dolor at dictum semper, est nisi porttitor metus, sit amet posuere enim ex non magna. Suspendisse maximus libero ut lectus scelerisque viverra. Nam et tempus tellus. Mauris vel consectetur erat, a dictum eros. ";
+            Close();
         }
 
-        private void Tempt_Click(object sender, RoutedEventArgs e)
+        private void MinimizeClick(object sender, RoutedEventArgs e)
         {
-            User user = new User();
-            user.Name = "Reinhart Hendriks";
-            user.LoggedIn = false;
-            user.Age = new DateTime(1994, 6, 3);
-            user.city = "New York";
-            user.Bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Curabitur posuere, nulla eget pulvinar varius, ex diam efficitur turpis, quis gravida quam tortor ac ligula.Vivamus tempus felis a iaculis porta. Aenean posuere convallis varius. Ut faucibus nulla ipsum, in porta velit iaculis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.Vestibulum iaculis nibh in libero posuere dictum.Nulla tristique tortor fermentum pellentesque ornare. Etiam mollis, diam quis venenatis rutrum, augue diam tincidunt arcu, porttitor congue eros nibh non eros.Duis sodales vel ligula eu placerat. ";
-            Page userProfile = new UserProfile();
-            NavigationService.Navigate(userProfile);
+            WindowState = WindowState.Minimized;
         }
+
+        private void MaximizeClick(object sender, RoutedEventArgs e)
+        {
+            switch (WindowState)
+            {
+                case WindowState.Maximized:
+                    WindowState = WindowState.Normal;
+                    ChangeScreen.Data = Geometry.Parse("M58.152,58.152H0V0h58.152V58.152z M3,55.152h52.152V3H3V55.152z");
+                    break;
+                default:
+                    WindowState = WindowState.Maximized;
+                    ChangeScreen.Data = Geometry.Parse("M114.279,0v114.274H0v378.034h378.039V378.029h114.269V0H114.279z M358.346,472.615H19.692V133.966h338.654V472.615z    M472.615,358.337h-94.577V114.274H133.971V19.692h338.644V358.337z");
+                    break;
+            }
+        }
+
+        // Check if the size of the screen is changed. If so switch between icons if the size meets the condition.
+        private void FullscreenCheck(object sender, SizeChangedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                ChangeScreen.Data = Geometry.Parse("M114.279,0v114.274H0v378.034h378.039V378.029h114.269V0H114.279z M358.346,472.615H19.692V133.966h338.654V472.615z    M472.615,358.337h-94.577V114.274H133.971V19.692h338.644V358.337z");
+            }
+            else
+            {
+                ChangeScreen.Data = Geometry.Parse("M58.152,58.152H0V0h58.152V58.152z M3,55.152h52.152V3H3V55.152z");
+            }
+        }
+        private void MoveWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+    }
+    public static class activeUser
+    {
+
+        public static string name { get; set; } = "Hans Gruber";
+        public static string city { get; set; } = "Zwolle";
+        public static DateTime Age { get; set; } = new DateTime(1996, 6, 3);
+        public static string Bio { get; set; } = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum dolor semper nibh ullamcorper, eu bibendum diam venenatis. Sed ut mi dui. Praesent nec efficitur neque, sed interdum mauris. Etiam suscipit dui at sem cursus, vel blandit metus tempor. Cras id turpis massa. Praesent pulvinar, velit et vestibulum consequat, sem diam convallis magna, porta ultrices sapien enim non tellus. In egestas, dolor at dictum semper, est nisi porttitor metus, sit amet posuere enim ex non magna. Suspendisse maximus libero ut lectus scelerisque viverra. Nam et tempus tellus. Mauris vel consectetur erat, a dictum eros. ";
     }
 }
+

@@ -27,7 +27,7 @@ namespace Matchmaker
     public partial class UserProfile : Page
     {
         //needs to get the currently active account 
-        public UserProfile(User user)
+        public UserProfile(UserData user)
         {
             InitializeComponent();
 
@@ -35,13 +35,13 @@ namespace Matchmaker
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
             DateTime now = DateTime.Now;
-            var a = now.Year - user.Age.Year;
+            var a = now.Year - user.birthday.Year;
             years.Text = a.ToString();
             city.Text = user.city;
-            accountText.Text = user.Bio;
-            bioText.Text = user.Bio;
-            name.Text = user.Name;
-            showName.Text = user.Name;
+            accountText.Text = user.about;
+            bioText.Text = user.about;
+            name.Text = user.realName;
+            showName.Text = user.realName;
             
 
         }
@@ -191,6 +191,10 @@ namespace Matchmaker
             editLocation.Visibility = Visibility.Visible;
             citySelection.Visibility = Visibility.Collapsed;
             city.Visibility = Visibility.Visible;
+        }
+        private void Return(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

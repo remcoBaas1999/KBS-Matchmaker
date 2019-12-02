@@ -38,9 +38,11 @@
         <Rectangle x:Name="purpleRectangle" Fill="Purple" Grid.Column="0" Grid.ColumnSpan="12" Grid.Row="0" Grid.RowSpan="6"/>
         <!-- Close account page-->
 
-       <!--<Button Name="exit" Width="50" Height="30" Click="exit_Click" BorderBrush="{x:Null}" Background="{x:Null}" Grid.RowSpan="2" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left">
-            <Image Source="Images/ic_close-png-24px.png" ></Image>
-        </Button> -->
+       <Rectangle x:Name="exit" Width="50" Height="30"  Grid.RowSpan="2" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" MouseDown="Return">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Images/return.png" Stretch="UniformToFill"/>
+            </Rectangle.Fill>
+        </Rectangle>
         <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130"  Grid.Row="6"   Grid.Column="1" >
             <Ellipse.Fill>
                 <ImageBrush ImageSource="Images\ProfilePicture.jpg" Stretch="UniformToFill"/>
