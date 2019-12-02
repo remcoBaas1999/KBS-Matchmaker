@@ -88,9 +88,9 @@ namespace Matchmaker {
         {
             UserData user = new UserData();
             user.realName = "Reinhart Hendriks";
-            user.birthday = new DateTime(1994, 6, 3);
-            user.city = "New York";
-            user.about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Curabitur posuere, nulla eget pulvinar varius, ex diam efficitur turpis, quis gravida quam tortor ac ligula.Vivamus tempus felis a iaculis porta. Aenean posuere convallis varius. Ut faucibus nulla ipsum, in porta velit iaculis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.Vestibulum iaculis nibh in libero posuere dictum.Nulla tristique tortor fermentum pellentesque ornare. Etiam mollis, diam quis venenatis rutrum, augue diam tincidunt arcu, porttitor congue eros nibh non eros.Duis sodales vel ligula eu placerat. ";
+            user.birthdate = new DateTime(1994, 6, 3).Ticks;
+            //user.city = "New York";
+            //user.about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Curabitur posuere, nulla eget pulvinar varius, ex diam efficitur turpis, quis gravida quam tortor ac ligula.Vivamus tempus felis a iaculis porta. Aenean posuere convallis varius. Ut faucibus nulla ipsum, in porta velit iaculis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.Vestibulum iaculis nibh in libero posuere dictum.Nulla tristique tortor fermentum pellentesque ornare. Etiam mollis, diam quis venenatis rutrum, augue diam tincidunt arcu, porttitor congue eros nibh non eros.Duis sodales vel ligula eu placerat. ";
             Page userProfile = new UserProfile();
             NavigationService.Navigate(userProfile);
         }
