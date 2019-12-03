@@ -2,8 +2,6 @@
 
 ICT.SE.KBS.V19
 
-<img src="media/image1.png" alt="Image result for technical design icon" width="596" height="596" />
-
 Versie: 0.1.5
 
 Versiebeheer
