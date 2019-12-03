@@ -6,8 +6,6 @@ Toelichting op functionele documentatie
 
 ICT.SE.KBS.V19
 
-<img src="media/image1.png" width="600" height="379" />
-
 Versie: 0.2.2
 
 Versiebeheer
