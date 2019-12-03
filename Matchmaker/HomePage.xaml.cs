@@ -39,16 +39,7 @@ namespace Matchmaker {
         private void Profile1Picture1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-            Dictionary<string, Object> dict = (Dictionary<string, Object>)json_serializer.DeserializeObject(MatchmakerAPI_Client.GetUserData("info@guusapeldoorn.nl"));
-            UserData user = new UserData();
-            user.email = dict["email"].ToString();
-            user.realName = dict["realName"].ToString();
-            long date = Convert.ToInt64(dict["birthdate"].ToString());
-            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
-            DateTime birthDay = start.AddMilliseconds(date).ToLocalTime();
-            user.birthdate = date;
-            user.location = dict["city"].ToString();
-            user.about = dict["about"].ToString();
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData("info@guusapeldoorn.nl"));
             Page page = new UserProfile(user);
             NavigationService.Navigate(page);
         }

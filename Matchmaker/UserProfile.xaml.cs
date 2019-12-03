@@ -35,7 +35,8 @@ namespace Matchmaker
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
             DateTime now = DateTime.Now;
-            var a = now.Year - new DateTime(user.birthdate).Year;
+            DateTime birthdate = new DateTime(user.birthdate);
+            int a = now.Year - birthdate.Year;
             years.Text = a.ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
