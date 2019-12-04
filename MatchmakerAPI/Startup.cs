@@ -44,6 +44,13 @@ namespace MatchmakerAPI
 		        EnableDirectoryBrowsing = true
 		    });
 
+			app.UseFileServer(new FileServerOptions
+		    {
+		        FileProvider = new PhysicalFileProvider("/home/student/data/thumbs/"),
+		        RequestPath = "/thumbs",
+		        EnableDirectoryBrowsing = true
+		    });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
