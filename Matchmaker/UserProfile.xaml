@@ -20,6 +20,8 @@
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
@@ -139,7 +141,7 @@
 
         <!-- bio text and editing section-->
         <TextBlock VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" Height="20" FontWeight="Bold" Width="100" Text="About me" Margin="0,100" />
-        <Button VerticalAlignment="Bottom" Grid.Column="4" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Row="6" Height="30" Width="30" Name="editBio" Margin="125,0,0,100"  Click="editBio_Click" Visibility="Visible">
+        <Button VerticalAlignment="Bottom" Grid.Column="4" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Row="7" Height="30" Width="30" Name="editBio" Margin="125,0,0,100"  Click="editBio_Click" Visibility="Visible">
             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg23" Width="24" Height="24">
                 <Canvas.RenderTransform>
                     <TranslateTransform X="0" Y="0"/>
@@ -151,7 +153,7 @@
                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path54" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="M 17.046353 6.9499009 15.215996 5.1151518 16.187813 4.1548222 c 0.567001 -0.5602985 1.035959 -0.9871298 1.125798 -1.0246671 0.26349 -0.110093 0.555491 -0.08332 0.806591 0.073955 0.262052 0.1641348 2.611683 2.5023829 2.711206 2.698071 0.111948 0.2201192 0.137055 0.4520073 0.07351 0.6789605 -0.05116 0.1827225 -0.17877 0.3302218 -1.043249 1.2058483 L 18.87671 8.7846502 Z"/>
             </Canvas>
         </Button>
-        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="30" Width="40"  Name="confirmBioChange" Margin="100,0,0,100" Click="confirmBioChange_Click" Visibility="Collapsed">
+        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="7" Height="30" Width="40"  Name="confirmBioChange" Margin="100,0,0,100" Click="confirmBioChange_Click" Visibility="Collapsed">
             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg81" Width="24" Height="24">
                 <Canvas.RenderTransform>
                     <TranslateTransform X="0" Y="0"/>
@@ -161,7 +163,7 @@
                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path88" Fill="#FFB3B3B3" StrokeThickness="0.0869565" Data="M 8.7130435 18.496651 C 8.6413043 18.471275 7.5358559 17.408317 6.2564913 16.134525 3.7578354 13.646751 3.6858138 13.548427 3.9657207 13.007147 c 0.1905717 -0.368525 0.4644316 -0.537582 0.8708456 -0.537582 0.3340474 0 0.4089295 0.063 2.2223233 1.869565 1.0321451 1.028261 1.9147408 1.869566 1.961324 1.869566 0.046583 0 2.3527424 -2.268299 5.1247984 -5.040664 3.418959 -3.4193408 5.115117 -5.0571403 5.27332 -5.0918876 0.335064 -0.073592 0.824512 0.1596562 0.984588 0.4692088 0.169167 0.3271331 0.17225 0.5607031 0.01139 0.8633129 C 20.22018 7.7738729 9.5707795 18.362885 9.2943391 18.465583 c -0.2626882 0.09759 -0.3761138 0.10365 -0.5812956 0.03107 z"/>
             </Canvas>
         </Button>
-        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="30" Width="40"  Name="denyBioChange" Margin="150,00,0,100" Click="denyBioChange_Click" Visibility="Collapsed">
+        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="7" Height="30" Width="40"  Name="denyBioChange" Margin="150,00,0,100" Click="denyBioChange_Click" Visibility="Collapsed">
             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg48" Width="24" Height="24">
                 <Canvas.RenderTransform>
                     <TranslateTransform X="0" Y="0"/>
@@ -171,8 +173,8 @@
                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path56" Fill="#FFCCCCCC" StrokeThickness="0.0869565" Data="m 6.0511406 18.471298 c -0.3165743 -0.12791 -0.5554884 -0.515607 -0.5554884 -0.901416 0 -0.348643 0.042639 -0.397218 2.5843592 -2.944134 L 10.664371 12.036106 8.0800114 9.4423943 5.4956522 6.848683 V 6.4534597 c 0 -0.6817545 0.598307 -1.1565767 1.1831268 -0.9389409 0.1384107 0.051508 1.396221 1.2361297 2.795134 2.6324919 l 2.543478 2.5388403 2.543479 -2.5388403 c 1.398913 -1.3963622 2.650747 -2.5787114 2.781853 -2.6274427 0.602002 -0.2237597 1.287903 0.3915389 1.165255 1.0453103 -0.04566 0.2433976 -0.511101 0.7522105 -2.577503 2.8176904 -1.386978 1.3863603 -2.521779 2.5602913 -2.521779 2.6087353 0 0.04845 1.134801 1.222376 2.521779 2.608736 2.736496 2.735277 2.780172 2.79479 2.492994 3.397009 -0.183057 0.383873 -0.589738 0.593105 -1.003598 0.516337 -0.267501 -0.04962 -0.70623 -0.447629 -2.882619 -2.615084 l -2.567095 -2.556558 -2.476383 2.482691 c -1.3620104 1.365481 -2.5820482 2.538806 -2.7111949 2.607389 -0.261833 0.139047 -0.4587029 0.149672 -0.7314385 0.03947 z"/>
             </Canvas>
         </Button>
-        <TextBox  VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
-        <TextBlock VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
+        <TextBox  VerticalAlignment="Bottom" Grid.Row="7" Grid.Column="4" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
+        <TextBlock VerticalAlignment="Bottom" Grid.Row="7" Grid.Column="4" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
     </Grid>
 </Page>
     
