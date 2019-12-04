@@ -10,16 +10,16 @@ using System.Runtime.Serialization;
 
 namespace MatchmakerAPI.Controllers
 {
-    [ApiController]
-    [Route("/image/")]
-    public class ImageController : ControllerBase
-    {
-        [HttpGet("get/id={id}")]
-        public ActionResult GetImage(string id)
-		{
-			var dir = MapPath("/home/student/res/images/");
-	       	var path = Path.Combine(dir, id + ".jpg");
-	       	return base.File(path, "image/jpeg");
-		}
-	}
+    // [ApiController]
+    // [Route("/image/")]
+    // public class ImageController : ControllerBase
+    // {
+    //     [HttpGet("get/id={id}")]
+    //     public ActionResult GetImage(string id)
+	// 	{
+	// 		var dir = MapPath("/home/student/res/images/");
+	//        	var path = Path.Combine(dir, id + ".jpg");
+	//        	return base.File(path, "image/jpeg");
+	// 	}
+	// }
 }
