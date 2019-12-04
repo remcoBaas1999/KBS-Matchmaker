@@ -17,7 +17,7 @@ namespace MatchmakerAPI.Controllers
         [HttpGet("get/id={id}")]
         public ActionResult GetImage(string id)
 		{
-			var dir = Server.MapPath("/home/student/res/images/");
+			var dir = MapPath("/home/student/res/images/");
 	       	var path = Path.Combine(dir, id + ".jpg");
 	       	return base.File(path, "image/jpeg");
 		}
