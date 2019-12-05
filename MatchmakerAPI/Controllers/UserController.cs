@@ -47,7 +47,7 @@ namespace MatchmakerAPI.Controllers
         }
 
 		[HttpGet("get/all")]
-        public Dictionary<string, int> UserByEmail(string email)
+        public Dictionary<string, int> AllUsers(string email)
         {
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
