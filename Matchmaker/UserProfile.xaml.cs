@@ -42,28 +42,26 @@ namespace Matchmaker
             showName.Text = user.realName;
             city.Text = user.location;
             bioText.Text = user.about;
-            foreach (var item in user.hobbies)
-            {
+            //foreach (var item in user.hobbies)
+            //{
                 //add to list of Hobbies in the XAML
-            }
+            //}
             userInView = user;
         }
-        public UserProfile(UserData user, bool userAccount)
+        public UserProfile(UserData active, bool userAccount)
         {
             InitializeComponent();
-            activeUser active = new activeUser();
-            years.Text = (DateTime.Now.Year - active.Age.Year).ToString();
-            city.Text = active.city;
-            accountText.Text = active.Bio;
-            bioText.Text = active.Bio;
+            years.Text = (DateTime.Now.Year - new DateTime(active.birthdate).Year).ToString();
+            city.Text = active.location;
+            accountText.Text = active.about;
+            bioText.Text = active.about;
             name.Text = active.realName;
             showName.Text = active.realName;
-            foreach (var item in active.hobbies)
-            {
+            //foreach (var item in active.hobbies)
+            //{
                 //add to list of Hobbies in the Xaml
-            }
+            //}
             userInView = active;
-
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)
