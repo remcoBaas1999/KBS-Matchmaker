@@ -26,6 +26,8 @@ namespace Matchmaker {
             InitializeComponent();
 
             //Show users
+            List < UserData > Profiles = new List<UserData>();
+            //Profiles = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(https://145.44.233.207/user/get/all));
             //Create first profile
             UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData("janjansen@gmail.com"));
             Profile1Tag.Content = user1.realName;
