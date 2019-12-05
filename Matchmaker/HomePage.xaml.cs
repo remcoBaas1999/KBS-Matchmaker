@@ -20,18 +20,30 @@ using System.Windows.Shapes;
 namespace Matchmaker {
     public partial class HomePage : Page
     {
+        private int FirstProfileID;
         public HomePage()
         {
             //Start application
             InitializeComponent();
 
-            //Show users
-            List < UserData > Profiles = new List<UserData>();
-            //Profiles = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(https://145.44.233.207/user/get/all));
+            //Get 4 profiles on homepage
+            Dictionary<String,int> Profiles = new Dictionary<string, int>();
+            Profiles = MatchmakerAPI_Client.GetUsers();
+
+            
+
+            var profiles = Profiles.Values.ToList();
+
             //Create first profile
-            UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData("janjansen@gmail.com"));
-            Profile1Tag.Content = user1.realName;
-            //ProfilePicture1.Fill.();
+            Random random = new Random();
+            int rnd = random.Next(0, Profiles.Count);
+            int ProfileID1 = profiles.ElementAt(rnd);
+            FirstProfileID = ProfileID1;
+            UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ProfileID1));
+            //Set name
+            Profile1Tag.Content = user1.realName; 
+            //Set profile picture
+            //Set Cover Image
 
 
 
@@ -45,9 +57,7 @@ namespace Matchmaker {
         }
         private void Profile1Picture1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData("info@guusapeldoorn.nl"));
-            Page page = new UserProfile(user);
+             Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)));
             NavigationService.Navigate(page);
         }
 
