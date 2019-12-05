@@ -13,7 +13,7 @@ namespace MatchmakerAPI
 		public int[] hobbies { get; set; }
 		public int[] eventsAtt { get; set; }
 		public int[] eventsOrg { get; set; }
-		public int profilePicture { get; set; }
+		public string profilePicture { get; set; }
 		public int[] pictures { get; set; }
 		public int[] matches { get; set; }
 		public int[] chats { get; set; }
