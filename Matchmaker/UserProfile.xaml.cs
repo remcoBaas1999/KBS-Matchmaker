@@ -48,7 +48,7 @@ namespace Matchmaker
             }
             userInView = user;
         }
-        public UserProfile()
+        public UserProfile(UserData user, bool userAccount)
         {
             InitializeComponent();
             activeUser active = new activeUser();
@@ -63,6 +63,7 @@ namespace Matchmaker
                 //add to list of Hobbies in the Xaml
             }
             userInView = active;
+
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)

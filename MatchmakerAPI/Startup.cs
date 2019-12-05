@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.FileProviders;
 
 namespace MatchmakerAPI
 {
@@ -35,6 +36,20 @@ namespace MatchmakerAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+			app.UseFileServer(new FileServerOptions
+		    {
+		        FileProvider = new PhysicalFileProvider("/home/student/data/images/"),
+		        RequestPath = "/images",
+		        EnableDirectoryBrowsing = true
+		    });
+
+			app.UseFileServer(new FileServerOptions
+		    {
+		        FileProvider = new PhysicalFileProvider("/home/student/data/users/"),
+		        RequestPath = "/images/users",
+		        EnableDirectoryBrowsing = true
+		    });
 
             app.UseHttpsRedirection();
 

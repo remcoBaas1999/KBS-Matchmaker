@@ -20,6 +20,7 @@ namespace MatchMakerClassLibrary
         //methods
         public async Task<bool> LogInAsync(string password)
         {
+            
             return await MatchmakerAPI_Client.AuthenticateAsync(this.Email, password);
             
         }
@@ -47,4 +48,6 @@ namespace MatchMakerClassLibrary
 
         }
     }
+
+    
 }
