@@ -43,15 +43,20 @@ namespace Matchmaker
             city.Text = user.location;
             bioText.Text = user.about;
         }
-        public UserProfile()
+        public UserProfile(UserData user, bool userAccount)
         {
             InitializeComponent();
-            years.Text = (DateTime.Now.Year - activeUser.Age.Year).ToString();
-            city.Text = activeUser.city;
-            accountText.Text = activeUser.Bio;
+
+            editBio.Visibility = Visibility.Visible;
+            editLocation.Visibility = Visibility.Visible;
+            editName.Visibility = Visibility.Visible;
+
+            years.Text = (DateTime.Now.Year - user.birthdate).ToString();
+            city.Text = user.location;
+            accountText.Text = user.about;
             bioText.Text = activeUser.Bio;
-            name.Text = activeUser.name;
-            showName.Text = activeUser.name;
+            name.Text = user.realName;
+            showName.Text = user.realName;
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)
