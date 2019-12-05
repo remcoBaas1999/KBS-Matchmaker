@@ -25,8 +25,13 @@ namespace Matchmaker {
             //Start application
             InitializeComponent();
 
-            //Log into users account
-            
+            //Show users
+            //Create first profile
+            UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData("janjansen@gmail.com"));
+            Profile1Tag.Content = user1.realName;
+            //ProfilePicture1.Fill.();
+
+
 
         }
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -84,7 +89,9 @@ namespace Matchmaker {
 
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Page userProfile = new UserProfile();
+            
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            Page userProfile = new UserProfile(user, User.loggedIn);
             NavigationService.Navigate(userProfile);
         }
     }
