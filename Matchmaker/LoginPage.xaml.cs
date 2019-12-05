@@ -75,6 +75,9 @@ namespace Matchmaker
 
                     try
                     {
+                        User.email = account.Email;
+                        User.loggedIn = true;
+
                         HomePage homePage = new HomePage();
                         NavigationService.Navigate(homePage);
                         NavigationService.RemoveBackEntry();
@@ -87,6 +90,9 @@ namespace Matchmaker
                             Foreground = Brushes.Red
                         };
                         LoginErrorText.Children.Add(LoginTryError);
+
+                        User.email = "";
+                        User.loggedIn = false;
                     }
                 }
                 else
