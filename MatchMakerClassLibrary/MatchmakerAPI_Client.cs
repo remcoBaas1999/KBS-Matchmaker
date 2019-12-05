@@ -34,6 +34,11 @@ namespace MatchMakerClassLibrary
 			return Get($@"https://145.44.233.207/user/get/email={email}");
 		}
 
+		public static Dictionary<string, int> GetUsers() {
+			var json = Get($@"https://145.44.233.207/user/get/all");
+			return JsonConvert.DeserializeObject<Dictionary<string, int>>(json)
+		}
+
         public static async Task<AuthData> GetAuthDataAsync(string email) {
             try {
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -54,7 +59,7 @@ namespace MatchMakerClassLibrary
             bool check = false;
 
             //Retrieve data
-            try { 
+            try {
                 AuthData response = await GetAuthDataAsync(email);
                 //Get salt and hash from database using email
                 string saltRetrievedString = response.salt;
@@ -83,7 +88,7 @@ namespace MatchMakerClassLibrary
             }
 
 
-            
+
             return false;
         }
 		private static string Get(string uri)
@@ -100,7 +105,7 @@ namespace MatchMakerClassLibrary
 		    }
 		}
 
-  
+
         public static async Task<bool> PostNewUserDataAsync(UserData newUserData) {
             string uri = @"https://145.44.233.207/user/post/new";
             var result = await Post(uri, newUserData);
