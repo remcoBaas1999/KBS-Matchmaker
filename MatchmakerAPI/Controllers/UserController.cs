@@ -47,13 +47,13 @@ namespace MatchmakerAPI.Controllers
         }
 
 		[HttpGet("get/all")]
-        public Dictionary<string, int> AllUsers(string email)
+        public Dictionary<string, int> AllUsers()
         {
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
 		        string json = r.ReadToEnd();
 				var dict = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
-				return JsonConvert.SerializeObject(dict);
+				return dict;
 		    }
         }
 
