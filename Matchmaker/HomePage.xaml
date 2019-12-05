@@ -55,12 +55,19 @@
                         <ImageBrush ImageSource="Images\ProfileBackground.jpg" Stretch="UniformToFill"/>
                     </Border.Background>
                     <Canvas>
-                        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" MouseDown="Profile1Picture1_MouseDown" Canvas.Left="25" Canvas.Top="25">
+                        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" VerticalAlignment="Top" Width="130" MouseDown="Profile1Picture1_MouseDown" Canvas.Left="25" Canvas.Top="25">
+                            <Ellipse.Stroke>
+                                <ImageBrush ImageSource="{Binding https://145.44.233.207/images/users/1.jpg}"/>
+                            </Ellipse.Stroke>
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="Images\ProfilePicture.jpg" Stretch="UniformToFill"/>
+                                <ImageBrush Stretch="UniformToFill">
+                                    <ImageBrush.ImageSource>
+                                        <BitmapImage UriSource="https://145.44.233.207/images/users/1.jpg"/>
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
                             </Ellipse.Fill>
                         </Ellipse>
-                        <Label x:Name="Profile1Tag" Content="Jeff Anderson, 43" Canvas.Bottom="0" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Top" Width="178" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold"/>
+                        <Label x:Name="Profile1Tag" Content="(Name)" Canvas.Bottom="0" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Top" Width="178" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold"/>
                     </Canvas>
                 </Border>
                 <Border x:Name="Profile2BackgroundPicture" Margin="20" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15">
