@@ -10,7 +10,7 @@ namespace MatchmakerAPI
 		public string realName { get; set; }
 		public string about { get; set; }
 		public string city { get; set; }
-		public int[] hobbies { get; set; }
+		public List<Hobby> hobbies { get; set; }
 		public int[] eventsAtt { get; set; }
 		public int[] eventsOrg { get; set; }
 		public string profilePicture { get; set; }

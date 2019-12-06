@@ -57,6 +57,22 @@ namespace MatchmakerAPI.Controllers
 		    }
         }
 
+		[HttpGet("get/id={id}/hobbies")]
+		public List<Hobby> GetUserHobbies(int id)
+		{
+			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
+		    {
+		        string json = r.ReadToEnd();
+				try {
+					var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
+					return JsonConvert.DeserializeObject<List<Hobby>>(test.hobbies);
+				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					return null;
+				}
+
+		    }
+		}
+
 		[HttpPost("post/new")]
 		public CreatedAtActionResult AddNewUser(NewUserData data)
 		{
