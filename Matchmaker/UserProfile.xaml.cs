@@ -34,10 +34,8 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
-            DateTime now = DateTime.Now;
-            DateTime birthdate = new DateTime(user.birthdate);
-            int a = now.Year - birthdate.Year;
-            years.Text = a.ToString();
+            
+            years.Text = (CalculateAge(UnixTimeToDateTime(user.birthdate))).ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
             city.Text = user.location;
@@ -47,16 +45,54 @@ namespace Matchmaker
         {
             InitializeComponent();
 
-            editBio.Visibility = Visibility.Visible;
-            editLocation.Visibility = Visibility.Visible;
-            editName.Visibility = Visibility.Visible;
+            if (userAccount)
+            {
+                editBio.Visibility = Visibility.Visible;
+                editLocation.Visibility = Visibility.Visible;
+                editName.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                editBio.Visibility = Visibility.Collapsed;
+                editLocation.Visibility = Visibility.Collapsed;
+                editName.Visibility = Visibility.Collapsed;
+            }
 
-            years.Text = (DateTime.Now.Year - user.birthdate).ToString();
+            DateTime age = UnixTimeToDateTime(user.birthdate);
+
+            years.Text = (CalculateAge(age).ToString());
             city.Text = user.location;
             accountText.Text = user.about;
             bioText.Text = activeUser.Bio;
             name.Text = user.realName;
             showName.Text = user.realName;
+        }
+
+        public int CalculateAge(DateTime dob)
+        {
+            // Calculate dif between years
+            var today = DateTime.Today;
+            var age = today.Year - dob.Year;
+
+            // Now check the months and days
+            if(dob.Month > today.Month)
+            {
+                age--;
+            }
+            else if (dob.Day > today.Day)
+            {
+                age--;
+            }
+
+
+            return age;
+        }
+
+        public DateTime UnixTimeToDateTime(long unixtime)
+        {
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixtime).ToLocalTime();
+            return dtDateTime;
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)
