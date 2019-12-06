@@ -44,7 +44,6 @@
             </WrapPanel>
         </Grid>
         <StackPanel Grid.Column="0" Grid.Row="1">
-
             <StackPanel>
                 <Label x:Name="RecommendedPeople" Content="People you might like" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Roboto" FontWeight="Bold" Height="36" Width="234" FontSize="22" RenderTransformOrigin="0.201,0.472" Margin="10"/>
                 <Button x:Name="RefreshButton" Content="Refresh" Foreground="#673AB7" HorizontalAlignment="Center" Height="35" VerticalAlignment="Top" Width="94" Click="Button_Click" FontFamily="Roboto" Background="{x:Null}" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.044,-2.382" Grid.Column="0" BorderBrush="{x:Null}" MouseDown="RefreshButton_MouseDown"/>
@@ -55,15 +54,10 @@
                         <ImageBrush ImageSource="Images\ProfileBackground.jpg" Stretch="UniformToFill"/>
                     </Border.Background>
                     <Canvas>
-                        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" VerticalAlignment="Top" Width="130" MouseDown="Profile1Picture1_MouseDown" Canvas.Left="25" Canvas.Top="25">
-                            <Ellipse.Stroke>
-                                <ImageBrush ImageSource="{Binding https://145.44.233.207/images/users/1.jpg}"/>
-                            </Ellipse.Stroke>
+                        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" VerticalAlignment="Top" Width="130" MouseDown="Profile1Picture1_MouseDown" Canvas.Left="25" Canvas.Top="25" Stroke="Black">
                             <Ellipse.Fill>
                                 <ImageBrush Stretch="UniformToFill">
-                                    <ImageBrush.ImageSource>
-                                        <BitmapImage UriSource="https://145.44.233.207/images/users/1.jpg"/>
-                                    </ImageBrush.ImageSource>
+            
                                 </ImageBrush>
                             </Ellipse.Fill>
                         </Ellipse>
@@ -79,9 +73,6 @@
                     </Border.Background>
                     <Canvas>
                         <Ellipse x:Name="ProfilePicture2" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="25" Canvas.Top="24">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="Images/NoProfilePicture.png" Stretch="UniformToFill"/>
-                            </Ellipse.Fill>
                         </Ellipse>
                         <Label x:Name="Profile2Tag" Content="Anna Bell, 38" Canvas.Bottom="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
                     </Canvas>
@@ -91,10 +82,7 @@
                         <ImageBrush ImageSource="Images/Background2.jpg" Stretch="UniformToFill"/>
                     </Border.Background>
                     <Canvas>
-                        <Ellipse x:Name="Profile1Picture3" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="24" Canvas.Top="24">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="Images/ProfilePicture3.jpeg" Stretch="UniformToFill"/>
-                            </Ellipse.Fill>
+                        <Ellipse x:Name="ProfilePicture3" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="24" Canvas.Top="24">
                         </Ellipse>
                         <Label x:Name="Profile3Tag" Content="Kia Huang, 29" Canvas.Bottom="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20" />
                     </Canvas>
@@ -104,10 +92,7 @@
                         <ImageBrush ImageSource="Images/Background3.jpg" Stretch="UniformToFill"/>
                     </Border.Background>
                     <Canvas>
-                        <Ellipse x:Name="Profile1Picture4" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="25" Canvas.Top="24">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="Images/ProfilePicture4.jpg" Stretch="UniformToFill"/>
-                            </Ellipse.Fill>
+                        <Ellipse x:Name="ProfilePicture4" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="25" Canvas.Top="24">
                         </Ellipse>
                         <Label x:Name="Profile4Tag" Content="David Atton, 43" Canvas.Bottom="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20" />
                     </Canvas>
