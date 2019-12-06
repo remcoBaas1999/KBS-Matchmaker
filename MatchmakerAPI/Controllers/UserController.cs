@@ -73,6 +73,40 @@ namespace MatchmakerAPI.Controllers
 		    }
 		}
 
+		[HttpPost("post/hobbies/add")]
+		public CreatedAtActionResult UpdateUser(UserData data)
+		{
+			int key;
+
+			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
+		    {
+		        string json = r.ReadToEnd();
+				try {
+					key = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[data.email];
+				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					key = 0;
+				}
+		    }
+
+			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
+		    {
+		        string json = r.ReadToEnd();
+
+				var users = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json);
+
+				users[key] = data;
+
+				var text = JsonConvert.SerializeObject(users);
+				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
+		    }
+
+			try {
+				return CreatedAtAction("UpdateUser", new { success = true });
+			} catch (System.InvalidOperationException) {
+				return null;
+			}
+		}
+
 		[HttpPost("post/new")]
 		public CreatedAtActionResult AddNewUser(NewUserData data)
 		{
