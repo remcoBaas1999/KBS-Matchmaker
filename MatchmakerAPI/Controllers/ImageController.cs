@@ -19,7 +19,7 @@ namespace MatchmakerAPI.Controllers
         {
 			DirectoryInfo d = new DirectoryInfo(@"/home/student/data/images/");
 			FileInfo[] Files = d.GetFiles("*.jpg");
-			var dict = new Dictionary<string, string>;
+			var dict = new Dictionary<string, string>();
 			foreach(FileInfo file in Files )
 			{
 			  dict.Add(file.Name, $"https://145.44.233.207/images/covers/{file.Name}");
