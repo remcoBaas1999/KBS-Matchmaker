@@ -71,19 +71,25 @@ namespace Matchmaker
         public int CalculateAge(DateTime dob)
         {
             // Calculate dif between years
-            var today = DateTime.Today;
-            var age = today.Year - dob.Year;
+            DateTime today = DateTime.Today;
+            int age = today.Year - dob.Year;
+            bool month = true;
 
             // Now check the months and days
-            if(dob.Month > today.Month)
+            if (dob.Month > today.Month)
             {
                 age--;
+                month = false;
             }
-            else if (dob.Day > today.Day)
+            else
             {
-                age--;
-            }
+                month = false;
 
+                if (dob.Day > today.Day && month == true)
+                {
+                    age--;
+                }
+            }
 
             return age;
         }

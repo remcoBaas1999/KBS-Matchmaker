@@ -142,7 +142,7 @@ namespace Matchmaker
                 //Do Something With User
                 string[] hashAndSalt = Password.HashPassword(pw);
                 DateTime dtBd = new DateTime();
-                DateTime.TryParse($"{dOBM}/{dOBD}/{dOBY}", out dtBd); ;
+                DateTime.TryParse($"{dOBD}/{dOBM}/{dOBY}", out dtBd); ;
                 var dateTimeOffset = new DateTimeOffset(dtBd);
                 var unixDateTime = dateTimeOffset.ToUnixTimeSeconds();
 
