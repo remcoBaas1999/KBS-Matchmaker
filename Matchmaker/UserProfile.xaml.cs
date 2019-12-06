@@ -212,5 +212,34 @@ namespace Matchmaker
         {
             NavigationService.GoBack();
         }
+
+        private void addHobby_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //Window window = new AddHobbies();
+            //window.WindowStyle = WindowStyle.None;
+            //window.Show();
+            AddHobbies.Visibility = Visibility.Visible;
+        }
+
+        private void DenyNewHobbies_Click(object sender, RoutedEventArgs e)
+        {
+            AddHobbies.Visibility = Visibility.Collapsed;
+            entryHobbies.Visibility = Visibility.Collapsed;
+            addInterests.Visibility = Visibility.Collapsed;
+            inputHobbies.Visibility = Visibility.Collapsed;
+            svg122.Visibility = Visibility.Collapsed;
+            confirmNewHobbies.Visibility = Visibility.Collapsed;
+        }
+
+        private void confirmNewHobbies_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void requestSuggestions_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> listHobbies = new List<string>() { "Dance", "Hop hop", "gotterdammerung" }; //find interests based on string
+            listPossibleInterests.DataContext = listHobbies;
+        }
     }
 }
