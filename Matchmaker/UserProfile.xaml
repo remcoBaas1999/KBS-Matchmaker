@@ -22,12 +22,12 @@
 
         <!--create the purple background-->
 
-        <Border Grid.Row="0" Grid.Column="1" Width="1008" Height="181" CornerRadius="10, 10,10,10" Background="#673AB7" Margin="0, 46,0,0">
+        <Border Grid.Column="1" x:Name="purpleBox" Grid.Row="0" Width="1008" MaxWidth="1008" Height="181" CornerRadius="10, 10,10,10" Background="#673AB7" Margin="0,46,0,0">
             <Grid>
-                <Canvas MouseDown="Return" Margin="30, 30, 0,0">
+                <Canvas MouseDown="Return" Margin="30, 30, 0,0" Height="18" Width="18" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <Path Data="M13.2997 0.710001C12.9097 0.320001 12.2797 0.320001 11.8897 0.710001L6.99973 5.59L2.10973 0.700001C1.71973 0.310001 1.08973 0.310001 0.699727 0.700001C0.309727 1.09 0.309727 1.72 0.699727 2.11L5.58973 7L0.699727 11.89C0.309727 12.28 0.309727 12.91 0.699727 13.3C1.08973 13.69 1.71973 13.69 2.10973 13.3L6.99973 8.41L11.8897 13.3C12.2797 13.69 12.9097 13.69 13.2997 13.3C13.6897 12.91 13.6897 12.28 13.2997 11.89L8.40973 7L13.2997 2.11C13.6797 1.73 13.6797 1.09 13.2997 0.710001Z" Fill="White"/>
                 </Canvas>
-                <Ellipse x:Name="ProfilePicture1" Height="170" Width="170" Margin="72,78,766,-67">
+                <Ellipse x:Name="ProfilePicture1" Height="170" Width="170" Margin="72,78,766,-67" Panel.ZIndex="99">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="Images\ProfilePicture.jpg" Stretch="UniformToFill"/>
                     </Ellipse.Fill>
@@ -37,7 +37,7 @@
                 <!--display the name of the profile-->
                 <StackPanel Orientation="Horizontal">
                     <!-- change back to visible-->
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Margin="266,129,0,31" Foreground="White"  FontFamily="Roboto" Width="Auto" MaxWidth="150" Name="showName" Visibility="Visible" FontSize="20"/>
+                    <TextBlock  HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Margin="266,129,0,31" Foreground="White"  FontFamily="Roboto" Width="Auto" MaxWidth="150" Name="showName" Visibility="Visible" FontSize="20"/>
                     <Button Height="30" Width="30" Name="editName" Click="editName_Click" Visibility="Visible" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,125,0,0">
                         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg22" Width="24" Height="24">
                             <Canvas.RenderTransform>
@@ -81,15 +81,15 @@
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="Age" TextAlignment="Center" Foreground="LightGray" FontFamily="Roboto" Height="14" Width="30" Margin="446,101,532,0"/>
-                    <TextBlock FontSize="20" Height="20" TextAlignment="Center" Foreground="White" FontFamily="Roboto" Width="35" x:Name="years" Margin="415,0,500,0" />
+                    <TextBlock Text="Age" TextAlignment="Center" Foreground="LightGray" FontFamily="Roboto" Height="14" Width="30" Margin="446,105.4,532,0"/>
+                    <TextBlock  FontSize="20" Height="28" TextAlignment="Center" Foreground="White" FontFamily="Roboto" Width="35" x:Name="years" Margin="444,10.49,529,0" />
                 </StackPanel>
 
-                <StackPanel Width="Auto" HorizontalAlignment="Right">
-                    <TextBlock Text="Location" Foreground="LightGray"  FontFamily="Roboto" Height="20" Width="50" HorizontalAlignment="Left" Margin="0,101,52,0"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock FontSize="20" Foreground="White" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Right" Margin="0,0,52,0"/>
-                        <Button  Width="40" Height="30" Grid.Column="7" Grid.Row="4" Click="editLocation_Click" BorderBrush="{x:Null}" Background="{x:Null}" Name="editLocation" Visibility="Visible" Margin="50,0,0,0">
+                <StackPanel Width="Auto" HorizontalAlignment="Right" Margin="0,0,7,0">
+                    <TextBlock Text="Location" Foreground="LightGray"  FontFamily="Roboto" Height="20" Width="Auto" HorizontalAlignment="Left" Margin="0,106,12,0"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                        <TextBlock FontSize="20" Foreground="White" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Right" Width="Auto" Margin="0,0,7,0"/>
+                        <Button  Width="40" Height="30" Grid.Column="7" Grid.Row="4" Click="editLocation_Click" BorderBrush="{x:Null}" Background="{x:Null}" Name="editLocation" Visibility="Visible" Margin="0,0,7,0">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg24" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -103,7 +103,8 @@
                                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path44" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="M 17.046353 6.9499009 15.215996 5.1151518 16.187813 4.1548222 c 0.567001 -0.5602985 1.035959 -0.9871298 1.125798 -1.0246671 0.26349 -0.110093 0.555491 -0.08332 0.806591 0.073955 0.262052 0.1641348 2.611683 2.5023829 2.711206 2.698071 0.111948 0.2201192 0.137055 0.4520073 0.07351 0.6789605 -0.05116 0.1827225 -0.17877 0.3302218 -1.043249 1.2058483 L 18.87671 8.7846502 Z"/>
                             </Canvas>
                         </Button>
-                        <Button Height="30" BorderBrush="{x:Null}" Background="{x:Null}" Width="40" Grid.Column="8" Grid.Row="4" Click="confirmNewLocation_Click" Name="confirmNewLocation" Visibility="Collapsed">
+                        <ComboBox FontSize="20" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Row="4" Grid.Column="6" FontFamily="Roboto"  Width="130" Name="citySelection" Visibility="Collapsed" Loaded="citySelection_Loaded" SelectedValuePath="Content"/>
+                        <Button Height="30" BorderBrush="{x:Null}" Background="{x:Null}" Width="40" Grid.Column="8" Grid.Row="4" Click="confirmNewLocation_Click" Name="confirmNewLocation" Visibility="Collapsed" HorizontalAlignment="Right">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg82" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -115,7 +116,7 @@
                                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path89" Fill="#FFB3B3B3" StrokeThickness="0.0869565" Data="M 8.7130435 18.496651 C 8.6413043 18.471275 7.5358559 17.408317 6.2564913 16.134525 3.7578354 13.646751 3.6858138 13.548427 3.9657207 13.007147 c 0.1905717 -0.368525 0.4644316 -0.537582 0.8708456 -0.537582 0.3340474 0 0.4089295 0.063 2.2223233 1.869565 1.0321451 1.028261 1.9147408 1.869566 1.961324 1.869566 0.046583 0 2.3527424 -2.268299 5.1247984 -5.040664 3.418959 -3.4193408 5.115117 -5.0571403 5.27332 -5.0918876 0.335064 -0.073592 0.824512 0.1596562 0.984588 0.4692088 0.169167 0.3271331 0.17225 0.5607031 0.01139 0.8633129 C 20.22018 7.7738729 9.5707795 18.362885 9.2943391 18.465583 c -0.2626882 0.09759 -0.3761138 0.10365 -0.5812956 0.03107 z"/>
                             </Canvas>
                         </Button>
-                        <Button Height="30" BorderBrush="{x:Null}" Background="{x:Null}" Width="40" Grid.Column="8" Grid.Row="4" Click="denyLocationChange_Click" Name="denyLocationChange" Visibility="Collapsed" Margin="50,0,0,0">
+                        <Button Height="30" BorderBrush="{x:Null}" Background="{x:Null}" Width="40" Grid.Column="8" Grid.Row="4" Click="denyLocationChange_Click" Name="denyLocationChange" Visibility="Collapsed" Margin="0" HorizontalAlignment="Right">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg49" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -127,13 +128,12 @@
                                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path67" Fill="#FFCCCCCC" StrokeThickness="0.0869565" Data="m 6.0511406 18.471298 c -0.3165743 -0.12791 -0.5554884 -0.515607 -0.5554884 -0.901416 0 -0.348643 0.042639 -0.397218 2.5843592 -2.944134 L 10.664371 12.036106 8.0800114 9.4423943 5.4956522 6.848683 V 6.4534597 c 0 -0.6817545 0.598307 -1.1565767 1.1831268 -0.9389409 0.1384107 0.051508 1.396221 1.2361297 2.795134 2.6324919 l 2.543478 2.5388403 2.543479 -2.5388403 c 1.398913 -1.3963622 2.650747 -2.5787114 2.781853 -2.6274427 0.602002 -0.2237597 1.287903 0.3915389 1.165255 1.0453103 -0.04566 0.2433976 -0.511101 0.7522105 -2.577503 2.8176904 -1.386978 1.3863603 -2.521779 2.5602913 -2.521779 2.6087353 0 0.04845 1.134801 1.222376 2.521779 2.608736 2.736496 2.735277 2.780172 2.79479 2.492994 3.397009 -0.183057 0.383873 -0.589738 0.593105 -1.003598 0.516337 -0.267501 -0.04962 -0.70623 -0.447629 -2.882619 -2.615084 l -2.567095 -2.556558 -2.476383 2.482691 c -1.3620104 1.365481 -2.5820482 2.538806 -2.7111949 2.607389 -0.261833 0.139047 -0.4587029 0.149672 -0.7314385 0.03947 z"/>
                             </Canvas>
                         </Button>
-                        <ComboBox FontSize="20" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Row="4" Grid.Column="6" FontFamily="Roboto"  Width="130" Name="citySelection" Visibility="Collapsed" Loaded="citySelection_Loaded" SelectedValuePath="Content"/>
                     </StackPanel>
 
                 </StackPanel>
             </Grid>
         </Border>
-        <StackPanel Grid.Row="1" Grid.Column="1" Height="Auto" Width="Auto">
+        <StackPanel Grid.Row="1" Grid.Column="1" Height="Auto" Width="{Binding ElementName=purpleBox}">
             <WrapPanel Grid.Row="1" Grid.Column="1" Margin="266, 24,0,0">
                 <!-- placeholder for chosen hobbies -->
                 <Border Background="#673AB7" CornerRadius="16" Width="Auto" Height="32" Margin="0,0,12,0">
@@ -185,24 +185,11 @@
                     </Canvas>
                 </Button>
             </StackPanel>
-            <WrapPanel>
-                <TextBox HorizontalAlignment="Center" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
-                <TextBlock HorizontalAlignment="Center" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
-            </WrapPanel>
+            <StackPanel>
+                <TextBox HorizontalAlignment="Center" TextAlignment="Center" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Collapsed" />
+                <TextBlock HorizontalAlignment="Center" TextAlignment="Center"  FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" x:Name="bioText" Visibility="Visible" />
+            </StackPanel>
         </StackPanel>
-
-
-
-
-
-
-
-
-
-
-
-
-
     </Grid>
 </Page>
     

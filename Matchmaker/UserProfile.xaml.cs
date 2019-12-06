@@ -68,6 +68,7 @@ namespace Matchmaker
             showName.Text = user.realName;
         }
 
+        // Calculate the age correctly by looking at the year, month and day.
         public int CalculateAge(DateTime dob)
         {
             // Calculate dif between years
@@ -93,6 +94,7 @@ namespace Matchmaker
 
             return age;
         }
+
 
         public DateTime UnixTimeToDateTime(long unixtime)
         {
