@@ -14,7 +14,7 @@ namespace MatchmakerAPI.Controllers
     [Route("/images/")]
     public class ImageController : ControllerBase
     {
-        [HttpGet("get/list")]
+        [HttpGet("covers/get/list")]
         public Dictionary<string, string> ImageList(int id)
         {
 			DirectoryInfo d = new DirectoryInfo(@"/home/student/data/images/");
