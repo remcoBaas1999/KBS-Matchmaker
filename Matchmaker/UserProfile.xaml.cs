@@ -162,7 +162,6 @@ namespace Matchmaker
             string newCity = citySelection.Text;
             city.Text = newCity;
             userInView.city = newCity;
-            //MessageBox.Show(userInView.location);
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
