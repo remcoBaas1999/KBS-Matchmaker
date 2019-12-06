@@ -40,7 +40,6 @@ namespace Matchmaker
             years.Text = a.ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
-            MessageBox.Show(user.city);
             city.Text = user.city;
             bioText.Text = user.about;
             //foreach (var item in user.hobbies)

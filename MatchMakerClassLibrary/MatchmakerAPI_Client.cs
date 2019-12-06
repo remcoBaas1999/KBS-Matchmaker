@@ -36,7 +36,7 @@ namespace MatchMakerClassLibrary
 
 		public static Dictionary<string, int> GetUsers() {
 			var json = Get($@"https://145.44.233.207/user/get/all");
-			return JsonConvert.DeserializeObject<Dictionary<string, int>>(json)
+            return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
 		}
 
         public static async Task<AuthData> GetAuthDataAsync(string email) {
