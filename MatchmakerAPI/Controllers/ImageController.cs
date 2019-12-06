@@ -12,7 +12,7 @@ namespace MatchmakerAPI.Controllers
 {
     [ApiController]
     [Route("/images/")]
-    public class HobbyController : ControllerBase
+    public class ImageController : ControllerBase
     {
         [HttpGet("get/list")]
         public Dictionary<string, string> ImageList(int id)
