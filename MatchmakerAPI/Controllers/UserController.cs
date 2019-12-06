@@ -65,7 +65,7 @@ namespace MatchmakerAPI.Controllers
 		        string json = r.ReadToEnd();
 				try {
 					var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
-					return JsonConvert.DeserializeObject<List<Hobby>>(test.hobbies);
+					return test.hobbies;
 				} catch (System.Collections.Generic.KeyNotFoundException e) {
 					return null;
 				}
