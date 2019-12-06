@@ -42,7 +42,7 @@ namespace MatchmakerAPI
 			app.UseFileServer(new FileServerOptions
 		    {
 		        FileProvider = new PhysicalFileProvider("/home/student/data/images/"),
-		        RequestPath = "/images",
+		        RequestPath = "/images/covers",
 		        EnableDirectoryBrowsing = true
 		    });
 
