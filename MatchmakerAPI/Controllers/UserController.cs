@@ -57,7 +57,7 @@ namespace MatchmakerAPI.Controllers
 		    }
         }
 
-		[HttpGet("get/id={id}/hobbies")]
+		[HttpGet("get/hobbies/id={id}")]
 		public List<Hobby> GetUserHobbies(int id)
 		{
 			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
