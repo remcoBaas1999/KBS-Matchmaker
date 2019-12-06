@@ -85,14 +85,8 @@ namespace MatchmakerAPI.Controllers
 
 				users.Add(key, udata);
 
-				using (StreamWriter file = new StreamWriter("/home/student/data/userMap.json"))
-				{
-				    foreach (var entry in users) {
-						var text = JsonConvert.SerializeObject(entry.Value);
-						file.WriteLine("[{0} {1}]", entry.Key, text);
-					}
-				}
-				// System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
+				var text = JsonConvert.SerializeObject(users);
+				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
 		    }
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
 		    {
