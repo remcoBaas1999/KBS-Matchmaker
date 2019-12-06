@@ -14,10 +14,19 @@ namespace MatchmakerAPI.Controllers
     [Route("/hobbies/")]
     public class HobbyController : ControllerBase
     {
-        [HttpGet("get/list")]
+        [HttpGet("get/all")]
         public List<Hobby> HobbyList(int id)
         {
-			return null;
+			using (StreamReader r = new StreamReader("/home/student/data/hobbies.json"))
+		    {
+		        string json = r.ReadToEnd();
+				try {
+					var test = JsonConvert.DeserializeObject<List<Hobby>>(json);
+					return test;
+				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					return null;
+				}
+			}
         }
 	}
 }
