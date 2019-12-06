@@ -117,7 +117,16 @@ namespace MatchMakerClassLibrary
             result = response.Content.ReadAsStringAsync().Result;
             return result;
         }
+
+        public static async Task<bool> SaveUser(UserData user)
+        {
+            string url = @"https://145.44.233.207/user/post/update";
+            var result = await Post(url, user);
+
+            return true;
+        }
     }
+
 
     public class UserData
     {
@@ -128,7 +137,7 @@ namespace MatchMakerClassLibrary
         public int id { get; set; }
         public long birthdate { get; set; }
         public string about { get; set; }
-        public string location { get; set; }
+        public string city { get; set; }
         public List<string> hobbies { get; set; }
     }
     public class AuthData {

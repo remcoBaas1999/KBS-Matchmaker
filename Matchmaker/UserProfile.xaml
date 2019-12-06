@@ -98,7 +98,7 @@
         <TextBlock Grid.Row="4" FontSize="20" TextAlignment="Center" Grid.Column="4" Foreground="White" FontFamily="Roboto" Width="50" Name="years" />
         <!-- location text and editing section-->
         <TextBlock Text="Location:" Foreground="LightGray" Grid.Column="6" FontFamily="Roboto" Grid.Row="3" Height="20" Width="50" HorizontalAlignment="Right"/>
-        <TextBlock FontSize="20" Grid.Row="4" Foreground="White" Grid.Column="6" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Right"/>
+        <TextBlock FontSize="20" Grid.Row="4"  Foreground="White" Grid.Column="6" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Right"/>
         <Button  Width="40" Height="30" Grid.Column="7" Grid.Row="4" Click="editLocation_Click" BorderBrush="{x:Null}" Background="{x:Null}" Name="editLocation" Visibility="Visible" Margin="50,0,0,0">
             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg24" Width="24" Height="24">
                 <Canvas.RenderTransform>
@@ -154,6 +154,7 @@
             </Canvas>
         </Button>
         <!-- add hobby textbox-->
+        <TextBlock Grid.Row="6" Grid.Column="4" Text="Add Hobby"/>
         <TextBox x:Name="add_hobby"  BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="20" Width="20">
 
         </TextBox>

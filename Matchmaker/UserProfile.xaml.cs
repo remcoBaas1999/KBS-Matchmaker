@@ -40,7 +40,8 @@ namespace Matchmaker
             years.Text = a.ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
-            city.Text = user.location;
+            MessageBox.Show(user.city);
+            city.Text = user.city;
             bioText.Text = user.about;
             //foreach (var item in user.hobbies)
             //{
@@ -52,7 +53,7 @@ namespace Matchmaker
         {
             InitializeComponent();
             years.Text = (DateTime.Now.Year - new DateTime(active.birthdate).Year).ToString();
-            city.Text = active.location;
+            city.Text = active.city;
             accountText.Text = active.about;
             bioText.Text = active.about;
             name.Text = active.realName;
@@ -73,7 +74,7 @@ namespace Matchmaker
             denymNameChange.Visibility = Visibility.Visible;
         }
 
-        private void confirmNameChange_Click(object sender, RoutedEventArgs e)
+        private async void confirmNameChange_Click(object sender, RoutedEventArgs e)
         {
             
             userInView.realName = name.Text;
@@ -83,7 +84,7 @@ namespace Matchmaker
             name.Visibility = Visibility.Collapsed;
             confirmNameChange.Visibility = Visibility.Collapsed;
             denymNameChange.Visibility = Visibility.Collapsed;
-            //Save to account in database function
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
         private void denymNameChange_Click(object sender, RoutedEventArgs e)
@@ -96,7 +97,7 @@ namespace Matchmaker
             denymNameChange.Visibility = Visibility.Collapsed;
         }
 
-        private void confirmBioChange_Click(object sender, RoutedEventArgs e)
+        private async void confirmBioChange_Click(object sender, RoutedEventArgs e)
         {
             userInView.about = accountText.Text;
             bioText.Text = accountText.Text;
@@ -105,8 +106,8 @@ namespace Matchmaker
             accountText.Visibility = Visibility.Collapsed;
             bioText.Visibility = Visibility.Visible;
             editBio.Visibility = Visibility.Visible;
-            //Save account text to database
-            
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
+
         }
 
         private void denyBioChange_Click(object sender, RoutedEventArgs e)
@@ -155,18 +156,19 @@ namespace Matchmaker
             city.Visibility = Visibility.Collapsed;
         }
 
-        private void confirmNewLocation_Click(object sender, RoutedEventArgs e)
+        private async void confirmNewLocation_Click(object sender, RoutedEventArgs e)
         {
             citySelection.SelectedValue = city.Text;
             string newCity = citySelection.Text;
             city.Text = newCity;
-            userInView.location = newCity;
-            //Save to database
+            userInView.city = newCity;
+            //MessageBox.Show(userInView.location);
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
             citySelection.Visibility = Visibility.Collapsed;
             city.Visibility = Visibility.Visible;
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
         private void denyLocationChange_Click(object sender, RoutedEventArgs e)
