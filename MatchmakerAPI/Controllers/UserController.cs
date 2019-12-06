@@ -79,7 +79,8 @@ namespace MatchmakerAPI.Controllers
 					password = data.password,
 					salt = data.salt,
 					realName = data.realName,
-					birthdate = data.birthdate
+					birthdate = data.birthdate,
+					profilePicture = "0.jpg"
 				};
 
 				users.Add(key, udata);
