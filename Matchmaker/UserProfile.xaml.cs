@@ -38,11 +38,14 @@ namespace Matchmaker
             years.Text = (CalculateAge(UnixTimeToDateTime(user.birthdate))).ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
-            city.Text = user.city;
+            city.Text = user.location;
             bioText.Text = user.about;
-            foreach (var item in user.hobbies)
+            if (user.interests != null)
             {
-                //add to list of Hobbies in the XAML
+                foreach (var item in user.interests)
+                {
+                    //add to list of Hobbies in the Xaml
+                }
             }
             userInView = user;
         }
@@ -63,18 +66,22 @@ namespace Matchmaker
                 editName.Visibility = Visibility.Collapsed;
             }
 
-            DateTime age = UnixTimeToDateTime(user.birthdate);
+            DateTime age = UnixTimeToDateTime(active.birthdate);
 
             years.Text = (CalculateAge(age).ToString());
-            city.Text = user.location;
-            accountText.Text = user.about;
-            bioText.Text = activeUser.Bio;
-            name.Text = user.realName;
-            showName.Text = user.realName;
-            //foreach (var item in active.hobbies)
-            //{
-                //add to list of Hobbies in the Xaml
-            //}
+            city.Text = active.location;
+            accountText.Text = active.about;
+            bioText.Text = active.about;
+            name.Text = active.realName;
+            showName.Text = active.realName;
+            if (active.interests != null)
+            {
+                foreach (var item in active.interests)
+                {
+                    //add to list of Hobbies in the Xaml
+                }
+            }
+            
             userInView = active;
         }
 
@@ -181,11 +188,6 @@ namespace Matchmaker
 
         }
 
-        private void exit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void editLocation_Click(object sender, RoutedEventArgs e)
         {
             citySelection.SelectedItem = city.Text;
@@ -201,7 +203,7 @@ namespace Matchmaker
             citySelection.SelectedValue = city.Text;
             string newCity = citySelection.Text;
             city.Text = newCity;
-            userInView.city = newCity;
+            userInView.location = newCity;
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
@@ -239,6 +241,7 @@ namespace Matchmaker
             inputHobbies.Visibility = Visibility.Collapsed;
             svg122.Visibility = Visibility.Collapsed;
             confirmNewHobbies.Visibility = Visibility.Collapsed;
+            listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
         private void confirmNewHobbies_Click(object sender, RoutedEventArgs e)
@@ -246,17 +249,17 @@ namespace Matchmaker
             //foreach cb{i} or for all children of listPossibleInterests
             foreach (var item in listPossibleInterests.Children)
             {
-                activeUser. item.ToString();
+                //activeUser. item.ToString();
             }
         }
 
         private void requestSuggestions_Click(object sender, RoutedEventArgs e)
         {
-            List<string> listHobbies = new List<string>() { "Dance", "Muziek", "Programmeren" }; //find interests based on string
+            List<HobbyData> listHobbies = MatchmakerAPI_Client.getAllHobbies();
             for (int i = 0; i < listHobbies.Count(); i++)
             {
                 CheckBox cb = new CheckBox();
-                cb.Content = listHobbies[i];
+                cb.Content = listHobbies[i].displayName;
                 cb.Name = $"cb{i}";
                 listPossibleInterests.Children.Add(cb);
             }

@@ -129,6 +129,20 @@ namespace MatchMakerClassLibrary
             result = response.Content.ReadAsStringAsync().Result;
             return result;
         }
+
+        public static async Task<bool> SaveUser(UserData data)
+        {
+            string uri = @"https://145.44.233.207/user/post/update";
+            var result = await Post(uri, data);
+            //doe wat met result
+            return true;
+        }
+
+        public static List<HobbyData> getAllHobbies()
+        {
+            List<HobbyData> data = JsonConvert.DeserializeObject<List<HobbyData>>(Get(@"https://145.44.233.207/hobbies/get/all"));
+            return data;
+        }
     }
 
     public class UserData
@@ -142,10 +156,17 @@ namespace MatchMakerClassLibrary
         public string about { get; set; }
         public string location { get; set; }
 		public string profilePicture { get; set; }
+        public List<string> interests { get; set; }
     }
     public class AuthData {
         public string email { get; set; }
         public string password { get; set; }
         public string salt { get; set; }
+    }
+
+    public class HobbyData
+    {
+        public string displayName { get; set; }
+        public List<string> assocHobbies { get; set; }
     }
 }
