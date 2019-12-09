@@ -21,7 +21,7 @@
                 <Button x:Name="ActivitiesButton" Content="Activities" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="94" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.044,-2.382" Grid.Column="1" Visibility="Hidden"/>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Right">
-                <Ellipse HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" MouseDown="Ellipse_MouseDown_1" Margin="0,0,5,0">
+                <Ellipse x:Name="Notification" HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" Margin="0,0,5,0" MouseDown="Notification_MouseDown">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
                     </Ellipse.Fill>
@@ -50,7 +50,7 @@
             <WrapPanel HorizontalAlignment="Center">
                 <Border x:Name="Profile1BackgroundPicture" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Left" Height="238"  VerticalAlignment="Top" Width="180" CornerRadius="15" MouseDown="Profile1BackgroundPicture_MouseDown" Margin="20">
                     <Canvas>
-                        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" VerticalAlignment="Top" Width="130" MouseDown="Profile1Picture1_MouseDown" Canvas.Left="25" Canvas.Top="25" Stroke="Black">
+                        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" VerticalAlignment="Top" Width="130" Canvas.Left="25" Canvas.Top="25" Stroke="Black">
                             <Ellipse.Fill>
                                 <ImageBrush Stretch="UniformToFill">
             
@@ -60,21 +60,21 @@
                         <Label x:Name="Profile1Tag" Content="(Name)" Canvas.Bottom="0" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Top" Width="178" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold"/>
                     </Canvas>
                 </Border>
-                <Border x:Name="Profile2BackgroundPicture" Margin="20" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15">
+                <Border x:Name="Profile2BackgroundPicture" Margin="20" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15" MouseDown="Profile2BackgroundPicture_MouseDown">
                     <Canvas>
                         <Ellipse x:Name="ProfilePicture2" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="25" Canvas.Top="24">
                         </Ellipse>
                         <Label x:Name="Profile2Tag" Content="(name)" Canvas.Bottom="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
                     </Canvas>
                 </Border>
-                <Border x:Name="Profile3BackgroundPicture" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15">
+                <Border x:Name="Profile3BackgroundPicture" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15" MouseDown="Profile3BackgroundPicture_MouseDown">
                     <Canvas>
                         <Ellipse x:Name="ProfilePicture3" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="24" Canvas.Top="24">
                         </Ellipse>
                         <Label x:Name="Profile3Tag" Content="(name)" Canvas.Bottom="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20" />
                     </Canvas>
                 </Border>
-                <Border x:Name="Profile4BackgroundPicture" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15">
+                <Border x:Name="Profile4BackgroundPicture" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15" MouseDown="Profile4BackgroundPicture_MouseDown">
                     <Canvas>
                         <Ellipse x:Name="ProfilePicture4" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="25" Canvas.Top="24">
                         </Ellipse>

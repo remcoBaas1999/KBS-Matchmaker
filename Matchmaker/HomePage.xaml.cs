@@ -117,30 +117,37 @@ namespace Matchmaker {
         private void Button_Click(object sender, RoutedEventArgs e)
         {
         }
-        private void RefreshButton_MouseDown(object sender, MouseButtonEventArgs e)
+        /*private void RefreshButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //Refresh recommended profiles
             HomePage p = new HomePage();
             p.InitializeComponent();
             NavigationService.Navigate(p);
-        }
-        private void Profile1Picture1_MouseDown(object sender, MouseButtonEventArgs e)
+        }*/
+
+        //When clicked on a profile
+        private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)));
             NavigationService.Navigate(page);
         }
-
-        private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Profile1Picture1_MouseDown(sender, e);
+        private void Profile2BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID)));
+            NavigationService.Navigate(page);
         }
 
-        private void myProfile(object sender, MouseButtonEventArgs e)
-        {
-
+        private void Profile3BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID)));
+            NavigationService.Navigate(page);
+        }
+        private void Profile4BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID)));
+            NavigationService.Navigate(page);
         }
 
-        private void Ellipse_MouseDown_1(object sender, MouseButtonEventArgs e)
+
+        //Menu buttons
+        private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //show notification page
             Notifications notifications = new Notifications();
