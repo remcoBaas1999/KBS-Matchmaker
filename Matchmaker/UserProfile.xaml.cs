@@ -26,7 +26,7 @@ namespace Matchmaker
 
     public partial class UserProfile : Page
     {
-        UserData userInView;
+        public UserData user;
         public UserProfile(UserData user)
         {
             InitializeComponent();
@@ -50,13 +50,11 @@ namespace Matchmaker
                     LoadHobbyWrapper(item);
                 }
             }
-            userInView = user;
-        }
-        public UserProfile(UserData active, bool userAccount)
-
+            this.user = user;
             string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
         }
+        
         public UserProfile(UserData user, bool userAccount)
         {
             InitializeComponent();
@@ -74,35 +72,37 @@ namespace Matchmaker
                 editName.Visibility = Visibility.Collapsed;
             }
 
-            DateTime age = UnixTimeToDate(active.birthdate);
+            DateTime age = UnixTimeToDate(user.birthdate);
 
             years.Text = (CalculateAge(age).ToString());
-            city.Text = active.location;
-            citySelection.SelectedItem = active.location;
-            accountText.Text = active.about;
-            bioText.Text = active.about;
-            name.Text = active.realName;
-            showName.Text = active.realName;
-            if (active.interests != null)
+            city.Text = user.location;
+            citySelection.SelectedItem = user.location;
+            accountText.Text = user.about;
+            bioText.Text = user.about;
+            name.Text = user.realName;
+            showName.Text = user.realName;
+            if (user.interests != null)
             {
-                foreach (var item in active.interests)
+                foreach (var item in user.interests)
                 {
                     LoadHobbyWrapper(item);
                 }
             }
             LoadHobbyWrapper("Test");
-            userInView = active;
-        }
+            this.user = user;
+        
             years.Text = (DateTime.Now.Year - user.birthdate).ToString();
             city.Text = user.location;
             accountText.Text = user.about;
-            bioText.Text = activeUser.Bio;
+            bioText.Text = this.user.about;
             name.Text = user.realName;
             showName.Text = user.realName;
 
             string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-        }
+            }
+        
+    
 
         public int CalculateAge(DateTime dob)
         {
@@ -144,7 +144,7 @@ namespace Matchmaker
 
         private void confirmNameChange_Click(object sender, RoutedEventArgs e) {
 
-            userInView.realName = name.Text;
+            user.realName = name.Text;
             showName.Text = name.Text;
             showName.Visibility = Visibility.Visible;
             editName.Visibility = Visibility.Visible;
@@ -166,7 +166,7 @@ namespace Matchmaker
 
         private async void confirmBioChange_Click(object sender, RoutedEventArgs e)
         {
-            userInView.about = accountText.Text;
+            user.about = accountText.Text;
             bioText.Text = accountText.Text;
             denyBioChange.Visibility = Visibility.Collapsed;
             confirmBioChange.Visibility = Visibility.Collapsed;
@@ -221,7 +221,7 @@ namespace Matchmaker
         private async void confirmNewLocation_Click(object sender, RoutedEventArgs e)
         {
             city.Text = citySelection.SelectedItem.ToString();
-            userInView.location = citySelection.SelectedItem.ToString();
+            user.location = citySelection.SelectedItem.ToString();
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
@@ -257,7 +257,7 @@ namespace Matchmaker
         private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
             CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
             coverImageSelecter.Show();
-            coverImageSelecter.userID = userInView.id;
+            coverImageSelecter.userID = user.id;
         }
 
         private void confirmNewHobbyList(object sender, MouseButtonEventArgs e)
@@ -363,8 +363,8 @@ namespace Matchmaker
             entryHobbies.Visibility = Visibility.Collapsed;
             addInterests.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
-            userInView.interests = hobbyData;
-            var result = await MatchmakerAPI_Client.SaveUser(userInView);
+            user.interests = hobbyData;
+            var result = await MatchmakerAPI_Client.SaveUser(user);
         }
     }
 }
