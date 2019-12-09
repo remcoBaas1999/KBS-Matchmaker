@@ -191,33 +191,19 @@
         </StackPanel>
         <!--Add hobbies-->
         <Rectangle x:Name="AddHobbies" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="3" Fill="DimGray" Opacity="0.75" Visibility="Visible"/>
-        <Rectangle x:Name="entryHobbies" Fill="White" Height="450 " Width="590" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
-        <TextBlock Name="addInterests" Grid.Row="1" Grid.Column="1" Text="Add interests" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,50" FontWeight="Bold"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Width="100" Height="20" x:Name="inputHobbies"/>
-        <Button BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="1" Grid.Row="1" Margin="150,0,0,0"  x:Name="requestSuggestions" Click="requestSuggestions_Click">
-            <Canvas  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg122" Width="24" Height="24">
+        <Border CornerRadius="5" x:Name="entryHobbies" Background="White" Height="250 " Width="300" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+            <Grid>
+                <TextBlock Name="addInterests" Height="auto" FontSize="14" FontFamily="Roboto" HorizontalAlignment="Center" Margin="0 18 0 0" Text="Add new interests"  FontWeight="Medium"/>
+                <!--Add hobby suggestions as a tickbox where the V sign turns purple when selected-->
 
-                <Canvas.RenderTransform>
-                    <TranslateTransform X="0" Y="0"/>
-                </Canvas.RenderTransform>
-                <Canvas.Resources/>
-                <!--Unknown tag: metadata-->
-                <!--Unknown tag: sodipodi:namedview-->
-                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path120" Fill="#000000" Data="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L18.2929 19.7843C18.6835 20.1742 19.3162 20.1738 19.7064 19.7836L19.745 19.745L19.7836 19.7064C20.1738 19.3162 20.1742 18.6835 19.7843 18.2929L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z"/>
-                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path130" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="m 18.601625 19.959473 c -0.1518 -0.0686 -0.738183 -0.627216 -2.399553 -2.28593 l -2.198661 -2.195144 v -0.405631 c 0 -0.386149 -0.006 -0.411392 -0.125211 -0.52559 -0.06886 -0.06598 -0.139769 -0.119959 -0.157563 -0.119959 -0.01779 0 -0.13723 0.08293 -0.265414 0.184285 -0.775348 0.613081 -1.807167 1.070993 -2.866991 1.272343 -0.535274 0.101694 -1.5980009 0.103868 -2.1428567 0.0044 C 6.8467903 15.596344 5.4438861 14.776343 4.4701124 13.564681 3.7860531 12.713508 3.34897 11.765814 3.1255054 10.649272 3.0061603 10.052964 3.017164 8.8429606 3.1474536 8.2357717 3.7020465 5.6512019 5.608905 3.7340474 8.2006931 3.1552477 8.7211739 3.0390136 9.9560079 3.0139098 10.528805 3.1079179 c 1.328564 0.2180453 2.571834 0.8571751 3.519249 1.8091463 0.956836 0.9614374 1.520852 2.0070507 1.81877 3.3717615 0.112585 0.515734 0.109848 1.9051043 -0.0048 2.4330353 -0.230047 1.059385 -0.678293 2.033972 -1.269116 2.759342 l -0.196275 0.240973 0.146965 0.151628 c 0.145872 0.150502 0.149979 0.151629 0.552602 0.151629 h 0.405638 l 2.18972 2.198661 c 1.415979 1.421759 2.217157 2.25863 2.267365 2.368377 0.105456 0.23051 0.100442 0.602545 -0.01107 0.821121 -0.04879 0.09564 -0.178703 0.256841 -0.288693 0.358227 -0.31227 0.287839 -0.688226 0.354551 -1.057544 0.187654 z m -8.147321 -6.040164 c 1.765005 -0.384056 3.103611 -1.737935 3.469765 -3.509352 0.11628 -0.5625513 0.09296 -1.540558 -0.04941 -2.0726147 -0.109928 -0.4107871 -0.4588 -1.1558 -0.691689 -1.477088 C 12.246165 5.5678567 10.614103 4.8329036 9.0571021 5.0022871 7.1283813 5.2121094 5.6308458 6.4980844 5.1090348 8.3926012 c -0.1375865 0.499529 -0.1371702 1.7050498 7.616e-4 2.2061428 0.2265223 0.822931 0.5506285 1.410116 1.092122 1.978603 0.7516418 0.789111 1.5962988 1.236059 2.6490256 1.401725 0.3560255 0.05603 1.219062 0.02386 1.60336 -0.05976 z"/>
-                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path132" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="m 18.536884 19.870498 c -0.118882 -0.07539 -1.187548 -1.103306 -2.374811 -2.28425 l -2.158662 -2.147171 v -0.408862 c 0 -0.376261 -0.0087 -0.417061 -0.109463 -0.511696 -0.06232 -0.05854 -0.144147 -0.09376 -0.189992 -0.08178 -0.04429 0.01158 -0.251341 0.143239 -0.460112 0.292571 -0.675909 0.483472 -1.647176 0.906863 -2.545277 1.109526 -0.490121 0.110599 -1.8506355 0.112228 -2.3647989 0.0028 C 6.7208487 15.498499 5.3106122 14.626241 4.387547 13.400862 3.8231298 12.651592 3.4846117 11.946521 3.2301539 10.990224 3.0979267 10.493291 3.0933897 10.44464 3.0927178 9.5165043 3.0920676 8.6182472 3.0998557 8.5253405 3.2141391 8.0680382 3.8183126 5.6504531 5.5548188 3.8859422 7.9673753 3.2381464 c 0.377858 -0.1014587 0.547704 -0.11915 1.3262143 -0.1381395 0.7058602 -0.017218 0.9816804 -0.00634 1.3169644 0.051946 1.233593 0.2144411 2.475341 0.862371 3.389511 1.7686072 0.876739 0.8691303 1.416593 1.799048 1.753536 3.0205261 0.143714 0.5209884 0.145192 0.5364697 0.146157 1.5307755 9.24e-4 0.9528523 -0.0053 1.0285493 -0.121381 1.4732143 -0.240162 0.920068 -0.614841 1.722753 -1.114395 2.387398 l -0.301238 0.40079 0.141591 0.146085 c 0.139662 0.144093 0.147167 0.146084 0.550784 0.146084 h 0.409192 l 2.07089 2.087533 c 1.138989 1.148144 2.148223 2.182229 2.242744 2.297969 0.31539 0.386191 0.308459 0.838424 -0.01854 1.209918 -0.357029 0.405606 -0.825687 0.501308 -1.222519 0.249645 z m -7.814723 -5.998496 c 0.815081 -0.234645 1.509342 -0.656035 2.081257 -1.263244 0.503235 -0.534291 0.825863 -1.094488 1.051905 -1.826485 0.115345 -0.373525 0.12215 -0.444272 0.123907 -1.2880901 C 13.98093 8.6819659 13.97173 8.571574 13.87761 8.2719092 13.621411 7.4563254 13.209709 6.7604267 12.693053 6.2696537 11.734302 5.3589342 10.548676 4.9097718 9.2763016 4.9752518 7.2724033 5.0783784 5.6764 6.3685724 5.094489 8.35579 5.024149 8.595999 5.009491 8.7920329 5.009366 9.4941829 c -1.785e-4 0.9931261 0.05623 1.2621711 0.4211786 2.0089281 0.5059518 1.035277 1.5076497 1.930957 2.5463988 2.276892 0.6505192 0.216643 0.8623321 0.246049 1.629146 0.226176 0.5988526 -0.01552 0.7792176 -0.0372 1.1160716 -0.134177 z"/>
-            </Canvas>
-        </Button>
-        <!--Add hobby suggestions as a tickbox where the V sign turns purple when selected-->
-        <StackPanel x:Name="listPossibleInterests" Visibility="Visible">
-            
-        </StackPanel>
-        <!--Selected hobbies -->
-        
-        <!-- confirm or deny selection-->
-        <Button Margin="100,80,0,0" x:Name="confirmNewHobbies" Content="Add Interests" BorderBrush="{x:Null}" Background="{x:Null}" Width="80" Height="20" Foreground="Purple" Grid.Column="1" Grid.Row="1" Click="confirmNewHobbies_Click"/>
-        <Button Margin="150,40,0,0" x:Name="DenyNewHobbies" Content="Cancel" Height="20" Width="50" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="DimGray" Grid.Column="1" Grid.Row="1" Click="DenyNewHobbies_Click"/>
+                <StackPanel x:Name="listPossibleInterests" Visibility="Visible" Width="200" Height="150" CanVerticallyScroll="True">
 
+                </StackPanel>
+                <!--Selected hobbies -->
+
+                <!-- confirm or deny selection-->
+            </Grid>
+        </Border>
     </Grid>
 </Page>
     
