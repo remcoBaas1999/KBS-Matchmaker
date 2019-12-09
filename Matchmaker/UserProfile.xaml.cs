@@ -34,6 +34,7 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
+
             DateTime now = DateTime.Now;
             DateTime birthdate = new DateTime(user.birthdate);
             int a = now.Year - birthdate.Year;
@@ -46,17 +47,21 @@ namespace Matchmaker
             //{
                 //add to list of Hobbies in the XAML
             //}
+
             userInView = user;
         }
         public UserProfile(UserData active, bool userAccount)
         {
             InitializeComponent();
+
             years.Text = (DateTime.Now.Year - new DateTime(active.birthdate).Year).ToString();
             city.Text = active.city;
+
             accountText.Text = active.about;
             bioText.Text = active.about;
             name.Text = active.realName;
             showName.Text = active.realName;
+
             //foreach (var item in active.hobbies)
             //{
                 //add to list of Hobbies in the Xaml
