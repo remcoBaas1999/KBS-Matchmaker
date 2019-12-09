@@ -57,7 +57,7 @@ namespace Matchmaker {
             string pfPic1 = $"https://145.44.233.207/images/users/{user1.profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
             //Set Cover Image
-            string coverImage = $"https://145.44.233.207/images/covers/1.jpg";
+            string coverImage = $"https://145.44.233.207/images/covers/3.jpg";
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create second profile
@@ -74,7 +74,7 @@ namespace Matchmaker {
             string pfPic2 = $"https://145.44.233.207/images/users/{user2.profilePicture}";
             ProfilePicture2.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic2, UriKind.Absolute)));
             //Set Cover Image
-            //coverImage = $"https://145.44.233.207/images/covers/2.jpg";
+            coverImage = $"https://145.44.233.207/images/covers/3.jpg";
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create third profile
@@ -90,6 +90,9 @@ namespace Matchmaker {
             //Set profile picture
             string pfPic3 = $"https://145.44.233.207/images/users/{user3.profilePicture}";
             ProfilePicture3.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic3, UriKind.Absolute)));
+            //Set Cover Image
+            coverImage = $"https://145.44.233.207/images/covers/3.jpg";
+            Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
 
             //Create fourth profile
@@ -104,8 +107,10 @@ namespace Matchmaker {
             Profile4Tag.Content = user4.realName;
             //Set profile picture
             string pfPic4 = $"https://145.44.233.207/images/users/{user4.profilePicture}";
-
             ProfilePicture4.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic4, UriKind.Absolute)));
+            //Set Cover Image
+            coverImage = $"https://145.44.233.207/images/covers/3.jpg";
+            Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
 
 
@@ -169,6 +174,23 @@ namespace Matchmaker {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             Page userProfile = new UserProfile(user, User.loggedIn);
             NavigationService.Navigate(userProfile);
+        }
+
+        //Redirect links for activites
+        private void Activity1Border_MouseDown(object sender, MouseButtonEventArgs e) {
+            System.Diagnostics.Process.Start("https://www.workshoppen.nl/workshops/action-painting-abstract-schilderen/");
+        }
+
+        private void Activity2Border_MouseDown(object sender, MouseButtonEventArgs e) {
+            System.Diagnostics.Process.Start("https://gamingweek.info/");
+        }
+
+        private void Activity3Border_MouseDown(object sender, MouseButtonEventArgs e) {
+            System.Diagnostics.Process.Start("http://www.ijsclubvzodkampen.nl/");
+        }
+
+        private void Activity4Border_MouseDown(object sender, MouseButtonEventArgs e) {
+            System.Diagnostics.Process.Start("https://www.xycletracx.nl/");
         }
     }
 }

@@ -67,7 +67,7 @@
                         <Label x:Name="Profile2Tag" Content="Anna Bell, 38" Canvas.Bottom="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
                     </Canvas>
                 </Border>
-                <Border x:Name="Profile1BackgroundPicture_" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15">
+                <Border x:Name="Profile3BackgroundPicture" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15">
                     <Border.Background>
                         <ImageBrush ImageSource="Images/Background2.jpg" Stretch="UniformToFill"/>
                     </Border.Background>
@@ -103,11 +103,11 @@
                             <Border.Background>
                                 <ImageBrush Stretch="UniformToFill" ImageSource="Images/painting.jpg"/>
                             </Border.Background>
-                            <Border x:Name="Activity1Border_Copy" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.5" Padding="0" UseLayoutRounding="False" CornerRadius="15">
+                            <Border x:Name="Activity1Border" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.5" Padding="0" UseLayoutRounding="False" CornerRadius="15" MouseDown="Activity1Border_MouseDown">
                                 <Label Content="Painting workshop" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.895,0.981" Margin="9,84,0,0" Width="152" FontWeight="Bold" FontSize="16"/>
                             </Border>
                         </Border>
-                        <Label x:Name="Activity1OpenSpots" Content="3/8 spots available" Grid.Column="0" HorizontalAlignment="Left" Height="26" Margin="10,110,20,0" VerticalAlignment="Top" Width="120" Background="#00000000" Foreground="#FFE0E0E0" FontWeight="Bold" FontStretch="Condensed"/>
+                        <Label x:Name="Activity1OpenSpots" Content="10/100 spots available" Grid.Column="0" HorizontalAlignment="Left" Height="26" Margin="10,110,20,0" VerticalAlignment="Top" Width="120" Background="#00000000" Foreground="#FFE0E0E0" FontWeight="Bold" FontStretch="Condensed"/>
                         <Border x:Name="LocationBackground" BorderBrush="#00AE51B8" BorderThickness="1" HorizontalAlignment="Left" Height="25" Margin="10,134,0,0" VerticalAlignment="Top" Width="97" CornerRadius="10" Background="#FFAE51B8">
                             <Label x:Name="LocationTitle" Content="Zwolle" FontFamily="Roboto" HorizontalAlignment="Left" Margin="31,-1,-14,-1" VerticalAlignment="Top" Foreground="White" Height="25" Width="78" VerticalContentAlignment="Center"/>
                         </Border>
@@ -128,7 +128,7 @@
                             <Border.Background>
                                 <ImageBrush ImageSource="Images/console.png" Stretch="UniformToFill"/>
                             </Border.Background>
-                            <Border x:Name="Activity2Border" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.25" Padding="0" UseLayoutRounding="False" CornerRadius="15">
+                            <Border x:Name="Activity2Border" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.25" Padding="0" UseLayoutRounding="False" CornerRadius="15" MouseDown="Activity2Border_MouseDown">
                                 <Label Content="Gaming week" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.895,0.981" Margin="9,84,0,0" Width="152" FontWeight="Bold" FontSize="16"/>
                             </Border>
                         </Border>
@@ -155,7 +155,7 @@
                             <Border.Background>
                                 <ImageBrush ImageSource="Images/schaatsen.jpg"/>
                             </Border.Background>
-                            <Border x:Name="Activity3Border" BorderThickness="1" Margin="-1.5,-0.667,0,-2.333" Padding="0" UseLayoutRounding="False" CornerRadius="10">
+                            <Border x:Name="Activity3Border" BorderThickness="1" Margin="-1.5,-0.667,0,-2.333" Padding="0" UseLayoutRounding="False" CornerRadius="10" MouseDown="Activity3Border_MouseDown">
                                 <Border.Background>
                                     <SolidColorBrush Color="#E5000000" Opacity="0.195"/>
                                 </Border.Background>
@@ -177,7 +177,7 @@
                             <Border.Background>
                                 <ImageBrush ImageSource="Images/fietsen.jpg" Stretch="UniformToFill"/>
                             </Border.Background>
-                            <Border x:Name="Activity4Border" BorderThickness="1" Background="#8E000000" Padding="0" UseLayoutRounding="False" CornerRadius="15">
+                            <Border x:Name="Activity4Border" BorderThickness="1" Background="#8E000000" Padding="0" UseLayoutRounding="False" CornerRadius="15" MouseDown="Activity4Border_MouseDown">
                                 <Label Content="Bicycle race" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.895,0.981" Margin="9,84,0,0" Width="152" FontWeight="Bold" FontSize="16"/>
                             </Border>
                         </Border>
