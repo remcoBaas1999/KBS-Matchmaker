@@ -283,22 +283,30 @@ namespace Matchmaker
             listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
-        private void confirmNewHobbies_Click(object sender, RoutedEventArgs e)
+        private async void ConfirmNewHobbies_Click(object sender, RoutedEventArgs e)
         {
-            //foreach cb{i} or for all children of listPossibleInterests
+            List<HobbyData> hobbyData = new List<HobbyData>();
+            List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
             foreach (CheckBox item in listPossibleInterests.Children)
             {
-                List<string> hobbyData = new List<string>();
+                
                 if ((bool)item.IsChecked)
                 {
-                    
-                    hobbyData.Add(item.Content.ToString());
+                    foreach (var hobby in listAllHobbies)
+                    {
+                        if (hobby.displayName == item.Content.ToString())
+                        {
+                            hobbyData.Add(hobby);
+                        }
+                    }
                 }
             }
             AddHobbies.Visibility = Visibility.Collapsed;
             entryHobbies.Visibility = Visibility.Collapsed;
             addInterests.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
+            userInView.interests = hobbyData;
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
         private void LoadHobbies()
