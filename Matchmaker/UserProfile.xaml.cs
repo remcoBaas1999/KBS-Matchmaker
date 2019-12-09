@@ -27,6 +27,7 @@ namespace Matchmaker
     public partial class UserProfile : Page
     {
         UserData userInView;
+        public static List<HobbyData> hobbyData = new List<HobbyData>();
         public UserProfile(UserData user)
         {
             InitializeComponent();
@@ -34,17 +35,17 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
-            
             years.Text = (CalculateAge(UnixTimeToDateTime(user.birthdate))).ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
             city.Text = user.location;
             bioText.Text = user.about;
-            if (user.interests != null)
+            if (user.hobbies != null)
             {
-                foreach (var item in user.interests)
+                foreach (var item in user.hobbies)
                 {
                     //add to list of Hobbies in the Xaml
+                    MessageBox.Show(item.ToString());
                     LoadHobbyWrapper(item.displayName);
                 }
             }
@@ -76,9 +77,9 @@ namespace Matchmaker
             bioText.Text = active.about;
             name.Text = active.realName;
             showName.Text = active.realName;
-            if (active.interests != null)
+            if (active.hobbies != null)
             {
-                foreach (var item in active.interests)
+                foreach (var item in active.hobbies)
                 {
                     LoadHobbyWrapper(item.displayName);
                 }
@@ -125,7 +126,6 @@ namespace Matchmaker
 
         private async void confirmNameChange_Click(object sender, RoutedEventArgs e)
         {
-            
             userInView.realName = name.Text;
             showName.Text = name.Text;
             showName.Visibility = Visibility.Visible;
@@ -133,7 +133,7 @@ namespace Matchmaker
             name.Visibility = Visibility.Collapsed;
             confirmNameChange.Visibility = Visibility.Collapsed;
             denymNameChange.Visibility = Visibility.Collapsed;
-            var result = await MatchmakerAPI_Client.SaveUser(userInView);
+            await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
         private void denymNameChange_Click(object sender, RoutedEventArgs e)
@@ -250,6 +250,17 @@ namespace Matchmaker
                 tb.Name = $"tb{i}";
                 tb.HorizontalAlignment = HorizontalAlignment.Left;
                 cb.Name = $"cb{i}";
+                if (userInView.hobbies != null)
+                {
+                    foreach (var item in userInView.hobbies)
+                    {
+                        if (listHobbies[i].displayName == item.displayName)
+                        {
+                            cb.IsChecked = true;
+                        }
+                    }
+                }
+                cb.Click += new RoutedEventHandler(addHobbyToList_Click);
                 cb.HorizontalAlignment = HorizontalAlignment.Right;
                 cb.VerticalAlignment = VerticalAlignment.Center;
 
@@ -260,6 +271,24 @@ namespace Matchmaker
 
                 listPossibleInterests.Children.Add(hobbyLane);
             }
+        }
+
+        public void addHobbyToList_Click(object sender, RoutedEventArgs e)
+        {
+            List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
+            string name = (e.Source as CheckBox).Name.ToString();
+            string idName = name.Substring(2);
+            int id = Int32.Parse(idName);
+
+            if ((sender as CheckBox).IsChecked == true)
+            {    
+                hobbyData.Add(listAllHobbies[id]);
+            }
+            else
+            {
+                hobbyData.Remove(listAllHobbies[id]);
+            }
+            
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -311,35 +340,17 @@ namespace Matchmaker
 
         private async void AddInterests_Click(object sender, RoutedEventArgs e)
         {
-            List<HobbyData> hobbyData = new List<HobbyData>();
-            List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
-            for (int i = 0; i < listAllHobbies.Count; i++)
-            {
-                CheckBox o = selectedInterests.FindName($"cb{i}") as CheckBox;
-                //var button = sender as CheckBox;
-                //var parent = button.Parent as FrameworkElement;
-                //var checkbox = parent.FindName($"cb{i}") as CheckBox;
-                if (o.IsChecked == true)
-                {
-                    //var textBlock = sender as TextBlock;
-                    //var parentBlock = textBlock.Parent as FrameworkElement;
-                    TextBlock block = FindName($"tb{i}") as TextBlock;
-                    //var block = parentBlock.FindName($"cb{i}") as TextBlock;
-                    foreach (var hobby in listAllHobbies)
-                    {
-                        if (hobby.displayName == block.Text)
-                        {
-                            hobbyData.Add(hobby);
-                        }
-                    }
-                }
-            }
+            
+  
             AddHobbies.Visibility = Visibility.Collapsed;
             entryHobbies.Visibility = Visibility.Collapsed;
             addInterests.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
-            userInView.interests = hobbyData;
+            userInView.hobbies = hobbyData;
+            
             var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
+
+
     }
 }

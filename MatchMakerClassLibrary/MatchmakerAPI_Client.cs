@@ -132,11 +132,12 @@ namespace MatchMakerClassLibrary
 
         public static async Task<bool> SaveUser(UserData data)
         {
-            string uri = @"https://145.44.233.207/user/post/update";
-            var result = await Post(uri, data);
-            //doe wat met result
+            string url = @"https://145.44.233.207/user/post/update";
+            var result = await Post(url, data);
+
             return true;
         }
+
 
         public static List<HobbyData> getAllHobbies()
         {
@@ -156,7 +157,7 @@ namespace MatchMakerClassLibrary
         public string about { get; set; }
         public string location { get; set; }
 		public string profilePicture { get; set; }
-        public List<HobbyData> interests { get; set; }
+        public List<HobbyData> hobbies { get; set; }
     }
     public class AuthData {
         public string email { get; set; }
