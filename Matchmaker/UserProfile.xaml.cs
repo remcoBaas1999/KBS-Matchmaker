@@ -83,7 +83,7 @@ namespace Matchmaker
             name.Visibility = Visibility.Collapsed;
             confirmNameChange.Visibility = Visibility.Collapsed;
             denymNameChange.Visibility = Visibility.Collapsed;
-            var result = await MatchmakerAPI_Client.SaveUser(userInView);
+            //var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
         private void denymNameChange_Click(object sender, RoutedEventArgs e)
@@ -105,7 +105,7 @@ namespace Matchmaker
             accountText.Visibility = Visibility.Collapsed;
             bioText.Visibility = Visibility.Visible;
             editBio.Visibility = Visibility.Visible;
-            var result = await MatchmakerAPI_Client.SaveUser(userInView);
+            //var result = await MatchmakerAPI_Client.SaveUser(userInView);
 
         }
 
@@ -166,7 +166,7 @@ namespace Matchmaker
             editLocation.Visibility = Visibility.Visible;
             citySelection.Visibility = Visibility.Collapsed;
             city.Visibility = Visibility.Visible;
-            var result = await MatchmakerAPI_Client.SaveUser(userInView);
+            //var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
         private void denyLocationChange_Click(object sender, RoutedEventArgs e)

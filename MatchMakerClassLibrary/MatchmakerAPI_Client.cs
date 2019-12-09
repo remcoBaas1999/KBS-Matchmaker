@@ -13,33 +13,32 @@ using System.Net.Security;
 
 namespace MatchMakerClassLibrary
 {
-    public static class MatchmakerAPI_Client
-    {
+    public static class MatchmakerAPI_Client {
         //public static readonly HttpClient client = new HttpClient();
         public static HttpClient client = new HttpClient();
 
-		public static UserData DeserializeUserData(string json) {
-			return JsonConvert.DeserializeObject<UserData>(json);
-		}
+        public static UserData DeserializeUserData(string json) {
+            return JsonConvert.DeserializeObject<UserData>(json);
+        }
 
         public static AuthData DeserializeAuthData(string json) {
             return JsonConvert.DeserializeObject<AuthData>(json);
         }
 
-		public static string GetUserData(int id) {
-			return Get($@"https://145.44.233.207/user/get/id={id}");
-		}
+        public static string GetUserData(int id) {
+            return Get($@"https://145.44.233.207/user/get/id={id}");
+        }
 
-		public static string GetUserData(string email) {
-			return Get($@"https://145.44.233.207/user/get/email={email}");
-		}
+        public static string GetUserData(string email) {
+            return Get($@"https://145.44.233.207/user/get/email={email}");
+        }
 
         public static Dictionary<string, int> GetUsers() {
-            
-                var json = Get($@"https://145.44.233.207/user/get/all");
-                return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
-            
-            }
+
+            var json = Get($@"https://145.44.233.207/user/get/all");
+            return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+
+        }
 
         public static async Task<AuthData> GetAuthDataAsync(string email) {
             try {
@@ -56,7 +55,7 @@ namespace MatchMakerClassLibrary
         public static string GetEventData(int id) {
             //return Get($@"https://145.44.233.207/get/event?id={id}");
             return null;
-		}
+        }
         public static async Task<bool> AuthenticateAsync(string email, string password) {
             bool check = false;
 
@@ -93,11 +92,10 @@ namespace MatchMakerClassLibrary
 
             return false;
         }
-		private static string Get(string uri)
-		{
+        private static string Get(string uri) {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-		    request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
             try {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -110,7 +108,7 @@ namespace MatchMakerClassLibrary
                 Console.WriteLine("De server reageerde niet of staat uit.");
                 return null;
             }
-		}
+        }
 
 
         public static async Task<bool> PostNewUserDataAsync(UserData newUserData) {
@@ -129,6 +127,10 @@ namespace MatchMakerClassLibrary
             result = response.Content.ReadAsStringAsync().Result;
             return result;
         }
+
+        public static bool SaveUser(UserData data){
+            return true;
+        }
     }
 
     public class UserData
@@ -138,6 +140,7 @@ namespace MatchMakerClassLibrary
         public string salt { get; set; }
         public string realName { get; set; }
         public int id { get; set; }
+        public string city { get; set; }
         public long birthdate { get; set; }
         public string about { get; set; }
         public string location { get; set; }
