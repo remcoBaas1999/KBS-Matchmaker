@@ -249,19 +249,11 @@ namespace Matchmaker
             addInterests.Visibility = Visibility.Visible;
             listPossibleInterests.Visibility = Visibility.Visible;
 
-            //LoadHobbies();
+            LoadHobbies();
         }
 
-        //private void LoadHobbies()
-        private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
-            CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
-            coverImageSelecter.Show();
-            coverImageSelecter.userID = userInView.id;
-        }
-
-        private void confirmNewHobbyList(object sender, MouseButtonEventArgs e)
+        private void LoadHobbies()
         {
-
             List<HobbyData> listHobbies = MatchmakerAPI_Client.getAllHobbies();
             for (int i = 0; i < listHobbies.Count(); i++)
             {
@@ -295,6 +287,11 @@ namespace Matchmaker
 
                 listPossibleInterests.Children.Add(hobbyLane);
             }
+        }
+        private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
+            CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
+            coverImageSelecter.Show();
+            coverImageSelecter.userID = userInView.id;
         }
 
         public void addHobbyToList_Click(object sender, RoutedEventArgs e)
