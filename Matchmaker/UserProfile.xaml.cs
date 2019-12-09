@@ -26,7 +26,7 @@ namespace Matchmaker
 
     public partial class UserProfile : Page
     {
-        //needs to get the currently active account 
+        UserData userInView;
         public UserProfile(UserData user)
         {
             InitializeComponent();
@@ -40,23 +40,28 @@ namespace Matchmaker
             years.Text = a.ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
-            city.Text = user.location;
+            city.Text = user.city;
             bioText.Text = user.about;
+            //foreach (var item in user.hobbies)
+            //{
+                //add to list of Hobbies in the XAML
+            //}
+            userInView = user;
         }
-        public UserProfile(UserData user, bool userAccount)
+        public UserProfile(UserData active, bool userAccount)
         {
             InitializeComponent();
-
-            editBio.Visibility = Visibility.Visible;
-            editLocation.Visibility = Visibility.Visible;
-            editName.Visibility = Visibility.Visible;
-
-            years.Text = (DateTime.Now.Year - user.birthdate).ToString();
-            city.Text = user.location;
-            accountText.Text = user.about;
-            bioText.Text = activeUser.Bio;
-            name.Text = user.realName;
-            showName.Text = user.realName;
+            years.Text = (DateTime.Now.Year - new DateTime(active.birthdate).Year).ToString();
+            city.Text = active.city;
+            accountText.Text = active.about;
+            bioText.Text = active.about;
+            name.Text = active.realName;
+            showName.Text = active.realName;
+            //foreach (var item in active.hobbies)
+            //{
+                //add to list of Hobbies in the Xaml
+            //}
+            userInView = active;
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)
@@ -68,16 +73,17 @@ namespace Matchmaker
             denymNameChange.Visibility = Visibility.Visible;
         }
 
-        private void confirmNameChange_Click(object sender, RoutedEventArgs e)
+        private async void confirmNameChange_Click(object sender, RoutedEventArgs e)
         {
-            activeUser.name = name.Text;
+            
+            userInView.realName = name.Text;
             showName.Text = name.Text;
             showName.Visibility = Visibility.Visible;
             editName.Visibility = Visibility.Visible;
             name.Visibility = Visibility.Collapsed;
             confirmNameChange.Visibility = Visibility.Collapsed;
             denymNameChange.Visibility = Visibility.Collapsed;
-            //Save to account in database function
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
         private void denymNameChange_Click(object sender, RoutedEventArgs e)
@@ -90,17 +96,17 @@ namespace Matchmaker
             denymNameChange.Visibility = Visibility.Collapsed;
         }
 
-        private void confirmBioChange_Click(object sender, RoutedEventArgs e)
+        private async void confirmBioChange_Click(object sender, RoutedEventArgs e)
         {
-            activeUser.Bio = accountText.Text;
+            userInView.about = accountText.Text;
             bioText.Text = accountText.Text;
             denyBioChange.Visibility = Visibility.Collapsed;
             confirmBioChange.Visibility = Visibility.Collapsed;
             accountText.Visibility = Visibility.Collapsed;
             bioText.Visibility = Visibility.Visible;
             editBio.Visibility = Visibility.Visible;
-            //Save account text to database
-            
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
+
         }
 
         private void denyBioChange_Click(object sender, RoutedEventArgs e)
@@ -149,18 +155,18 @@ namespace Matchmaker
             city.Visibility = Visibility.Collapsed;
         }
 
-        private void confirmNewLocation_Click(object sender, RoutedEventArgs e)
+        private async void confirmNewLocation_Click(object sender, RoutedEventArgs e)
         {
             citySelection.SelectedValue = city.Text;
             string newCity = citySelection.Text;
             city.Text = newCity;
-            activeUser.city = newCity;
-            //Save to database
+            userInView.city = newCity;
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
             citySelection.Visibility = Visibility.Collapsed;
             city.Visibility = Visibility.Visible;
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
         private void denyLocationChange_Click(object sender, RoutedEventArgs e)
@@ -175,6 +181,16 @@ namespace Matchmaker
         private void Return(object sender, MouseButtonEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void confirmNewHobbyList(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private void denyNewHobbyList(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
