@@ -75,10 +75,7 @@ namespace Matchmaker
                 addHobby.Visibility = Visibility.Collapsed;
             }
 
-            DateTime age = UnixTimeToDate(active.birthdate);
-
-            years.Text = (CalculateAge(age).ToString());
-
+            years.Text = (CalculateAge(UnixTimeToDate(active.birthdate))).ToString();
             city.Text = active.location;
             citySelection.SelectedItem = active.location;
             accountText.Text = active.about;
