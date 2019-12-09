@@ -34,7 +34,7 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
-
+            btnEditCoverImage.Visibility = Visibility.Collapsed;
             DateTime now = DateTime.Now;
             DateTime birthdate = new DateTime(user.birthdate);
             int a = now.Year - birthdate.Year;
@@ -54,19 +54,17 @@ namespace Matchmaker
         {
             InitializeComponent();
 
-            years.Text = (DateTime.Now.Year - new DateTime(active.birthdate).Year).ToString();
-            city.Text = active.city;
-
-            accountText.Text = active.about;
-            bioText.Text = active.about;
-            name.Text = active.realName;
-            showName.Text = active.realName;
-
-            //foreach (var item in active.hobbies)
-            //{
-                //add to list of Hobbies in the Xaml
-            //}
-            userInView = active;
+            editBio.Visibility = Visibility.Visible;
+            editLocation.Visibility = Visibility.Visible;
+            editName.Visibility = Visibility.Visible;
+            btnEditCoverImage.Visibility = Visibility.Visible;
+            years.Text = (DateTime.Now.Year - user.birthdate).ToString();
+            city.Text = user.location;
+            accountText.Text = user.about;
+            bioText.Text = activeUser.Bio;
+            name.Text = user.realName;
+            showName.Text = user.realName;
+            userID = user.id;
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)
@@ -186,6 +184,12 @@ namespace Matchmaker
         private void Return(object sender, MouseButtonEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
+            CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
+            coverImageSelecter.Show();
+            coverImageSelecter.userID = userID;
         }
 
         private void confirmNewHobbyList(object sender, MouseButtonEventArgs e)

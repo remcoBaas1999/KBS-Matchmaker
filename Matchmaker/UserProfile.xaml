@@ -215,8 +215,9 @@
                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path56" Fill="#FFCCCCCC" StrokeThickness="0.0869565" Data="m 6.0511406 18.471298 c -0.3165743 -0.12791 -0.5554884 -0.515607 -0.5554884 -0.901416 0 -0.348643 0.042639 -0.397218 2.5843592 -2.944134 L 10.664371 12.036106 8.0800114 9.4423943 5.4956522 6.848683 V 6.4534597 c 0 -0.6817545 0.598307 -1.1565767 1.1831268 -0.9389409 0.1384107 0.051508 1.396221 1.2361297 2.795134 2.6324919 l 2.543478 2.5388403 2.543479 -2.5388403 c 1.398913 -1.3963622 2.650747 -2.5787114 2.781853 -2.6274427 0.602002 -0.2237597 1.287903 0.3915389 1.165255 1.0453103 -0.04566 0.2433976 -0.511101 0.7522105 -2.577503 2.8176904 -1.386978 1.3863603 -2.521779 2.5602913 -2.521779 2.6087353 0 0.04845 1.134801 1.222376 2.521779 2.608736 2.736496 2.735277 2.780172 2.79479 2.492994 3.397009 -0.183057 0.383873 -0.589738 0.593105 -1.003598 0.516337 -0.267501 -0.04962 -0.70623 -0.447629 -2.882619 -2.615084 l -2.567095 -2.556558 -2.476383 2.482691 c -1.3620104 1.365481 -2.5820482 2.538806 -2.7111949 2.607389 -0.261833 0.139047 -0.4587029 0.149672 -0.7314385 0.03947 z"/>
             </Canvas>
         </Button>
-        <TextBox  VerticalAlignment="Bottom" Grid.Row="7" Grid.Column="4" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
-        <TextBlock VerticalAlignment="Bottom" Grid.Row="7" Grid.Column="4" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
+        <TextBox  VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
+        <TextBlock VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
+        <Button VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10" x:Name="btnEditCoverImage" Click="btnEditCoverImage_Click" Content="Edit cover image" Width="100" Height="30" Grid.Column="2" Grid.Row="6"/>
     </Grid>
 </Page>
     
