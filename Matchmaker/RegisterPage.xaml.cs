@@ -141,10 +141,10 @@ namespace Matchmaker
                 ErrorGrid.Visibility = Visibility.Collapsed;
                 //Do Something With User
                 string[] hashAndSalt = Password.HashPassword(pw);
-                DateTime dtBd = new DateTime();
-                DateTime.TryParse($"{dOBM}/{dOBD}/{dOBY}", out dtBd); ;
-                var dateTimeOffset = new DateTimeOffset(dtBd);
-                var unixDateTime = dateTimeOffset.ToUnixTimeSeconds();
+                //DateTime dtBd = new DateTime();
+                //DateTime.TryParse($"{dOBM}/{dOBD}/{dOBY}", out dtBd); ;
+                //var dateTimeOffset = new DateTimeOffset(dtBd);
+                //var unixDateTime = dateTimeOffset.ToUnixTimeSeconds();
 
                 //make userdata
                 var userData = new UserData {
@@ -152,7 +152,7 @@ namespace Matchmaker
                     password = hashAndSalt[0],
                     salt = hashAndSalt[1],
                     realName = name,
-                    birthdate = unixDateTime
+                    birthdate = 1
                 };
                 if (await MatchmakerAPI_Client.PostNewUserDataAsync(userData)) {
                     NavigationService.Navigate("MainPage.xaml", UriKind.Relative);

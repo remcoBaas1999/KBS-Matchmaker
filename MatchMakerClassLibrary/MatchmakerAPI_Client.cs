@@ -30,9 +30,9 @@ namespace MatchMakerClassLibrary
 			return Get($@"https://145.44.233.207/user/get/id={id}");
 		}
 
-		public static string GetUserData(string email) {
-			return Get($@"https://145.44.233.207/user/get/email={email}");
-		}
+        public static string GetUserData(string email) {
+            return Get($@"https://145.44.233.207/user/get/email={email}");
+        }
 
         public static async Task<AuthData> GetAuthDataAsync(string email) {
             try {
@@ -129,6 +129,7 @@ namespace MatchMakerClassLibrary
         public long birthdate { get; set; }
         public string about { get; set; }
         public string location { get; set; }
+        public string coverImage { get; set; }
     }
     public class AuthData {
         public string email { get; set; }
