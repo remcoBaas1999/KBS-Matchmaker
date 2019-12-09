@@ -229,10 +229,8 @@ namespace Matchmaker
             AddHobbies.Visibility = Visibility.Visible;
             entryHobbies.Visibility = Visibility.Visible;
             addInterests.Visibility = Visibility.Visible;
-            inputHobbies.Visibility = Visibility.Visible;
-            svg122.Visibility = Visibility.Visible;
-            confirmNewHobbies.Visibility = Visibility.Visible;
             listPossibleInterests.Visibility = Visibility.Visible;
+            LoadHobbies();
         }
 
         private void DenyNewHobbies_Click(object sender, RoutedEventArgs e)
@@ -240,9 +238,6 @@ namespace Matchmaker
             AddHobbies.Visibility = Visibility.Collapsed;
             entryHobbies.Visibility = Visibility.Collapsed;
             addInterests.Visibility = Visibility.Collapsed;
-            inputHobbies.Visibility = Visibility.Collapsed;
-            svg122.Visibility = Visibility.Collapsed;
-            confirmNewHobbies.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
@@ -251,25 +246,32 @@ namespace Matchmaker
             //foreach cb{i} or for all children of listPossibleInterests
             foreach (CheckBox item in listPossibleInterests.Children)
             {
+                List<string> hobbyData = new List<string>();
                 if ((bool)item.IsChecked)
                 {
-                    List<string> hobbyData = new List<string>();
+                    
                     hobbyData.Add(item.Content.ToString());
                 }
             }
             AddHobbies.Visibility = Visibility.Collapsed;
             entryHobbies.Visibility = Visibility.Collapsed;
             addInterests.Visibility = Visibility.Collapsed;
-            inputHobbies.Visibility = Visibility.Collapsed;
-            svg122.Visibility = Visibility.Collapsed;
-            confirmNewHobbies.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
-        private void requestSuggestions_Click(object sender, RoutedEventArgs e)
+        private void LoadHobbies()
         {
-            
 
+            List<HobbyData> listHobbies = MatchmakerAPI_Client.getAllHobbies();
+            for (int i = 0; i < listHobbies.Count(); i++)
+            {
+                CheckBox cb = new CheckBox();
+                TextBlock tb = new TextBlock();
+
+                tb.Text = listHobbies[i].displayName;
+                cb.Name = $"cb{i}";
+                listPossibleInterests.Children.Add(cb);
+            }
         }
     }
 }
