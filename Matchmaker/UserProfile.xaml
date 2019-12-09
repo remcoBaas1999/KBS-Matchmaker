@@ -135,18 +135,10 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Height="Auto" Width="Auto">
             <WrapPanel Grid.Row="1" Grid.Column="1" Margin="266, 24,0,0">
                 <!-- placeholder for chosen hobbies -->
-                <Border Background="#673AB7" CornerRadius="16" Width="Auto" Height="32" Margin="0,0,12,0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="Sport" Margin="6, 8.58, 1.58, 8.58" FontSize="14" FontFamily="Roboto" Foreground="#fff" Opacity="0.54"/>
-                        <Canvas Width="16" Height="16" Margin="0,0,6,0">
-                            <Path Data="M10.6517 11.7123L8 9.06066L5.34835 11.7123C5.05667 12.004 4.57937 12.004 4.28769 11.7123C3.99601 11.4206 3.99601 10.9433 4.28769 10.6516L6.93934 8L4.28769 5.34835C3.99601 5.05667 3.99601 4.57937 4.28769 4.28769C4.57937 3.99601 5.05667 3.99601 5.34835 4.28769L8 6.93934L10.6517 4.28769C10.9433 3.99601 11.4206 3.99601 11.7123 4.28769C12.004 4.57937 12.004 5.05667 11.7123 5.34835L9.06066 8L11.7123 10.6516C12.004 10.9433 12.004 11.4206 11.7123 11.7123C11.4206 12.004 10.9433 12.004 10.6517 11.7123Z" Fill="White" Opacity="0.54"/>
-                        </Canvas>
-                    </StackPanel>
-                </Border>
-
+                <WrapPanel x:Name="HobbyWrapper"></WrapPanel>
                 <!-- placeholder for add new hobby -->
                 <Border Background="{x:Null}" Opacity="0.24" BorderThickness="1" CornerRadius="16" BorderBrush="Black" Padding="6,0" x:Name="addHobby" MouseDown="addHobby_MouseDown">
-                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="Add New Interest" Foreground="Black" Opacity="0.56" FontSize="12" FontFamily="Roboto"/>
+                    <TextBlock Margin="6" TextAlignment="Center" VerticalAlignment="Center" Text="Add New Interest" Foreground="Black" Opacity="0.56" FontSize="14" FontFamily="Roboto"/>
                 </Border>
             </WrapPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,236,0,0">
