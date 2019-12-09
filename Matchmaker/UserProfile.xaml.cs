@@ -233,13 +233,23 @@ namespace Matchmaker
 
         private void confirmNewHobbies_Click(object sender, RoutedEventArgs e)
         {
-
+            //foreach cb{i} or for all children of listPossibleInterests
+            foreach (var item in listPossibleInterests.Children)
+            {
+                activeUser. item.ToString();
+            }
         }
 
         private void requestSuggestions_Click(object sender, RoutedEventArgs e)
         {
-            List<string> listHobbies = new List<string>() { "Dance", "Hop hop", "gotterdammerung" }; //find interests based on string
-            listPossibleInterests.DataContext = listHobbies;
+            List<string> listHobbies = new List<string>() { "Dance", "Muziek", "Programmeren" }; //find interests based on string
+            for (int i = 0; i < listHobbies.Count(); i++)
+            {
+                CheckBox cb = new CheckBox();
+                cb.Content = listHobbies[i];
+                cb.Name = $"cb{i}";
+                listPossibleInterests.Children.Add(cb);
+            }
         }
     }
 }

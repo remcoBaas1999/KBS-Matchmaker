@@ -208,13 +208,9 @@
             </Canvas>
         </Button>
         <!--Add hobby suggestions as a tickbox where the V sign turns purple when selected-->
-        <ListBox x:Name="listPossibleInterests" ItemsSource="{Binding TheList}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding TheText}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <StackPanel x:Name="listPossibleInterests" Visibility="Visible">
+            
+        </StackPanel>
         <!--Selected hobbies -->
         
         <!-- confirm or deny selection-->
