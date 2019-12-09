@@ -82,7 +82,7 @@ namespace Matchmaker
         public  string password { get; set; }
         public  string salt { get; set; }
         public  int id { get; set; }
-        public List<HobbyData> interests { get; set; }
+        public List<string> interests { get; set; }
 
     }
 }

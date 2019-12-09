@@ -35,7 +35,7 @@ namespace Matchmaker
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
             
-            years.Text = (CalculateAge(UnixTimeToDateTime(user.birthdate))).ToString();
+            years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
             btnEditCoverImage.Visibility = Visibility.Collapsed;
             
             name.Text = user.realName;
@@ -69,7 +69,7 @@ namespace Matchmaker
                 editName.Visibility = Visibility.Collapsed;
             }
 
-            DateTime age = UnixTimeToDateTime(active.birthdate);
+            DateTime age = UnixTimeToDate(active.birthdate);
 
             years.Text = (CalculateAge(age).ToString());
             city.Text = active.location;
@@ -235,7 +235,7 @@ namespace Matchmaker
             addInterests.Visibility = Visibility.Visible;
             listPossibleInterests.Visibility = Visibility.Visible;
 
-            LoadHobbies();
+            //LoadHobbies();
         }
 
         //private void LoadHobbies()
@@ -248,14 +248,14 @@ namespace Matchmaker
         private void confirmNewHobbyList(object sender, MouseButtonEventArgs e)
         {
 
-            List<HobbyData> listHobbies = MatchmakerAPI_Client.getAllHobbies();
+            List<string> listHobbies = MatchmakerAPI_Client.getAllHobbies();
             for (int i = 0; i < listHobbies.Count(); i++)
             {
                 CheckBox cb = new CheckBox();
                 TextBlock tb = new TextBlock();
                 Grid hobbyLane = new Grid();
 
-                tb.Text = listHobbies[i].displayName;
+                tb.Text = listHobbies[i];
                 tb.FontSize = 14;
                 tb.Name = $"tb{i}";
                 tb.HorizontalAlignment = HorizontalAlignment.Left;
@@ -321,8 +321,8 @@ namespace Matchmaker
 
         private async void AddInterests_Click(object sender, RoutedEventArgs e)
         {
-            List<HobbyData> hobbyData = new List<HobbyData>();
-            List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
+            List<string> hobbyData = new List<string>();
+            List<string> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
             for (int i = 0; i < listAllHobbies.Count; i++)
             {
                 CheckBox o = this.FindName($"cb{i}") as CheckBox; 
@@ -337,7 +337,7 @@ namespace Matchmaker
                     //var block = parentBlock.FindName($"cb{i}") as TextBlock;
                     foreach (var hobby in listAllHobbies)
                     {
-                        if (hobby.displayName == block.Text)
+                        if (hobby == block.Text)
                         {
                             hobbyData.Add(hobby);
                         }
