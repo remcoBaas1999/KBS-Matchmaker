@@ -140,4 +140,9 @@ namespace MatchMakerClassLibrary
         public string password { get; set; }
         public string salt { get; set; }
     }
+
+    public class CoverImageData {
+        public int userid { get; set; }
+        public string imageName { get; set; }
+    }
 }
