@@ -121,6 +121,28 @@ namespace MatchmakerAPI.Controllers
 			}
 		}
 
+		[HttpPost("post/update/images")]
+		public CreatedAtActionResult UpdateCoverImage(CoverImageData data) {
+			int key = data.userid;
+
+			using (StreamReader r = new StreamReader("/home/student/data/users.json")) {
+				string json = r.ReadToEnd();
+
+				var users = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json);
+
+				users[key].coverImage = data.imageName;
+
+				var text = JsonConvert.SerializeObject(users);
+				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
+			}
+
+			try {
+				return CreatedAtAction("UpdateUser", new { success = true });
+			} catch (System.InvalidOperationException) {
+				return null;
+			}
+		}
+
 		[HttpPost("post/update")]
 		public CreatedAtActionResult UpdateUser(UserData data)
 		{
