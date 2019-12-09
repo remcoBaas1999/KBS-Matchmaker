@@ -34,39 +34,86 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
-
-            DateTime now = DateTime.Now;
-            DateTime birthdate = new DateTime(user.birthdate);
-            int a = now.Year - birthdate.Year;
-            years.Text = a.ToString();
+            
+            years.Text = (CalculateAge(UnixTimeToDateTime(user.birthdate))).ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
-            city.Text = user.city;
+            city.Text = user.location;
             bioText.Text = user.about;
-            //foreach (var item in user.hobbies)
-            //{
-                //add to list of Hobbies in the XAML
-            //}
-
+            if (user.interests != null)
+            {
+                foreach (var item in user.interests)
+                {
+                    //add to list of Hobbies in the Xaml
+                    LoadHobbyWrapper(item);
+                }
+            }
             userInView = user;
         }
         public UserProfile(UserData active, bool userAccount)
         {
             InitializeComponent();
 
-            years.Text = (DateTime.Now.Year - new DateTime(active.birthdate).Year).ToString();
-            city.Text = active.city;
+            if (userAccount)
+            {
+                editBio.Visibility = Visibility.Visible;
+                editLocation.Visibility = Visibility.Visible;
+                editName.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                editBio.Visibility = Visibility.Collapsed;
+                editLocation.Visibility = Visibility.Collapsed;
+                editName.Visibility = Visibility.Collapsed;
+            }
 
+            DateTime age = UnixTimeToDateTime(active.birthdate);
+
+            years.Text = (CalculateAge(age).ToString());
+            city.Text = active.location;
+            citySelection.SelectedItem = active.location;
             accountText.Text = active.about;
             bioText.Text = active.about;
             name.Text = active.realName;
             showName.Text = active.realName;
-
-            //foreach (var item in active.hobbies)
-            //{
-                //add to list of Hobbies in the Xaml
-            //}
+            if (active.interests != null)
+            {
+                foreach (var item in active.interests)
+                {
+                    LoadHobbyWrapper(item);
+                }
+            }
+            LoadHobbyWrapper("Test");
             userInView = active;
+        }
+
+        public int CalculateAge(DateTime dob)
+        {
+            // Calculate dif between years
+            var today = DateTime.Today;
+            var age = today.Year - dob.Year;
+
+            // Now check the months and days
+            if(dob.Month > today.Month)
+            {
+                age--;
+            }
+            else if (dob.Day > today.Day)
+            {
+                age--;
+            }
+
+
+            return age;
+        }
+
+        // Convert the Unixtime to an object of datetime
+        private DateTime UnixTimeToDate(long _bday)
+        {
+            
+            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime bday = start.AddSeconds(_bday).ToLocalTime();
+            return bday;
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)
@@ -145,11 +192,6 @@ namespace Matchmaker
 
         }
 
-        private void exit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void editLocation_Click(object sender, RoutedEventArgs e)
         {
             citySelection.SelectedItem = city.Text;
@@ -162,10 +204,8 @@ namespace Matchmaker
 
         private async void confirmNewLocation_Click(object sender, RoutedEventArgs e)
         {
-            citySelection.SelectedValue = city.Text;
-            string newCity = citySelection.Text;
-            city.Text = newCity;
-            userInView.city = newCity;
+            city.Text = citySelection.SelectedItem.ToString();
+            userInView.location = citySelection.SelectedItem.ToString();
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
@@ -187,15 +227,121 @@ namespace Matchmaker
         {
             NavigationService.GoBack();
         }
-
-        private void confirmNewHobbyList(object sender, MouseButtonEventArgs e)
+        private void addHobby_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            
+            AddHobbies.Visibility = Visibility.Visible;
+            entryHobbies.Visibility = Visibility.Visible;
+            addInterests.Visibility = Visibility.Visible;
+            listPossibleInterests.Visibility = Visibility.Visible;
+
+            LoadHobbies();
         }
 
-        private void denyNewHobbyList(object sender, MouseButtonEventArgs e)
+        private void LoadHobbies()
         {
 
+            List<HobbyData> listHobbies = MatchmakerAPI_Client.getAllHobbies();
+            for (int i = 0; i < listHobbies.Count(); i++)
+            {
+                CheckBox cb = new CheckBox();
+                TextBlock tb = new TextBlock();
+                Grid hobbyLane = new Grid();
+
+                tb.Text = listHobbies[i].displayName;
+                tb.FontSize = 14;
+                tb.Name = $"tb{i}";
+                tb.HorizontalAlignment = HorizontalAlignment.Left;
+                cb.Name = $"cb{i}";
+                cb.HorizontalAlignment = HorizontalAlignment.Right;
+                cb.VerticalAlignment = VerticalAlignment.Center;
+
+                hobbyLane.Children.Add(tb);
+                hobbyLane.Children.Add(cb);
+                hobbyLane.Height = 25;
+                hobbyLane.HorizontalAlignment = HorizontalAlignment.Stretch;
+
+                listPossibleInterests.Children.Add(hobbyLane);
+            }
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            AddHobbies.Visibility = Visibility.Collapsed;
+            entryHobbies.Visibility = Visibility.Collapsed;
+            addInterests.Visibility = Visibility.Collapsed;
+            listPossibleInterests.Visibility = Visibility.Collapsed;
+        }
+
+        private void LoadHobbyWrapper(string hobby)
+        {
+            
+            Border hobbyBorder = new Border();
+            StackPanel stackPanel = new StackPanel();
+            TextBlock hobbyText = new TextBlock();
+            Canvas canvas = new Canvas();
+            Path path = new Path();
+
+            //hobbyBorder.BorderBrush = new SolidColorBrush(Colors.Purple);
+            //hobbyBorder.CornerRadius = new CornerRadius(16);
+            //hobbyBorder.BorderThickness = new Thickness(0);
+            //hobbyBorder.Width = 100;
+            //hobbyBorder.Height = 20;
+
+
+            hobbyBorder.Background = new SolidColorBrush(Colors.Purple);
+            hobbyBorder.Child = stackPanel;
+            hobbyBorder.CornerRadius = new CornerRadius(16);
+
+            stackPanel.Orientation = Orientation.Horizontal;
+
+            hobbyText.Text = "Dit is een test";
+            hobbyText.FontSize = 14;
+
+            path.Data = Geometry.Parse("M10.6517 11.7123L8 9.06066L5.34835 11.7123C5.05667 12.004 4.57937 12.004 4.28769 11.7123C3.99601 11.4206 3.99601 10.9433 4.28769 10.6516L6.93934 8L4.28769 5.34835C3.99601 5.05667 3.99601 4.57937 4.28769 4.28769C4.57937 3.99601 5.05667 3.99601 5.34835 4.28769L8 6.93934L10.6517 4.28769C10.9433 3.99601 11.4206 3.99601 11.7123 4.28769C12.004 4.57937 12.004 5.05667 11.7123 5.34835L9.06066 8L11.7123 10.6516C12.004 10.9433 12.004 11.4206 11.7123 11.7123C11.4206 12.004 10.9433 12.004 10.6517 11.7123Z");
+            path.Fill = new SolidColorBrush(Colors.Black);
+            path.Opacity = 0.54;
+
+            canvas.Children.Add(path);
+
+            stackPanel.Children.Add(hobbyText);
+            stackPanel.Children.Add(canvas);
+
+            HobbyWrapper.Children.Add(hobbyBorder);
+
+
+        }
+
+        private async void AddInterests_Click(object sender, RoutedEventArgs e)
+        {
+            List<HobbyData> hobbyData = new List<HobbyData>();
+            List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
+            for (int i = 0; i < listAllHobbies.Count; i++)
+            {
+                CheckBox o = this.FindName($"cb{i}") as CheckBox; 
+                //var button = sender as CheckBox;
+                //var parent = button.Parent as FrameworkElement;
+                //var checkbox = parent.FindName($"cb{i}") as CheckBox;
+                if (o.IsChecked == true)
+                {
+                    //var textBlock = sender as TextBlock;
+                    //var parentBlock = textBlock.Parent as FrameworkElement;
+                    TextBlock block = FindName($"tb{i}") as TextBlock;
+                    //var block = parentBlock.FindName($"cb{i}") as TextBlock;
+                    foreach (var hobby in listAllHobbies)
+                    {
+                        if (hobby.displayName == block.Text)
+                        {
+                            hobbyData.Add(hobby);
+                        }
+                    }
+                }
+            }
+            AddHobbies.Visibility = Visibility.Collapsed;
+            entryHobbies.Visibility = Visibility.Collapsed;
+            addInterests.Visibility = Visibility.Collapsed;
+            listPossibleInterests.Visibility = Visibility.Collapsed;
+            userInView.interests = hobbyData;
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
     }
 }

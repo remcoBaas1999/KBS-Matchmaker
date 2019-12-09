@@ -73,15 +73,16 @@ namespace Matchmaker
     public  class activeUser : UserData
     {
 
-        public  string realName { get; set; } = "Hans Gruber";
-        public  string city { get; set; } = "Zwolle";
-        public  DateTime Age { get; set; } = new DateTime(1970, 6, 3);
-        public  string Bio { get; set; } = "Tell something about yourself...";
-        public  List<string> hobbies { get; set; } = new List<string>() { "springen", "Piano", "Warhammer"};
+        public  string realName { get; set; }
+        public  string location { get; set; }
+        public  DateTime birthDate { get; set; }
+        public  string about { get; set; }
+        public List<string> hobbies { get; set; }
         public  string email { get; set; }
         public  string password { get; set; }
         public  string salt { get; set; }
         public  int id { get; set; }
+        public List<HobbyData> interests { get; set; }
 
     }
 }
