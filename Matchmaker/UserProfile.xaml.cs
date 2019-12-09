@@ -36,6 +36,8 @@ namespace Matchmaker
             editName.Visibility = Visibility.Collapsed;
             
             years.Text = (CalculateAge(UnixTimeToDateTime(user.birthdate))).ToString();
+            btnEditCoverImage.Visibility = Visibility.Collapsed;
+            
             name.Text = user.realName;
             showName.Text = user.realName;
             city.Text = user.location;
@@ -125,9 +127,8 @@ namespace Matchmaker
             denymNameChange.Visibility = Visibility.Visible;
         }
 
-        private async void confirmNameChange_Click(object sender, RoutedEventArgs e)
-        {
-            
+        private void confirmNameChange_Click(object sender, RoutedEventArgs e) {
+
             userInView.realName = name.Text;
             showName.Text = name.Text;
             showName.Visibility = Visibility.Visible;
@@ -237,7 +238,14 @@ namespace Matchmaker
             LoadHobbies();
         }
 
-        private void LoadHobbies()
+        //private void LoadHobbies()
+        private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
+            CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
+            coverImageSelecter.Show();
+            coverImageSelecter.userID = userInView.id;
+        }
+
+        private void confirmNewHobbyList(object sender, MouseButtonEventArgs e)
         {
 
             List<HobbyData> listHobbies = MatchmakerAPI_Client.getAllHobbies();
