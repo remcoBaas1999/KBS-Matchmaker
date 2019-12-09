@@ -56,8 +56,8 @@
                     </StackPanel>
                     <!--edit profile name-->
                     <StackPanel Orientation="Horizontal" Height="{Binding ElementName=name}">
-                        <TextBox  Foreground="White" FontFamily="Roboto" Width="Auto" x:Name="name" Visibility="Collapsed" FontSize="24"  BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,128,0,0"/>
-                        <Button Height="30" Width="30" BorderBrush="{x:Null}" Background="{x:Null}" x:Name="confirmNameChange" Click="confirmNameChange_Click" Visibility="Collapsed" Margin="0,128,0,23">
+                        <TextBox  Foreground="White" FontFamily="Roboto" Width="Auto" x:Name="name" Visibility="Collapsed" FontSize="24"  BorderBrush="{x:Null}" BorderThickness="0" Background="{x:Null}" Margin="0,129,0,0" Height="auto"/>
+                        <Button Height="30" Width="30" BorderBrush="{x:Null}" Background="{x:Null}" x:Name="confirmNameChange" Click="confirmNameChange_Click" Visibility="Collapsed" Margin="0,129,0,0">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" x:Name="svg80" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -68,7 +68,7 @@
                                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="path99" Fill="#FFB3B3B3" StrokeThickness="0.0869565" Data="M 8.7130435 18.496651 C 8.6413043 18.471275 7.5358559 17.408317 6.2564913 16.134525 3.7578354 13.646751 3.6858138 13.548427 3.9657207 13.007147 c 0.1905717 -0.368525 0.4644316 -0.537582 0.8708456 -0.537582 0.3340474 0 0.4089295 0.063 2.2223233 1.869565 1.0321451 1.028261 1.9147408 1.869566 1.961324 1.869566 0.046583 0 2.3527424 -2.268299 5.1247984 -5.040664 3.418959 -3.4193408 5.115117 -5.0571403 5.27332 -5.0918876 0.335064 -0.073592 0.824512 0.1596562 0.984588 0.4692088 0.169167 0.3271331 0.17225 0.5607031 0.01139 0.8633129 C 20.22018 7.7738729 9.5707795 18.362885 9.2943391 18.465583 c -0.2626882 0.09759 -0.3761138 0.10365 -0.5812956 0.03107 z"/>
                             </Canvas>
                         </Button>
-                        <Button Height="30" Width="30"    HorizontalAlignment="Left" x:Name="denymNameChange" Click="denymNameChange_Click" Visibility="Collapsed" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,128,0,0">
+                        <Button Height="30" Width="30"    HorizontalAlignment="Left" x:Name="denymNameChange" Click="denymNameChange_Click" Visibility="Collapsed" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,129,0,0">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" x:Name="svg60" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -87,7 +87,7 @@
                     </StackPanel>
                 </WrapPanel>
                 <StackPanel Width="Auto" HorizontalAlignment="Right">
-                    <TextBlock Text="Location" Foreground="LightGray"  FontFamily="Roboto"  Width="50" HorizontalAlignment="Left" Margin="0,101,0,6"/>
+                    <TextBlock Text="Location" Foreground="LightGray"  FontFamily="Roboto"  Width="50" HorizontalAlignment="Left" Margin="0,109,0,6"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock FontSize="24" Foreground="White" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Left"/>
                         <ComboBox FontSize="24" BorderBrush="{x:Null}" Background="{x:Null}" FontFamily="Roboto" Name="citySelection" Visibility="Collapsed" Loaded="citySelection_Loaded" SelectedValuePath="Content" HorizontalAlignment="Left" Width="130"/>
