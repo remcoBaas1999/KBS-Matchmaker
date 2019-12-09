@@ -46,6 +46,33 @@ namespace MatchmakerAPI.Controllers
 		    }
         }
 
+		[HttpGet("get/all")]
+        public Dictionary<string, int> AllUsers()
+        {
+			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
+		    {
+		        string json = r.ReadToEnd();
+				var dict = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+				return dict;
+		    }
+        }
+
+		[HttpGet("get/hobbies/id={id}")]
+		public List<Hobby> GetUserHobbies(int id)
+		{
+			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
+		    {
+		        string json = r.ReadToEnd();
+				try {
+					var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
+					return test.hobbies;
+				} catch (System.Collections.Generic.KeyNotFoundException e) {
+					return null;
+				}
+
+		    }
+		}
+
 		[HttpPost("post/new")]
 		public CreatedAtActionResult AddNewUser(NewUserData data)
 		{
@@ -68,7 +95,8 @@ namespace MatchmakerAPI.Controllers
 					password = data.password,
 					salt = data.salt,
 					realName = data.realName,
-					birthdate = data.birthdate
+					birthdate = data.birthdate,
+					profilePicture = "0.jpg"
 				};
 
 				users.Add(key, udata);
