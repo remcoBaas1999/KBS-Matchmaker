@@ -34,10 +34,12 @@ namespace MatchMakerClassLibrary
 			return Get($@"https://145.44.233.207/user/get/email={email}");
 		}
 
-		public static Dictionary<string, int> GetUsers() {
-			var json = Get($@"https://145.44.233.207/user/get/all");
-            return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
-		}
+        public static Dictionary<string, int> GetUsers() {
+            
+                var json = Get($@"https://145.44.233.207/user/get/all");
+                return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+            
+            }
 
         public static async Task<AuthData> GetAuthDataAsync(string email) {
             try {
@@ -97,12 +99,17 @@ namespace MatchMakerClassLibrary
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
 		    request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
-		    using(HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-		    using(Stream stream = response.GetResponseStream())
-		    using(StreamReader reader = new StreamReader(stream))
-		    {
-		        return reader.ReadToEnd();
-		    }
+            try {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream)) {
+                    return reader.ReadToEnd();
+                }
+            }
+            catch {
+                Console.WriteLine("De server reageerde niet of staat uit.");
+                return null;
+            }
 		}
 
 
@@ -122,16 +129,7 @@ namespace MatchMakerClassLibrary
             result = response.Content.ReadAsStringAsync().Result;
             return result;
         }
-
-        public static async Task<bool> SaveUser(UserData user)
-        {
-            string url = @"https://145.44.233.207/user/post/update";
-            var result = await Post(url, user);
-
-            return true;
-        }
     }
-
 
     public class UserData
     {
@@ -142,8 +140,8 @@ namespace MatchMakerClassLibrary
         public int id { get; set; }
         public long birthdate { get; set; }
         public string about { get; set; }
-        public string city { get; set; }
-        public List<string> hobbies { get; set; }
+        public string location { get; set; }
+		public string profilePicture { get; set; }
     }
     public class AuthData {
         public string email { get; set; }
