@@ -171,7 +171,7 @@ namespace Matchmaker {
 
         private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Settings settings = new Settings();
+            Settings settings = new Settings(LoggedInUserID);
             NavigationService.Navigate(settings);
         }
 
