@@ -38,6 +38,7 @@ namespace Matchmaker
             editName.Visibility = Visibility.Collapsed;            
             years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
             btnEditCoverImage.Visibility = Visibility.Collapsed;
+            addHobby.Visibility = Visibility.Collapsed;
             name.Text = user.realName;
             showName.Text = user.realName;
             city.Text = user.location;
@@ -65,12 +66,14 @@ namespace Matchmaker
                 editBio.Visibility = Visibility.Visible;
                 editLocation.Visibility = Visibility.Visible;
                 editName.Visibility = Visibility.Visible;
+                addHobby.Visibility = Visibility.Visible;
             }
             else
             {
                 editBio.Visibility = Visibility.Collapsed;
                 editLocation.Visibility = Visibility.Collapsed;
                 editName.Visibility = Visibility.Collapsed;
+                addHobby.Visibility = Visibility.Collapsed;
             }
 
             DateTime age = UnixTimeToDate(active.birthdate);
@@ -104,19 +107,25 @@ namespace Matchmaker
         public int CalculateAge(DateTime dob)
         {
             // Calculate dif between years
-            var today = DateTime.Today;
-            var age = today.Year - dob.Year;
+            DateTime today = DateTime.Today;
+            int age = today.Year - dob.Year;
+            bool month = false;
+
 
             // Now check the months and days
-            if(dob.Month > today.Month)
+            if (today.Month < dob.Month)
             {
                 age--;
             }
-            else if (dob.Day > today.Day)
+            else
             {
-                age--;
+                month = true; //Maand is al geweest
             }
 
+            if(month == false && today.Day < dob.Day)
+            {
+                age--;
+            }
 
             return age;
         }
