@@ -155,9 +155,10 @@ namespace Matchmaker
                     birthdate = unixDateTime
                 };
                 if (await MatchmakerAPI_Client.PostNewUserDataAsync(userData)) {
-                    NavigationService.Navigate("MainPage.xaml", UriKind.Relative);
+                    LoginPage loginPage = new LoginPage();
+                    NavigationService.Navigate(loginPage);
+                    NavigationService.RemoveBackEntry();
                 }
-                //Close Page
             } else
             {
                 string errorMSG = "";
