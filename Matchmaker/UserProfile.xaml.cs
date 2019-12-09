@@ -81,7 +81,6 @@ namespace Matchmaker
                     //add to list of Hobbies in the Xaml
                 }
             }
-            
             userInView = active;
         }
 
@@ -227,12 +226,10 @@ namespace Matchmaker
         }
         private void addHobby_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //Window window = new AddHobbies();
-            //window.WindowStyle = WindowStyle.None;
-            //window.Show();
             AddHobbies.Visibility = Visibility.Visible;
             entryHobbies.Visibility = Visibility.Visible;
-
+            addInterests.Visibility = Visibility.Visible;
+            listPossibleInterests.Visibility = Visibility.Visible;
             LoadHobbies();
         }
 
@@ -241,23 +238,30 @@ namespace Matchmaker
             AddHobbies.Visibility = Visibility.Collapsed;
             entryHobbies.Visibility = Visibility.Collapsed;
             addInterests.Visibility = Visibility.Collapsed;
-            //inputHobbies.Visibility = Visibility.Collapsed;
-            //svg122.Visibility = Visibility.Collapsed;
-            //confirmNewHobbies.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
         private void confirmNewHobbies_Click(object sender, RoutedEventArgs e)
         {
             //foreach cb{i} or for all children of listPossibleInterests
-            foreach (var item in listPossibleInterests.Children)
+            foreach (CheckBox item in listPossibleInterests.Children)
             {
-                //activeUser. item.ToString();
+                List<string> hobbyData = new List<string>();
+                if ((bool)item.IsChecked)
+                {
+                    
+                    hobbyData.Add(item.Content.ToString());
+                }
             }
+            AddHobbies.Visibility = Visibility.Collapsed;
+            entryHobbies.Visibility = Visibility.Collapsed;
+            addInterests.Visibility = Visibility.Collapsed;
+            listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
         private void LoadHobbies()
         {
+
             List<HobbyData> listHobbies = MatchmakerAPI_Client.getAllHobbies();
             for (int i = 0; i < listHobbies.Count(); i++)
             {
