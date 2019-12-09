@@ -45,7 +45,7 @@ namespace Matchmaker
                 foreach (var item in user.interests)
                 {
                     //add to list of Hobbies in the Xaml
-                    LoadHobbyWrapper(item);
+                    LoadHobbyWrapper(item.displayName);
                 }
             }
             userInView = user;
@@ -80,7 +80,7 @@ namespace Matchmaker
             {
                 foreach (var item in active.interests)
                 {
-                    LoadHobbyWrapper(item);
+                    LoadHobbyWrapper(item.displayName);
                 }
             }
             LoadHobbyWrapper("Test");
@@ -315,7 +315,7 @@ namespace Matchmaker
             List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
             for (int i = 0; i < listAllHobbies.Count; i++)
             {
-                CheckBox o = this.FindName($"cb{i}") as CheckBox; 
+                CheckBox o = selectedInterests.FindName($"cb{i}") as CheckBox;
                 //var button = sender as CheckBox;
                 //var parent = button.Parent as FrameworkElement;
                 //var checkbox = parent.FindName($"cb{i}") as CheckBox;
