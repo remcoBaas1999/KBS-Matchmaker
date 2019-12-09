@@ -52,7 +52,7 @@ namespace Matchmaker
             years.Text = CalculateBirthday(UnixTimeToDate(user.birthdate)).ToString();
             city.Text = user.location;
             accountText.Text = user.about;
-            bioText.Text = activeUser.Bio;
+            bioText.Text = user.about;
             name.Text = user.realName;
             showName.Text = user.realName;
         }
@@ -64,17 +64,14 @@ namespace Matchmaker
             int age = today.Year - bday.Year;
             bool month = true;
 
-            if(today.Month < bday.Month)
+            if (today.Month < bday.Month)
             {
                 age--;
                 month = false;
             }
-            if(month)
+            if (month && today.Day < bday.Day)
             {
-                if(today.Day < bday.Day)
-                {
-                    age--;
-                }
+                age--;
             }
 
             return age;
@@ -85,7 +82,6 @@ namespace Matchmaker
             
             DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             DateTime bday = start.AddSeconds(_bday).ToLocalTime();
-
             return bday;
         }
 
