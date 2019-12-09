@@ -70,6 +70,7 @@ namespace Matchmaker
 
             years.Text = (CalculateAge(age).ToString());
             city.Text = active.location;
+            citySelection.SelectedItem = active.location;
             accountText.Text = active.about;
             bioText.Text = active.about;
             name.Text = active.realName;
@@ -199,10 +200,8 @@ namespace Matchmaker
 
         private async void confirmNewLocation_Click(object sender, RoutedEventArgs e)
         {
-            citySelection.SelectedValue = city.Text;
-            string newCity = citySelection.Text;
-            city.Text = newCity;
-            userInView.location = newCity;
+            city.Text = citySelection.SelectedItem.ToString();
+            userInView.location = citySelection.SelectedItem.ToString();
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
@@ -234,40 +233,6 @@ namespace Matchmaker
             LoadHobbies();
         }
 
-        private void DenyNewHobbies_Click(object sender, RoutedEventArgs e)
-        {
-            AddHobbies.Visibility = Visibility.Collapsed;
-            entryHobbies.Visibility = Visibility.Collapsed;
-            addInterests.Visibility = Visibility.Collapsed;
-            listPossibleInterests.Visibility = Visibility.Collapsed;
-        }
-
-        private async void ConfirmNewHobbies_Click(object sender, RoutedEventArgs e)
-        {
-            List<HobbyData> hobbyData = new List<HobbyData>();
-            List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
-            foreach (CheckBox item in listPossibleInterests.Children)
-            {
-                
-                if ((bool)item.IsChecked)
-                {
-                    foreach (var hobby in listAllHobbies)
-                    {
-                        if (hobby.displayName == item.Content.ToString())
-                        {
-                            hobbyData.Add(hobby);
-                        }
-                    }
-                }
-            }
-            AddHobbies.Visibility = Visibility.Collapsed;
-            entryHobbies.Visibility = Visibility.Collapsed;
-            addInterests.Visibility = Visibility.Collapsed;
-            listPossibleInterests.Visibility = Visibility.Collapsed;
-            userInView.interests = hobbyData;
-            var result = await MatchmakerAPI_Client.SaveUser(userInView);
-        }
-
         private void LoadHobbies()
         {
 
@@ -280,7 +245,7 @@ namespace Matchmaker
 
                 tb.Text = listHobbies[i].displayName;
                 tb.FontSize = 14;
-                
+                tb.Name = $"tb{i}";
                 tb.HorizontalAlignment = HorizontalAlignment.Left;
                 cb.Name = $"cb{i}";
                 cb.HorizontalAlignment = HorizontalAlignment.Right;
@@ -293,6 +258,47 @@ namespace Matchmaker
 
                 listPossibleInterests.Children.Add(hobbyLane);
             }
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            AddHobbies.Visibility = Visibility.Collapsed;
+            entryHobbies.Visibility = Visibility.Collapsed;
+            addInterests.Visibility = Visibility.Collapsed;
+            listPossibleInterests.Visibility = Visibility.Collapsed;
+        }
+
+        private async void AddInterests_Click(object sender, RoutedEventArgs e)
+        {
+            List<HobbyData> hobbyData = new List<HobbyData>();
+            List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
+            for (int i = 0; i < listAllHobbies.Count; i++)
+            {
+                CheckBox o = this.FindName($"cb{i}") as CheckBox; 
+                //var button = sender as CheckBox;
+                //var parent = button.Parent as FrameworkElement;
+                //var checkbox = parent.FindName($"cb{i}") as CheckBox;
+                if (o.IsChecked == true)
+                {
+                    //var textBlock = sender as TextBlock;
+                    //var parentBlock = textBlock.Parent as FrameworkElement;
+                    TextBlock block = FindName($"tb{i}") as TextBlock;
+                    //var block = parentBlock.FindName($"cb{i}") as TextBlock;
+                    foreach (var hobby in listAllHobbies)
+                    {
+                        if (hobby.displayName == block.Text)
+                        {
+                            hobbyData.Add(hobby);
+                        }
+                    }
+                }
+            }
+            AddHobbies.Visibility = Visibility.Collapsed;
+            entryHobbies.Visibility = Visibility.Collapsed;
+            addInterests.Visibility = Visibility.Collapsed;
+            listPossibleInterests.Visibility = Visibility.Collapsed;
+            userInView.interests = hobbyData;
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
     }
 }

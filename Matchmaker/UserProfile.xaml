@@ -203,10 +203,12 @@
                 </ScrollViewer>
                 <!--Selected hobbies -->
 
-                <WrapPanel x:Name="selectedInterests">
+                <WrapPanel x:Name="selectedInterests" >
 
                 </WrapPanel>
                 <!-- confirm or deny selection-->
+                <Button x:Name="Cancel" Foreground="LightGray" Content="Cancel" BorderBrush="{x:Null}" Background="{x:Null}" Height="20" Width="45" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,120,20" Click="Cancel_Click"/>
+                <Button x:Name="AddInterests" Foreground="Purple" Content="Add Interests" BorderBrush="{x:Null}" Background="{x:Null}" Height="20" Width="80" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Margin="0,0,20,20" Click="AddInterests_Click"/>
             </Grid>
         </Border>
     </Grid>
