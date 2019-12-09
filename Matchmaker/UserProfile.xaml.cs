@@ -38,6 +38,7 @@ namespace Matchmaker
             editName.Visibility = Visibility.Collapsed;            
             years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
             btnEditCoverImage.Visibility = Visibility.Collapsed;
+            addHobby.Visibility = Visibility.Collapsed;
             name.Text = user.realName;
             showName.Text = user.realName;
             city.Text = user.location;
