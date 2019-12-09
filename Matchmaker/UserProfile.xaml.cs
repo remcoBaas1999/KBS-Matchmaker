@@ -263,10 +263,22 @@ namespace Matchmaker
             {
                 CheckBox cb = new CheckBox();
                 TextBlock tb = new TextBlock();
+                Grid hobbyLane = new Grid();
 
                 tb.Text = listHobbies[i].displayName;
+                tb.FontSize = 14;
+                
+                tb.HorizontalAlignment = HorizontalAlignment.Left;
                 cb.Name = $"cb{i}";
-                listPossibleInterests.Children.Add(cb);
+                cb.HorizontalAlignment = HorizontalAlignment.Right;
+                cb.VerticalAlignment = VerticalAlignment.Center;
+
+                hobbyLane.Children.Add(tb);
+                hobbyLane.Children.Add(cb);
+                hobbyLane.Height = 25;
+                hobbyLane.HorizontalAlignment = HorizontalAlignment.Stretch;
+
+                listPossibleInterests.Children.Add(hobbyLane);
             }
         }
     }
