@@ -186,8 +186,6 @@ namespace MatchMakerClassLibrary
         public string city { get; set; }
         public long birthdate { get; set; }
         public string about { get; set; }
-        public string location { get; set; }
-
         public string profilePicture { get; set; }
         public string coverImage { get; set; }
         public List<HobbyData> hobbies { get; set; }
