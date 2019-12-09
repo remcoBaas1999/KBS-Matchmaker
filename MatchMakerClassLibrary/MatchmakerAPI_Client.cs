@@ -109,7 +109,7 @@ namespace MatchMakerClassLibrary {
                 Console.WriteLine("De server reageerde niet of staat uit.");
                 return null;
             }
-		}
+        }
 
         public static async Task<bool> PostNewCoverImageDataAsync(CoverImageData coverImageData) {
             string uri = @"https://145.44.233.207/user/post/update/images";
@@ -152,6 +152,7 @@ namespace MatchMakerClassLibrary {
         public string about { get; set; }
         public string location { get; set; }
 		public string profilePicture { get; set; }
+        public string coverImage { get; set; }
     }
     public class AuthData {
         public string email { get; set; }
