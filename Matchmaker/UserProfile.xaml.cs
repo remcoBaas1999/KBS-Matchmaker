@@ -230,6 +230,7 @@ namespace Matchmaker
             entryHobbies.Visibility = Visibility.Visible;
             addInterests.Visibility = Visibility.Visible;
             listPossibleInterests.Visibility = Visibility.Visible;
+
             LoadHobbies();
         }
 
@@ -241,7 +242,7 @@ namespace Matchmaker
             listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
-        private async void confirmNewHobbies_Click(object sender, RoutedEventArgs e)
+        private async void ConfirmNewHobbies_Click(object sender, RoutedEventArgs e)
         {
             List<HobbyData> hobbyData = new List<HobbyData>();
             List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
@@ -264,7 +265,7 @@ namespace Matchmaker
             addInterests.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
             userInView.interests = hobbyData;
-            var result = MatchmakerAPI_Client.SaveUser(userInView);
+            var result = await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
         private void LoadHobbies()
@@ -275,10 +276,22 @@ namespace Matchmaker
             {
                 CheckBox cb = new CheckBox();
                 TextBlock tb = new TextBlock();
+                Grid hobbyLane = new Grid();
 
                 tb.Text = listHobbies[i].displayName;
+                tb.FontSize = 14;
+                
+                tb.HorizontalAlignment = HorizontalAlignment.Left;
                 cb.Name = $"cb{i}";
-                listPossibleInterests.Children.Add(cb);
+                cb.HorizontalAlignment = HorizontalAlignment.Right;
+                cb.VerticalAlignment = VerticalAlignment.Center;
+
+                hobbyLane.Children.Add(tb);
+                hobbyLane.Children.Add(cb);
+                hobbyLane.Height = 25;
+                hobbyLane.HorizontalAlignment = HorizontalAlignment.Stretch;
+
+                listPossibleInterests.Children.Add(hobbyLane);
             }
         }
     }
