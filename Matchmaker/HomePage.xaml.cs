@@ -53,10 +53,12 @@ namespace Matchmaker {
             //Set name
             Profile1Tag.Content = user1.realName;
 
-            //Set profile picture            
+            //Set profile picture           
             string pfPic1 = $"https://145.44.233.207/images/users/{user1.profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
             //Set Cover Image
+            string coverImage = $"https://145.44.233.207/images/covers/1.jpg";
+            Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create second profile
             rnd = random.Next(0, Profiles.Count);
@@ -71,6 +73,9 @@ namespace Matchmaker {
             //Set profile picture
             string pfPic2 = $"https://145.44.233.207/images/users/{user2.profilePicture}";
             ProfilePicture2.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic2, UriKind.Absolute)));
+            //Set Cover Image
+            //coverImage = $"https://145.44.233.207/images/covers/2.jpg";
+            Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create third profile
             rnd = random.Next(0, Profiles.Count);
