@@ -41,7 +41,7 @@ namespace Matchmaker
             addHobby.Visibility = Visibility.Collapsed;
             name.Text = user.realName;
             showName.Text = user.realName;
-            city.Text = user.location;
+            city.Text = user.city;
             bioText.Text = user.about;
             if (user.hobbies != null)
             {
@@ -75,9 +75,10 @@ namespace Matchmaker
                 addHobby.Visibility = Visibility.Collapsed;
             }
 
+
             years.Text = (CalculateAge(UnixTimeToDate(active.birthdate))).ToString();
-            city.Text = active.location;
-            citySelection.SelectedItem = active.location;
+            city.Text = active.city;
+            citySelection.SelectedItem = active.city;
             accountText.Text = active.about;
             bioText.Text = active.about;
             name.Text = active.realName;
@@ -224,7 +225,7 @@ namespace Matchmaker
         private async void confirmNewLocation_Click(object sender, RoutedEventArgs e)
         {
             city.Text = citySelection.SelectedItem.ToString();
-            userInView.location = citySelection.SelectedItem.ToString();
+            userInView.city = citySelection.SelectedItem.ToString();
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;

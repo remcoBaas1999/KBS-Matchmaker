@@ -90,7 +90,7 @@
                     <TextBlock Text="Location" Foreground="LightGray"  FontFamily="Roboto"  Width="50" HorizontalAlignment="Left" Margin="0,109,0,6"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock FontSize="24" Foreground="White" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Left"/>
-                        <ComboBox FontSize="24" BorderBrush="{x:Null}" Background="{x:Null}" FontFamily="Roboto" Name="citySelection" Visibility="Collapsed" Loaded="citySelection_Loaded" SelectedValuePath="Content" HorizontalAlignment="Left" Width="130"/>
+                        <ComboBox FontSize="24" BorderBrush="{x:Null}" Background="{x:Null}" FontFamily="Roboto" Name="citySelection" Visibility="Collapsed" Loaded="citySelection_Loaded"  HorizontalAlignment="Left" Width="130"/>
                         <Button  Width="40" Height="30" Grid.Column="7" Grid.Row="4" Click="editLocation_Click" BorderBrush="{x:Null}" Background="{x:Null}" Name="editLocation" Visibility="Visible">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg24" Width="24" Height="24">
                                 <Canvas.RenderTransform>

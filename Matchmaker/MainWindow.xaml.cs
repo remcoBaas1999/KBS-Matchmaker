@@ -74,8 +74,8 @@ namespace Matchmaker
     {
 
         public  string realName { get; set; }
-        public  string location { get; set; }
-        public  DateTime birthDate { get; set; }
+        public  string city { get; set; }
+        public  DateTime birthdate { get; set; }
         public  string about { get; set; }
         public  string email { get; set; }
         public  string password { get; set; }
