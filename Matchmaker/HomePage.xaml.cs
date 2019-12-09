@@ -177,7 +177,6 @@ namespace Matchmaker {
 
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             Page userProfile = new UserProfile(user, User.loggedIn);
             NavigationService.Navigate(userProfile);

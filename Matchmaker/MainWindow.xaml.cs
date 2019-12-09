@@ -77,12 +77,11 @@ namespace Matchmaker
         public  string location { get; set; }
         public  DateTime birthDate { get; set; }
         public  string about { get; set; }
-        public List<string> hobbies { get; set; }
         public  string email { get; set; }
         public  string password { get; set; }
         public  string salt { get; set; }
         public  int id { get; set; }
-        public List<string> interests { get; set; }
+        public List<HobbyData> hobbies { get; set; }
 
     }
 }
