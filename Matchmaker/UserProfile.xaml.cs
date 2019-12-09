@@ -53,6 +53,11 @@ namespace Matchmaker
             userInView = user;
         }
         public UserProfile(UserData active, bool userAccount)
+
+            string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
+        }
+        public UserProfile(UserData user, bool userAccount)
         {
             InitializeComponent();
 
@@ -87,6 +92,16 @@ namespace Matchmaker
             }
             LoadHobbyWrapper("Test");
             userInView = active;
+        }
+            years.Text = (DateTime.Now.Year - user.birthdate).ToString();
+            city.Text = user.location;
+            accountText.Text = user.about;
+            bioText.Text = activeUser.Bio;
+            name.Text = user.realName;
+            showName.Text = user.realName;
+
+            string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
         }
 
         public int CalculateAge(DateTime dob)
