@@ -10,16 +10,21 @@ using System.Runtime.Serialization;
 
 namespace MatchmakerAPI.Controllers
 {
-    // [ApiController]
-    // [Route("/image/")]
-    // public class ImageController : ControllerBase
-    // {
-    //     [HttpGet("get/id={id}")]
-    //     public ActionResult GetImage(string id)
-	// 	{
-	// 		var dir = MapPath("/home/student/res/images/");
-	//        	var path = Path.Combine(dir, id + ".jpg");
-	//        	return base.File(path, "image/jpeg");
-	// 	}
-	// }
+    [ApiController]
+    [Route("/images/")]
+    public class ImageController : ControllerBase
+    {
+        [HttpGet("covers/get/list")]
+        public Dictionary<string, string> ImageList(int id)
+        {
+			DirectoryInfo d = new DirectoryInfo(@"/home/student/data/images/");
+			FileInfo[] Files = d.GetFiles("*.jpg");
+			var dict = new Dictionary<string, string>();
+			foreach(FileInfo file in Files )
+			{
+			  dict.Add(file.Name, $"https://145.44.233.207/images/covers/{file.Name}");
+			}
+			return dict;
+        }
+	}
 }
