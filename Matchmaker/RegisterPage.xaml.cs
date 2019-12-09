@@ -242,8 +242,7 @@ namespace Matchmaker
         public bool EmailExists(string email)
         {
             MatchmakerAPI_Client.GetUserData(email);
-            //return MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email)).email!=null;            
-            return false;
+            return MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email)).email!=null;            
         }
     }
 }
