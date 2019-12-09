@@ -77,9 +77,8 @@ namespace Matchmaker
             denymNameChange.Visibility = Visibility.Visible;
         }
 
-        private async void confirmNameChange_Click(object sender, RoutedEventArgs e)
-        {
-            
+        private void confirmNameChange_Click(object sender, RoutedEventArgs e) {
+
             userInView.realName = name.Text;
             showName.Text = name.Text;
             showName.Visibility = Visibility.Visible;
