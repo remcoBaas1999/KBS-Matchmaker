@@ -39,7 +39,7 @@ namespace Matchmaker {
             } else {
                 MatchMakerClassLibrary.CoverImageData coverImageData = new MatchMakerClassLibrary.CoverImageData();
                 coverImageData.userID = userID;
-                coverImageData.imageName = (image as Img).Src;
+                coverImageData.imageName = (image as Img).Src.Key;
 
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 

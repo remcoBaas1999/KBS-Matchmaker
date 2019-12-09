@@ -58,13 +58,14 @@ namespace Matchmaker
             editLocation.Visibility = Visibility.Visible;
             editName.Visibility = Visibility.Visible;
             btnEditCoverImage.Visibility = Visibility.Visible;
-            years.Text = (DateTime.Now.Year - user.birthdate).ToString();
-            city.Text = user.location;
-            accountText.Text = user.about;
-            bioText.Text = activeUser.Bio;
-            name.Text = user.realName;
-            showName.Text = user.realName;
-            userID = user.id;
+            years.Text = (DateTime.Now.Year - active.birthdate).ToString();
+            city.Text = active.location;
+            accountText.Text = active.about;
+            bioText.Text = active.about;
+            name.Text = active.realName;
+            showName.Text = active.realName;
+
+            userInView = active;
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)
@@ -189,7 +190,7 @@ namespace Matchmaker
         private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
             CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
             coverImageSelecter.Show();
-            coverImageSelecter.userID = userID;
+            coverImageSelecter.userID = userInView.id;
         }
 
         private void confirmNewHobbyList(object sender, MouseButtonEventArgs e)
