@@ -156,7 +156,7 @@ namespace MatchMakerClassLibrary
         public string about { get; set; }
         public string location { get; set; }
 		public string profilePicture { get; set; }
-        public List<string> interests { get; set; }
+        public List<HobbyData> interests { get; set; }
     }
     public class AuthData {
         public string email { get; set; }
