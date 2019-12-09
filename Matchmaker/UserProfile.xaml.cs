@@ -57,6 +57,7 @@ namespace Matchmaker
             showName.Text = user.realName;
         }
 
+        // Calculate age. Check the difference between the years. Check if the month is correct and the day as well to get the correct age.
         private int CalculateBirthday(DateTime bday)
         {
             DateTime today = DateTime.Today;
@@ -77,6 +78,7 @@ namespace Matchmaker
             return age;
         }
 
+        // Convert the Unixtime to an object of datetime
         private DateTime UnixTimeToDate(long _bday)
         {
             
