@@ -230,6 +230,7 @@ namespace Matchmaker
             entryHobbies.Visibility = Visibility.Visible;
             addInterests.Visibility = Visibility.Visible;
             listPossibleInterests.Visibility = Visibility.Visible;
+
             LoadHobbies();
         }
 

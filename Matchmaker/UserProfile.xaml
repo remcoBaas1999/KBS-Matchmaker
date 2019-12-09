@@ -191,14 +191,16 @@
         </StackPanel>
         <!--Add hobbies-->
         <Rectangle x:Name="AddHobbies" MaxHeight="1080" MaxWidth="1920" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2" Fill="DimGray" Opacity="0.75" Visibility="Collapsed" Margin="-1,0,1,0"/>
-        <Border Visibility="Collapsed" CornerRadius="5" x:Name="entryHobbies" Background="White" Height="250 " Width="300" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+        <Border Visibility="Collapsed" CornerRadius="5" x:Name="entryHobbies" Background="White" Height="350 " Width="400" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
             <Grid>
                 <TextBlock Name="addInterests" Height="auto" FontSize="14" FontFamily="Roboto" HorizontalAlignment="Center" Margin="0 18 0 0" Text="Add new interests"  FontWeight="Medium"/>
                 <!--Add hobby suggestions as a tickbox where the V sign turns purple when selected-->
 
-                <StackPanel x:Name="listPossibleInterests" Visibility="Visible" Width="200" Height="150" CanVerticallyScroll="True">
+                <ScrollViewer HorizontalAlignment="Center" Width="300" Height="250" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel x:Name="listPossibleInterests" Visibility="Visible" >
 
-                </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
                 <!--Selected hobbies -->
 
                 <WrapPanel x:Name="selectedInterests">
