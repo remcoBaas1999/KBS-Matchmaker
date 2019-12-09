@@ -48,7 +48,6 @@ namespace Matchmaker
                 foreach (var item in user.hobbies)
                 {
                     //add to list of Hobbies in the Xaml
-                    MessageBox.Show(item.ToString());
                     LoadHobbyWrapper(item.displayName);
                 }
             }
@@ -91,7 +90,6 @@ namespace Matchmaker
                     LoadHobbyWrapper(item.displayName);
                 }
             }
-            LoadHobbyWrapper("Test");
             userInView = active;
         
             years.Text = (DateTime.Now.Year - active.birthdate).ToString();
@@ -327,33 +325,25 @@ namespace Matchmaker
             Border hobbyBorder = new Border();
             StackPanel stackPanel = new StackPanel();
             TextBlock hobbyText = new TextBlock();
-            Canvas canvas = new Canvas();
-            Path path = new Path();
-
-            //hobbyBorder.BorderBrush = new SolidColorBrush(Colors.Purple);
-            //hobbyBorder.CornerRadius = new CornerRadius(16);
-            //hobbyBorder.BorderThickness = new Thickness(0);
-            //hobbyBorder.Width = 100;
-            //hobbyBorder.Height = 20;
 
 
-            hobbyBorder.Background = new SolidColorBrush(Colors.Purple);
+            hobbyBorder.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673AB7"));
             hobbyBorder.Child = stackPanel;
             hobbyBorder.CornerRadius = new CornerRadius(16);
+            hobbyBorder.Height = 32;
+            hobbyBorder.Margin = new Thickness(6, 0, 6, 0);
+
 
             stackPanel.Orientation = Orientation.Horizontal;
 
-            hobbyText.Text = "Dit is een test";
+            hobbyText.Text = hobby;
             hobbyText.FontSize = 14;
-
-            path.Data = Geometry.Parse("M10.6517 11.7123L8 9.06066L5.34835 11.7123C5.05667 12.004 4.57937 12.004 4.28769 11.7123C3.99601 11.4206 3.99601 10.9433 4.28769 10.6516L6.93934 8L4.28769 5.34835C3.99601 5.05667 3.99601 4.57937 4.28769 4.28769C4.57937 3.99601 5.05667 3.99601 5.34835 4.28769L8 6.93934L10.6517 4.28769C10.9433 3.99601 11.4206 3.99601 11.7123 4.28769C12.004 4.57937 12.004 5.05667 11.7123 5.34835L9.06066 8L11.7123 10.6516C12.004 10.9433 12.004 11.4206 11.7123 11.7123C11.4206 12.004 10.9433 12.004 10.6517 11.7123Z");
-            path.Fill = new SolidColorBrush(Colors.Black);
-            path.Opacity = 0.54;
-
-            canvas.Children.Add(path);
+            hobbyText.Foreground = new SolidColorBrush(Colors.White);
+            hobbyText.Margin = new Thickness(6, 0 , 6, 0);
+            hobbyText.TextAlignment = TextAlignment.Center;
+            hobbyText.VerticalAlignment = VerticalAlignment.Center;
 
             stackPanel.Children.Add(hobbyText);
-            stackPanel.Children.Add(canvas);
 
             HobbyWrapper.Children.Add(hobbyBorder);
 
@@ -368,6 +358,7 @@ namespace Matchmaker
             listPossibleInterests.Visibility = Visibility.Collapsed;
             userInView.hobbies = hobbyData;
             await MatchmakerAPI_Client.SaveUser(userInView);
+            HobbyWrapper.UpdateLayout();
         }
 
 
