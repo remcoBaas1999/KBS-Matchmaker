@@ -20,6 +20,8 @@
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
@@ -96,7 +98,7 @@
         <TextBlock Grid.Row="4" FontSize="20" TextAlignment="Center" Grid.Column="4" Foreground="White" FontFamily="Roboto" Width="50" Name="years" />
         <!-- location text and editing section-->
         <TextBlock Text="Location:" Foreground="LightGray" Grid.Column="6" FontFamily="Roboto" Grid.Row="3" Height="20" Width="50" HorizontalAlignment="Right"/>
-        <TextBlock FontSize="20" Grid.Row="4" Foreground="White" Grid.Column="6" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Right"/>
+        <TextBlock FontSize="20" Grid.Row="4"  Foreground="White" Grid.Column="6" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Right"/>
         <Button  Width="40" Height="30" Grid.Column="7" Grid.Row="4" Click="editLocation_Click" BorderBrush="{x:Null}" Background="{x:Null}" Name="editLocation" Visibility="Visible" Margin="50,0,0,0">
             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg24" Width="24" Height="24">
                 <Canvas.RenderTransform>
@@ -137,10 +139,52 @@
         </Button>
         <ComboBox FontSize="20" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Row="4" Grid.Column="6" FontFamily="Roboto"  Width="130" Name="citySelection" Visibility="Collapsed" Loaded="citySelection_Loaded" SelectedValuePath="Content"/>
 
+        <!-- hobbies-->
+        <!--Edit hobbies -->
+        <Button Grid.Column="4" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Row="6" Height="30" Width="30" Name="editHobbies"  Visibility="Visible">
+            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg23" Width="24" Height="24">
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="0" Y="0"/>
+                </Canvas.RenderTransform>
+                <Canvas.Resources/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path150" Fill="#000000" Data="M3 17.4601V20.5001C3 20.7801 3.22 21.0001 3.5 21.0001H6.54C6.67 21.0001 6.8 20.9501 6.89 20.8501L17.81 9.94006L14.06 6.19006L3.15 17.1001C3.05 17.2001 3 17.3201 3 17.4601ZM20.71 7.04006C21.1 6.65006 21.1 6.02006 20.71 5.63006L18.37 3.29006C17.98 2.90006 17.35 2.90006 16.96 3.29006L15.13 5.12006L18.88 8.87006L20.71 7.04006V7.04006Z"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path151" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="M 3.2346064 20.894805 C 3.019013 20.743797 3.0061746 20.636236 3.0061746 18.980996 c 0 -1.225289 0.012884 -1.572629 0.062566 -1.686702 0.036676 -0.08421 2.3228104 -2.402051 5.5246886 -5.601311 l 5.4621218 -5.4576562 1.852521 1.8529244 1.852521 1.8529243 -5.513751 5.5132135 -5.5137499 5.513214 H 5.0358166 c -1.4968935 0 -1.709546 -0.0086 -1.8012102 -0.0728 z"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path152" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="M 17.024036 6.972072 15.171944 5.1195768 16.131128 4.1596146 c 0.527551 -0.5279793 1.02965 -0.9934589 1.115776 -1.0343991 0.08612 -0.04094 0.251677 -0.083621 0.367892 -0.094846 0.398633 -0.038504 0.546548 0.074319 1.96064 1.4954945 1.205649 1.2116878 1.283198 1.2994702 1.350755 1.529005 0.07928 0.2693629 0.06091 0.4692884 -0.06582 0.716306 -0.04409 0.085937 -0.50858 0.5831071 -1.032202 1.1048215 L 18.87613 8.8245674 Z"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path154" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="M 17.046353 6.9499009 15.215996 5.1151518 16.187813 4.1548222 c 0.567001 -0.5602985 1.035959 -0.9871298 1.125798 -1.0246671 0.26349 -0.110093 0.555491 -0.08332 0.806591 0.073955 0.262052 0.1641348 2.611683 2.5023829 2.711206 2.698071 0.111948 0.2201192 0.137055 0.4520073 0.07351 0.6789605 -0.05116 0.1827225 -0.17877 0.3302218 -1.043249 1.2058483 L 18.87671 8.7846502 Z"/>
+            </Canvas>
+        </Button>
+        <!-- add hobby textbox-->
+        <TextBlock Grid.Row="6" Grid.Column="4" Text="Add Hobby"/>
+        <TextBox x:Name="add_hobby"  BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="20" Width="20">
+
+        </TextBox>
+        <!-- new hobby list confirm-->
+        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="7" Height="30" Width="40"  Name="confirmHobbyChange" Margin="100,0,0,100" Visibility="Collapsed">
+            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg81" Width="24" Height="24">
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="0" Y="0"/>
+                </Canvas.RenderTransform>
+                <Canvas.Resources/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path178" Fill="#000000" Data="M9.00012 16.2001L5.50012 12.7001C5.11012 12.3101 4.49012 12.3101 4.10012 12.7001C3.71012 13.0901 3.71012 13.7101 4.10012 14.1001L8.29012 18.2901C8.68012 18.6801 9.31012 18.6801 9.70012 18.2901L20.3001 7.70007C20.6901 7.31007 20.6901 6.69007 20.3001 6.30007C19.9101 5.91007 19.2901 5.91007 18.9001 6.30007L9.00012 16.2001Z"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path188" Fill="#FFB3B3B3" StrokeThickness="0.0869565" Data="M 8.7130435 18.496651 C 8.6413043 18.471275 7.5358559 17.408317 6.2564913 16.134525 3.7578354 13.646751 3.6858138 13.548427 3.9657207 13.007147 c 0.1905717 -0.368525 0.4644316 -0.537582 0.8708456 -0.537582 0.3340474 0 0.4089295 0.063 2.2223233 1.869565 1.0321451 1.028261 1.9147408 1.869566 1.961324 1.869566 0.046583 0 2.3527424 -2.268299 5.1247984 -5.040664 3.418959 -3.4193408 5.115117 -5.0571403 5.27332 -5.0918876 0.335064 -0.073592 0.824512 0.1596562 0.984588 0.4692088 0.169167 0.3271331 0.17225 0.5607031 0.01139 0.8633129 C 20.22018 7.7738729 9.5707795 18.362885 9.2943391 18.465583 c -0.2626882 0.09759 -0.3761138 0.10365 -0.5812956 0.03107 z"/>
+            </Canvas>
+        </Button>
+        <!-- deny new hobby list-->
+        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="7" Height="30" Width="40"  Name="denyHobbyChange" Margin="150,00,0,100" Visibility="Collapsed">
+            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg48" Width="24" Height="24">
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="0" Y="0"/>
+                </Canvas.RenderTransform>
+                <Canvas.Resources/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path146" Fill="#000000" Data="M18.3002 5.70997C17.9102 5.31997 17.2802 5.31997 16.8902 5.70997L12.0002 10.59L7.11022 5.69997C6.72022 5.30997 6.09021 5.30997 5.70021 5.69997C5.31021 6.08997 5.31021 6.71997 5.70021 7.10997L10.5902 12L5.70021 16.89C5.31021 17.28 5.31021 17.91 5.70021 18.3C6.09021 18.69 6.72022 18.69 7.11022 18.3L12.0002 13.41L16.8902 18.3C17.2802 18.69 17.9102 18.69 18.3002 18.3C18.6902 17.91 18.6902 17.28 18.3002 16.89L13.4102 12L18.3002 7.10997C18.6802 6.72997 18.6802 6.08997 18.3002 5.70997V5.70997Z"/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path156" Fill="#FFCCCCCC" StrokeThickness="0.0869565" Data="m 6.0511406 18.471298 c -0.3165743 -0.12791 -0.5554884 -0.515607 -0.5554884 -0.901416 0 -0.348643 0.042639 -0.397218 2.5843592 -2.944134 L 10.664371 12.036106 8.0800114 9.4423943 5.4956522 6.848683 V 6.4534597 c 0 -0.6817545 0.598307 -1.1565767 1.1831268 -0.9389409 0.1384107 0.051508 1.396221 1.2361297 2.795134 2.6324919 l 2.543478 2.5388403 2.543479 -2.5388403 c 1.398913 -1.3963622 2.650747 -2.5787114 2.781853 -2.6274427 0.602002 -0.2237597 1.287903 0.3915389 1.165255 1.0453103 -0.04566 0.2433976 -0.511101 0.7522105 -2.577503 2.8176904 -1.386978 1.3863603 -2.521779 2.5602913 -2.521779 2.6087353 0 0.04845 1.134801 1.222376 2.521779 2.608736 2.736496 2.735277 2.780172 2.79479 2.492994 3.397009 -0.183057 0.383873 -0.589738 0.593105 -1.003598 0.516337 -0.267501 -0.04962 -0.70623 -0.447629 -2.882619 -2.615084 l -2.567095 -2.556558 -2.476383 2.482691 c -1.3620104 1.365481 -2.5820482 2.538806 -2.7111949 2.607389 -0.261833 0.139047 -0.4587029 0.149672 -0.7314385 0.03947 z"/>
+            </Canvas>
+        </Button>
+        
         <!-- bio text and editing section-->
         <TextBlock VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" Height="20" FontWeight="Bold" Width="100" Text="About me" Margin="0,100" />
-        <Button VerticalAlignment="Bottom" Grid.Column="4" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Row="6" Height="30" Width="30" Name="editBio" Margin="125,0,0,100"  Click="editBio_Click" Visibility="Visible">
-            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg23" Width="24" Height="24">
+        <Button VerticalAlignment="Bottom" Grid.Column="4" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Row="7" Height="30" Width="30" Name="editBio" Margin="125,0,0,100"  Click="editBio_Click" Visibility="Visible">
+            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg123" Width="24" Height="24">
                 <Canvas.RenderTransform>
                     <TranslateTransform X="0" Y="0"/>
                 </Canvas.RenderTransform>
@@ -151,8 +195,8 @@
                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path54" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="M 17.046353 6.9499009 15.215996 5.1151518 16.187813 4.1548222 c 0.567001 -0.5602985 1.035959 -0.9871298 1.125798 -1.0246671 0.26349 -0.110093 0.555491 -0.08332 0.806591 0.073955 0.262052 0.1641348 2.611683 2.5023829 2.711206 2.698071 0.111948 0.2201192 0.137055 0.4520073 0.07351 0.6789605 -0.05116 0.1827225 -0.17877 0.3302218 -1.043249 1.2058483 L 18.87671 8.7846502 Z"/>
             </Canvas>
         </Button>
-        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="30" Width="40"  Name="confirmBioChange" Margin="100,0,0,100" Click="confirmBioChange_Click" Visibility="Collapsed">
-            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg81" Width="24" Height="24">
+        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="7" Height="30" Width="40"  Name="confirmBioChange" Margin="100,0,0,100" Click="confirmBioChange_Click" Visibility="Collapsed">
+            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg181" Width="24" Height="24">
                 <Canvas.RenderTransform>
                     <TranslateTransform X="0" Y="0"/>
                 </Canvas.RenderTransform>
@@ -161,8 +205,8 @@
                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path88" Fill="#FFB3B3B3" StrokeThickness="0.0869565" Data="M 8.7130435 18.496651 C 8.6413043 18.471275 7.5358559 17.408317 6.2564913 16.134525 3.7578354 13.646751 3.6858138 13.548427 3.9657207 13.007147 c 0.1905717 -0.368525 0.4644316 -0.537582 0.8708456 -0.537582 0.3340474 0 0.4089295 0.063 2.2223233 1.869565 1.0321451 1.028261 1.9147408 1.869566 1.961324 1.869566 0.046583 0 2.3527424 -2.268299 5.1247984 -5.040664 3.418959 -3.4193408 5.115117 -5.0571403 5.27332 -5.0918876 0.335064 -0.073592 0.824512 0.1596562 0.984588 0.4692088 0.169167 0.3271331 0.17225 0.5607031 0.01139 0.8633129 C 20.22018 7.7738729 9.5707795 18.362885 9.2943391 18.465583 c -0.2626882 0.09759 -0.3761138 0.10365 -0.5812956 0.03107 z"/>
             </Canvas>
         </Button>
-        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="30" Width="40"  Name="denyBioChange" Margin="150,00,0,100" Click="denyBioChange_Click" Visibility="Collapsed">
-            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg48" Width="24" Height="24">
+        <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="7" Height="30" Width="40"  Name="denyBioChange" Margin="150,00,0,100" Click="denyBioChange_Click" Visibility="Collapsed">
+            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg148" Width="24" Height="24">
                 <Canvas.RenderTransform>
                     <TranslateTransform X="0" Y="0"/>
                 </Canvas.RenderTransform>
@@ -171,8 +215,8 @@
                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path56" Fill="#FFCCCCCC" StrokeThickness="0.0869565" Data="m 6.0511406 18.471298 c -0.3165743 -0.12791 -0.5554884 -0.515607 -0.5554884 -0.901416 0 -0.348643 0.042639 -0.397218 2.5843592 -2.944134 L 10.664371 12.036106 8.0800114 9.4423943 5.4956522 6.848683 V 6.4534597 c 0 -0.6817545 0.598307 -1.1565767 1.1831268 -0.9389409 0.1384107 0.051508 1.396221 1.2361297 2.795134 2.6324919 l 2.543478 2.5388403 2.543479 -2.5388403 c 1.398913 -1.3963622 2.650747 -2.5787114 2.781853 -2.6274427 0.602002 -0.2237597 1.287903 0.3915389 1.165255 1.0453103 -0.04566 0.2433976 -0.511101 0.7522105 -2.577503 2.8176904 -1.386978 1.3863603 -2.521779 2.5602913 -2.521779 2.6087353 0 0.04845 1.134801 1.222376 2.521779 2.608736 2.736496 2.735277 2.780172 2.79479 2.492994 3.397009 -0.183057 0.383873 -0.589738 0.593105 -1.003598 0.516337 -0.267501 -0.04962 -0.70623 -0.447629 -2.882619 -2.615084 l -2.567095 -2.556558 -2.476383 2.482691 c -1.3620104 1.365481 -2.5820482 2.538806 -2.7111949 2.607389 -0.261833 0.139047 -0.4587029 0.149672 -0.7314385 0.03947 z"/>
             </Canvas>
         </Button>
-        <TextBox  VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
-        <TextBlock VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
+        <TextBox  VerticalAlignment="Bottom" Grid.Row="7" Grid.Column="4" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
+        <TextBlock VerticalAlignment="Bottom" Grid.Row="7" Grid.Column="4" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
     </Grid>
 </Page>
     
