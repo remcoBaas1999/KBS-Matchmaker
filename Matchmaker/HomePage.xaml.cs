@@ -57,7 +57,7 @@ namespace Matchmaker {
             string pfPic1 = $"https://145.44.233.207/images/users/{user1.profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
             //Set Cover Image
-            string coverImage = $"https://145.44.233.207/images/covers/3.jpg";
+            string coverImage = $"https://145.44.233.207/images/covers/{user1.coverImage}";
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create second profile
@@ -74,7 +74,7 @@ namespace Matchmaker {
             string pfPic2 = $"https://145.44.233.207/images/users/{user2.profilePicture}";
             ProfilePicture2.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic2, UriKind.Absolute)));
             //Set Cover Image
-            coverImage = $"https://145.44.233.207/images/covers/3.jpg";
+            coverImage = $"https://145.44.233.207/images/covers/{user2.coverImage}";
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create third profile
@@ -91,7 +91,7 @@ namespace Matchmaker {
             string pfPic3 = $"https://145.44.233.207/images/users/{user3.profilePicture}";
             ProfilePicture3.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic3, UriKind.Absolute)));
             //Set Cover Image
-            coverImage = $"https://145.44.233.207/images/covers/3.jpg";
+            coverImage = $"https://145.44.233.207/images/covers/{user3.coverImage}";
             Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
 
@@ -109,7 +109,7 @@ namespace Matchmaker {
             string pfPic4 = $"https://145.44.233.207/images/users/{user4.profilePicture}";
             ProfilePicture4.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic4, UriKind.Absolute)));
             //Set Cover Image
-            coverImage = $"https://145.44.233.207/images/covers/3.jpg";
+            coverImage = $"https://145.44.233.207/images/covers/{user4.coverImage}";
             Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
 
