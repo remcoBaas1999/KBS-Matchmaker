@@ -32,13 +32,13 @@
                   <ImageBrush ImageSource="Images\ProfilePicture.jpg" Stretch="UniformToFill"/>
                </Ellipse.Fill>
             </Ellipse>
-            <TextBlock Foreground="LightGray" Width="Auto" Text="Name" Height="14" FontFamily="Roboto" Margin="266,101,708,57" FontSize="14" />
+            <TextBlock Foreground="LightGray" Text="Name" FontFamily="Roboto" Margin="266,109,0,57" FontSize="14" />
             <WrapPanel Orientation="Horizontal" Margin="266,0,0,0">
                
             <!--display the name of the profile-->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                <!-- change back to visible-->
-               <TextBlock  HorizontalAlignment="Left" VerticalAlignment="Top" Text="test" Height="28" Margin="0,129,0,31" Foreground="White"  FontFamily="Roboto" Width="Auto" MaxWidth="150" Name="showName" Visibility="Visible" FontSize="24"/>
+               <TextBlock  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,129,0,0" Foreground="White"  FontFamily="Roboto" Name="showName" Visibility="Visible" FontSize="24"/>
                <Button Height="30" Width="30" Name="editName" Click="editName_Click" Visibility="Visible" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,125,0,0">
                   <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg22" Width="24" Height="24">
                      <Canvas.RenderTransform>
@@ -82,8 +82,8 @@
             </StackPanel>
 
                <StackPanel Margin="36,0,0,0">
-                  <TextBlock Text="Age" TextAlignment="Center" Foreground="LightGray" FontFamily="Roboto" Height="14" Width="30" Margin="0,106,0,0" FontSize="14"/>
-                  <TextBlock FontSize="24" Height="28" TextAlignment="Center" Foreground="White" FontFamily="Roboto" Width="35" x:Name="years"  Margin=""/>
+                  <TextBlock Text="Age" TextAlignment="Center" Foreground="LightGray" FontFamily="Roboto" Width="30" Margin="0,109,0,0" FontSize="14"/>
+                  <TextBlock FontSize="24" TextAlignment="Center" Foreground="White" FontFamily="Roboto" Width="35" x:Name="years"/>
                </StackPanel>
             </WrapPanel>
             <StackPanel Width="Auto" HorizontalAlignment="Right">
@@ -174,19 +174,6 @@
             <TextBox FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
             <TextBlock VerticalAlignment="Top" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
         </StackPanel>
-
-
-
-
-
-
-        
-        
-        
-
-        
-        
-
     </Grid>
 </Page>
     
