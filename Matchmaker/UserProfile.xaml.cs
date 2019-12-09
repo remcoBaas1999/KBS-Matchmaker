@@ -231,6 +231,9 @@ namespace Matchmaker
             //window.WindowStyle = WindowStyle.None;
             //window.Show();
             AddHobbies.Visibility = Visibility.Visible;
+            entryHobbies.Visibility = Visibility.Visible;
+
+            LoadHobbies();
         }
 
         private void DenyNewHobbies_Click(object sender, RoutedEventArgs e)
@@ -238,9 +241,9 @@ namespace Matchmaker
             AddHobbies.Visibility = Visibility.Collapsed;
             entryHobbies.Visibility = Visibility.Collapsed;
             addInterests.Visibility = Visibility.Collapsed;
-            inputHobbies.Visibility = Visibility.Collapsed;
-            svg122.Visibility = Visibility.Collapsed;
-            confirmNewHobbies.Visibility = Visibility.Collapsed;
+            //inputHobbies.Visibility = Visibility.Collapsed;
+            //svg122.Visibility = Visibility.Collapsed;
+            //confirmNewHobbies.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
@@ -253,17 +256,18 @@ namespace Matchmaker
             }
         }
 
-        private void requestSuggestions_Click(object sender, RoutedEventArgs e)
+        private void LoadHobbies()
         {
             List<HobbyData> listHobbies = MatchmakerAPI_Client.getAllHobbies();
             for (int i = 0; i < listHobbies.Count(); i++)
             {
                 CheckBox cb = new CheckBox();
-                cb.Content = listHobbies[i].displayName;
+                TextBlock tb = new TextBlock();
+
+                tb.Text = listHobbies[i].displayName;
                 cb.Name = $"cb{i}";
                 listPossibleInterests.Children.Add(cb);
             }
-
         }
     }
 }
