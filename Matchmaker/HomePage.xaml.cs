@@ -112,18 +112,12 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{user4.coverImage}";
             Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-        }
-        /*private void RefreshButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
+        private void Button_Click(object sender, RoutedEventArgs e) {
             //Refresh recommended profiles
             HomePage p = new HomePage();
             p.InitializeComponent();
             NavigationService.Navigate(p);
-        }*/
+        }
 
         //When clicked on a profile
         private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
