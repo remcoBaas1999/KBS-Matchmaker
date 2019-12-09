@@ -42,6 +42,9 @@ namespace Matchmaker
             showName.Text = user.realName;
             city.Text = user.location;
             bioText.Text = user.about;
+
+            string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
         }
         public UserProfile(UserData user, bool userAccount)
         {
@@ -57,6 +60,9 @@ namespace Matchmaker
             bioText.Text = activeUser.Bio;
             name.Text = user.realName;
             showName.Text = user.realName;
+
+            string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)

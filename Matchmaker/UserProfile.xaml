@@ -43,11 +43,7 @@
                 <ImageBrush ImageSource="Images/return.png" Stretch="UniformToFill"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130"  Grid.Row="6"   Grid.Column="1" >
-            <Ellipse.Fill>
-                <ImageBrush ImageSource="Images\ProfilePicture.jpg" Stretch="UniformToFill"/>
-            </Ellipse.Fill>
-        </Ellipse>
+        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130"  Grid.Row="6"   Grid.Column="1" />
 
         <!-- name text and editing section-->
         <TextBlock Foreground="LightGray" Text="Name:" Height="20" FontFamily="Roboto" Grid.Column="2" Grid.Row="3" Margin="87,0,83,0" />
