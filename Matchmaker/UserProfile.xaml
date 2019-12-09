@@ -173,6 +173,7 @@
         </Button>
         <TextBox  VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" AcceptsReturn="True" MaxLength="300" TextWrapping="Wrap" Width="300" Height="100" Name="accountText" Visibility="Hidden" />
         <TextBlock VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="4" FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" Name="bioText" Visibility="Visible" />
+        <Button VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10" x:Name="btnEditCoverImage" Click="btnEditCoverImage_Click" Content="Edit cover image" Width="100" Height="30" Grid.Column="2" Grid.Row="6"/>
     </Grid>
 </Page>
     

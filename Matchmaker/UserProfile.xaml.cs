@@ -26,6 +26,7 @@ namespace Matchmaker
 
     public partial class UserProfile : Page
     {
+        private int userID;
         //needs to get the currently active account 
         public UserProfile(UserData user)
         {
@@ -34,6 +35,7 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
+            btnEditCoverImage.Visibility = Visibility.Collapsed;
             DateTime now = DateTime.Now;
             DateTime birthdate = new DateTime(user.birthdate);
             int a = now.Year - birthdate.Year;
@@ -42,6 +44,7 @@ namespace Matchmaker
             showName.Text = user.realName;
             city.Text = user.location;
             bioText.Text = user.about;
+            userID = user.id;
         }
         public UserProfile(UserData user, bool userAccount)
         {
@@ -50,13 +53,14 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Visible;
             editLocation.Visibility = Visibility.Visible;
             editName.Visibility = Visibility.Visible;
-
+            btnEditCoverImage.Visibility = Visibility.Visible;
             years.Text = (DateTime.Now.Year - user.birthdate).ToString();
             city.Text = user.location;
             accountText.Text = user.about;
             bioText.Text = activeUser.Bio;
             name.Text = user.realName;
             showName.Text = user.realName;
+            userID = user.id;
         }
 
         private void editName_Click(object sender, RoutedEventArgs e)
@@ -175,6 +179,12 @@ namespace Matchmaker
         private void Return(object sender, MouseButtonEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
+            CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
+            coverImageSelecter.Show();
+            coverImageSelecter.userID = userID;
         }
     }
 }

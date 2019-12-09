@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 
 namespace Matchmaker {
     public partial class CoverImageSelecter : Window {
+        public int userID { get; set; }
+        
         public CoverImageSelecter() {
             InitializeComponent();
             List<Img> images = new List<Img>();
@@ -37,8 +39,8 @@ namespace Matchmaker {
             if (image == null) {
                 MessageBox.Show("Please select a cover image!", "");
             } else {
-                CoverImageData coverImageData = new CoverImageData();
-                coverImageData.userID = 1; //HomePage.LoggedInUserID;
+                MatchMakerClassLibrary.CoverImageData coverImageData = new MatchMakerClassLibrary.CoverImageData();
+                coverImageData.userID = userID;
                 coverImageData.imageName = (image as Img).Src;
 
                 Console.WriteLine($"Src: {(image as Img).Src}");
