@@ -10,5 +10,6 @@ namespace MatchmakerAPI
 		public string realName { get; set; }
 		public int id { get; set; }
 		public long birthdate { get; set; }
+		public string coverImage { get; set; }
     }
 }

@@ -37,10 +37,12 @@ namespace MatchmakerAPI
                 app.UseDeveloperExceptionPage();
             }
 
+			app.UseCors();
+
 			app.UseFileServer(new FileServerOptions
 		    {
 		        FileProvider = new PhysicalFileProvider("/home/student/data/images/"),
-		        RequestPath = "/images",
+		        RequestPath = "/images/covers",
 		        EnableDirectoryBrowsing = true
 		    });
 

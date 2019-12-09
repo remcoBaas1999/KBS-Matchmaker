@@ -70,13 +70,20 @@ namespace Matchmaker
         }
 
     }
-    public static class activeUser
+    public  class activeUser : UserData
     {
 
-        public static string name { get; set; } = "Hans Gruber";
-        public static string city { get; set; } = "Zwolle";
-        public static DateTime Age { get; set; } = new DateTime(1970, 6, 3);
-        public static string Bio { get; set; } = "Tell something about yourself...";
+        public  string realName { get; set; }
+        public  string location { get; set; }
+        public  DateTime birthDate { get; set; }
+        public  string about { get; set; }
+        public List<string> hobbies { get; set; }
+        public  string email { get; set; }
+        public  string password { get; set; }
+        public  string salt { get; set; }
+        public  int id { get; set; }
+        public List<HobbyData> interests { get; set; }
+
     }
 }
 
