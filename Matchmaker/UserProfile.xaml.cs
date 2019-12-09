@@ -48,7 +48,6 @@ namespace Matchmaker
                 foreach (var item in user.hobbies)
                 {
                     //add to list of Hobbies in the Xaml
-                    MessageBox.Show(item.ToString());
                     LoadHobbyWrapper(item.displayName);
                 }
             }
