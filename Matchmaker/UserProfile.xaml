@@ -8,7 +8,7 @@
       d:DesignHeight="720" d:DesignWidth="1280"
       Title="UserProfile">
 
-    <Grid Margin="-3,0,3,0">
+    <Grid>
         <!--setup the grid-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -19,8 +19,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        
+        
         <!--create the purple background-->
         <Border Grid.Row="0" Grid.Column="1" Width="1008" Height="181" CornerRadius="10, 10,10,10" Background="#673AB7" Margin="0, 46,0,0">
             <Grid>
@@ -185,7 +188,7 @@
             </WrapPanel>
         </StackPanel>
         <!--Add hobbies-->
-        <Rectangle x:Name="AddHobbies" MaxHeight="1080" MaxWidth="1920" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2" Fill="DimGray" Opacity="0.75" Visibility="Collapsed" Margin="-1,0,1,0"/>
+        <Border Grid.RowSpan="3" Grid.ColumnSpan="3" x:Name="AddHobbies"  Background="DimGray" Opacity="0.75" Visibility="Collapsed" />
         <Border Visibility="Collapsed" CornerRadius="5" x:Name="entryHobbies" Background="White" Height="350 " Width="400" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
             <Grid>
                 <TextBlock Name="addInterests" Height="auto" FontSize="14" FontFamily="Roboto" HorizontalAlignment="Center" Margin="0 18 0 0" Text="Add new interests"  FontWeight="Medium"/>
