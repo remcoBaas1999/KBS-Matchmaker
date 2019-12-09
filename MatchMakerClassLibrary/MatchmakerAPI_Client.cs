@@ -32,6 +32,11 @@ namespace MatchMakerClassLibrary {
             return Get($@"https://145.44.233.207/user/get/email={email}");
         }
 
+        public static Dictionary<string, string> GetCoverImages() {
+            var json = Get($@"https://145.44.233.207/images/covers/get/list");
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+        }
+
         public static Dictionary<string, int> GetUsers() {
             var json = Get($@"https://145.44.233.207/user/get/all");
             return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
@@ -120,6 +125,10 @@ namespace MatchMakerClassLibrary {
             return true;
         }
 
+        public static bool SaveUser(UserData data) {
+            return true;
+        }
+
         private static async Task<string> Post(string uri, object data) {
 
             string result;
@@ -138,6 +147,7 @@ namespace MatchMakerClassLibrary {
         public string salt { get; set; }
         public string realName { get; set; }
         public int id { get; set; }
+        public string city { get; set; }
         public long birthdate { get; set; }
         public string about { get; set; }
         public string location { get; set; }

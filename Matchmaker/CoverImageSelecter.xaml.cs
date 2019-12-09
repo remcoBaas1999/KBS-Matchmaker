@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,28 +21,27 @@ namespace Matchmaker {
             InitializeComponent();
             List<Img> images = new List<Img>();
 
-            string[] files = new string[1];
+            Dictionary<string, string> coverImages = MatchmakerAPI_Client.GetCoverImages();
 
-            //files = Directory.GetFiles(@"https://145.44.233.207/images/covers/");
-            files = Directory.GetFiles(@"../../Images");
-
-            for (int i = 0; i < files.Length; i++) {
-                images.Add(new Img() { Src = files[i] });
+            foreach(KeyValuePair<string, string> keyValue in coverImages) {
+                images.Add(new Img(keyValue));
             }
 
             ImageList.ItemsSource = images;
         }
 
-        private async void btnSave_Click(object sender, RoutedEventArgs e) {
+        private async void btnSave_Click(object sender1, RoutedEventArgs e) {
             object image = ImageList.SelectedItem;
             if (image == null) {
                 MessageBox.Show("Please select a cover image!", "");
             } else {
                 CoverImageData coverImageData = new CoverImageData();
                 coverImageData.userID = 1; //HomePage.LoggedInUserID;
-                coverImageData.imageName = (image as Img).Src;
+                coverImageData.imageName = (image as Img).Src.Key;
 
-                Console.WriteLine($"Src: {(image as Img).Src}");
+                Console.WriteLine($"Src: {(image as Img).Src.Key}");
+
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
                 if (await MatchmakerAPI_Client.PostNewCoverImageDataAsync(coverImageData)) {
                     MessageBox.Show("Image saved!", "");
@@ -55,6 +55,9 @@ namespace Matchmaker {
     }
 
     public class Img {
-        public string Src { get; set; }
+        public KeyValuePair<string, string> Src { get; set; }
+        public Img (KeyValuePair<string, string> keyValue) {
+            Src = keyValue;
+        }
     }
 }
