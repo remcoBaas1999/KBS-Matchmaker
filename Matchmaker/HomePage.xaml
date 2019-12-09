@@ -15,13 +15,13 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="12">
 
-            <WrapPanel HorizontalAlignment="Center">
+            <WrapPanel HorizontalAlignment="Center" Margin="504,1,301,-1">
                 <Button x:Name="HomeButton" Content="Home" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="86" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="0"/>
-                <Button x:Name="MatchesButton" Content="Matches" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="111" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="0"/>
-                <Button x:Name="ActivitiesButton" Content="Activities" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="94" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.044,-2.382" Grid.Column="1"/>
+                <Button x:Name="MatchesButton" Content="Matches" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="111" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="0" Visibility="Hidden"/>
+                <Button x:Name="ActivitiesButton" Content="Activities" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="94" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.044,-2.382" Grid.Column="1" Visibility="Hidden"/>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Right">
-                <Ellipse HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" MouseDown="Ellipse_MouseDown_1" Margin="0,0,5,0">
+                <Ellipse x:Name="Notification" HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" Margin="0,0,5,0" MouseDown="Notification_MouseDown">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
                     </Ellipse.Fill>
@@ -50,41 +50,38 @@
             <WrapPanel HorizontalAlignment="Center">
                 <Border x:Name="Profile1BackgroundPicture" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Left" Height="238"  VerticalAlignment="Top" Width="180" CornerRadius="15" MouseDown="Profile1BackgroundPicture_MouseDown" Margin="20">
                     <Canvas>
-                        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" VerticalAlignment="Top" Width="130" MouseDown="Profile1Picture1_MouseDown" Canvas.Left="25" Canvas.Top="25" Stroke="Black">
+                        <Border Background="#89000000" CornerRadius="10" Height="236" Width="178"></Border>
+                        <Ellipse x:Name="ProfilePicture1" HorizontalAlignment="Left" Height="130" VerticalAlignment="Top" Width="130" Canvas.Left="25" Canvas.Top="25" Stroke="Black">
                             <Ellipse.Fill>
                                 <ImageBrush Stretch="UniformToFill">
-            
                                 </ImageBrush>
                             </Ellipse.Fill>
                         </Ellipse>
-                        <Label x:Name="Profile1Tag" Content="(Name)" Canvas.Bottom="0" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Top" Width="178" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold"/>
+                        <Label x:Name="Profile1Tag" Content="" Canvas.Bottom="0" HorizontalAlignment="Left" Margin="0,0,0,20" VerticalAlignment="Top" Width="178" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold"/>
                     </Canvas>
                 </Border>
-                <Border x:Name="Profile2BackgroundPicture" Margin="20" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15">
+                <Border x:Name="Profile2BackgroundPicture" Margin="20" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15" MouseDown="Profile2BackgroundPicture_MouseDown">
                     <Canvas>
+                        <Border Background="#89000000" CornerRadius="10" Height="236" Width="178"></Border>
                         <Ellipse x:Name="ProfilePicture2" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="25" Canvas.Top="24">
                         </Ellipse>
-                        <Label x:Name="Profile2Tag" Content="Anna Bell, 38" Canvas.Bottom="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <Label x:Name="Profile2Tag" Content="" Canvas.Bottom="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
                     </Canvas>
                 </Border>
-                <Border x:Name="Profile1BackgroundPicture_" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15">
-                    <Border.Background>
-                        <ImageBrush ImageSource="Images/Background2.jpg" Stretch="UniformToFill"/>
-                    </Border.Background>
+                <Border x:Name="Profile3BackgroundPicture" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15" MouseDown="Profile3BackgroundPicture_MouseDown">
                     <Canvas>
+                        <Border Background="#89000000" CornerRadius="10" Height="236" Width="178"></Border>
                         <Ellipse x:Name="ProfilePicture3" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="24" Canvas.Top="24">
                         </Ellipse>
-                        <Label x:Name="Profile3Tag" Content="Kia Huang, 29" Canvas.Bottom="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20" />
+                        <Label x:Name="Profile3Tag" Content="" Canvas.Bottom="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20" />
                     </Canvas>
                 </Border>
-                <Border x:Name="Profile4BackgroundPicture" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15">
-                    <Border.Background>
-                        <ImageBrush ImageSource="Images/Background3.jpg" Stretch="UniformToFill"/>
-                    </Border.Background>
+                <Border x:Name="Profile4BackgroundPicture" BorderThickness="1" Margin="20" Grid.Column="0" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="180" CornerRadius="15" MouseDown="Profile4BackgroundPicture_MouseDown">
                     <Canvas>
+                        <Border Background="#89000000" CornerRadius="10" Height="236" Width="178"></Border>
                         <Ellipse x:Name="ProfilePicture4" HorizontalAlignment="Left" Height="130" Stroke="Black" VerticalAlignment="Top" Width="130" Canvas.Left="25" Canvas.Top="24">
                         </Ellipse>
-                        <Label x:Name="Profile4Tag" Content="David Atton, 43" Canvas.Bottom="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20" />
+                        <Label x:Name="Profile4Tag" Content="" Canvas.Bottom="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="180" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" FontFamily="Roboto" Foreground="White" FontWeight="Bold" Margin="0,0,0,20" />
                     </Canvas>
                 </Border>
             </WrapPanel>
@@ -103,11 +100,11 @@
                             <Border.Background>
                                 <ImageBrush Stretch="UniformToFill" ImageSource="Images/painting.jpg"/>
                             </Border.Background>
-                            <Border x:Name="Activity1Border_Copy" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.5" Padding="0" UseLayoutRounding="False" CornerRadius="15">
+                            <Border x:Name="Activity1Border" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.5" Padding="0" UseLayoutRounding="False" CornerRadius="15" MouseDown="Activity1Border_MouseDown">
                                 <Label Content="Painting workshop" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.895,0.981" Margin="9,84,0,0" Width="152" FontWeight="Bold" FontSize="16"/>
                             </Border>
                         </Border>
-                        <Label x:Name="Activity1OpenSpots" Content="3/8 spots available" Grid.Column="0" HorizontalAlignment="Left" Height="26" Margin="10,110,20,0" VerticalAlignment="Top" Width="120" Background="#00000000" Foreground="#FFE0E0E0" FontWeight="Bold" FontStretch="Condensed"/>
+                        <Label x:Name="Activity1OpenSpots" Content="10/100 spots available" Grid.Column="0" HorizontalAlignment="Left" Height="26" Margin="10,110,20,0" VerticalAlignment="Top" Width="120" Background="#00000000" Foreground="#FFE0E0E0" FontWeight="Bold" FontStretch="Condensed"/>
                         <Border x:Name="LocationBackground" BorderBrush="#00AE51B8" BorderThickness="1" HorizontalAlignment="Left" Height="25" Margin="10,134,0,0" VerticalAlignment="Top" Width="97" CornerRadius="10" Background="#FFAE51B8">
                             <Label x:Name="LocationTitle" Content="Zwolle" FontFamily="Roboto" HorizontalAlignment="Left" Margin="31,-1,-14,-1" VerticalAlignment="Top" Foreground="White" Height="25" Width="78" VerticalContentAlignment="Center"/>
                         </Border>
@@ -128,7 +125,7 @@
                             <Border.Background>
                                 <ImageBrush ImageSource="Images/console.png" Stretch="UniformToFill"/>
                             </Border.Background>
-                            <Border x:Name="Activity2Border" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.25" Padding="0" UseLayoutRounding="False" CornerRadius="15">
+                            <Border x:Name="Activity2Border" BorderThickness="1" Background="#8E000000" Margin="-1,-1,-1.5,-1.25" Padding="0" UseLayoutRounding="False" CornerRadius="15" MouseDown="Activity2Border_MouseDown">
                                 <Label Content="Gaming week" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.895,0.981" Margin="9,84,0,0" Width="152" FontWeight="Bold" FontSize="16"/>
                             </Border>
                         </Border>
@@ -155,7 +152,7 @@
                             <Border.Background>
                                 <ImageBrush ImageSource="Images/schaatsen.jpg"/>
                             </Border.Background>
-                            <Border x:Name="Activity3Border" BorderThickness="1" Margin="-1.5,-0.667,0,-2.333" Padding="0" UseLayoutRounding="False" CornerRadius="10">
+                            <Border x:Name="Activity3Border" BorderThickness="1" Margin="-1.5,-0.667,0,-2.333" Padding="0" UseLayoutRounding="False" CornerRadius="10" MouseDown="Activity3Border_MouseDown">
                                 <Border.Background>
                                     <SolidColorBrush Color="#E5000000" Opacity="0.195"/>
                                 </Border.Background>
@@ -177,7 +174,7 @@
                             <Border.Background>
                                 <ImageBrush ImageSource="Images/fietsen.jpg" Stretch="UniformToFill"/>
                             </Border.Background>
-                            <Border x:Name="Activity4Border" BorderThickness="1" Background="#8E000000" Padding="0" UseLayoutRounding="False" CornerRadius="15">
+                            <Border x:Name="Activity4Border" BorderThickness="1" Background="#8E000000" Padding="0" UseLayoutRounding="False" CornerRadius="15" MouseDown="Activity4Border_MouseDown">
                                 <Label Content="Bicycle race" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" RenderTransformOrigin="0.895,0.981" Margin="9,84,0,0" Width="152" FontWeight="Bold" FontSize="16"/>
                             </Border>
                         </Border>

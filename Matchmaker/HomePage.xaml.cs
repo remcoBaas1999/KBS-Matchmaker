@@ -57,7 +57,7 @@ namespace Matchmaker {
             string pfPic1 = $"https://145.44.233.207/images/users/{user1.profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
             //Set Cover Image
-            string coverImage = $"https://145.44.233.207/images/covers/1.jpg";
+            string coverImage = $"https://145.44.233.207/images/covers/{user1.coverImage}";
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create second profile
@@ -74,7 +74,7 @@ namespace Matchmaker {
             string pfPic2 = $"https://145.44.233.207/images/users/{user2.profilePicture}";
             ProfilePicture2.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic2, UriKind.Absolute)));
             //Set Cover Image
-            //coverImage = $"https://145.44.233.207/images/covers/2.jpg";
+            coverImage = $"https://145.44.233.207/images/covers/{user2.coverImage}";
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create third profile
@@ -90,6 +90,9 @@ namespace Matchmaker {
             //Set profile picture
             string pfPic3 = $"https://145.44.233.207/images/users/{user3.profilePicture}";
             ProfilePicture3.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic3, UriKind.Absolute)));
+            //Set Cover Image
+            coverImage = $"https://145.44.233.207/images/covers/{user3.coverImage}";
+            Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
 
             //Create fourth profile
@@ -104,38 +107,47 @@ namespace Matchmaker {
             Profile4Tag.Content = user4.realName;
             //Set profile picture
             string pfPic4 = $"https://145.44.233.207/images/users/{user4.profilePicture}";
-
             ProfilePicture4.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic4, UriKind.Absolute)));
+            //Set Cover Image
+            coverImage = $"https://145.44.233.207/images/covers/{user4.coverImage}";
+            Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
         }
-        private void RefreshButton_MouseDown(object sender, MouseButtonEventArgs e)
+        /*private void RefreshButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //Refresh recommended profiles
             HomePage p = new HomePage();
             p.InitializeComponent();
             NavigationService.Navigate(p);
-        }
-        private void Profile1Picture1_MouseDown(object sender, MouseButtonEventArgs e)
+        }*/
+
+        //When clicked on a profile
+        private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)));
             NavigationService.Navigate(page);
         }
-
-        private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Profile1Picture1_MouseDown(sender, e);
+        private void Profile2BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID)));
+            NavigationService.Navigate(page);
         }
 
-        private void myProfile(object sender, MouseButtonEventArgs e)
-        {
-
+        private void Profile3BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID)));
+            NavigationService.Navigate(page);
+        }
+        private void Profile4BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID)));
+            NavigationService.Navigate(page);
         }
 
-        private void Ellipse_MouseDown_1(object sender, MouseButtonEventArgs e)
+
+        //Menu buttons
+        private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //show notification page
             Notifications notifications = new Notifications();
@@ -169,6 +181,23 @@ namespace Matchmaker {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             Page userProfile = new UserProfile(user, User.loggedIn);
             NavigationService.Navigate(userProfile);
+        }
+
+        //Redirect links for activites
+        private void Activity1Border_MouseDown(object sender, MouseButtonEventArgs e) {
+            System.Diagnostics.Process.Start("https://www.workshoppen.nl/workshops/action-painting-abstract-schilderen/");
+        }
+
+        private void Activity2Border_MouseDown(object sender, MouseButtonEventArgs e) {
+            System.Diagnostics.Process.Start("https://gamingweek.info/");
+        }
+
+        private void Activity3Border_MouseDown(object sender, MouseButtonEventArgs e) {
+            System.Diagnostics.Process.Start("http://www.ijsclubvzodkampen.nl/");
+        }
+
+        private void Activity4Border_MouseDown(object sender, MouseButtonEventArgs e) {
+            System.Diagnostics.Process.Start("https://www.xycletracx.nl/");
         }
     }
 }
