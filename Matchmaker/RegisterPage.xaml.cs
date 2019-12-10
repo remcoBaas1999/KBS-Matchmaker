@@ -154,12 +154,12 @@ namespace Matchmaker
                     realName = name,
                     birthdate = unixDateTime
                 };
-                //if (await MatchmakerAPI_Client.PostNewUserDataAsync(userData)) {
+                if (await MatchmakerAPI_Client.PostNewUserDataAsync(userData)) {
                     LoginPage loginPage = new LoginPage();
                     loginPage.RegistrationComplete.Text = "Registration Successful";
                     NavigationService.Navigate(loginPage);
                     NavigationService.RemoveBackEntry();
-                //}
+                }
             } else
             {
                 string errorMSG = "";
