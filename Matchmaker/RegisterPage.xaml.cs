@@ -135,7 +135,7 @@ namespace Matchmaker
                 }
             }
             //check succes
-            if (pWSucceed && pWRegex && noEmptyFields && emailSucceed && dateSucceed && nameSucceed && tOS && oldEnough)
+            if (pWSucceed && pWRegex && noEmptyFields && emailSucceed && dateSucceed && nameSucceed && tOS && oldEnough && !emailExists)
             {
                 //Make Errorgrid go away
                 ErrorGrid.Visibility = Visibility.Collapsed;
