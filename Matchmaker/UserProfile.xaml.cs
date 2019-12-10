@@ -148,14 +148,25 @@ namespace Matchmaker
 
         private async void confirmNameChange_Click(object sender, RoutedEventArgs e)
         {
-            userInView.realName = name.Text;
-            showName.Text = name.Text;
-            showName.Visibility = Visibility.Visible;
-            editName.Visibility = Visibility.Visible;
-            name.Visibility = Visibility.Collapsed;
-            confirmNameChange.Visibility = Visibility.Collapsed;
-            denymNameChange.Visibility = Visibility.Collapsed;
-            await MatchmakerAPI_Client.SaveUser(userInView);
+
+            if (name.Text.Trim() == "" || name.Text == null)
+            {
+                MessageBox.Show("The new name cannot be empty");
+                name.Text = userInView.realName;
+            }
+            else if (name.Text != null && name.Text.Trim() != "")
+            {
+                userInView.realName = name.Text;
+                showName.Text = name.Text;
+                userInView.realName = name.Text;
+                showName.Visibility = Visibility.Visible;
+                editName.Visibility = Visibility.Visible;
+                name.Visibility = Visibility.Collapsed;
+                confirmNameChange.Visibility = Visibility.Collapsed;
+                denymNameChange.Visibility = Visibility.Collapsed;
+                await MatchmakerAPI_Client.SaveUser(userInView);
+            }
+            
         }
 
         private void denymNameChange_Click(object sender, RoutedEventArgs e)
