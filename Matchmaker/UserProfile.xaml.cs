@@ -24,7 +24,7 @@ namespace Matchmaker
         public static List<HobbyData> hobbyData = new List<HobbyData>();
 
         //Create UserProfile as if it is anothers profile
-        public UserProfile(UserData user, int loggedinuser)
+        public UserProfile(UserData user, bool userAccount,int loggedinuser)
         {
             LoggedInUserID = loggedinuser;
             InitializeComponent();
