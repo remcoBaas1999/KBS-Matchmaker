@@ -29,16 +29,28 @@ namespace Matchmaker
 
         UserData userInView;
         public static List<HobbyData> hobbyData = new List<HobbyData>();
-        public UserProfile(UserData user)
+        public UserProfile(UserData user, bool userAccount)
         {
             InitializeComponent();
 
-            editBio.Visibility = Visibility.Collapsed;
-            editLocation.Visibility = Visibility.Collapsed;
-            editName.Visibility = Visibility.Collapsed;            
+            if(userAccount)
+            {
+                editBio.Visibility = Visibility.Visible;
+                editLocation.Visibility = Visibility.Visible;
+                editName.Visibility = Visibility.Visible;
+                btnEditCoverImage.Visibility = Visibility.Visible;
+                addHobby.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                editBio.Visibility = Visibility.Collapsed;
+                editLocation.Visibility = Visibility.Collapsed;
+                editName.Visibility = Visibility.Collapsed;
+                btnEditCoverImage.Visibility = Visibility.Collapsed;
+                addHobby.Visibility = Visibility.Collapsed;
+            }
+
             years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
-            btnEditCoverImage.Visibility = Visibility.Collapsed;
-            addHobby.Visibility = Visibility.Collapsed;
             name.Text = user.realName;
             showName.Text = user.realName;
             city.Text = user.city;
@@ -56,73 +68,12 @@ namespace Matchmaker
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
         }
         
-        public UserProfile(UserData active, bool userAccount)
-        {
-            InitializeComponent();
-
-            if (userAccount)
-            {
-                editBio.Visibility = Visibility.Visible;
-                editLocation.Visibility = Visibility.Visible;
-                editName.Visibility = Visibility.Visible;
-                addHobby.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                editBio.Visibility = Visibility.Collapsed;
-                editLocation.Visibility = Visibility.Collapsed;
-                editName.Visibility = Visibility.Collapsed;
-                addHobby.Visibility = Visibility.Collapsed;
-            }
-
-
-            years.Text = (CalculateAge(UnixTimeToDate(active.birthdate))).ToString();
-            city.Text = active.city;
-            citySelection.SelectedItem = active.city;
-            accountText.Text = active.about;
-            bioText.Text = active.about;
-            name.Text = active.realName;
-            showName.Text = active.realName;
-            if (active.hobbies != null)
-            {
-                foreach (var item in active.hobbies)
-                {
-                    LoadHobbyWrapper(item.displayName);
-                }
-            }
-            userInView = active;
-        
-            years.Text = (DateTime.Now.Year - active.birthdate).ToString();
-
-
-            string pfPic1 = $"https://145.44.233.207/images/users/{active.profilePicture}";
-            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-            }
-        
-    
-
+        // Calculate the current age of the user.
         public int CalculateAge(DateTime dob)
         {
-            // Calculate dif between years
             DateTime today = DateTime.Today;
             int age = today.Year - dob.Year;
-            bool month = false;
-
-
-            // Now check the months and days
-            if (today.Month < dob.Month)
-            {
-                age--;
-            }
-            else
-            {
-                month = true; //Maand is al geweest
-            }
-
-            if(month == false && today.Day < dob.Day)
-            {
-                age--;
-            }
+            if (today < dob.AddYears(age)) age--;
 
             return age;
         }
