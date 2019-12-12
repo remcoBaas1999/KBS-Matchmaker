@@ -160,6 +160,7 @@ namespace Matchmaker
             accountText.Visibility = Visibility.Visible;
             bioText.Visibility = Visibility.Collapsed;
             editBio.Visibility = Visibility.Collapsed;
+            accountText.Text = userInView.about;
         }
 
         private void citySelection_Loaded(object sender, RoutedEventArgs e)
