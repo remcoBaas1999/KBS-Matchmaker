@@ -378,9 +378,11 @@ namespace Matchmaker
         private void BlockUser_MouseDown(object sender, MouseButtonEventArgs e) {
             //When pressed on the blockimage next to a users profile
 
-            //Select USERID
+            //Select USERID           
             int IWantToBlockThisUserID = userInView.id;
+
             //Put USERID on blocklist from activeUSER
+            
         }
     }
 }
