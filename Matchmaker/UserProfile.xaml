@@ -209,6 +209,6 @@
                 <Button x:Name="AddInterests" Foreground="Purple" Content="Add Interests" BorderBrush="{x:Null}" Background="{x:Null}" Height="20" Width="80" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Margin="0,0,20,20" Click="AddInterests_Click"/>
             </Grid>
         </Border>
-
+        <Button Click="Button_Click"  Content="chats" />
     </Grid>
 </Page>    

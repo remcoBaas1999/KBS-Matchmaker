@@ -5,10 +5,49 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Matchmaker"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Page2">
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="Chatlist" FontFamily="Roboto">
 
-    <Grid>
-        
+    <Grid Margin="2,2,-2,-2">
+        <!-- Grid definitions -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto"  MaxWidth="1008" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="1" Background="#673AB7" Width="1008" Margin="0 46 0 0" CornerRadius="2">
+            <TextBlock Text="Your chats" Foreground="White" FontSize="28" LineHeight="32" Margin="16"/>
+        </Border>
+
+        <Grid  Grid.Row="1" Grid.Column="1">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" MaxHeight="500" MinHeight="200">
+                <StackPanel x:Name="chatList" HorizontalAlignment="Left" Width="1008" Grid.Row="1" Grid.Column="1" Margin="0 16 0 0">
+                    <StackPanel Orientation="Horizontal" Height="70" Width="1008" MaxWidth="1008">
+                        <StackPanel Orientation="Horizontal" Margin="0 8" Height="70">
+                            <Ellipse Height="54" Width="54" Margin="16 0" VerticalAlignment="Center">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="Images/settings.png"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <StackPanel Margin="16 17 16 15">
+                                <TextBlock Text="Friendr" FontSize="16" LineHeight="20"/>
+                                <TextBlock Text="No messages received from Friendr" FontSize="16" LineHeight="20" Opacity="0.6"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid HorizontalAlignment="Right" Width="24" Height="24" VerticalAlignment="Center">
+                            <Ellipse Stroke="Black"/>
+                            <TextBlock Text="1" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
     </Grid>
 </Page>
