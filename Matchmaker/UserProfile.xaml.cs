@@ -17,18 +17,13 @@ using static Matchmaker.HomePage;
 
 namespace Matchmaker
 {
-    /// <summary>
-    /// Interaction logic for UserProfile.xaml
-    /// </summary>
-    /// 
-
-
-
     public partial class UserProfile : Page
     {
 
         UserData userInView;
         public static List<HobbyData> hobbyData = new List<HobbyData>();
+
+        //Create UserProfile as if it is anothers profile
         public UserProfile(UserData user)
         {
             InitializeComponent();
@@ -56,6 +51,7 @@ namespace Matchmaker
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
         }
         
+        //Create UserProfile as if it is his/her profile
         public UserProfile(UserData active, bool userAccount)
         {
             InitializeComponent();
@@ -66,6 +62,7 @@ namespace Matchmaker
                 editLocation.Visibility = Visibility.Visible;
                 editName.Visibility = Visibility.Visible;
                 addHobby.Visibility = Visibility.Visible;
+                BlockUser.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -378,6 +375,11 @@ namespace Matchmaker
             HobbyWrapper.UpdateLayout();
         }
 
+        private void BlockUser_MouseDown(object sender, MouseButtonEventArgs e) {
+            //When pressed on the blockimage next to a users profile
 
+            //Select USERID
+            //Put USERID on blocklist from activeUSER
+        }
     }
 }

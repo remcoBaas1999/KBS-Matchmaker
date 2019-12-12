@@ -35,10 +35,12 @@ namespace Matchmaker {
             UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
             LoggedInUserID = activeUser.id;
 
-            //Get 4 profiles on homepage
+            //Get userprofiles from databases
             Dictionary<String, int> Profiles = new Dictionary<string, int>();
             Profiles = MatchmakerAPI_Client.GetUsers();
             var profiles = Profiles.Values.ToList();
+
+            //Remove blocked user
 
             //Create first profile
 
