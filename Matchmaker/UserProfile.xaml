@@ -86,7 +86,7 @@
 
                     <StackPanel Margin="36,0,0,0">
                         <TextBlock Text="Age" TextAlignment="Center" Foreground="LightGray" FontFamily="Roboto" Width="30" Margin="0,109,0,6" FontSize="14"/>
-                        <TextBlock FontSize="24" TextAlignment="Center" Foreground="White" FontFamily="Roboto" Width="35" x:Name="years"/>
+                        <TextBlock FontSize="24" TextAlignment="Center" Foreground="White" FontFamily="Roboto" Width="auto" x:Name="years"/>
                     </StackPanel>
                 </WrapPanel>
                 <StackPanel Width="Auto" HorizontalAlignment="Right">
