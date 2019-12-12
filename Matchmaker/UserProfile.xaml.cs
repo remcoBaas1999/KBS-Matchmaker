@@ -28,6 +28,24 @@ namespace Matchmaker
         {
             LoggedInUserID = loggedinuser;
             InitializeComponent();
+
+            if(userAccount)
+            {
+                editBio.Visibility = Visibility.Visible;
+                editLocation.Visibility = Visibility.Visible;
+                editName.Visibility = Visibility.Visible;
+                btnEditCoverImage.Visibility = Visibility.Visible;
+                addHobby.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                editBio.Visibility = Visibility.Collapsed;
+                editLocation.Visibility = Visibility.Collapsed;
+                editName.Visibility = Visibility.Collapsed;
+                btnEditCoverImage.Visibility = Visibility.Collapsed;
+                addHobby.Visibility = Visibility.Collapsed;
+            }
+
             years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
@@ -38,7 +56,7 @@ namespace Matchmaker
                 foreach (var item in user.hobbies)
                 {
                     //add to list of Hobbies in the Xaml
-                    LoadHobbyWrapper(item.displayName);
+                    LoadHobbyWrapper(item.displayName, userAccount);
                 }
             }
             userInView= user;
@@ -46,53 +64,7 @@ namespace Matchmaker
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
         }
         
-        //Create UserProfile as if it is his/her profile
-        public UserProfile(UserData active, bool userAccount, int loggedinuser)
-        {
-            InitializeComponent();
-            userInView = active;
-            LoggedInUserID = loggedinuser;
-
-            if (userAccount)
-            {
-                editBio.Visibility = Visibility.Visible;
-                editLocation.Visibility = Visibility.Visible;
-                editName.Visibility = Visibility.Visible;
-                addHobby.Visibility = Visibility.Visible;
-                BlockUser.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                editBio.Visibility = Visibility.Collapsed;
-                editLocation.Visibility = Visibility.Collapsed;
-                editName.Visibility = Visibility.Collapsed;
-                addHobby.Visibility = Visibility.Collapsed;
-            }
-
-
-            years.Text = (CalculateAge(UnixTimeToDate(active.birthdate))).ToString();
-            city.Text = active.city;
-            citySelection.SelectedItem = active.city;
-            accountText.Text = active.about;
-            bioText.Text = active.about;
-            name.Text = active.realName;
-            showName.Text = active.realName;
-            if (active.hobbies != null)
-            {
-                foreach (var item in active.hobbies)
-                {
-                    LoadHobbyWrapper(item.displayName);
-                }
-            }        
-            years.Text = (DateTime.Now.Year - active.birthdate).ToString();
-
-
-            string pfPic1 = $"https://145.44.233.207/images/users/{active.profilePicture}";
-            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-            }
-        
-    
-
+        // Calculate the current age of the user.
         public int CalculateAge(DateTime dob)
         {
             DateTime today = DateTime.Today;
@@ -184,6 +156,7 @@ namespace Matchmaker
             accountText.Visibility = Visibility.Visible;
             bioText.Visibility = Visibility.Collapsed;
             editBio.Visibility = Visibility.Collapsed;
+            accountText.Text = userInView.about;
         }
 
         private void citySelection_Loaded(object sender, RoutedEventArgs e)
@@ -192,7 +165,6 @@ namespace Matchmaker
             List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord" };
             foreach (string item in locations)
             {
-                
                 citySelection.Items.Add(item);
             }
 
@@ -312,7 +284,7 @@ namespace Matchmaker
             listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
-        private void LoadHobbyWrapper(string hobby)
+        private void LoadHobbyWrapper(string hobby, bool myProfile)
         {
             
             Border hobbyBorder = new Border();
@@ -337,16 +309,19 @@ namespace Matchmaker
             hobbyText.TextAlignment = TextAlignment.Center;
             hobbyText.VerticalAlignment = VerticalAlignment.Center;
 
-            path.Data = Geometry.Parse("M13.2997 0.710001C12.9097 0.320001 12.2797 0.320001 11.8897 0.710001L6.99973 5.59L2.10973 0.700001C1.71973 0.310001 1.08973 0.310001 0.699727 0.700001C0.309727 1.09 0.309727 1.72 0.699727 2.11L5.58973 7L0.699727 11.89C0.309727 12.28 0.309727 12.91 0.699727 13.3C1.08973 13.69 1.71973 13.69 2.10973 13.3L6.99973 8.41L11.8897 13.3C12.2797 13.69 12.9097 13.69 13.2997 13.3C13.6897 12.91 13.6897 12.28 13.2997 11.89L8.40973 7L13.2997 2.11C13.6797 1.73 13.6797 1.09 13.2997 0.710001Z");
-            path.Fill = Brushes.White;
-            path.Name = $"remove{formatName(hobby)}";
-            remove.MouseDown += Remove_MouseDown;
-            remove.Children.Add(path);
-            remove.Height = 15;
-            remove.Width = 15;
-            remove.Margin = new Thickness(6, 0, 6, 0);
-            remove.HorizontalAlignment = HorizontalAlignment.Right;
-            remove.VerticalAlignment = VerticalAlignment.Center;
+            if (myProfile)
+            {
+                path.Data = Geometry.Parse("M13.2997 0.710001C12.9097 0.320001 12.2797 0.320001 11.8897 0.710001L6.99973 5.59L2.10973 0.700001C1.71973 0.310001 1.08973 0.310001 0.699727 0.700001C0.309727 1.09 0.309727 1.72 0.699727 2.11L5.58973 7L0.699727 11.89C0.309727 12.28 0.309727 12.91 0.699727 13.3C1.08973 13.69 1.71973 13.69 2.10973 13.3L6.99973 8.41L11.8897 13.3C12.2797 13.69 12.9097 13.69 13.2997 13.3C13.6897 12.91 13.6897 12.28 13.2997 11.89L8.40973 7L13.2997 2.11C13.6797 1.73 13.6797 1.09 13.2997 0.710001Z");
+                path.Fill = Brushes.White;
+                path.Name = $"remove{formatName(hobby)}";
+                remove.MouseDown += Remove_MouseDown;
+                remove.Children.Add(path);
+                remove.Height = 15;
+                remove.Width = 15;
+                remove.Margin = new Thickness(6, 0, 6, 0);
+                remove.HorizontalAlignment = HorizontalAlignment.Right;
+                remove.VerticalAlignment = VerticalAlignment.Center;
+            }
 
             stackPanel.Children.Add(hobbyText);
             stackPanel.Children.Add(remove);
