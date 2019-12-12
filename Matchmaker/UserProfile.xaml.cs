@@ -441,6 +441,8 @@ namespace Matchmaker
             int IWantToBlockThisUserID = userInView.id;
 
             //Put USERID on blocklist from activeUSER
+            int[] blockedIDList = userInView.blockedUsers;
+            
             
         }
     }
