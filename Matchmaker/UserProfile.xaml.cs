@@ -256,7 +256,8 @@ namespace Matchmaker
         }
         private void Return(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.GoBack();
+            HomePage page = new HomePage();
+            NavigationService.Navigate(page);
         }
         private void addHobby_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -342,7 +343,8 @@ namespace Matchmaker
             Border hobbyBorder = new Border();
             StackPanel stackPanel = new StackPanel();
             TextBlock hobbyText = new TextBlock();
-
+            Canvas remove = new Canvas();
+            Path path = new Path();
 
             hobbyBorder.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673AB7"));
             hobbyBorder.Child = stackPanel;
@@ -360,11 +362,57 @@ namespace Matchmaker
             hobbyText.TextAlignment = TextAlignment.Center;
             hobbyText.VerticalAlignment = VerticalAlignment.Center;
 
-            stackPanel.Children.Add(hobbyText);
+            path.Data = Geometry.Parse("M13.2997 0.710001C12.9097 0.320001 12.2797 0.320001 11.8897 0.710001L6.99973 5.59L2.10973 0.700001C1.71973 0.310001 1.08973 0.310001 0.699727 0.700001C0.309727 1.09 0.309727 1.72 0.699727 2.11L5.58973 7L0.699727 11.89C0.309727 12.28 0.309727 12.91 0.699727 13.3C1.08973 13.69 1.71973 13.69 2.10973 13.3L6.99973 8.41L11.8897 13.3C12.2797 13.69 12.9097 13.69 13.2997 13.3C13.6897 12.91 13.6897 12.28 13.2997 11.89L8.40973 7L13.2997 2.11C13.6797 1.73 13.6797 1.09 13.2997 0.710001Z");
+            path.Fill = Brushes.White;
+            path.Name = $"remove{formatName(hobby)}";
+            remove.MouseDown += Remove_MouseDown;
+            remove.Children.Add(path);
+            remove.Height = 15;
+            remove.Width = 15;
+            remove.Margin = new Thickness(6, 0, 6, 0);
+            remove.HorizontalAlignment = HorizontalAlignment.Right;
+            remove.VerticalAlignment = VerticalAlignment.Center;
 
+            stackPanel.Children.Add(hobbyText);
+            stackPanel.Children.Add(remove);
             HobbyWrapper.Children.Add(hobbyBorder);
 
 
+        }
+
+        private string formatName(string hobby)
+        {
+            string name = (hobby).Replace(" ", "_");
+            name = name.Replace(":", "KOLON");
+            name = name.Replace("&","AND");
+            return name;
+        }
+
+        private string restoreName(string name)
+        {
+            string hobby = name.Substring(6).Replace("_", " ");
+            hobby = hobby.Replace("KOLON", ":");
+            hobby = hobby.Replace("AND" ,"&");
+            return hobby;
+        }
+
+        private async void Remove_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            string name = (e.Source as Path).Name.ToString();
+            string hobby = restoreName(name);
+            MessageBox.Show(hobby);
+            for (int i = 0; i < userInView.hobbies.Count; i++)
+            {
+                if (userInView.hobbies[i].displayName == hobby)
+                {
+                    userInView.hobbies.Remove(userInView.hobbies[i]);
+                }
+            }
+            
+            await MatchmakerAPI_Client.SaveUser(userInView);
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            Page userProfile = new UserProfile(user, User.loggedIn);
+            NavigationService.Navigate(userProfile);
         }
 
         private async void AddInterests_Click(object sender, RoutedEventArgs e)
@@ -373,9 +421,27 @@ namespace Matchmaker
             entryHobbies.Visibility = Visibility.Collapsed;
             addInterests.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
-            userInView.hobbies = hobbyData;
+            bool inAccount;
+            foreach (var item in hobbyData)
+            {
+                inAccount = false;
+                foreach (var hobby in userInView.hobbies)
+                {
+                    if (hobby.displayName == item.displayName)
+                    {
+                        inAccount = true;
+                    }
+                }
+                if (inAccount == false)
+                {
+                    userInView.hobbies.Add(item);
+                }
+            }
             await MatchmakerAPI_Client.SaveUser(userInView);
-            HobbyWrapper.UpdateLayout();
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            Page userProfile = new UserProfile(user, User.loggedIn);
+            NavigationService.Navigate(userProfile);
+            //HobbyWrapper.UpdateLayout();
         }
 
 
