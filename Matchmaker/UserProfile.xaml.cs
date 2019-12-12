@@ -19,32 +19,15 @@ namespace Matchmaker
 {
     public partial class UserProfile : Page
     {
-
-        UserData userInView;
+        private int LoggedInUserID;
+        private UserData userInView;
         public static List<HobbyData> hobbyData = new List<HobbyData>();
 
         //Create UserProfile as if it is anothers profile
-        public UserProfile(UserData user)
+        public UserProfile(UserData user, int loggedinuser)
         {
+            LoggedInUserID = loggedinuser;
             InitializeComponent();
-
-            if(userAccount)
-            {
-                editBio.Visibility = Visibility.Visible;
-                editLocation.Visibility = Visibility.Visible;
-                editName.Visibility = Visibility.Visible;
-                btnEditCoverImage.Visibility = Visibility.Visible;
-                addHobby.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                editBio.Visibility = Visibility.Collapsed;
-                editLocation.Visibility = Visibility.Collapsed;
-                editName.Visibility = Visibility.Collapsed;
-                btnEditCoverImage.Visibility = Visibility.Collapsed;
-                addHobby.Visibility = Visibility.Collapsed;
-            }
-
             years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
@@ -64,9 +47,11 @@ namespace Matchmaker
         }
         
         //Create UserProfile as if it is his/her profile
-        public UserProfile(UserData active, bool userAccount)
+        public UserProfile(UserData active, bool userAccount, int loggedinuser)
         {
             InitializeComponent();
+            userInView = active;
+            LoggedInUserID = loggedinuser;
 
             if (userAccount)
             {
@@ -98,9 +83,7 @@ namespace Matchmaker
                 {
                     LoadHobbyWrapper(item.displayName);
                 }
-            }
-            userInView = active;
-        
+            }        
             years.Text = (DateTime.Now.Year - active.birthdate).ToString();
 
 
@@ -402,7 +385,7 @@ namespace Matchmaker
             
             await MatchmakerAPI_Client.SaveUser(userInView);
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, User.loggedIn);
+            Page userProfile = new UserProfile(user, false, LoggedInUserID);
             NavigationService.Navigate(userProfile);
         }
 
@@ -430,7 +413,7 @@ namespace Matchmaker
             }
             await MatchmakerAPI_Client.SaveUser(userInView);
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, User.loggedIn);
+            Page userProfile = new UserProfile(user, false, LoggedInUserID);
             NavigationService.Navigate(userProfile);
         }
 
@@ -441,9 +424,9 @@ namespace Matchmaker
             int IWantToBlockThisUserID = userInView.id;
 
             //Put USERID on blocklist from activeUSER
-            int[] blockedIDList = userInView.blockedUsers;
-            
-            
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
+            user.blockedUsers.Add(IWantToBlockThisUserID);
+            BlockedFeedback.Content = "Blocked";
         }
     }
 }
