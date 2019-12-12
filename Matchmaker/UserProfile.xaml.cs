@@ -379,6 +379,7 @@ namespace Matchmaker
             //When pressed on the blockimage next to a users profile
 
             //Select USERID
+            int IWantToBlockThisUserID = userInView.id;
             //Put USERID on blocklist from activeUSER
         }
     }
