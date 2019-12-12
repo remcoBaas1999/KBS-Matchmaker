@@ -125,20 +125,20 @@ namespace Matchmaker {
         //When clicked on a profile
         private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)));
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)), false);
             NavigationService.Navigate(page);
         }
         private void Profile2BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID)));
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID)), false);
             NavigationService.Navigate(page);
         }
 
         private void Profile3BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID)));
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID)), false);
             NavigationService.Navigate(page);
         }
         private void Profile4BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID)));
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID)), false);
             NavigationService.Navigate(page);
         }
 
@@ -175,7 +175,7 @@ namespace Matchmaker {
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, User.loggedIn);
+            Page userProfile = new UserProfile(user, true);
             NavigationService.Navigate(userProfile);
         }
 
