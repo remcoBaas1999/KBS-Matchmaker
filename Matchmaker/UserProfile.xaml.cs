@@ -400,7 +400,6 @@ namespace Matchmaker
         {
             string name = (e.Source as Path).Name.ToString();
             string hobby = restoreName(name);
-            MessageBox.Show(hobby);
             for (int i = 0; i < userInView.hobbies.Count; i++)
             {
                 if (userInView.hobbies[i].displayName == hobby)
@@ -441,7 +440,6 @@ namespace Matchmaker
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             Page userProfile = new UserProfile(user, User.loggedIn);
             NavigationService.Navigate(userProfile);
-            //HobbyWrapper.UpdateLayout();
         }
 
 
