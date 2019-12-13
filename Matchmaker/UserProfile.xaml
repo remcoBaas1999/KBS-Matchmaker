@@ -140,7 +140,7 @@
                         <ImageBrush ImageSource="Images/block.png" Stretch="UniformToFill"/>
                     </Image.OpacityMask>
                 </Image>
-                <Label x:Name="BlockedFeedback" Content="" Margin="9,136,930,17" FontFamily="Roboto" FontWeight="Bold" FontSize="16" />
+                <Label x:Name="BlockedFeedback" Content="Blocked" Visibility="Hidden" Margin="9,136,930,17" FontFamily="Roboto" FontWeight="Bold" FontSize="16" />
             </Grid>
         </Border>
         <StackPanel Grid.Row="1" Grid.Column="1" Height="Auto" Width="Auto">

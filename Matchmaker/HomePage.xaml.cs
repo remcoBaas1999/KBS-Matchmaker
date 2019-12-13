@@ -41,15 +41,20 @@ namespace Matchmaker {
             Profiles = MatchmakerAPI_Client.GetUsers();
             var profiles = Profiles.Values.ToList();
 
-            //Remove blocked user
+            //Remove blocked user(s)
+            foreach (var item in activeUser.blockedUsers) {
+                if (profiles.Contains(item)) {
+                    profiles.Remove(item);
+                }
+            }
 
             //Create first profile
 
             Random random = new Random();
-            int rnd = random.Next(0, Profiles.Count);
+            int rnd = random.Next(0, profiles.Count);
             FirstProfileID = profiles.ElementAt(rnd);
             while (FirstProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, Profiles.Count);
+                rnd = random.Next(0, profiles.Count);
                 FirstProfileID = profiles.ElementAt(rnd);
             }
             UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID));
@@ -64,10 +69,10 @@ namespace Matchmaker {
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create second profile
-            rnd = random.Next(0, Profiles.Count);
+            rnd = random.Next(0, profiles.Count);
             SecondProfileID = profiles.ElementAt(rnd);
             while(FirstProfileID == SecondProfileID || SecondProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, Profiles.Count);
+                rnd = random.Next(0, profiles.Count);
                 SecondProfileID = profiles.ElementAt(rnd);
             }
             UserData user2 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID));
@@ -81,10 +86,10 @@ namespace Matchmaker {
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create third profile
-            rnd = random.Next(0, Profiles.Count);
+            rnd = random.Next(0, profiles.Count);
             ThirdProfileID = profiles.ElementAt(rnd);
             while (ThirdProfileID == FirstProfileID || ThirdProfileID == SecondProfileID || ThirdProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, Profiles.Count);
+                rnd = random.Next(0, profiles.Count);
                 ThirdProfileID = profiles.ElementAt(rnd);
             }
             UserData user3 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID));
@@ -99,10 +104,10 @@ namespace Matchmaker {
 
 
             //Create fourth profile
-            rnd = random.Next(0, Profiles.Count);
+            rnd = random.Next(0, profiles.Count);
             FourthProfileID = profiles.ElementAt(rnd);
             while (FourthProfileID == FirstProfileID || FourthProfileID == SecondProfileID || FourthProfileID == ThirdProfileID || FourthProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, Profiles.Count);
+                rnd = random.Next(0, profiles.Count);
                 FourthProfileID = profiles.ElementAt(rnd);
             }
             UserData user4 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID));
