@@ -44,10 +44,14 @@ namespace MatchMakerClassLibrary
             return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
         }
 
-        public static Dictionary<string, int> GetUsers()
-        {
+        public static Dictionary<string, int> GetUsers() {
             var json = Get($@"https://145.44.233.207/user/get/all");
             return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+        }
+
+        public static UserData[] GetMatches(int id) {
+            var json = Get($@"https://145.44.233.207/user/get/matches/id={id}");
+            return JsonConvert.DeserializeObject<UserData[]>(json);
         }
 
         public static async Task<AuthData> GetAuthDataAsync(string email)

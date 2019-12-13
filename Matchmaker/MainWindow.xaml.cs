@@ -70,19 +70,16 @@ namespace Matchmaker
         }
 
     }
-    public  class activeUser : UserData
+    public class activeUser : UserData
     {
-
-        public  string realName { get; set; }
-        public  string city { get; set; }
-        public  DateTime birthdate { get; set; }
-        public  string about { get; set; }
-        public  string email { get; set; }
-        public  string password { get; set; }
-        public  string salt { get; set; }
-        public  int id { get; set; }
-        public List<HobbyData> hobbies { get; set; }
-
+        public string RealName { get; set; }
+        public string City { get; set; }
+        public DateTime Birthdate { get; set; }
+        public string About { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Salt { get; set; }
+        public int ID { get; set; }
+        public List<HobbyData> Hobbies { get; set; }
     }
 }
-
