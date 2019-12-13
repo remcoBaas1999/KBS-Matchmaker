@@ -50,7 +50,9 @@ namespace MatchMakerClassLibrary
         }
 
         public static UserData[] GetMatches(int id) {
+            Console.WriteLine($"id: {id}");
             var json = Get($@"https://145.44.233.207/user/get/matches/id={id}");
+            Console.WriteLine($"json: {json}");
             return JsonConvert.DeserializeObject<UserData[]>(json);
         }
 
@@ -110,9 +112,6 @@ namespace MatchMakerClassLibrary
             {
                 Console.WriteLine(GetAuthDataAsync(email));
             }
-
-
-
             return false;
         }
         private static string Get(string uri)
@@ -121,17 +120,34 @@ namespace MatchMakerClassLibrary
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
+            Console.Write("Get: ");
+
             try
             {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 using (Stream stream = response.GetResponseStream())
                 using (StreamReader reader = new StreamReader(stream))
                 {
+                    Console.WriteLine("success");
+
                     return reader.ReadToEnd();
                 }
             }
-            catch
+            catch (WebException we)
             {
+                Console.WriteLine("fail");
+
+                if (we.Status == WebExceptionStatus.ProtocolError) {
+                    var response = we.Response as HttpWebResponse;
+                    if (response != null) {
+                        Console.WriteLine("HTTP Status Code: " + (int)response.StatusCode);
+                    } else {
+                        Console.WriteLine("error2");
+                    }
+                } else {
+                    Console.WriteLine("error1");
+                }
+                
                 Console.WriteLine("De server reageerde niet of staat uit.");
                 return null;
             }
