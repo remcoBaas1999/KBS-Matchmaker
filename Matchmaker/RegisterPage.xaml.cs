@@ -113,7 +113,7 @@ namespace Matchmaker
                 noEmptyFields = true;
             }
             //checks for valid email
-            string regexEmailString = @"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$";
+            string regexEmailString = @"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z.]+$";
             Regex regexEmail = new Regex(regexEmailString);
             if (regexEmail.IsMatch(email))
             {
@@ -135,7 +135,7 @@ namespace Matchmaker
                 }
             }
             //check succes
-            if (pWSucceed && pWRegex && noEmptyFields && emailSucceed && dateSucceed && nameSucceed && tOS && oldEnough)
+            if (pWSucceed && pWRegex && noEmptyFields && emailSucceed && dateSucceed && nameSucceed && tOS && oldEnough && !emailExists)
             {
                 //Make Errorgrid go away
                 ErrorGrid.Visibility = Visibility.Collapsed;
@@ -155,9 +155,11 @@ namespace Matchmaker
                     birthdate = unixDateTime
                 };
                 if (await MatchmakerAPI_Client.PostNewUserDataAsync(userData)) {
-                    NavigationService.Navigate("MainPage.xaml", UriKind.Relative);
+                    LoginPage loginPage = new LoginPage();
+                    loginPage.RegistrationComplete.Text = "Registration Successful";
+                    NavigationService.Navigate(loginPage);
+                    NavigationService.RemoveBackEntry();
                 }
-                //Close Page
             } else
             {
                 string errorMSG = "";
@@ -241,8 +243,7 @@ namespace Matchmaker
         public bool EmailExists(string email)
         {
             MatchmakerAPI_Client.GetUserData(email);
-            //return MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email)).email!=null;            
-            return false;
+            return MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email)).email!=null;            
         }
     }
 }

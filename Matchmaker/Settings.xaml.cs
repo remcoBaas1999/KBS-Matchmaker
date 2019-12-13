@@ -22,6 +22,12 @@ namespace Matchmaker {
             StartUp();
         }
 
+        public Settings(int userID) {
+            InitializeComponent();
+            email.Content = User.email;
+            StartUp();
+        }
+
         private void StartUp() {
             //Display settings as saved
             if (User.showInterests) {
