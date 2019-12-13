@@ -21,5 +21,6 @@ namespace MatchmakerAPI
 		public int id { get; set; }
 		public long birthdate { get; set; }
 		public string coverImage { get; set; }
+		public int[] blockedUsers { get; set; }
     }
 }
