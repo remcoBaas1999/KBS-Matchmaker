@@ -41,7 +41,13 @@ namespace Matchmaker {
             Profiles = MatchmakerAPI_Client.GetUsers();
             var profiles = Profiles.Values.ToList();
 
-            //Remove blocked user(s)
+            //Remove blocked user(s) if any
+
+            if (getLoggedInUserData.blockedUsers == null) {
+                List<int> temporarilyList = new List<int>();
+                getLoggedInUserData.blockedUsers = temporarilyList;
+            }
+
             foreach (var item in getLoggedInUserData.blockedUsers) {
                 if (profiles.Contains(item)) {
                     profiles.Remove(item);
