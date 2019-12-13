@@ -359,35 +359,36 @@ namespace Matchmaker {
         }
 
         private async void BlockUser_MouseDown(object sender, MouseButtonEventArgs e) {
-            //When pressed on the blockimage next to a users profile
+            //Triggers when pressed on the blockimage next to a users profile
+            if (MessageBox.Show($"Are you sure you want to ignore {userInView.realName}? His or her profile will never show up again.", $"Ignore {userInView.realName}", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) {
+                //Select USERID that will be blocked         
+                int IWantToBlockThisUserID = userInView.id;
+                //Select own userID
+                UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
 
-            //Select USERID that will be blocked         
-            int IWantToBlockThisUserID = userInView.id;
-            //Select own userID
-            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
 
-
-            //If it's the first time one blocking someone, create blockList
-            if (user.blockedUsers == null || user.blockedUsers.Count == 0) {
-                List<int> x = new List<int>();
-                user.blockedUsers = x;
-                user.blockedUsers.Add(IWantToBlockThisUserID);
-                await MatchmakerAPI_Client.SaveUser(user);
-                BlockedFeedback.Visibility = Visibility.Visible;
-            }
-            bool duplicateUser = false;
-            foreach (var item in user.blockedUsers) {
-                //Check if ID is already blocked
-                if (item == IWantToBlockThisUserID) {
-                    duplicateUser = true;
-                    break;
+                //If it's the first time one blocking someone, create blockList
+                if (user.blockedUsers == null || user.blockedUsers.Count == 0) {
+                    List<int> x = new List<int>();
+                    user.blockedUsers = x;
+                    user.blockedUsers.Add(IWantToBlockThisUserID);
+                    await MatchmakerAPI_Client.SaveUser(user);
+                    BlockedFeedback.Visibility = Visibility.Visible;
                 }
-            }
-            if (!duplicateUser) {
-                user.blockedUsers.Add(IWantToBlockThisUserID);
-                await MatchmakerAPI_Client.SaveUser(user);
-                BlockedFeedback.Content = "Blocked";
-                BlockedFeedback.Visibility = Visibility.Visible;
+                bool duplicateUser = false;
+                foreach (var item in user.blockedUsers) {
+                    //Check if ID is already blocked
+                    if (item == IWantToBlockThisUserID) {
+                        duplicateUser = true;
+                        break;
+                    }
+                }
+                if (!duplicateUser) {
+                    user.blockedUsers.Add(IWantToBlockThisUserID);
+                    await MatchmakerAPI_Client.SaveUser(user);
+                    BlockedFeedback.Content = "Blocked";
+                    BlockedFeedback.Visibility = Visibility.Visible;
+                }
             }
         }
     }
