@@ -32,8 +32,8 @@ namespace Matchmaker {
 
             //Gather info about logged-in user
             String email = User.email;
-            UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            LoggedInUserID = activeUser.id;
+            UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
+            LoggedInUserID = getLoggedInUserData.id;
             User.ID = LoggedInUserID;
 
             //Get userprofiles from databases
@@ -42,14 +42,13 @@ namespace Matchmaker {
             var profiles = Profiles.Values.ToList();
 
             //Remove blocked user(s)
-            foreach (var item in activeUser.blockedUsers) {
+            foreach (var item in getLoggedInUserData.blockedUsers) {
                 if (profiles.Contains(item)) {
                     profiles.Remove(item);
                 }
             }
 
             //Create first profile
-
             Random random = new Random();
             int rnd = random.Next(0, profiles.Count);
             FirstProfileID = profiles.ElementAt(rnd);
@@ -60,7 +59,6 @@ namespace Matchmaker {
             UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID));
             //Set name
             Profile1Tag.Content = user1.realName;
-
             //Set profile picture           
             string pfPic1 = $"https://145.44.233.207/images/users/{user1.profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
@@ -101,7 +99,6 @@ namespace Matchmaker {
             //Set Cover Image
             coverImage = $"https://145.44.233.207/images/covers/{user3.coverImage}";
             Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
-
 
             //Create fourth profile
             rnd = random.Next(0, profiles.Count);
@@ -149,34 +146,32 @@ namespace Matchmaker {
 
 
         //Menu buttons
+        //Go to Notification page
         private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //show notification page
             Notifications notifications = new Notifications();
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
 
+        //Go to Logout page
         private void Logout_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
-            {
-                //do not logout
-            }
-            else
-            {
-                //do logout
+            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes){
+                //Logout current user
                 LoginPage loginPage = new LoginPage();
                 NavigationService.Navigate(loginPage);
             }
         }
 
+        //Go to Settings page
         private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Settings settings = new Settings(LoggedInUserID);
             NavigationService.Navigate(settings);
         }
 
+        //Go to own profilepage
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
@@ -188,15 +183,12 @@ namespace Matchmaker {
         private void Activity1Border_MouseDown(object sender, MouseButtonEventArgs e) {
             System.Diagnostics.Process.Start("https://www.workshoppen.nl/workshops/action-painting-abstract-schilderen/");
         }
-
         private void Activity2Border_MouseDown(object sender, MouseButtonEventArgs e) {
             System.Diagnostics.Process.Start("https://gamingweek.info/");
         }
-
         private void Activity3Border_MouseDown(object sender, MouseButtonEventArgs e) {
             System.Diagnostics.Process.Start("http://www.ijsclubvzodkampen.nl/");
         }
-
         private void Activity4Border_MouseDown(object sender, MouseButtonEventArgs e) {
             System.Diagnostics.Process.Start("https://www.xycletracx.nl/");
         }
