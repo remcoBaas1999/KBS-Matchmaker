@@ -81,7 +81,7 @@ namespace Matchmaker
                 //chatInfo.Children.Add(profilePicture);
                 chatUser.Children.Add(realName);
                 chatUser.Children.Add(lastMessage);
-                chatList.Children.Add(chatUser);
+                //chatList.Children.Add(chatUser);
              }
         }
     }

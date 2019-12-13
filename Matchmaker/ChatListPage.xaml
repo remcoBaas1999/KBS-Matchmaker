@@ -8,7 +8,7 @@
       d:DesignHeight="720" d:DesignWidth="1280"
       Title="Chatlist" FontFamily="Roboto">
 
-    <Grid Margin="2,2,-2,-2">
+    <Grid>
         <!-- Grid definitions -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -21,33 +21,69 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="1" Background="#673AB7" Width="1008" Margin="0 46 0 0" CornerRadius="2">
-            <TextBlock Text="Your chats" Foreground="White" FontSize="28" LineHeight="32" Margin="16"/>
-        </Border>
+        <WrapPanel Grid.Row="0" Margin="0 36 0 0" HorizontalAlignment="Center" Grid.Column="1">
+            <Border HorizontalAlignment="Center" Height="48" Width="127">
+                <TextBlock Text="HOME" FontSize="18" LineHeight="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border HorizontalAlignment="Center" Height="48" Width="127">
+                <TextBlock Text="MATCHES" FontSize="18" LineHeight="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </WrapPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 56 0 0">
+            <Border Width="500">
+                <TextBlock Text="Your Chats" HorizontalAlignment="Center" FontWeight="Medium" FontSize="20" LineHeight="28"/>
+            </Border>
+            <StackPanel Width="473" x:Name="chatList" Margin="0 36 0 0">
+                <WrapPanel Width="473" Height="70">
 
-        <Grid  Grid.Row="1" Grid.Column="1">
-            <ScrollViewer VerticalScrollBarVisibility="Visible" MaxHeight="500" MinHeight="200">
-                <StackPanel x:Name="chatList" HorizontalAlignment="Left" Width="1008" Grid.Row="1" Grid.Column="1" Margin="0 16 0 0">
-                    <StackPanel Orientation="Horizontal" Height="70" Width="1008" MaxWidth="1008">
-                        <StackPanel Orientation="Horizontal" Margin="0 8" Height="70">
-                            <Ellipse Height="54" Width="54" Margin="16 0" VerticalAlignment="Center">
-                                <Ellipse.Fill>
-                                    <ImageBrush ImageSource="Images/settings.png"/>
-                                </Ellipse.Fill>
-                            </Ellipse>
-                            <StackPanel Margin="16 17 16 15">
-                                <TextBlock Text="Friendr" FontSize="16" LineHeight="20"/>
-                                <TextBlock Text="No messages received from Friendr" FontSize="16" LineHeight="20" Opacity="0.6"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <Grid HorizontalAlignment="Right" Width="24" Height="24" VerticalAlignment="Center">
-                            <Ellipse Stroke="Black"/>
-                            <TextBlock Text="1" TextAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
+                    <Ellipse Width="54" Height="54" VerticalAlignment="Center" Margin="8 8 0 0">
+                        <Ellipse.Fill>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Image Source="Images/ProfilePicture.jpg"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
 
+                    <TextBlock Text="Test Account" VerticalAlignment="Center" Margin="16 8 0 0" FontSize="16" FontWeight="Medium" LineHeight="20"/>
+
+
+                </WrapPanel>
+                <WrapPanel Width="473" Height="70">
+
+                    <Ellipse Width="54" Height="54" VerticalAlignment="Center" Margin="8 8 0 0">
+                        <Ellipse.Fill>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Image Source="Images/ProfilePicture.jpg" Stretch="Uniform"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <TextBlock Text="Test Account" VerticalAlignment="Center" Margin="16 8 0 0" FontSize="16" FontWeight="Medium" LineHeight="20"/>
+
+                </WrapPanel>
+                <WrapPanel Width="473" Height="70">
+
+                    <Ellipse Width="54" Height="54" VerticalAlignment="Center" Margin="8 8 0 0">
+                        <Ellipse.Fill>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Image Source="Images/ProfilePicture.jpg" Stretch="Uniform"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <TextBlock Text="Test Account" VerticalAlignment="Center" Margin="16 8 0 0" FontSize="16" FontWeight="Medium" LineHeight="20"/>
+                    
+                </WrapPanel>
+            </StackPanel>
+            <Border Width="500">
+                <TextBlock Text="Recently added contacts" TextAlignment="Center" FontSize="20" LineHeight="28"/>
+            </Border>
+        </StackPanel>
     </Grid>
 </Page>
