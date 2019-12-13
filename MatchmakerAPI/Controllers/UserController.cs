@@ -196,25 +196,25 @@ namespace MatchmakerAPI.Controllers
 			}
 
 			//Sort users from highest to lowest score, throw away the scores and only keep the 12 users with the hightest score
-			profiles = OrderUsersByScoreDescending(scoredUsers, scoredSelection);
+			List<UserData> profileSelection = OrderUsersByScoreDescending(scoredUsers, scoredSelection);
 
 			Console.Write("\nAfter ordering users by score (high to low), throwing away scores and only keeping the 12 users with the highest score: ");
-			foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
-				Console.Write($"{scoredUser.Key.Value.realName}, ");
+			foreach (UserData profile in profileSelection) {
+				Console.Write($"{profile.realName}, ");
 			}
 
 			//Pick 4 users randomly out of the 12 with the highst score
-			profiles = RandomSelection(profiles, finalRandomSelection);
+			profileSelection = RandomSelection(profileSelection, finalRandomSelection);
 
 			Console.Write("\nAfter selecting random 4: ");
-			foreach (KeyValuePair<int, UserData> profile in profiles) {
-				Console.Write($"{profile.Value.realName}, ");
+			foreach (UserData profile in profileSelection) {
+				Console.Write($"{profile.realName}, ");
 			}
 
 			//Put the users in a UserData array
 			int count = 0;
-			foreach (KeyValuePair<int, UserData> user in profiles) {
-				userDatas[count] = user.Value;
+			foreach (UserData user in profileSelection) {
+				userDatas[count] = user;
 				count++;
 			}
 			return userDatas;
@@ -237,6 +237,44 @@ namespace MatchmakerAPI.Controllers
 				//If the user is not already in profiles, add it to profiles
 				if (!profiles.Keys.ToList<int>().Contains(userID)) {
 					profiles.Add(userID, users[userID]);
+				}
+			}
+			return profiles;
+		}
+
+		private List<UserData> RandomSelection (List<UserData> users, int randomAmountToBeSelected) {
+			List<UserData> profiles = new List<UserData>();
+
+			//Make a list of all the user IDs
+			List<int> userIDs = new List<int>();
+
+			//Fill the list with user IDs
+			foreach (UserData user in users) {
+				userIDs.Add(user.id);
+			}
+
+			Random rnd = new Random();
+
+			//Fill the profiles List with random users from the users Dictionary
+			while (profiles.Count < Math.Min(randomAmountToBeSelected, users.Count)) {
+
+				//Select a random user from users
+				int userID = userIDs[rnd.Next(userIDs.Count)];
+
+				//If the user is not already in profiles ...
+				bool profileIsAlreadyInProfiles = false;
+				foreach (UserData profile in profiles) {
+					if (profile.id == userID) {
+						profileIsAlreadyInProfiles = true;
+					}
+				}
+				//... add it to profiles
+				if (profileIsAlreadyInProfiles) {
+					foreach (UserData user in users) {
+						if (user.id == userID) {
+							profiles.Add(user);
+						}
+					}
 				}
 			}
 			return profiles;
@@ -292,48 +330,20 @@ namespace MatchmakerAPI.Controllers
 			return scoredUsers;
 		}
 
-		private Dictionary<int, UserData> OrderUsersByScoreDescending (Dictionary<KeyValuePair<int, UserData>, int> scoredUsers, int scoredSelection) {
-			Dictionary<int, UserData> profiles = new Dictionary<int, UserData>();
-			Console.WriteLine($"profiles.Count (at the start): {profiles.Count}");
+		private List<UserData> OrderUsersByScoreDescending (Dictionary<KeyValuePair<int, UserData>, int> scoredUsers, int scoredSelection) {
+			List<UserData> profiles = new List<UserData>();
 			List<int> scores = scoredUsers.Values.ToList<int>();
-			Console.WriteLine($"scores.Count (at the start): {scores.Count}");
 			int count = 0;
 			while (scores.Count > 0 && count < scoredSelection) {
 				foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
-					if (scores.Count > 0) {
-						if (scoredUser.Value == scores.Max()) {
-							profiles.Add(scoredUser.Key.Key, scoredUser.Key.Value);
-							scores.Remove(scores.Max());
-						}
+					if (scoredUser.Value == scores.Max()) {
+						profiles.Add(scoredUser.Key.Value);
 					}
 				}
+				scores.Remove(scores.Max());
 				count++;
 			}
-			Console.WriteLine($"profiles.Count (at the end): {profiles.Count}");
-			Console.WriteLine($"scores.Count (at the end): {scores.Count}");
 			return profiles;
-		}
-
-		private Dictionary<int, UserData> KeepFirstX (Dictionary<int, UserData> users, int amountToKeep) {
-			Dictionary<int, UserData> profiles = new Dictionary<int, UserData>();
-
-			//Copy-paste an x amount of users from users into profiles
-			foreach (KeyValuePair<int, UserData> user in users) {
-				if (profiles.Count < amountToKeep) {
-					profiles.Add(user.Key, user.Value);
-				}
-			}
-			return profiles;
-		}
-
-		private Dictionary<int, UserData> ThrowAwayScores (Dictionary<KeyValuePair<int, UserData>, int> scoredUsers) {
-			Dictionary<int, UserData> scoredUsersNoScores = new Dictionary<int, UserData>();
-
-			//Only returns the users, not the scores
-			foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
-				scoredUsersNoScores.Add(scoredUser.Key.Key, scoredUser.Key.Value);
-			}
-			return scoredUsersNoScores;
 		}
 
 		private int CalculateAge(DateTime dob) {
