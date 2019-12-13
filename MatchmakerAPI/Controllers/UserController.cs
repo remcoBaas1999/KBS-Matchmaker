@@ -298,9 +298,11 @@ namespace MatchmakerAPI.Controllers
 			int count = 0;
 			while (scores.Count > 0 && count < scoredSelection) {
 				foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
-					if (scoredUser.Value == scores.Max()) {
-						profiles.Add(scoredUser.Key.Key, scoredUser.Key.Value);
-						scores.Remove(scores.Max());
+					if (scores.Count > 0) {
+						if (scoredUser.Value == scores.Max()) {
+							profiles.Add(scoredUser.Key.Key, scoredUser.Key.Value);
+							scores.Remove(scores.Max());
+						}
 					}
 				}
 				count++;
