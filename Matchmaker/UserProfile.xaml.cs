@@ -363,7 +363,7 @@ namespace Matchmaker
             stackPanel.Children.Add(hobbyText);
 
             HobbyWrapper.Children.Add(hobbyBorder);
-
+            
 
         }
 
@@ -378,6 +378,10 @@ namespace Matchmaker
             HobbyWrapper.UpdateLayout();
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ChatListPage chatList = new ChatListPage();
+            NavigationService.Navigate(chatList);
+        }
     }
 }

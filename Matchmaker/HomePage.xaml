@@ -16,8 +16,8 @@
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="12">
 
             <WrapPanel HorizontalAlignment="Center" Margin="504,1,301,-1">
-                <Button x:Name="HomeButton" Content="Home" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="86" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="0"/>
-                <Button x:Name="MatchesButton" Content="Matches" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="111" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="0" Visibility="Hidden"/>
+                <Button x:Name="HomeButton" Content="Home" Height="34" VerticalAlignment="Top" Width="86" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="0"/>
+                <Button x:Name="ContactsButton" Content="Contacts" Height="34" VerticalAlignment="Top" Width="111" Click="ContactPage_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="0" Visibility="Visible"/>
                 <Button x:Name="ActivitiesButton" Content="Activities" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="94" Click="Button_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.044,-2.382" Grid.Column="1" Visibility="Hidden"/>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Right">
