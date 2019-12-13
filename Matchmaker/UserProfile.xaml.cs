@@ -383,6 +383,7 @@ namespace Matchmaker {
                         break;
                     }
                 }
+                //Block user when not duplicate
                 if (!duplicateUser) {
                     user.blockedUsers.Add(IWantToBlockThisUserID);
                     await MatchmakerAPI_Client.SaveUser(user);
