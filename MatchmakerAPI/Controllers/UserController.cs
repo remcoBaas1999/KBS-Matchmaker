@@ -243,10 +243,12 @@ namespace MatchmakerAPI.Controllers
 					Console.WriteLine($"\n\nuser: {user.Key}, name: {user.Value.realName}, hobbies: {user.Value.hobbies}\n\n");
 
 					//Add 2 points to the score for each common hobby
-					if (user.Value.hobbies.Count != 0 && currentUser.hobbies.Count != 0) {
-						foreach (Hobby hobby in user.Value.hobbies) {
-							if (currentUser.hobbies.Contains(hobby)) {
-								hobbies += 2;
+					if (user.Value.hobbies != null && currentUser.hobbies != null) {
+						if (user.Value.hobbies.Count != 0 && currentUser.hobbies.Count != 0) {
+							foreach (Hobby hobby in user.Value.hobbies) {
+								if (currentUser.hobbies.Contains(hobby)) {
+									hobbies += 2;
+								}
 							}
 						}
 					}
