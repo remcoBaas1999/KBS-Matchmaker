@@ -2,38 +2,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static Matchmaker.HomePage;
 
 namespace Matchmaker
 {
-    /// <summary>
-    /// Interaction logic for UserProfile.xaml
-    /// </summary>
-    /// 
-
-
-
     public partial class UserProfile : Page
     {
 
-        UserData userInView;
-        public static List<HobbyData> hobbyData = new List<HobbyData>();
-        public UserProfile(UserData user, bool userAccount)
+        public UserData CurrentUser; // this holds the data of the currrent user profile.
+        public static List<HobbyData> _HobbyData = new List<HobbyData>(); // static list of hobbydata??
+        
+        // Set the values for the profile page and decide if it is
+        public UserProfile(UserData currentUser, bool ownUserProfile)
         {
             InitializeComponent();
 
-            if(userAccount)
+            // Check if it is youre profile or someone else theirs.
+            if (ownUserProfile)
             {
                 editBio.Visibility = Visibility.Visible;
                 editLocation.Visibility = Visibility.Visible;
@@ -50,30 +41,32 @@ namespace Matchmaker
                 addHobby.Visibility = Visibility.Collapsed;
             }
 
-            years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
-            name.Text = user.realName;
-            showName.Text = user.realName;
-            city.Text = user.city;
-            bioText.Text = user.about;
-            if (user.hobbies != null)
+            years.Text = (CalculateAge(UnixTimeToDate(currentUser.birthdate))).ToString();
+            name.Text = currentUser.realName;
+            showName.Text = currentUser.realName;
+            city.Text = currentUser.city;
+            bioText.Text = currentUser.about;
+
+            if (currentUser.hobbies != null)
             {
-                foreach (var item in user.hobbies)
+                for (int i = 0; i < currentUser.hobbies.Count; i++)
                 {
+                    HobbyData item = currentUser.hobbies[i];
                     //add to list of Hobbies in the Xaml
-                    LoadHobbyWrapper(item.displayName, userAccount);
+                    LoadInterestWrapper(item.displayName, ownUserProfile);
                 }
             }
-            userInView= user;
-            string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+
+            CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser)); // Check if the userdata is not null
+            string pfPic1 = $"https://145.44.233.207/images/users/{currentUser.profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
         }
         
         // Calculate the current age of the user.
         public int CalculateAge(DateTime dob)
         {
-            DateTime today = DateTime.Today;
-            int age = today.Year - dob.Year;
-            if (today < dob.AddYears(age)) age--;
+            int age = DateTime.Today.Year - dob.Year;
+            if (DateTime.Today < dob.AddYears(age)) age--;
 
             return age;
         }
@@ -81,13 +74,13 @@ namespace Matchmaker
         // Convert the Unixtime to an object of datetime
         private DateTime UnixTimeToDate(long _bday)
         {
-            
             DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             DateTime bday = start.AddSeconds(_bday).ToLocalTime();
             return bday;
         }
 
-        private void editName_Click(object sender, RoutedEventArgs e)
+        // open the edit name functionallities on screen.
+        private void EditName_Click(object sender, RoutedEventArgs e)
         {
             showName.Visibility = Visibility.Collapsed;
             editName.Visibility = Visibility.Collapsed;
@@ -97,30 +90,31 @@ namespace Matchmaker
         }
 
 
-        private async void confirmNameChange_Click(object sender, RoutedEventArgs e)
+        // confirm the name change and hide the buttons and the textbox on the page.
+        private async void ConfirmNameChange_Click(object sender, RoutedEventArgs e)
         {
 
             if (name.Text.Trim() == "" || name.Text == null)
             {
                 MessageBox.Show("The new name cannot be empty");
-                name.Text = userInView.realName;
+                name.Text = CurrentUser.realName;
             }
-            else if (name.Text != null && name.Text.Trim() != "")
+            else
             {
-                userInView.realName = name.Text;
+                CurrentUser.realName = name.Text;
                 showName.Text = name.Text;
-                userInView.realName = name.Text;
+                CurrentUser.realName = name.Text;
                 showName.Visibility = Visibility.Visible;
                 editName.Visibility = Visibility.Visible;
                 name.Visibility = Visibility.Collapsed;
                 confirmNameChange.Visibility = Visibility.Collapsed;
                 denymNameChange.Visibility = Visibility.Collapsed;
-                await MatchmakerAPI_Client.SaveUser(userInView);
+                await MatchmakerAPI_Client.SaveUser(CurrentUser);
             }
-            
         }
 
-        private void denymNameChange_Click(object sender, RoutedEventArgs e)
+        // Hide the edit tools and make the old name return.
+        private void DenymNameChange_Click(object sender, RoutedEventArgs e)
         {
             name.Text = showName.Text;
             showName.Visibility = Visibility.Visible;
@@ -130,20 +124,21 @@ namespace Matchmaker
             denymNameChange.Visibility = Visibility.Collapsed;
         }
 
-        private async void confirmBioChange_Click(object sender, RoutedEventArgs e)
+        // Confirm the change to the about text, upload to the database and hide the edit tools. 
+        private async void ConfirmAboutChange_Click(object sender, RoutedEventArgs e)
         {
-            userInView.about = accountText.Text;
+            CurrentUser.about = accountText.Text;
             bioText.Text = accountText.Text;
             denyBioChange.Visibility = Visibility.Collapsed;
             confirmBioChange.Visibility = Visibility.Collapsed;
             accountText.Visibility = Visibility.Collapsed;
             bioText.Visibility = Visibility.Visible;
             editBio.Visibility = Visibility.Visible;
-            await MatchmakerAPI_Client.SaveUser(userInView);
-
+            await MatchmakerAPI_Client.SaveUser(CurrentUser);
         }
 
-        private void denyBioChange_Click(object sender, RoutedEventArgs e)
+        // Keep the old text and collapse the edit tools.
+        private void DenyAboutChange_Click(object sender, RoutedEventArgs e)
         {
             accountText.Text = bioText.Text;
             denyBioChange.Visibility = Visibility.Collapsed;
@@ -153,28 +148,31 @@ namespace Matchmaker
             editBio.Visibility = Visibility.Visible;
         }
 
-        private void editBio_Click(object sender, RoutedEventArgs e)
+        // Make the edit tools for the about text vissible.
+        private void EditAbout_Click(object sender, RoutedEventArgs e)
         {
             denyBioChange.Visibility = Visibility.Visible;
             confirmBioChange.Visibility = Visibility.Visible;
             accountText.Visibility = Visibility.Visible;
             bioText.Visibility = Visibility.Collapsed;
             editBio.Visibility = Visibility.Collapsed;
-            accountText.Text = userInView.about;
+            accountText.Text = CurrentUser.about;
         }
 
-        private void citySelection_Loaded(object sender, RoutedEventArgs e)
+        // Populate the combobox citySelection.
+        // This currently is a list with hard coded locations.
+        private void CitySelection_Loaded(object sender, RoutedEventArgs e)
         {
             citySelection.Text = city.Text;
-            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord" };
-            foreach (string item in locations)
+            foreach (string item in new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord" })
             {
                 citySelection.Items.Add(item);
             }
 
         }
 
-        private void editLocation_Click(object sender, RoutedEventArgs e)
+        // Makes the edit tools vissible.
+        private void EditLocation_Click(object sender, RoutedEventArgs e)
         {
             citySelection.SelectedItem = city.Text;
             confirmNewLocation.Visibility = Visibility.Visible;
@@ -184,19 +182,21 @@ namespace Matchmaker
             city.Visibility = Visibility.Collapsed;
         }
 
-        private async void confirmNewLocation_Click(object sender, RoutedEventArgs e)
+        // Change the location of the current user.
+        private async void ConfirmNewLocation_Click(object sender, RoutedEventArgs e)
         {
             city.Text = citySelection.SelectedItem.ToString();
-            userInView.city = citySelection.SelectedItem.ToString();
+            CurrentUser.city = citySelection.SelectedItem.ToString();
             confirmNewLocation.Visibility = Visibility.Collapsed;
             denyLocationChange.Visibility = Visibility.Collapsed;
             editLocation.Visibility = Visibility.Visible;
             citySelection.Visibility = Visibility.Collapsed;
             city.Visibility = Visibility.Visible;
-            await MatchmakerAPI_Client.SaveUser(userInView);
+            await MatchmakerAPI_Client.SaveUser(CurrentUser);
         }
 
-        private void denyLocationChange_Click(object sender, RoutedEventArgs e)
+        // Do not make changes to the user location.
+        private void DenyLocationChange_Click(object sender, RoutedEventArgs e)
         {
             citySelection.SelectedValue = city.Text;
             confirmNewLocation.Visibility = Visibility.Collapsed;
@@ -205,22 +205,27 @@ namespace Matchmaker
             citySelection.Visibility = Visibility.Collapsed;
             city.Visibility = Visibility.Visible;
         }
-        private void Return(object sender, MouseButtonEventArgs e)
+
+        // Go back to the homepage
+        private void ReturnToHomepage(object sender, MouseButtonEventArgs e)
         {
             HomePage page = new HomePage();
             NavigationService.Navigate(page);
         }
-        private void addHobby_MouseDown(object sender, MouseButtonEventArgs e)
+
+        // Open the interests dialog.
+        private void InterestDialog_MouseDown(object sender, MouseButtonEventArgs e)
         {
             AddHobbies.Visibility = Visibility.Visible;
             entryHobbies.Visibility = Visibility.Visible;
             addInterests.Visibility = Visibility.Visible;
             listPossibleInterests.Visibility = Visibility.Visible;
 
-            LoadHobbies();
+            LoadInterests();
         }
 
-        private void LoadHobbies()
+        // Create a visual list of all the interests.
+        private void LoadInterests()
         {
             List<HobbyData> listHobbies = MatchmakerAPI_Client.getAllHobbies();
             for (int i = 0; i < listHobbies.Count(); i++)
@@ -234,17 +239,18 @@ namespace Matchmaker
                 tb.Name = $"tb{i}";
                 tb.HorizontalAlignment = HorizontalAlignment.Left;
                 cb.Name = $"cb{i}";
-                if (userInView.hobbies != null)
+                if (CurrentUser.hobbies != null)
                 {
-                    foreach (var item in userInView.hobbies)
+                    for (int x = 0; x < CurrentUser.hobbies.Count; x++)
                     {
+                        HobbyData item = CurrentUser.hobbies[x];
                         if (listHobbies[i].displayName == item.displayName)
                         {
                             cb.IsChecked = true;
                         }
                     }
                 }
-                cb.Click += new RoutedEventHandler(addHobbyToList_Click);
+                cb.Click += new RoutedEventHandler(AddInterestToList_Click);
                 cb.HorizontalAlignment = HorizontalAlignment.Right;
                 cb.VerticalAlignment = VerticalAlignment.Center;
 
@@ -256,13 +262,17 @@ namespace Matchmaker
                 listPossibleInterests.Children.Add(hobbyLane);
             }
         }
-        private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
+
+        // Change the coverimage of the current user.
+        private void BtnEditCoverImage_Click(object sender, RoutedEventArgs e)
+        {
             CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
             coverImageSelecter.Show();
-            coverImageSelecter.userID = userInView.id;
+            coverImageSelecter.userID = CurrentUser.id;
         }
 
-        public void addHobbyToList_Click(object sender, RoutedEventArgs e)
+        // Add the selected interest to a list.
+        public void AddInterestToList_Click(object sender, RoutedEventArgs e)
         {
             List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();
             string name = (e.Source as CheckBox).Name.ToString();
@@ -271,16 +281,17 @@ namespace Matchmaker
 
             if ((sender as CheckBox).IsChecked == true)
             {    
-                hobbyData.Add(listAllHobbies[id]);
+                _HobbyData.Add(listAllHobbies[id]);
             }
             else
             {
-                hobbyData.Remove(listAllHobbies[id]);
+                _HobbyData.Remove(listAllHobbies[id]);
             }
             
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        // Hide the interests selection window.
+        private void CancelHobbyDialog_Click(object sender, RoutedEventArgs e)
         {
             AddHobbies.Visibility = Visibility.Collapsed;
             entryHobbies.Visibility = Visibility.Collapsed;
@@ -288,7 +299,8 @@ namespace Matchmaker
             listPossibleInterests.Visibility = Visibility.Collapsed;
         }
 
-        private void LoadHobbyWrapper(string hobby, bool myProfile)
+        // Show all interests from the current user.
+        private void LoadInterestWrapper(string hobby, bool myProfile)
         {
             
             Border hobbyBorder = new Border();
@@ -303,7 +315,6 @@ namespace Matchmaker
             hobbyBorder.Height = 32;
             hobbyBorder.Margin = new Thickness(6, 0, 6, 0);
 
-
             stackPanel.Orientation = Orientation.Horizontal;
 
             hobbyText.Text = hobby;
@@ -317,8 +328,8 @@ namespace Matchmaker
             {
                 path.Data = Geometry.Parse("M13.2997 0.710001C12.9097 0.320001 12.2797 0.320001 11.8897 0.710001L6.99973 5.59L2.10973 0.700001C1.71973 0.310001 1.08973 0.310001 0.699727 0.700001C0.309727 1.09 0.309727 1.72 0.699727 2.11L5.58973 7L0.699727 11.89C0.309727 12.28 0.309727 12.91 0.699727 13.3C1.08973 13.69 1.71973 13.69 2.10973 13.3L6.99973 8.41L11.8897 13.3C12.2797 13.69 12.9097 13.69 13.2997 13.3C13.6897 12.91 13.6897 12.28 13.2997 11.89L8.40973 7L13.2997 2.11C13.6797 1.73 13.6797 1.09 13.2997 0.710001Z");
                 path.Fill = Brushes.White;
-                path.Name = $"remove{formatName(hobby)}";
-                remove.MouseDown += Remove_MouseDown;
+                path.Name = $"remove{FormatName(hobby)}";
+                remove.MouseDown += RemoveInterest_MouseDown;
                 remove.Children.Add(path);
                 remove.Height = 15;
                 remove.Width = 15;
@@ -330,44 +341,46 @@ namespace Matchmaker
             stackPanel.Children.Add(hobbyText);
             stackPanel.Children.Add(remove);
             HobbyWrapper.Children.Add(hobbyBorder);
-
-
         }
 
-        private string formatName(string hobby)
+        //
+        private string FormatName(string hobby)
         {
-            string name = (hobby).Replace(" ", "_");
+            string name = hobby.Replace(" ", "_");
             name = name.Replace(":", "KOLON");
-            name = name.Replace("&","AND");
+            name = name.Replace("&", "AND");
             return name;
         }
 
-        private string restoreName(string name)
+        //
+        private string RestoreName(string name)
         {
             string hobby = name.Substring(6).Replace("_", " ");
             hobby = hobby.Replace("KOLON", ":");
-            hobby = hobby.Replace("AND" ,"&");
+            hobby = hobby.Replace("AND", "&");
             return hobby;
         }
 
-        private async void Remove_MouseDown(object sender, MouseButtonEventArgs e)
+        // Remove the selected interest from the user.
+        private async void RemoveInterest_MouseDown(object sender, MouseButtonEventArgs e)
         {
             string name = (e.Source as Path).Name.ToString();
-            string hobby = restoreName(name);
-            for (int i = 0; i < userInView.hobbies.Count; i++)
+            string hobby = RestoreName(name);
+            for (int i = 0; i < CurrentUser.hobbies.Count; i++)
             {
-                if (userInView.hobbies[i].displayName == hobby)
+                if (CurrentUser.hobbies[i].displayName == hobby)
                 {
-                    userInView.hobbies.Remove(userInView.hobbies[i]);
+                    CurrentUser.hobbies.Remove(CurrentUser.hobbies[i]);
                 }
             }
             
-            await MatchmakerAPI_Client.SaveUser(userInView);
+            await MatchmakerAPI_Client.SaveUser(CurrentUser);
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             Page userProfile = new UserProfile(user, User.loggedIn);
             NavigationService.Navigate(userProfile);
         }
 
+        // Add interest to the user.
         private async void AddInterests_Click(object sender, RoutedEventArgs e)
         {
             AddHobbies.Visibility = Visibility.Collapsed;
@@ -375,10 +388,10 @@ namespace Matchmaker
             addInterests.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
             bool inAccount;
-            foreach (var item in hobbyData)
+            foreach (HobbyData item in _HobbyData)
             {
                 inAccount = false;
-                foreach (var hobby in userInView.hobbies)
+                foreach (var hobby in CurrentUser.hobbies)
                 {
                     if (hobby.displayName == item.displayName)
                     {
@@ -387,15 +400,12 @@ namespace Matchmaker
                 }
                 if (inAccount == false)
                 {
-                    userInView.hobbies.Add(item);
+                    CurrentUser.hobbies.Add(item);
                 }
             }
-            await MatchmakerAPI_Client.SaveUser(userInView);
+            await MatchmakerAPI_Client.SaveUser(CurrentUser);
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, User.loggedIn);
-            NavigationService.Navigate(userProfile);
+            NavigationService.Navigate(new UserProfile(user, User.loggedIn));
         }
-
-
     }
 }
