@@ -66,12 +66,14 @@ namespace MatchmakerAPI.Controllers
 		public UserData[] GetMatches(int id) {
 			using (StreamReader r = new StreamReader("/home/student/data/users.json")) {
 				string json = r.ReadToEnd();
-				int amountToBeSelected = 4;
+				int firstRandomSelection = 120;
+				int scoredSelection = 12;
+				int finalRandomSelection = 4;
 				try {
 					var users = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json);
-					return FindMatches(users, id, amountToBeSelected);
+					return FindMatches(users, id, firstRandomSelection, scoredSelection, finalRandomSelection);
 				} catch (System.Collections.Generic.KeyNotFoundException e) {
-					return new UserData[amountToBeSelected];
+					return new UserData[finalRandomSelection];
 				}
 			}
 		}
@@ -174,30 +176,30 @@ namespace MatchmakerAPI.Controllers
 			}
 		}
 
-		public UserData[] FindMatches(Dictionary<int, UserData> users, int currentUserID, int amountToBeSelected) {
-			UserData[] userDatas = new UserData[amountToBeSelected];
+		public UserData[] FindMatches(Dictionary<int, UserData> users, int currentUserID, int firstRandomSelection, int scoredSelection, int finalRandomSelection) {
+			UserData[] userDatas = new UserData[finalRandomSelection];
 
 			//Make a random selection of 120 users
-			Dictionary<int, UserData> users120 = RandomSelection(users, 120);
+			Dictionary<int, UserData> profiles = RandomSelection(users, firstRandomSelection);
 
 			//Score each of the users based on hobbies, age and city
-			Dictionary<KeyValuePair<int, UserData>, int> scoredUsers = ScoreUsers(users120, currentUserID);
+			Dictionary<KeyValuePair<int, UserData>, int> scoredUsers = ScoreUsers(profiles, currentUserID);
 
 			//Sort users from highest to lowest score
 			scoredUsers.OrderByDescending(key => key.Value);
 
-			//Throw away scores of the users (they're already sorted now)
-			Dictionary<int, UserData> scoredUsersNoScores = ThrowAwayScores(scoredUsers);
+			//Throw away scores of the users (they're already sorted now anyway)
+			profiles = ThrowAwayScores(scoredUsers);
 
 			//Only keep the 12 users with the highest score
-			Dictionary<int, UserData> scoredUsers12 = KeepFirstX(scoredUsersNoScores, 12);
+			profiles = KeepFirstX(profiles, scoredSelection);
 
 			//Pick 4 users randomly out of the 12 with the highst score (the first 12)
-			Dictionary<int, UserData> users4 = RandomSelection(scoredUsers12, amountToBeSelected);
+			profiles = RandomSelection(profiles, finalRandomSelection);
 
 			//Put the users in a UserData array
 			int count = 0;
-			foreach (KeyValuePair<int, UserData> user in users4) {
+			foreach (KeyValuePair<int, UserData> user in profiles) {
 				userDatas[count] = user.Value;
 				count++;
 			}
@@ -239,8 +241,6 @@ namespace MatchmakerAPI.Controllers
 					int hobbies = 0;
 					int age = 0;
 					int city = 0;
-
-					Console.WriteLine($"\n\nuser: {user.Key}, name: {user.Value.realName}, hobbies: {user.Value.hobbies}\n\n");
 
 					//Add 2 points to the score for each common hobby
 					if (user.Value.hobbies != null && currentUser.hobbies != null) {
