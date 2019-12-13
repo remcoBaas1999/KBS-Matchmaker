@@ -240,6 +240,8 @@ namespace MatchmakerAPI.Controllers
 					int age = 0;
 					int city = 0;
 
+					Console.WriteLine($"\n\nuser: {user.Key}, name: {user.Value.realName}, hobbies: {user.Value.hobbies}\n\n");
+
 					//Add 2 points to the score for each common hobby
 					if (user.Value.hobbies.Count != 0 && currentUser.hobbies.Count != 0) {
 						foreach (Hobby hobby in user.Value.hobbies) {
