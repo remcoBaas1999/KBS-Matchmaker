@@ -214,4 +214,11 @@ namespace MatchMakerClassLibrary
             public List<string> assocHobbies { get; set; }
         }
     }
+    public class MessageData
+    {
+        public string ID { get; set; }
+        public string Text { get; set; }
+        public int Sender { get; set; }
+        public long TimeStamp { get; set; }
+    }
 }
