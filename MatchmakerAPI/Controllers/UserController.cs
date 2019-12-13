@@ -237,30 +237,38 @@ namespace MatchmakerAPI.Controllers
 					UserData currentUser = users[currentUserID];
 
 					int hobbies = 0;
-					int age;
+					int age = 0;
 					int city = 0;
 
 					//Add 2 points to the score for each common hobby
-					foreach (Hobby hobby in user.Value.hobbies) {
-						if (currentUser.hobbies.Contains(hobby)) {
-							hobbies += 2;
+					if (user.Value.hobbies.Count != 0 && currentUser.hobbies.Count != 0) {
+						foreach (Hobby hobby in user.Value.hobbies) {
+							if (currentUser.hobbies.Contains(hobby)) {
+								hobbies += 2;
+							}
 						}
 					}
 
-					//Add max. 10 points to the score, from 10 points if the users are the same age, to 0 points if the users are 10 years apart 
-					int userAge = CalculateAge(UnixTimeToDate(user.Value.birthdate));
-					int currentUserAge = CalculateAge(UnixTimeToDate(currentUser.birthdate));
-					int ageDiff = Math.Max(userAge, currentUserAge) - Math.Min(userAge, currentUserAge);
-					age = Math.Max((10 - ageDiff), 0);
+					//Add max. 10 points to the score, from 10 points if the users are the same age, to 0 points if the users are 10 years apart
+					if (user.Value.birthdate != 0 && currentUser.birthdate != 0) {
+						int userAge = CalculateAge(UnixTimeToDate(user.Value.birthdate));
+						int currentUserAge = CalculateAge(UnixTimeToDate(currentUser.birthdate));
+						int ageDiff = Math.Max(userAge, currentUserAge) - Math.Min(userAge, currentUserAge);
+						age = Math.Max((10 - ageDiff), 0);
+					}
 
 					//Add 10 points to the score if the cities match
-					if (user.Value.city == currentUser.city) {
-						city = 10;
+					if (user.Value.city != null && currentUser.city != null) {
+						if (user.Value.city == currentUser.city) {
+							city = 10;
+						}
 					}
 
 					//Add scores together and assign it to the user
-					int score = hobbies + ageDiff + city;
+					int score = hobbies + age + city;
 					scoredUsers.Add(user, score);
+
+					Console.WriteLine($"{user.Value.realName}: {score}");
 				}
 			}
 			return scoredUsers;
