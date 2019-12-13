@@ -390,6 +390,9 @@ namespace Matchmaker {
                     BlockedFeedback.Content = "Blocked";
                     BlockedFeedback.Visibility = Visibility.Visible;
                 }
+                //Return user to the homepage
+                HomePage home = new HomePage();
+                NavigationService.Navigate(home);
             }
         }
     }
