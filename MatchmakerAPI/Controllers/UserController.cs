@@ -182,20 +182,50 @@ namespace MatchmakerAPI.Controllers
 			//Make a random selection of 120 users
 			Dictionary<int, UserData> profiles = RandomSelection(users, firstRandomSelection);
 
+			Console.Write("\n\nAfter selecting random 120: ");
+			foreach (KeyValuePair<int, UserData> profile in profiles) {
+				Console.Write($"{profile.Value.realName} ");
+			}
+
 			//Score each of the users based on hobbies, age and city
 			Dictionary<KeyValuePair<int, UserData>, int> scoredUsers = ScoreUsers(profiles, currentUserID);
+
+			Console.Write("\n\nAfter scoring users: ");
+			foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
+				Console.Write($"{scoredUser.Key.Value.realName} ");
+			}
 
 			//Sort users from highest to lowest score
 			scoredUsers.OrderByDescending(key => key.Value);
 
+			Console.Write("\n\nAfter ordering users by score: (high to low) ");
+			foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
+				Console.Write($"{scoredUser.Key.Value.realName} ");
+			}
+
 			//Throw away scores of the users (they're already sorted now anyway)
 			profiles = ThrowAwayScores(scoredUsers);
+
+			Console.Write("\n\nAfter throwing away scores: ");
+			foreach (KeyValuePair<int, UserData> profile in profiles) {
+				Console.Write($"{profile.Value.realName} ");
+			}
 
 			//Only keep the 12 users with the highest score
 			profiles = KeepFirstX(profiles, scoredSelection);
 
+			Console.Write("\n\nAfter selecting first 12: ");
+			foreach (KeyValuePair<int, UserData> profile in profiles) {
+				Console.Write($"{profile.Value.realName} ");
+			}
+
 			//Pick 4 users randomly out of the 12 with the highst score (the first 12)
 			profiles = RandomSelection(profiles, finalRandomSelection);
+
+			Console.Write("\n\nAfter selecting random 4: ");
+			foreach (KeyValuePair<int, UserData> profile in profiles) {
+				Console.Write($"{profile.Value.realName} ");
+			}
 
 			//Put the users in a UserData array
 			int count = 0;
