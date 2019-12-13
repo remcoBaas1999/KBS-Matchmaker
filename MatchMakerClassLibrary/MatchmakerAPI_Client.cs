@@ -135,6 +135,7 @@ namespace MatchMakerClassLibrary {
         public long birthdate { get; set; }
         public string about { get; set; }
         public string location { get; set; }
+        public List<int> blockedUsers { get; set; }
     }
     public class AuthData {
         public string email { get; set; }
