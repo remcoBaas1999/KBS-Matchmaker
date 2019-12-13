@@ -31,12 +31,12 @@ namespace Matchmaker {
             InitializeComponent();
 
             //Gather info about logged-in user
-            String email = User.email;
+            string email = User.email;
             UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
             LoggedInUserID = activeUser.id;
 
             //Get 4 profiles on homepage
-            Dictionary<String, int> Profiles = new Dictionary<string, int>();
+            Dictionary<string, int> Profiles = new Dictionary<string, int>();
             Profiles = MatchmakerAPI_Client.GetUsers();
             var profiles = Profiles.Values.ToList();
 

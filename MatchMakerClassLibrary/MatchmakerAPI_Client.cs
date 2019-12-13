@@ -164,7 +164,7 @@ namespace MatchMakerClassLibrary
         public static async Task<bool> SaveUser(UserData data)
         {
             string url = @"https://145.44.233.207/user/post/update";
-            var result = await Post(url, data);
+            await Post(url, data);
 
             return true;
         }
@@ -174,7 +174,47 @@ namespace MatchMakerClassLibrary
             List<HobbyData> data = JsonConvert.DeserializeObject<List<HobbyData>>(Get(@"https://145.44.233.207/hobbies/get/all"));
             return data;
         }
+
+        public static async Task<bool> sendContactRequest(UserData user, UserData requestUser)
+        {
+            int id = user.id;
+            //The contact is saved with the user
+            user.contacts.Add(requestUser.id, false);
+            string uri = @"https://145.44.233.207/user/post/update/id={id}";
+            //THe request is saved with the other account
+            requestUser.requestFrom.Add(user.id);
+            id = requestUser.id;
+            await Post(uri, requestUser);
+            return true;
+
+        }
+
+        public static async Task<bool> denyContactRequest(UserData user, UserData requestUser)
+        {
+            int id = user.id;
+            //The request  is is set to not be a contact
+            user.contacts.Add(requestUser.id, false);
+            user.requestFrom.Remove(user.id);
+            string uri = @"https://145.44.233.207/user/post/update/id={id}";
+            await Post(uri, requestUser);
+            return true;
+        }
+
+        public static async Task<bool> ConfirmContactRequest(UserData user, UserData requestUser)
+        {
+            int id = user.id;
+            //The request  is is set to be a contact
+            user.contacts.Add(requestUser.id, true);
+            user.requestFrom.Remove(user.id);
+            string uri = @"https://145.44.233.207/user/post/update/id={id}";
+            //Update requesting user account
+            id = requestUser.id;
+            requestUser.contacts[id] = true;
+            await Post(uri, requestUser);
+            return true;
+        }
     }
+
 
     public class UserData
     {
@@ -190,6 +230,8 @@ namespace MatchMakerClassLibrary
         public string coverImage { get; set; }
         public List<HobbyData> hobbies { get; set; }
         public int[] blockedUsers { get; set; }
+        public Dictionary<int, bool> contacts { get; set; }
+        public List<int> requestFrom { get; set; }
 
     }
     public class AuthData
@@ -209,10 +251,5 @@ namespace MatchMakerClassLibrary
     {
         public int userID { get; set; }
         public string imageName { get; set; }
-        public class HobbyData
-        {
-            public string displayName { get; set; }
-            public List<string> assocHobbies { get; set; }
-        }
     }
 }

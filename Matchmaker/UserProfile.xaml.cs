@@ -17,13 +17,6 @@ using static Matchmaker.HomePage;
 
 namespace Matchmaker
 {
-    /// <summary>
-    /// Interaction logic for UserProfile.xaml
-    /// </summary>
-    /// 
-
-
-
     public partial class UserProfile : Page
     {
 
@@ -40,6 +33,17 @@ namespace Matchmaker
                 editName.Visibility = Visibility.Visible;
                 btnEditCoverImage.Visibility = Visibility.Visible;
                 addHobby.Visibility = Visibility.Visible;
+                contactRequest.Visibility = Visibility.Collapsed;//I have to get the active userData somehow
+                string email = User.email;
+                UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
+                if (activeUser.contacts != null)
+                {
+                    if (activeUser.contacts.ContainsKey(userInView.id))
+                    {
+                        addHobby.Visibility = Visibility.Collapsed;
+                    }
+                }
+                
             }
             else
             {
@@ -396,6 +400,11 @@ namespace Matchmaker
             NavigationService.Navigate(userProfile);
         }
 
-
+        private async void contactRequest_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            await MatchmakerAPI_Client.sendContactRequest(user, userInView ) ;
+        }
     }
 }
