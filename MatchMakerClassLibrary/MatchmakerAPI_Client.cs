@@ -11,54 +11,73 @@ using System.Security.Cryptography;
 using System.Net.Http;
 using System.Net.Security;
 
-namespace MatchMakerClassLibrary {
-    public static class MatchmakerAPI_Client {
+namespace MatchMakerClassLibrary
+{
+    public static class MatchmakerAPI_Client
+    {
         //public static readonly HttpClient client = new HttpClient();
         public static HttpClient client = new HttpClient();
 
-        public static UserData DeserializeUserData(string json) {
+        public static UserData DeserializeUserData(string json)
+        {
             return JsonConvert.DeserializeObject<UserData>(json);
         }
 
-        public static AuthData DeserializeAuthData(string json) {
+        public static AuthData DeserializeAuthData(string json)
+        {
             return JsonConvert.DeserializeObject<AuthData>(json);
         }
 
-        public static string GetUserData(int id) {
+        public static string GetUserData(int id)
+        {
             return Get($@"https://145.44.233.207/user/get/id={id}");
         }
 
-        public static string GetUserData(string email) {
+        public static string GetUserData(string email)
+        {
             return Get($@"https://145.44.233.207/user/get/email={email}");
         }
 
-        public static Dictionary<string, int> GetUsers() {
+        public static Dictionary<string, string> GetCoverImages()
+        {
+            var json = Get($@"https://145.44.233.207/images/covers/get/list");
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+        }
+
+        public static Dictionary<string, int> GetUsers()
+        {
             var json = Get($@"https://145.44.233.207/user/get/all");
             return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
         }
 
-
-        public static async Task<AuthData> GetAuthDataAsync(string email) {
-            try {
+        public static async Task<AuthData> GetAuthDataAsync(string email)
+        {
+            try
+            {
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
                 var uri = $@"https://145.44.233.207/auth/get/email=" + email;
                 var response = await client.GetAsync(uri);
                 var authData = JsonConvert.DeserializeObject<AuthData>(await response.Content.ReadAsStringAsync());
                 return authData;
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 return new AuthData();
             }
         }
 
-        public static string GetEventData(int id) {
+        public static string GetEventData(int id)
+        {
             //return Get($@"https://145.44.233.207/get/event?id={id}");
             return null;
         }
-        public static async Task<bool> AuthenticateAsync(string email, string password) {
+        public static async Task<bool> AuthenticateAsync(string email, string password)
+        {
             bool check = false;
 
             //Retrieve data
-            try {
+            try
+            {
                 AuthData response = await GetAuthDataAsync(email);
                 //Get salt and hash from database using email
                 string saltRetrievedString = response.salt;
@@ -77,11 +96,14 @@ namespace MatchMakerClassLibrary {
                 string hashString = Convert.ToBase64String(hash);
 
                 //Compare the new and old hash
-                if (hashString == hashRetrievedString) {
+                if (hashString == hashRetrievedString)
+                {
                     check = true;
                 }
                 return check;
-            } catch (ArgumentNullException) {
+            }
+            catch (ArgumentNullException)
+            {
                 Console.WriteLine(GetAuthDataAsync(email));
             }
 
@@ -89,33 +111,46 @@ namespace MatchMakerClassLibrary {
 
             return false;
         }
-        private static string Get(string uri) {
+        private static string Get(string uri)
+        {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream)) {
-                return reader.ReadToEnd();
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            catch
+            {
+                Console.WriteLine("De server reageerde niet of staat uit.");
+                return null;
             }
         }
 
-        public static async Task<bool> PostNewCoverImageDataAsync(CoverImageData coverImageData) {
+        public static async Task<bool> PostNewCoverImageDataAsync(CoverImageData coverImageData)
+        {
             string uri = @"https://145.44.233.207/user/post/update/images";
             var result = await Post(uri, coverImageData);
             //doe wat met result
             return true;
         }
 
-        public static async Task<bool> PostNewUserDataAsync(UserData newUserData) {
+        public static async Task<bool> PostNewUserDataAsync(UserData newUserData)
+        {
             string uri = @"https://145.44.233.207/user/post/new";
             var result = await Post(uri, newUserData);
             //doe wat met result
             return true;
         }
 
-        private static async Task<string> Post(string uri, object data) {
+        private static async Task<string> Post(string uri, object data)
+        {
 
             string result;
             var json = JsonConvert.SerializeObject(data);
@@ -125,27 +160,65 @@ namespace MatchMakerClassLibrary {
             result = response.Content.ReadAsStringAsync().Result;
             return result;
         }
+
+        public static async Task<bool> SaveUser(UserData data)
+        {
+            string url = @"https://145.44.233.207/user/post/update";
+            var result = await Post(url, data);
+
+            return true;
+        }
+
+        public static List<HobbyData> getAllHobbies()
+        {
+            List<HobbyData> data = JsonConvert.DeserializeObject<List<HobbyData>>(Get(@"https://145.44.233.207/hobbies/get/all"));
+            return data;
+        }
     }
 
-    public class UserData {
+    public class UserData
+    {
         public string email { get; set; }
         public string password { get; set; }
         public string salt { get; set; }
         public string realName { get; set; }
         public int id { get; set; }
+        public string city { get; set; }
         public long birthdate { get; set; }
         public string about { get; set; }
-        public string location { get; set; }
-        public List<int> blockedUsers { get; set; }
+        public string profilePicture { get; set; }
+        public string coverImage { get; set; }
+        public List<HobbyData> hobbies { get; set; }
+
     }
-    public class AuthData {
+    public class AuthData
+    {
         public string email { get; set; }
         public string password { get; set; }
         public string salt { get; set; }
     }
 
-    public class CoverImageData {
+    public class HobbyData
+    {
+        public string displayName { get; set; }
+        public List<string> assocHobbies { get; set; }
+    }
+
+    public class CoverImageData
+    {
         public int userID { get; set; }
         public string imageName { get; set; }
+        public class HobbyData
+        {
+            public string displayName { get; set; }
+            public List<string> assocHobbies { get; set; }
+        }
+    }
+    public class MessageData
+    {
+        public string ID { get; set; }
+        public string Text { get; set; }
+        public int Sender { get; set; }
+        public long TimeStamp { get; set; }
     }
 }

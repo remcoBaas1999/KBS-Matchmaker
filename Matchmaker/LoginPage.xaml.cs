@@ -47,6 +47,8 @@ namespace Matchmaker
 
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
+            RegistrationComplete.Text = "";
+            //bool containsMail = false;
             if (LoginErrorText.Children.Count > 0)
             {
                 LoginErrorText.Children.RemoveAt(0);
@@ -68,42 +70,42 @@ namespace Matchmaker
 
             try
             {
-                var pw = MatchmakerAPI_Client.AuthenticateAsync(account.Email, AccountPassBox.Password);
-                if (await pw)
+                //checks if boxes aren't empty
+                if (AccountEmail.Text != "" && AccountPassBox.Password != "")
                 {
-                    account.LoggedIn = true;
-
-                    try
+                    //tries to login, if succeeds goes to homePage.
+                    if (await MatchmakerAPI_Client.AuthenticateAsync(account.Email, AccountPassBox.Password))
                     {
-                        User.email = account.Email;
-                        User.loggedIn = true;
+                        account.LoggedIn = true;
 
-                        HomePage homePage = new HomePage();
-                        NavigationService.Navigate(homePage);
-                        NavigationService.RemoveBackEntry();
-                    }
-                    catch (Exception)
-                    {
-                        TextBlock LoginTryError = new TextBlock
+                        try
                         {
-                            Text = "Sorry, something went wrong during the process. Please try again.",
-                            Foreground = Brushes.Red
-                        };
-                        LoginErrorText.Children.Add(LoginTryError);
+                            User.email = account.Email;
+                            User.loggedIn = true;
 
-                        User.email = "";
-                        User.loggedIn = false;
+                            HomePage homePage = new HomePage();
+                            NavigationService.Navigate(homePage);
+                            NavigationService.RemoveBackEntry();
+                        }
+                        catch (Exception)
+                        {
+                            TextBlock LoginTryError = new TextBlock
+                            {
+                                Text = "Sorry, something went wrong during the process. Please try again.",
+                                Foreground = Brushes.Red
+                            };
+                            LoginErrorText.Children.Add(LoginTryError);
+
+                            User.email = "";
+                            User.loggedIn = false;
+                        }
                     }
-                }
-                else
-                {
-                    AccountEmail.BorderBrush = Brushes.Red;
-                    AccountEmail.Foreground = Brushes.Red;
-                    AccountPassBox.BorderBrush = Brushes.Red;
-                    AccountPassBox.Foreground = Brushes.Red;
-
-                    if (AccountEmail.Text != "" && AccountPassBox.Password != "")
+                    else
                     {
+                        AccountEmail.BorderBrush = Brushes.Red;
+                        AccountEmail.Foreground = Brushes.Red;
+                        AccountPassBox.BorderBrush = Brushes.Red;
+                        AccountPassBox.Foreground = Brushes.Red;
                         if (EmailError.Children.Count > 0)
                         {
                             EmailError.Children.Remove(GeneralError[2]);
@@ -112,15 +114,19 @@ namespace Matchmaker
                         {
                             PasswordError.Children.Remove(GeneralError[1]);
                         }
-                        LoginErrorText.Children.Add(GeneralError[0]);
+                        LoginErrorText.Children.Add(GeneralError[0]);                       
                     }
-                    else
-                    {
-                        AccountPassBox.BorderBrush = Brushes.Red;
-                        PasswordError.Children.Add(GeneralError[1]);
-                        AccountEmail.BorderBrush = Brushes.Red;
-                        EmailError.Children.Add(GeneralError[2]);
-                    }
+                }
+                else
+                {
+                    AccountEmail.BorderBrush = Brushes.Red;
+                    AccountEmail.Foreground = Brushes.Red;
+                    AccountPassBox.BorderBrush = Brushes.Red;
+                    AccountPassBox.Foreground = Brushes.Red;                
+                    AccountPassBox.BorderBrush = Brushes.Red;
+                    PasswordError.Children.Add(GeneralError[1]);
+                    AccountEmail.BorderBrush = Brushes.Red;
+                    EmailError.Children.Add(GeneralError[2]);                    
                 }
                 // Image for the error message needs to be implemented here.
 

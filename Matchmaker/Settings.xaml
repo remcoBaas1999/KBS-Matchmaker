@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <Label Content="Account settings" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="90,22,336,0" VerticalAlignment="Top" Width="134" FontWeight="Bold" FontSize="16"/>
         <Label Content="E-mail address" FontFamily="Roboto" Grid.Column="1" HorizontalAlignment="Left" Margin="238,25,0,0" VerticalAlignment="Top" Foreground="#FF7C7C7C"/>
-        <Label Content="fritsjansen@gmail.com" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="238,40,0,0" VerticalAlignment="Top" Width="188" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="email" Content="" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="238,40,0,0" VerticalAlignment="Top" Width="188" FontSize="14" FontWeight="Bold"/>
         <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="59,27,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="20" MouseDown="Return">
             <Rectangle.Fill>
                 <ImageBrush ImageSource="Images/return.png" Stretch="UniformToFill"/>
