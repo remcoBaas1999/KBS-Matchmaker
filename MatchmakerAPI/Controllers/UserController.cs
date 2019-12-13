@@ -294,7 +294,9 @@ namespace MatchmakerAPI.Controllers
 
 		private Dictionary<int, UserData> OrderUsersByScoreDescending (Dictionary<KeyValuePair<int, UserData>, int> scoredUsers, int scoredSelection) {
 			Dictionary<int, UserData> profiles = new Dictionary<int, UserData>();
+			Console.WriteLine($"profiles.Count (at the start): {profiles.Count}");
 			List<int> scores = scoredUsers.Values.ToList<int>();
+			Console.WriteLine($"scores.Count (at the start): {scores.Count}");
 			int count = 0;
 			while (scores.Count > 0 && count < scoredSelection) {
 				foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
@@ -307,6 +309,8 @@ namespace MatchmakerAPI.Controllers
 				}
 				count++;
 			}
+			Console.WriteLine($"profiles.Count (at the end): {profiles.Count}");
+			Console.WriteLine($"scores.Count (at the end): {scores.Count}");
 			return profiles;
 		}
 
