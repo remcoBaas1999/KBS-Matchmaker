@@ -220,6 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\notification.jpg" />
+    <Resource Include="Images\block.png" />
     <Content Include="Images\close.svg">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
