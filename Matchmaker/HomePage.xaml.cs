@@ -26,6 +26,7 @@ namespace Matchmaker {
         private int ThirdProfileID;
         private int FourthProfileID;
 
+        
         public HomePage() {
             //Start application
             InitializeComponent();
@@ -44,8 +45,7 @@ namespace Matchmaker {
             //Remove blocked user(s) if any
 
             if (getLoggedInUserData.blockedUsers == null) {
-                List<int> temporarilyList = new List<int>();
-                getLoggedInUserData.blockedUsers = temporarilyList;
+                FillEmptyList(getLoggedInUserData);
             }
 
             foreach (var item in getLoggedInUserData.blockedUsers) {
@@ -123,6 +123,13 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{user4.coverImage}";
             Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
+       public async void FillEmptyList(UserData getLoggedInUserData) {
+            List<int> temporarilyList = new List<int>();
+            getLoggedInUserData.blockedUsers = temporarilyList;
+            await MatchmakerAPI_Client.SaveUser(getLoggedInUserData);
+       }
+
+        //Refresh button
         private void Button_Click(object sender, RoutedEventArgs e) {
             //Refresh recommended profiles
             HomePage p = new HomePage();
