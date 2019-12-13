@@ -27,7 +27,7 @@
         <!--create the purple background-->
         <Border Grid.Row="0" Grid.Column="1" Width="1008" Height="181" CornerRadius="10, 10,10,10" Background="#673AB7" Margin="0, 46,0,0">
             <Grid>
-                <Border MouseDown="Return" Background="#673AB7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15, 15, 0,0">
+                <Border MouseDown="ReturnToHomepage" Background="#673AB7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15, 15, 0,0">
                     <Path Canvas.Left="19" Canvas.Top="19" Data="M13.2997 0.710001C12.9097 0.320001 12.2797 0.320001 11.8897 0.710001L6.99973 5.59L2.10973 0.700001C1.71973 0.310001 1.08973 0.310001 0.699727 0.700001C0.309727 1.09 0.309727 1.72 0.699727 2.11L5.58973 7L0.699727 11.89C0.309727 12.28 0.309727 12.91 0.699727 13.3C1.08973 13.69 1.71973 13.69 2.10973 13.3L6.99973 8.41L11.8897 13.3C12.2797 13.69 12.9097 13.69 13.2997 13.3C13.6897 12.91 13.6897 12.28 13.2997 11.89L8.40973 7L13.2997 2.11C13.6797 1.73 13.6797 1.09 13.2997 0.710001Z" Fill="White"/>
                 </Border>
                 <Ellipse x:Name="ProfilePicture1" Height="170" Width="170" Margin="72,78,766,-67">
@@ -42,7 +42,7 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                         <!-- change back to visible-->
                         <TextBlock  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,129,0,0" Foreground="White"  FontFamily="Roboto" Name="showName" Visibility="Visible" FontSize="24"/>
-                        <Button Height="30" Width="30" Name="editName" Click="editName_Click" Visibility="Visible" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,125,0,0">
+                        <Button Height="30" Width="30" Name="editName" Click="EditName_Click" Visibility="Visible" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,125,0,0">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg22" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -60,7 +60,7 @@
                     <!--edit profile name-->
                     <StackPanel Orientation="Horizontal" Height="{Binding ElementName=name}">
                         <TextBox  Foreground="White" FontFamily="Roboto" Width="Auto" x:Name="name" Visibility="Collapsed" FontSize="24"  BorderBrush="{x:Null}" BorderThickness="0" Background="{x:Null}" Margin="0,129,0,0" Height="auto"/>
-                        <Button Height="30" Width="30" BorderBrush="{x:Null}" Background="{x:Null}" x:Name="confirmNameChange" Click="confirmNameChange_Click" Visibility="Collapsed" Margin="0,129,0,0">
+                        <Button Height="30" Width="30" BorderBrush="{x:Null}" Background="{x:Null}" x:Name="confirmNameChange" Click="ConfirmNameChange_Click" Visibility="Collapsed" Margin="0,129,0,0">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" x:Name="svg80" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -71,7 +71,7 @@
                                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="path99" Fill="#FFB3B3B3" StrokeThickness="0.0869565" Data="M 8.7130435 18.496651 C 8.6413043 18.471275 7.5358559 17.408317 6.2564913 16.134525 3.7578354 13.646751 3.6858138 13.548427 3.9657207 13.007147 c 0.1905717 -0.368525 0.4644316 -0.537582 0.8708456 -0.537582 0.3340474 0 0.4089295 0.063 2.2223233 1.869565 1.0321451 1.028261 1.9147408 1.869566 1.961324 1.869566 0.046583 0 2.3527424 -2.268299 5.1247984 -5.040664 3.418959 -3.4193408 5.115117 -5.0571403 5.27332 -5.0918876 0.335064 -0.073592 0.824512 0.1596562 0.984588 0.4692088 0.169167 0.3271331 0.17225 0.5607031 0.01139 0.8633129 C 20.22018 7.7738729 9.5707795 18.362885 9.2943391 18.465583 c -0.2626882 0.09759 -0.3761138 0.10365 -0.5812956 0.03107 z"/>
                             </Canvas>
                         </Button>
-                        <Button Height="30" Width="30"    HorizontalAlignment="Left" x:Name="denymNameChange" Click="denymNameChange_Click" Visibility="Collapsed" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,129,0,0">
+                        <Button Height="30" Width="30"    HorizontalAlignment="Left" x:Name="denymNameChange" Click="DenymNameChange_Click" Visibility="Collapsed" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,129,0,0">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" x:Name="svg60" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -93,8 +93,8 @@
                     <TextBlock Text="Location" Foreground="LightGray"  FontFamily="Roboto"  Width="50" HorizontalAlignment="Left" Margin="0,109,0,6"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock FontSize="24" Foreground="White" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Left"/>
-                        <ComboBox FontSize="24" BorderBrush="{x:Null}" Background="{x:Null}" FontFamily="Roboto" Name="citySelection" Visibility="Collapsed" Loaded="citySelection_Loaded"  HorizontalAlignment="Left" Width="130"/>
-                        <Button  Width="40" Height="30" Grid.Column="7" Grid.Row="4" Click="editLocation_Click" BorderBrush="{x:Null}" Background="{x:Null}" Name="editLocation" Visibility="Visible">
+                        <ComboBox FontSize="24" BorderBrush="{x:Null}" Background="{x:Null}" FontFamily="Roboto" Name="citySelection" Visibility="Collapsed" Loaded="CitySelection_Loaded"  HorizontalAlignment="Left" Width="130"/>
+                        <Button  Width="40" Height="30" Grid.Column="7" Grid.Row="4" Click="EditLocation_Click" BorderBrush="{x:Null}" Background="{x:Null}" Name="editLocation" Visibility="Visible">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg24" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -108,7 +108,7 @@
                                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path44" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="M 17.046353 6.9499009 15.215996 5.1151518 16.187813 4.1548222 c 0.567001 -0.5602985 1.035959 -0.9871298 1.125798 -1.0246671 0.26349 -0.110093 0.555491 -0.08332 0.806591 0.073955 0.262052 0.1641348 2.611683 2.5023829 2.711206 2.698071 0.111948 0.2201192 0.137055 0.4520073 0.07351 0.6789605 -0.05116 0.1827225 -0.17877 0.3302218 -1.043249 1.2058483 L 18.87671 8.7846502 Z"/>
                             </Canvas>
                         </Button>
-                        <Button Height="30" BorderBrush="{x:Null}" Background="{x:Null}" Width="40" Click="confirmNewLocation_Click" Name="confirmNewLocation" Visibility="Collapsed" HorizontalAlignment="Right">
+                        <Button Height="30" BorderBrush="{x:Null}" Background="{x:Null}" Width="40" Click="ConfirmNewLocation_Click" Name="confirmNewLocation" Visibility="Collapsed" HorizontalAlignment="Right">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg82" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -120,7 +120,7 @@
                                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path89" Fill="#FFB3B3B3" StrokeThickness="0.0869565" Data="M 8.7130435 18.496651 C 8.6413043 18.471275 7.5358559 17.408317 6.2564913 16.134525 3.7578354 13.646751 3.6858138 13.548427 3.9657207 13.007147 c 0.1905717 -0.368525 0.4644316 -0.537582 0.8708456 -0.537582 0.3340474 0 0.4089295 0.063 2.2223233 1.869565 1.0321451 1.028261 1.9147408 1.869566 1.961324 1.869566 0.046583 0 2.3527424 -2.268299 5.1247984 -5.040664 3.418959 -3.4193408 5.115117 -5.0571403 5.27332 -5.0918876 0.335064 -0.073592 0.824512 0.1596562 0.984588 0.4692088 0.169167 0.3271331 0.17225 0.5607031 0.01139 0.8633129 C 20.22018 7.7738729 9.5707795 18.362885 9.2943391 18.465583 c -0.2626882 0.09759 -0.3761138 0.10365 -0.5812956 0.03107 z"/>
                             </Canvas>
                         </Button>
-                        <Button Height="30" BorderBrush="{x:Null}" Background="{x:Null}" Width="40" Grid.Column="8" Grid.Row="4" Click="denyLocationChange_Click" Name="denyLocationChange" Visibility="Collapsed" HorizontalAlignment="Right">
+                        <Button Height="30" BorderBrush="{x:Null}" Background="{x:Null}" Width="40" Grid.Column="8" Grid.Row="4" Click="DenyLocationChange_Click" Name="denyLocationChange" Visibility="Collapsed" HorizontalAlignment="Right">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg49" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
@@ -142,14 +142,14 @@
                 <!-- placeholder for chosen hobbies -->
                 <WrapPanel x:Name="HobbyWrapper"></WrapPanel>
                 <!-- placeholder for add new hobby -->
-                <Border Background="{x:Null}" Opacity="0.24" BorderThickness="1" CornerRadius="16" BorderBrush="Black" Margin="6 0 0 0" Padding="6,0" x:Name="addHobby" MouseDown="addHobby_MouseDown">
+                <Border Background="{x:Null}" Opacity="0.24" BorderThickness="1" CornerRadius="16" BorderBrush="Black" Margin="6 0 0 0" Padding="6,0" x:Name="addHobby" MouseDown="InterestDialog_MouseDown">
                     <TextBlock Margin="6" TextAlignment="Center" VerticalAlignment="Center" Text="Add New Interest" Foreground="Black" Opacity="0.56" FontSize="14" FontFamily="Roboto"/>
                 </Border>
             </WrapPanel>
-         <Button BorderThickness="0" FontWeight="Bold" Foreground="#673AB7" Background="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" x:Name="btnEditCoverImage" Click="btnEditCoverImage_Click" Content="Edit cover image" Width="100" Height="30" Grid.Column="2" Grid.Row="6"/>
+         <Button BorderThickness="0" FontWeight="Bold" Foreground="#673AB7" Background="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" x:Name="btnEditCoverImage" Click="BtnEditCoverImage_Click" Content="Edit cover image" Width="100" Height="30" Grid.Column="2" Grid.Row="6"/>
          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 50 0 0">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" FontFamily="Roboto" Height="20" FontWeight="Bold" Width="Auto" Text="About me" Margin="0" FontSize="20" />
-                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="30" Width="30" Name="editBio" Margin="10,0,0,0"  Click="editBio_Click" Visibility="Visible">
+                <Button BorderBrush="{x:Null}" Background="{x:Null}" Height="30" Width="30" Name="editBio" Margin="10,0,0,0"  Click="EditAbout_Click" Visibility="Visible">
                     <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg23" Width="24" Height="24">
                         <Canvas.RenderTransform>
                             <TranslateTransform X="0" Y="0"/>
@@ -161,7 +161,7 @@
                         <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path54" Fill="#FFCCCCCC" StrokeThickness="0.0446429" Data="M 17.046353 6.9499009 15.215996 5.1151518 16.187813 4.1548222 c 0.567001 -0.5602985 1.035959 -0.9871298 1.125798 -1.0246671 0.26349 -0.110093 0.555491 -0.08332 0.806591 0.073955 0.262052 0.1641348 2.611683 2.5023829 2.711206 2.698071 0.111948 0.2201192 0.137055 0.4520073 0.07351 0.6789605 -0.05116 0.1827225 -0.17877 0.3302218 -1.043249 1.2058483 L 18.87671 8.7846502 Z"/>
                     </Canvas>
                 </Button>
-                <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="30" Width="40"  Name="confirmBioChange" Margin="10,0,0,0" Click="confirmBioChange_Click" Visibility="Collapsed">
+                <Button VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="30" Width="40"  Name="confirmBioChange" Margin="10,0,0,0" Click="ConfirmAboutChange_Click" Visibility="Collapsed">
                     <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg81" Width="24" Height="24">
                         <Canvas.RenderTransform>
                             <TranslateTransform X="0" Y="0"/>
@@ -171,7 +171,7 @@
                         <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path88" Fill="#FFB3B3B3" StrokeThickness="0.0869565" Data="M 8.7130435 18.496651 C 8.6413043 18.471275 7.5358559 17.408317 6.2564913 16.134525 3.7578354 13.646751 3.6858138 13.548427 3.9657207 13.007147 c 0.1905717 -0.368525 0.4644316 -0.537582 0.8708456 -0.537582 0.3340474 0 0.4089295 0.063 2.2223233 1.869565 1.0321451 1.028261 1.9147408 1.869566 1.961324 1.869566 0.046583 0 2.3527424 -2.268299 5.1247984 -5.040664 3.418959 -3.4193408 5.115117 -5.0571403 5.27332 -5.0918876 0.335064 -0.073592 0.824512 0.1596562 0.984588 0.4692088 0.169167 0.3271331 0.17225 0.5607031 0.01139 0.8633129 C 20.22018 7.7738729 9.5707795 18.362885 9.2943391 18.465583 c -0.2626882 0.09759 -0.3761138 0.10365 -0.5812956 0.03107 z"/>
                     </Canvas>
                 </Button>
-                <Button BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="30" Width="40"  Name="denyBioChange" Margin="10,00,0,0" Click="denyBioChange_Click" Visibility="Collapsed">
+                <Button BorderBrush="{x:Null}" Background="{x:Null}" Grid.Column="4" Grid.Row="6" Height="30" Width="40"  Name="denyBioChange" Margin="10,00,0,0" Click="DenyAboutChange_Click" Visibility="Collapsed">
                     <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg48" Width="24" Height="24">
                         <Canvas.RenderTransform>
                             <TranslateTransform X="0" Y="0"/>
@@ -205,7 +205,7 @@
 
                 </WrapPanel>
                 <!-- new hobby list confirm-->
-                <Button x:Name="Cancel" Foreground="LightGray" Content="Cancel" BorderBrush="{x:Null}" Background="{x:Null}" Height="20" Width="45" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,120,20" Click="Cancel_Click"/>
+                <Button x:Name="Cancel" Foreground="LightGray" Content="Cancel" BorderBrush="{x:Null}" Background="{x:Null}" Height="20" Width="45" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,120,20" Click="CancelHobbyDialog_Click"/>
                 <Button x:Name="AddInterests" Foreground="Purple" Content="Add Interests" BorderBrush="{x:Null}" Background="{x:Null}" Height="20" Width="80" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Margin="0,0,20,20" Click="AddInterests_Click"/>
             </Grid>
         </Border>
