@@ -67,7 +67,7 @@ namespace MatchmakerAPI.Controllers
 			using (StreamReader r = new StreamReader("/home/student/data/users.json")) {
 				string json = r.ReadToEnd();
 				int firstRandomSelection = 120;
-				int scoredSelection = 12;
+				int scoredSelection = 4;
 				int finalRandomSelection = 4;
 				try {
 					var users = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json);
@@ -213,7 +213,7 @@ namespace MatchmakerAPI.Controllers
 			List<int> userIDs = users.Keys.ToList<int>();
 
 			Random rnd = new Random();
-			
+
 			//Fill the profiles Dictionary with random users from the users Dictionary
 			while (profiles.Count < Math.Min(randomAmountToBeSelected, users.Count)) {
 

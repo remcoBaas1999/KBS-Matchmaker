@@ -37,6 +37,7 @@ namespace MatchMakerClassLibrary {
             return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
         }
 
+
         public static async Task<AuthData> GetAuthDataAsync(string email) {
             try {
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
