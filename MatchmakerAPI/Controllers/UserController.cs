@@ -182,7 +182,7 @@ namespace MatchmakerAPI.Controllers
 			//Make a random selection of 120 users
 			Dictionary<int, UserData> profiles = RandomSelection(users, firstRandomSelection);
 
-			Console.Write("\nAfter selecting random 120: ");
+			Console.Write($"\nAfter selecting random 120 ({profiles.Count} users): ");
 			foreach (KeyValuePair<int, UserData> profile in profiles) {
 				Console.Write($"{profile.Value.realName}, ");
 			}
@@ -190,23 +190,23 @@ namespace MatchmakerAPI.Controllers
 			//Score each of the users based on hobbies, age and city
 			Dictionary<KeyValuePair<int, UserData>, int> scoredUsers = ScoreUsers(profiles, currentUserID);
 
-			Console.Write("\nAfter scoring users: ");
+			Console.Write($"\nAfter scoring users ({scoredUsers.Count} users): ");
 			foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
 				Console.Write($"{scoredUser.Key.Value.realName}, ");
 			}
 
-			//Sort users from highest to lowest score, throw away the scores and only keep the 12 users with the hightest score
+			//Sort users from highest to lowest score, throw away the scores and only keep the 12 users with the highest score
 			List<UserData> profileSelection = OrderUsersByScoreDescending(scoredUsers, scoredSelection);
 
-			Console.Write("\nAfter ordering users by score (high to low), throwing away scores and only keeping the 12 users with the highest score: ");
+			Console.Write($"\nAfter ordering users by score (high to low) and only keeping the 12 users with the highest score ({profileSelection.Count} users): ");
 			foreach (UserData profile in profileSelection) {
 				Console.Write($"{profile.realName}, ");
 			}
 
-			//Pick 4 users randomly out of the 12 with the highst score
+			//Pick 4 users randomly out of the 12 with the highest score
 			profileSelection = RandomSelection(profileSelection, finalRandomSelection);
 
-			Console.Write("\nAfter selecting random 4: ");
+			Console.Write($"\nAfter selecting random 4 ({profileSelection.Count} users): ");
 			foreach (UserData profile in profileSelection) {
 				Console.Write($"{profile.realName}, ");
 			}
