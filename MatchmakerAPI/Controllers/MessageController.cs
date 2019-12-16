@@ -29,8 +29,7 @@ namespace MatchmakerAPI.Controllers
                     List<Message> manipulateChat;
                     chats.TryGetValue(data.id, out manipulateChat);
                     manipulateChat.Add(data);
-                    var text = JsonConvert.SerializeObject(chats);
-                    System.IO.File.WriteAllText(fileLocation, text);
+
                 }
                 else
                 {
@@ -39,6 +38,8 @@ namespace MatchmakerAPI.Controllers
                     chats.Add(data.id, newChat);
 
                 }
+                var text = JsonConvert.SerializeObject(chats);
+                System.IO.File.WriteAllText(fileLocation, text);
             }
 
 

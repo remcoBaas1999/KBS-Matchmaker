@@ -24,9 +24,8 @@ namespace MatchmakerAPI
     public static UserData[] FindMatches(int forUserId, int sampleNum, int scoredNum, int returnNum)
     {
 
-      // Retrieve the users database
+      // Retrieve the users database as Dictionary<int, UserData>
       var users = UserController.LoadUsers();
-      // Dictionary<int, UserData>
 
       try {
 
