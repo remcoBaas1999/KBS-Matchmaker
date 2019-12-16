@@ -13,11 +13,22 @@ namespace MatchmakerAPI.Controllers
 	[ApiController]
 	[Route("/user/")]
 	public class UserController : ControllerBase {
+
+		// Retrieving full user data by user id
 		[HttpGet("get/id={id}")]
 		public UserData UserById(int id) {
+
+			// Open the users.json data file
 			using (StreamReader r = new StreamReader("/home/student/data/users.json")) {
+
+				// Load the users.json contents into memory
 				string json = r.ReadToEnd();
+
 				try {
+
+					// Deserialize the json string into a dictionary of ints (the user's id)
+					// and the rest of their data, and take the one where the key is equal to
+					// the requested id in the url.
 					var user = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
 					user.id = id;
 					return user;
