@@ -72,7 +72,7 @@ namespace MatchmakerAPI
       List<UserData> returnVal_list = SortByScore(returnVal_unsorted, scoredNum);
 
       // Prepare a random subset of the scored users to be returned
-      List<UserData> returnVal_random = GetRandomUsers(returnVal_list, returnNum)
+      List<UserData> returnVal_random = GetRandomUsers(returnVal_list, returnNum);
 
       // Convert the list to the return format (array)
       returnVal = returnVal_random.ToArray();
@@ -189,6 +189,7 @@ namespace MatchmakerAPI
     }
 
 
+    // TODO: remove commented code after testing
 
   //   public static UserData[] FindMatches(Dictionary<int, UserData> users, int currentUserID, int firstRandomSelection, int scoredSelection, int finalRandomSelection) {
   //     UserData[] userDatas = new UserData[finalRandomSelection];
@@ -357,7 +358,6 @@ namespace MatchmakerAPI
   //     }
   //     return profiles;
   //   }
-
 
 
     private static int CalculateAge(DateTime dob) {
