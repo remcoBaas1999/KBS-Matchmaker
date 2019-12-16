@@ -1,4 +1,5 @@
 ﻿using MatchMakerClassLibrary;
+using MatchMakerClassLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -190,9 +191,10 @@ namespace Matchmaker {
             citySelection.Visibility = Visibility.Collapsed;
             city.Visibility = Visibility.Visible;
         }
+
+        //Send user back to homescreen
         private void Return(object sender, MouseButtonEventArgs e) {
-            HomePage page = new HomePage();
-            NavigationService.Navigate(page);
+            NavigationService.GoBack();
         }
         private void addHobby_MouseDown(object sender, MouseButtonEventArgs e) {
             AddHobbies.Visibility = Visibility.Visible;
