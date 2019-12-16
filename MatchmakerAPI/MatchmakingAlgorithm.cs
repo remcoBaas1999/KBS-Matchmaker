@@ -34,7 +34,8 @@ namespace MatchmakerAPI
         var forUser = users[forUserId];
 
         // Get a random sample from the users database
-        var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
+        // var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
+				var sample = users.Values.ToList();
 
         // Prepare unsorted variant of the return value
         var returnVal_unsorted = new List<KeyValuePair<int, UserData>>();
@@ -66,7 +67,7 @@ namespace MatchmakerAPI
         // List<UserData> returnVal_random = GetRandomUsers(returnVal_list, returnNum);
 
         // Convert the list to the return format (array)
-        var returnVal = returnVal_list.Take(4).ToArray();
+        var returnVal = returnVal_list.ToArray();
 
         return returnVal;
       } catch (System.Collections.Generic.KeyNotFoundException) {
