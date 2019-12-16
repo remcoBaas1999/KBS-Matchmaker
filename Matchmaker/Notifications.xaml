@@ -5,25 +5,32 @@
       Height="auto" Width="auto">
     <Grid>
         <Grid HorizontalAlignment="Center" Height="446" VerticalAlignment="Top" Width="624">
-            <Rectangle x:Name="goBack" HorizontalAlignment="Left" Height="32" Stroke="#00000000" VerticalAlignment="Top" Width="34" MouseDown="goBack_MouseDown">
+            <Rectangle x:Name="goBack" HorizontalAlignment="Left" Height="32" Stroke="#00000000" Margin="0,55" VerticalAlignment="Top" Width="34" MouseDown="goBack_MouseDown">
                 <Rectangle.Fill>
                     <ImageBrush ImageSource="Images/return.png" Stretch="Uniform"/>
                 </Rectangle.Fill>
             </Rectangle>
-            <Label Content="Notifications" HorizontalAlignment="Center" FontFamily="Roboto" Margin="233,117,262,292" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
-            <Image HorizontalAlignment="Left" Height="42" Margin="351,112,0,0" VerticalAlignment="Top" Width="42" Source="Images/notification.jpg">
+            <Label Content="Notifications" HorizontalAlignment="Center" FontFamily="Roboto" Margin="233,54,262,355" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
+            <Image HorizontalAlignment="Left" Height="42" Margin="351,49,0,0" VerticalAlignment="Top" Width="42" Source="Images/notification.jpg">
                 <Image.OpacityMask>
                     <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill"/>
                 </Image.OpacityMask>
             </Image>
-            <Image x:Name="RefreshNotificationsButton" Source="Images/refresh.png" RenderTransformOrigin="0.5, 0.5" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,180,50,225" Width="40" Height="40" MouseDown="RefreshNotificationsButton_MouseDown">
-                <Image.OpacityMask>
-                    <ImageBrush ImageSource="Images/refresh.png" Stretch="UniformToFill"/>
-                </Image.OpacityMask>
-            </Image>
 
-            <Rectangle HorizontalAlignment="Left" Height="40" Margin="101,181,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="402" Fill="#FFE8E8E8"/>
-            <Label Content="You are up to date!" FontFamily="Roboto" HorizontalAlignment="Left" Margin="237,187,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
+            <Grid Margin="30,100,30,25">
+                <Image x:Name="RefreshNotificationsButton" Source="Images/refresh.png" RenderTransformOrigin="0.5, 0.5" HorizontalAlignment="Right" VerticalAlignment="top" Width="40" Height="40" MouseDown="RefreshNotificationsButton_MouseDown">
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="Images/refresh.png" Stretch="UniformToFill"/>
+                    </Image.OpacityMask>
+                </Image>
+
+                <Button Content="You are up to date!" HorizontalAlignment="Center"  Height="40" VerticalAlignment="Top" Width="400" FontFamily="Roboto" BorderBrush="#00707070" FontWeight="Bold" FontSize="14" Background="#FF8B8B8B"/>
+                <Button Content="" HorizontalAlignment="Center"  Height="40" VerticalAlignment="Top" Width="400" FontFamily="Roboto" BorderBrush="#00707070" FontWeight="Bold" FontSize="14" Background="#FFACACAC" Margin="0,40,0,0"/>
+                <Button Content="" HorizontalAlignment="Center"  Height="40" VerticalAlignment="Top" Width="400" FontFamily="Roboto" BorderBrush="#00707070" FontWeight="Bold" FontSize="14" Background="#FFC5C5C5" Margin="0,80,0,0"/>
+                <Button Content="" HorizontalAlignment="Center"  Height="40" VerticalAlignment="Top" Width="400" FontFamily="Roboto" BorderBrush="#00707070" FontWeight="Bold" FontSize="14" Background="#FFCDCDCD" Margin="0,120,0,0"/>
+                <Button Content="" HorizontalAlignment="Center"  Height="40" VerticalAlignment="Top" Width="400" FontFamily="Roboto" BorderBrush="#00707070" FontWeight="Bold" FontSize="14" Background="#FFE2E2E2" Margin="0,160,0,0"/>
+
+            </Grid>
         </Grid>
     </Grid>
 </Page>
