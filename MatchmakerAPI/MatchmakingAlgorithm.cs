@@ -117,7 +117,7 @@ namespace MatchmakerAPI
       var returnVal = new List<UserData>();
 
       // Order the scored users by key and take the top N, where N == scoredNum
-      returnVal_kvps = scoredUsers.OrderByDescending(scoredUser => scoredUser.Key).Take(scoredNum).ToList();
+      var returnVal_kvps = scoredUsers.OrderByDescending(scoredUser => scoredUser.Key).Take(scoredNum).ToList();
 
       foreach (KeyValuePair<int, UserData> kvp in returnVal_kvps)
       {
