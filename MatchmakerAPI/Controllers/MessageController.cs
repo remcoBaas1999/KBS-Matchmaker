@@ -26,7 +26,7 @@ namespace MatchmakerAPI.Controllers
                 var chats = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
                 if (chats.ContainsKey(data.id))
                 {
-                    List<message> manipulateChat;
+                    List<Message> manipulateChat;
                     chats.TryGetValue(data.id, out manipulateChat);
                     manipulateChat.Add(data);
                     var text = JsonConvert.SerializeObject(chats);
@@ -34,7 +34,7 @@ namespace MatchmakerAPI.Controllers
                 }
                 else
                 {
-                    var newChat = new List<message>();
+                    var newChat = new List<Message>();
                     newChat.Add(data);
                     chats.Add(data.id, newChat);
 
@@ -52,22 +52,22 @@ namespace MatchmakerAPI.Controllers
             }
         }
         [HttpGet("get/id={id}")]
-        public List<message> RetrieveMessages(string id)
+        public List<Message> RetrieveMessages(string id)
         {
             string fileLocation = "/home/student/data/chats.json";
             using (StreamReader r = new StreamReader(fileLocation))
             {
                 string json = r.ReadToEnd();
-                var chat = JsonConvert.DeserializeObject<Dictionary<string, List<message>>>(json);
+                var chat = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
                 if (chat.ContainsKey(id))
                 {
-                    List<message> returnChat;
+                    List<Message> returnChat;
                     chat.TryGetValue(id, out returnChat);
                     return returnChat;
                 }
                 else
                 {
-                    return new List<message>();
+                    return new List<Message>();
                 }
             }
         }
