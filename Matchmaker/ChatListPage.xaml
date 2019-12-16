@@ -7,103 +7,65 @@
 	  mc:Ignorable="d" 
 	  d:DesignHeight="720" d:DesignWidth="1280"
 	  Title="Chatlist" FontFamily="Roboto">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <Grid>
 
-    <Grid>
-        <!-- Grid definitions -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="auto"  MaxWidth="1008" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+            <!-- Grid definitions -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto"  MaxWidth="1008" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
 
-        <WrapPanel Grid.Row="0" Margin="0 36 0 0" HorizontalAlignment="Center" Grid.Column="1">
-            <Border HorizontalAlignment="Center" Height="48" Width="127">
-                <TextBlock Text="HOME" FontSize="18" LineHeight="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <StackPanel>
-                <Border HorizontalAlignment="Center" Height="48" Width="127">
-                    <TextBlock Text="MATCHES" FontSize="18" LineHeight="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <WrapPanel Grid.Row="0" Margin="0 18 0 0" HorizontalAlignment="Center" Grid.Column="1">
+                <Border HorizontalAlignment="Center" Width="127">
+                    <Button Background="{x:Null}" BorderThickness="0" Click="NavigateHome">
+                        <TextBlock FontWeight="Heavy" Text="HOME" FontSize="18" LineHeight="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
                 </Border>
-            </StackPanel>
-        </WrapPanel>
-        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Hidden">
+                <Border HorizontalAlignment="Center" Width="127" Height="48">
+                    <Grid>
+                        <Button Height="48" FontWeight="Heavy" Background="{x:Null}" BorderThickness="0 0 0 0" Content="CONTACTS" FontSize="18" TextBlock.LineHeight="16" VerticalAlignment="Center"/>
+                        <Border Height="4" Width="73" Background="#673AB7" VerticalAlignment="Bottom" CornerRadius="5 5 0 0"/>
+                    </Grid>
+                </Border>
+            </WrapPanel>
+
+
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 56 0 0">
                 <Border Width="500">
-                    <TextBlock Text="Contact Requests" HorizontalAlignment="Center" FontWeight="Medium" FontSize="20" LineHeight="28"/>
+                    <TextBlock Text="Contact Requests" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
                 </Border>
-                <ScrollViewer Margin="0 36 0 0" VerticalScrollBarVisibility="Visible" Width="500" MaxHeight="210" x:Name="contactRequestList">
-                    <StackPanel x:Name="newRequestList">
-                        <!--<Grid>
-							<WrapPanel Width="473" Height="70">
-								<Ellipse Width="54" Height="54" VerticalAlignment="Center" Margin="8 8 0 0">
-									<Ellipse.Fill>
-										<VisualBrush>
-											<VisualBrush.Visual>
-												<Image Source="Images/ProfilePicture.jpg"/>
-											</VisualBrush.Visual>
-										</VisualBrush>
-									</Ellipse.Fill>
-								</Ellipse>
-
-								<TextBlock Text="Test Account" VerticalAlignment="Center" Margin="16 8 0 0" FontSize="16" FontWeight="Medium" LineHeight="20"/>
-							</WrapPanel>
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<Path Margin="0 0 10.405 0"  Data="M6 10.2L2.5 6.70001C2.11 6.31001 1.49 6.31001 1.1 6.70001C0.709995 7.09001 0.709995 7.71001 1.1 8.10001L5.29 12.29C5.68 12.68 6.31 12.68 6.7 12.29L17.3 1.70001C17.69 1.31001 17.69 0.690007 17.3 0.300007C16.91 -0.0899927 16.29 -0.0899927 15.9 0.300007L6 10.2Z" Fill="Black" Opacity="0.87" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-								<Path Margin="10.405 0 8 0" Data="M13.3 0.710001C12.91 0.320001 12.28 0.320001 11.89 0.710001L6.99997 5.59L2.10997 0.700001C1.71997 0.310001 1.08997 0.310001 0.699971 0.700001C0.309971 1.09 0.309971 1.72 0.699971 2.11L5.58997 7L0.699971 11.89C0.309971 12.28 0.309971 12.91 0.699971 13.3C1.08997 13.69 1.71997 13.69 2.10997 13.3L6.99997 8.41L11.89 13.3C12.28 13.69 12.91 13.69 13.3 13.3C13.69 12.91 13.69 12.28 13.3 11.89L8.40997 7L13.3 2.11C13.68 1.73 13.68 1.09 13.3 0.710001V0.710001Z" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							</StackPanel>
-						</Grid>-->
-                    </StackPanel>
+                <ScrollViewer Margin="0 36 0 60" VerticalScrollBarVisibility="Hidden" Width="500" MaxHeight="210" x:Name="contactRequestList">
+                    <StackPanel x:Name="newRequestList" />
                 </ScrollViewer>
                 <Border Width="500">
-                    <TextBlock Text="Your Chats" HorizontalAlignment="Center" FontWeight="Medium" FontSize="20" LineHeight="28"/>
+                    <TextBlock Text="Your Chats" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
                 </Border>
-                <ScrollViewer Margin="0 36 0 0" VerticalScrollBarVisibility="Hidden" MaxHeight="210">
-                    <StackPanel Width="473" x:Name="chatList" >
-                        <!--<WrapPanel Width="473" Height="70">
-
-							<Ellipse Width="54" Height="54" VerticalAlignment="Center" Margin="8 8 0 0">
-								<Ellipse.Fill>
-									<VisualBrush>
-										<VisualBrush.Visual>
-											<Image Source="Images/ProfilePicture.jpg" Stretch="Uniform"/>
-										</VisualBrush.Visual>
-									</VisualBrush>
-								</Ellipse.Fill>
-							</Ellipse>
-
-							<TextBlock Text="Test Account" VerticalAlignment="Center" Margin="16 8 0 0" FontSize="16" FontWeight="Medium" LineHeight="20"/>
-
-						</WrapPanel>-->
-                    </StackPanel>
+                <ScrollViewer Margin="0 46 0 0" VerticalScrollBarVisibility="Hidden" MaxHeight="210">
+                    <StackPanel Width="473" x:Name="chatList" />
                 </ScrollViewer>
                 <Border Width="520">
                     <StackPanel>
-                        <TextBlock Text="Recently added contacts" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 56 0 0"/>
-                        <ScrollViewer Margin="0 46 0 0" VerticalScrollBarVisibility="Hidden" MinHeight="100" MaxHeight="200">
-                            <WrapPanel x:Name="recentlyAddedChats">
-                                <!--<StackPanel Margin="0 0 20 0">
-										<Ellipse Width="54" Height="54">
-											<Ellipse.Fill>
-												<VisualBrush>
-													<VisualBrush.Visual>
-														<Image Source="Images/ProfilePicture.jpg"/>
-													</VisualBrush.Visual>
-												</VisualBrush>
-											</Ellipse.Fill>
-										</Ellipse>
-										<TextBlock Width="110" Text="Test Account" TextAlignment="Center" Margin="0 8 0 0" FontSize="16" LineHeight="20"/>
-									</StackPanel>-->
-                            </WrapPanel>
+                        <TextBlock Text="Your Contacts" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 56 0 0" FontWeight="Heavy"/>
+                        <ScrollViewer Margin="0 46 0 0" VerticalScrollBarVisibility="Hidden" MaxHeight="200">
+                            <WrapPanel x:Name="recentlyAddedChats"/>
                         </ScrollViewer>
                     </StackPanel>
                 </Border>
-
+                <Border Width="490">
+                    <TextBlock Text="Blocked Users" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 46 0 0" FontWeight="Heavy"/>
+                </Border>
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" MaxHeight="250">
+                    <StackPanel x:Name="blockedUserList"/>
+                </ScrollViewer>
             </StackPanel>
-        </ScrollViewer>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>
