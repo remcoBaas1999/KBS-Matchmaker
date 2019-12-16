@@ -23,20 +23,32 @@ namespace Matchmaker
     public partial class ChatPage : Page
     {
         private UserData chatPartner;
-        private UserData userPartner;
+        private UserData userInChat;
+        int userSender;
+        private string chatID;
         //Creates a page with a chatpartner. Own data to be retrieved via User.
         public ChatPage(UserData chatPartner)
         {
             //fix selfcert error
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
             InitializeComponent();
             this.chatPartner = chatPartner;
             ChatPartnerName.Text = chatPartner.realName;            
             string chatPartnerPicture = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";
             ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPicture, UriKind.Absolute)));
-            FillScrollBox();
-
+            this.userInChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            //determines chatid -> id = lowerid + space + higherid
+            if (userInChat.id<chatPartner.id)
+            {
+                chatID = $"{userInChat.id} {chatPartner.id}";
+                userSender = 0;
+            }
+            else
+            {
+                chatID = $"{chatPartner.id} {userInChat.id}";
+                userSender = 1;
+            }
+            UpdateScrollBox(); 
         }
         //with sample data for testing purposes
         public ChatPage()
@@ -44,29 +56,27 @@ namespace Matchmaker
             //fix selfcert error
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             InitializeComponent();
-            
-            Dictionary<String, int> Profiles = new Dictionary<string, int>();
-            Profiles = MatchmakerAPI_Client.GetUsers();
-            var profiles = Profiles.Values.ToList();
-            //pick random profile
-            Random random = new Random();
-            int i = random.Next(0, profiles.Count);
-            int a = profiles[i];
-            chatPartner = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(a));
-            int b;
-            if (a + 1 == profiles.Count)
-            {
-                b = a - 1;
-            }
-            else
-            {
-                b = a + 1;
-            }
-            userPartner = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(b));
+            //Claudia Alvarez
+            int u1= 744779591;
+            //Folkert
+            int u2 = 1838179466;
+            chatPartner = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(u1));
+            chatID = $"{u1}  {u2}";
+            userInChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(u2));
 
             ChatPartnerName.Text = chatPartner.realName;
             string chatPartnerPictureString = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";          
             ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPictureString, UriKind.Absolute)));
+            if (userInChat.id < chatPartner.id)
+            {
+                chatID = $"{userInChat.id} {chatPartner.id}";
+                userSender = 0;
+            }
+            else
+            {
+                chatID = $"{chatPartner.id} {userInChat.id}";
+                userSender = 1;
+            }
             UpdateScrollBox();
         }
         //This will return you to the last page. Here it is the ChatListPage.
@@ -76,12 +86,16 @@ namespace Matchmaker
         }
         //This method will send a message. This method will be used inside other methods.
         //Still needs connection to server.
-        private void SendMessage()
+        private async void SendMessageAsync()
         {
-            //ServersideChatInput.Text;
-            ChatInput.Clear();
+            //creates unixtimestamp to the current time.
+            long now = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            //creates message and sends it to the server. Clears inputfield afterwards
+            MessageData msgD = new MessageData() { ID = chatID, Sender=userSender, TimeStamp=now, Text=ChatInput.Text };
+            await MatchmakerAPI_Client.PostNewMessage(msgD);
+            ChatInput.Clear();         
         }
-        //This method Updates the scrollable chatbox.
+        //This method Updates the scrollable chatbox and scrolls to the bottom.
         private void UpdateScrollBox()
         {
             MessageList.Children.Clear();
@@ -93,33 +107,21 @@ namespace Matchmaker
         {
             var messageList = new List<MessageData>();
             //get message list from server
-
-            //Sampledata
-            string sID = $"{userPartner.id} 35";
-            for(int i = 0; i < 100; i++)
-            {
-                messageList.Add(new MessageData { ID = sID, Text = $"Yeet #{i}", Sender = i%2, TimeStamp = i });
-            }
-            /*messageList.Add(new MessageData { ID = sID, Text = "Yeeteth yoinketh", Sender = 1, TimeStamp = 3 });
-            messageList.Add(new MessageData { ID = sID, Text = "Yeeteth yoinketh back to you", Sender = 0, TimeStamp = 4 });
-            messageList.Add(new MessageData { ID = sID, Text = "Yeeteth yoinketh back to youno2", Sender = 0, TimeStamp = 2 });
-            messageList.Add(new MessageData { Text = "Alpha yeet", Sender = 0, ID = sID }) ;
-            */  //Serverside msgdata
+            messageList= MatchmakerAPI_Client.DeserializeMessageData(MatchmakerAPI_Client.GetMessageData(chatID));
             messageList = messageList.OrderBy(msg => msg.TimeStamp).ToList();
+            string[] iDS = chatID.Split(' ');
             foreach (MessageData m in messageList)
             {
+                //Changes alignment and colour to represent if it was sent or received
                 var tB = new TextBlock() { Text = m.Text, FontFamily= new FontFamily("Roboto"), Foreground=Brushes.White};                
                 var bTB = new Border() { Child=tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin=new Thickness(5)};                
-                //Changes alignment and colour to represent if it was sent or received
-                string[] iDS = m.ID.Split(' ');
-
+                
                 //Step by step breakdown of if-statement:
                 //The MatchmakerAPI_Client will get the user data of the current user to get its ID.
                 //The MatchmakerAPI_Client will deserialize this data
                 //The ID will be compared to the sender (0/1) and then the position in the messageID.
-                //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.
-                
-                if(userPartner.id==Int32.Parse(iDS[m.Sender]))//if(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email)).id.Equals(Int32.Parse(iDS[m.Sender])))
+                //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.                
+                if(userInChat.id==Int32.Parse(iDS[m.Sender]))
                 {
                     bTB.HorizontalAlignment = HorizontalAlignment.Right;
                     bTB.Background = Brushes.BlueViolet;
@@ -134,10 +136,11 @@ namespace Matchmaker
         }
         private void ChatInput_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            //if keypress is enter it sends the message
             if ((int) e.Key == 6 && e.KeyboardDevice.Modifiers!=ModifierKeys.Shift)
             {
                 e.Handled = true;
-                SendMessage();
+                SendMessageAsync();
                 UpdateScrollBox();
                 Console.WriteLine($"{e.Key}: {(int)e.Key}");
             }

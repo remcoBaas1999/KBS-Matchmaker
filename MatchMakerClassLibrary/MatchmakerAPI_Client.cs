@@ -27,7 +27,10 @@ namespace MatchMakerClassLibrary
         {
             return JsonConvert.DeserializeObject<AuthData>(json);
         }
-
+        public static List<MessageData> DeserializeMessageData(string json)
+        {
+            return JsonConvert.DeserializeObject<List<MessageData>>(json);
+        }
         public static string GetUserData(int id)
         {
             return Get($@"https://145.44.233.207/user/get/id={id}");
@@ -70,6 +73,10 @@ namespace MatchMakerClassLibrary
         {
             //return Get($@"https://145.44.233.207/get/event?id={id}");
             return null;
+        }
+        public static string GetMessageData(string id)
+        {
+            return Get($@"https://145.44.223.207/messages/get?id={id}");
         }
         public static async Task<bool> AuthenticateAsync(string email, string password)
         {
@@ -146,6 +153,14 @@ namespace MatchMakerClassLibrary
             string uri = @"https://145.44.233.207/user/post/new";
             var result = await Post(uri, newUserData);
             //doe wat met result
+            return true;
+        }
+
+        public static async Task<bool> PostNewMessage(MessageData newMessageData)
+        {
+            string uri = @"https://145.44.223.207/messages/post/new";
+            var result = await Post(uri, newMessageData);
+            //do something with result?
             return true;
         }
 
