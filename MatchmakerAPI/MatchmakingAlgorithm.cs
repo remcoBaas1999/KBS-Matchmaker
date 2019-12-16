@@ -16,7 +16,7 @@ namespace MatchmakerAPI
 
     // Declare weights
     public static int proximityWt = 1;
-    public static int hobbiesWt = 1;
+    public static int hobbiesWt = 2;
     public static int ageWt = 0;
 
 
