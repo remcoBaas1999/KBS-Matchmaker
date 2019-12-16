@@ -64,7 +64,7 @@ namespace MatchmakerAPI
         List<UserData> returnVal_list = SortByScore(returnVal_unsorted, scoredNum);
 
         // Prepare a random subset of the scored users to be returned
-        // List<UserData> returnVal_random = GetRandomUsers(returnVal_list, returnNum);
+        List<UserData> returnVal_random = GetRandomUsers(returnVal_list, returnNum);
 
         // Convert the list to the return format (array)
         var returnVal = returnVal_list.ToArray();
