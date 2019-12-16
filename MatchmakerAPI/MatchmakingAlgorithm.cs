@@ -34,8 +34,8 @@ namespace MatchmakerAPI
         var forUser = users[forUserId];
 
         // Get a random sample from the users database
-        // var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
-				var sample = users.Values.ToList();
+        var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
+				// var sample = users.Values.ToList();
 
         // Prepare unsorted variant of the return value
         var returnVal_unsorted = new List<KeyValuePair<int, UserData>>();
