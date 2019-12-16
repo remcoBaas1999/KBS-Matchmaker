@@ -192,7 +192,7 @@ namespace MatchmakerAPI.Controllers
 
 			Console.Write($"\nAfter scoring users ({scoredUsers.Count} users): ");
 			foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
-				Console.Write($"{scoredUser.Key.Value.realName}, ");
+				Console.Write($"{scoredUser.Key.Value.realName} - {scoredUser.Value}, ");
 			}
 
 			//Sort users from highest to lowest score, throw away the scores and only keep the 12 users with the highest score
@@ -323,8 +323,6 @@ namespace MatchmakerAPI.Controllers
 					//Add scores together and assign it to the user
 					int score = hobbies + age + city;
 					scoredUsers.Add(user, score);
-
-					Console.WriteLine($"{user.Value.realName}: {score}");
 				}
 			}
 			return scoredUsers;
