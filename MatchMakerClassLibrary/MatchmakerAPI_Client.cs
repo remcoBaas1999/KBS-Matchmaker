@@ -189,23 +189,23 @@ namespace MatchMakerClassLibrary
 
         }
 
-        public static async Task<bool> denyContactRequest(UserData user, UserData requestUser)
+        public static async Task<bool> denyContactRequest(UserData userDenying, UserData requestUser)
         {
-            int id = user.id;
+            int id = userDenying.id;
             //The request  is is set to not be a contact
-            user.contacts.Add(new KeyValuePair<int, bool>(id, false));
-            user.requestFrom.Remove(user.id);
+            userDenying.contacts.Add(new KeyValuePair<int, bool>(id, false));
+            userDenying.requestFrom.Remove(userDenying.id);
             string uri = @"https://145.44.233.207/user/post/update/id={id}";
             await Post(uri, requestUser);
             return true;
         }
 
-        public static async Task<bool> ConfirmContactRequest(UserData user, UserData requestUser)
+        public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
         {
-            int id = user.id;
+            int id = confirmingUser.id;
             //The request  is is set to be a contact
-            user.contacts.Add(new KeyValuePair<int, bool>(id, true));
-            user.requestFrom.Remove(user.id);
+            confirmingUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
+            confirmingUser.requestFrom.Remove(confirmingUser.id);
             string uri = @"https://145.44.233.207/user/post/update/id={id}";
             //Update requesting user account
             id = requestUser.id;
