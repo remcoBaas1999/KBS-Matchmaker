@@ -93,7 +93,7 @@ namespace MatchmakerAPI
 
         // If the users list is smaller than the number of users to be selected,
         // abort the method when all users have been selected.
-        if (users.Count == returnVal.Count) {
+        if (users.Count == 0) {
           return returnVal;
         }
 
