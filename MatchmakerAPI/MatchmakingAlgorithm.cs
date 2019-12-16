@@ -51,6 +51,8 @@ namespace MatchmakerAPI
           var hobbiesInCommon = CompareHobbies(forUser, user);
           var ageDifference = CompareAge(forUser, user);
 
+					Console.WriteLine($"{user.realName}: {proximity * proximityWt} # {hobbiesInCommon * hobbiesWt} # {ageDifference * ageWt}");
+
           // Calculate total weighted score
           var totalScore = ((proximity * proximityWt) + (hobbiesInCommon * hobbiesWt)) - (ageDifference * ageWt);
 
