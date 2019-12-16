@@ -280,7 +280,7 @@ namespace Matchmaker {
             hobbyBorder.Child = stackPanel;
             hobbyBorder.CornerRadius = new CornerRadius(16);
             hobbyBorder.Height = 32;
-            hobbyBorder.Margin = new Thickness(6, 0, 6, 0);
+            hobbyBorder.Margin = new Thickness(6);
 
 
             stackPanel.Orientation = Orientation.Horizontal;

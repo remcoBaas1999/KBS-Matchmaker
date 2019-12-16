@@ -92,7 +92,7 @@
                 <StackPanel Width="Auto" HorizontalAlignment="Right">
                     <TextBlock Text="Location" Foreground="LightGray"  FontFamily="Roboto"  Width="50" HorizontalAlignment="Left" Margin="0,109,0,6"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock FontSize="24" Foreground="White" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Left"/>
+                        <TextBlock FontSize="24" Foreground="White" FontFamily="Roboto" Name="city" Visibility="Visible" HorizontalAlignment="Left" Margin="0 0 16 0"/>
                         <ComboBox FontSize="24" BorderBrush="{x:Null}" Background="{x:Null}" FontFamily="Roboto" Name="citySelection" Visibility="Collapsed" Loaded="citySelection_Loaded"  HorizontalAlignment="Left" Width="130"/>
                         <Button  Width="40" Height="30" Grid.Column="7" Grid.Row="4" Click="editLocation_Click" BorderBrush="{x:Null}" Background="{x:Null}" Name="editLocation" Visibility="Visible">
                             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg24" Width="24" Height="24">
@@ -146,7 +146,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Height="Auto" Width="Auto">
             <WrapPanel Grid.Row="1" Grid.Column="1" Margin="266, 24,0,0">
                 <!-- placeholder for chosen hobbies -->
-                <WrapPanel x:Name="HobbyWrapper"></WrapPanel>
+                <WrapPanel x:Name="HobbyWrapper" MaxWidth="600"></WrapPanel>
                 <!-- placeholder for add new hobby -->
                 <Border Background="{x:Null}" Opacity="0.24" BorderThickness="1" CornerRadius="16" BorderBrush="Black" Margin="6 0 0 0" Padding="6,0" x:Name="addHobby" MouseDown="addHobby_MouseDown">
                     <TextBlock Margin="6" TextAlignment="Center" VerticalAlignment="Center" Text="Add New Interest" Foreground="Black" Opacity="0.56" FontSize="14" FontFamily="Roboto"/>
