@@ -86,7 +86,7 @@ namespace MatchmakerAPI.Controllers
 			int scoredSelection = 4;
 			int finalRandomSelection = 4;
 			try {
-				return FindMatches(id, firstRandomSelection, scoredSelection, finalRandomSelection);
+				return MatchmakingAlgorithm.FindMatches(id, firstRandomSelection, scoredSelection, finalRandomSelection);
 			} catch (System.Collections.Generic.KeyNotFoundException e) {
 				return new UserData[finalRandomSelection];
 			}
