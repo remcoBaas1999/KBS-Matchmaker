@@ -177,7 +177,12 @@ namespace MatchmakerAPI.Controllers
 		}
 
 		public UserData[] FindMatches(Dictionary<int, UserData> users, int currentUserID, int firstRandomSelection, int scoredSelection, int finalRandomSelection) {
-			
+
+			Console.Write($"\n\nAt the start ({users.Count} users): ");
+			foreach (KeyValuePair<int, UserData> user in users) {
+				Console.Write($"{user.Value.realName}, ");
+			}
+
 			//Make a random selection of 120 users
 			Dictionary<int, UserData> profiles = RandomSelection(users, firstRandomSelection);
 
@@ -198,8 +203,8 @@ namespace MatchmakerAPI.Controllers
 			UserData[] orderedUsers = OrderUsersByScoreDescending(scoredUsers, scoredSelection);
 
 			Console.Write($"\n\nAfter ordering users by score (high to low) and only keeping the 12 users with the highest score ({orderedUsers.Length} users): ");
-			foreach (UserData profile in orderedUsers) {
-				Console.Write($"{profile.realName}, ");
+			foreach (UserData orderedUser in orderedUsers) {
+				Console.Write($"{orderedUser.realName}, ");
 			}
 
 			//Pick 4 users randomly out of the 12 with the highest score
