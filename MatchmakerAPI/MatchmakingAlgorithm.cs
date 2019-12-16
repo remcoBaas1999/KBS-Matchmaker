@@ -26,7 +26,7 @@ namespace MatchmakerAPI
       var returnVal = new UserData[returnNum]();
 
       // Retrieve the users database
-      var users = LoadUsers();
+      var users = UserController.LoadUsers();
       // Dictionary<int, UserData>
 
       try {
@@ -119,7 +119,7 @@ namespace MatchmakerAPI
       var returnVal = new List<UserData>();
 
       // Order the scored users by key and take the top N, where N == scoredNum
-      returnVal = scoredUsers.OrderByDescending(scoredUser => scoredUser.Key).Take(scoredNum);
+      returnVal = scoredUsers.OrderByDescending(scoredUser => scoredUser.Key).Take(scoredNum).ToList();
 
       return returnVal;
     }
@@ -169,7 +169,7 @@ namespace MatchmakerAPI
       }
 
       // Return the number of hobbies that appear in both hobbies fields
-      return forUser.hobbies.Intersect(user.hobbies).Count;
+      return forUser.hobbies.Intersect(user.hobbies).Count();
     }
 
 
