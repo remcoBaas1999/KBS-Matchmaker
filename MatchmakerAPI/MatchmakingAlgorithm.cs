@@ -32,7 +32,7 @@ namespace MatchmakerAPI
 
         // Get user data for the user for which the matches are being found
         var forUser = users[forUserId];
-        
+
         // Get a random sample from the users database
         var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
 
@@ -117,7 +117,12 @@ namespace MatchmakerAPI
       var returnVal = new List<UserData>();
 
       // Order the scored users by key and take the top N, where N == scoredNum
-      returnVal = scoredUsers.OrderByDescending(scoredUser => scoredUser.Key).Take(scoredNum).ToList();
+      returnVal_kvps = scoredUsers.OrderByDescending(scoredUser => scoredUser.Key).Take(scoredNum).ToList();
+
+      foreach (KeyValuePair<int, UserData> kvp in returnVal_kvps)
+      {
+        returnVal.Add(kvp.Value);
+      }
 
       return returnVal;
     }
