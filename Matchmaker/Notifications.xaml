@@ -3,23 +3,27 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"   
       WindowTitle="Notifications"
       Height="auto" Width="auto">
-
-
     <Grid>
-        <Grid HorizontalAlignment="Center" Height="446" Margin="60,47,28,-51" VerticalAlignment="Top" Width="624">
-            <Rectangle HorizontalAlignment="Left" Height="40" Margin="101,181,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="402" Fill="#FFE8E8E8"/>
-            <Label Content="You are up to date!" FontFamily="Roboto" HorizontalAlignment="Left" Margin="237,187,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
+        <Grid HorizontalAlignment="Center" Height="446" VerticalAlignment="Top" Width="624">
+            <Rectangle x:Name="goBack" HorizontalAlignment="Left" Height="32" Stroke="#00000000" VerticalAlignment="Top" Width="34" MouseDown="goBack_MouseDown">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="Images/return.png" Stretch="Uniform"/>
+                </Rectangle.Fill>
+            </Rectangle>
             <Label Content="Notifications" HorizontalAlignment="Center" FontFamily="Roboto" Margin="233,117,262,292" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
             <Image HorizontalAlignment="Left" Height="42" Margin="351,112,0,0" VerticalAlignment="Top" Width="42" Source="Images/notification.jpg">
                 <Image.OpacityMask>
                     <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill"/>
                 </Image.OpacityMask>
             </Image>
-            <Rectangle x:Name="goBack" HorizontalAlignment="Left" Height="32" Margin="-319,-30,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="34" MouseDown="goBack_MouseDown" RenderTransformOrigin="0.591,0.352">
-                <Rectangle.Fill>
-                    <ImageBrush ImageSource="Images/return.png" Stretch="Uniform"/>
-                </Rectangle.Fill>
-            </Rectangle>
-        </Grid>
+            <Image x:Name="RefreshNotificationsButton" Source="Images/refresh.png" Margin="514,181,70,225" MouseDown="RefreshNotificationsButton_MouseDown">
+                <Image.OpacityMask>
+                    <ImageBrush ImageSource="Images/refresh.png" Stretch="UniformToFill"/>
+                </Image.OpacityMask>
+            </Image>
+            
+            <Rectangle HorizontalAlignment="Left" Height="40" Margin="101,181,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="402" Fill="#FFE8E8E8"/>
+            <Label Content="You are up to date!" FontFamily="Roboto" HorizontalAlignment="Left" Margin="237,187,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
+            </Grid>
     </Grid>
 </Page>
