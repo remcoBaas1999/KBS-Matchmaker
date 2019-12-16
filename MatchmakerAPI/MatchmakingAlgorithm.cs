@@ -182,7 +182,7 @@ namespace MatchmakerAPI
 
       // Return the number of hobbies that appear in both hobbies fields
 			foreach (Hobby h in forUser.hobbies.Intersect(user.hobbies))
-			{ Console.WriteLine(h); }
+			{ Console.WriteLine(h.Value); }
 
       return forUser.hobbies.Intersect(user.hobbies).Count();
     }
