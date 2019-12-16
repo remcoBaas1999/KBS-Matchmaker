@@ -163,6 +163,7 @@ namespace MatchmakerAPI
 
     public static int CompareHobbies(UserData forUser, UserData user)
     {
+			int returnVal = 0;
 
       // Terminate method when either of the user's hobbies field is not
       // defined
@@ -178,10 +179,15 @@ namespace MatchmakerAPI
       }
 
       // Return the number of hobbies that appear in both hobbies fields
-			foreach (Hobby h in forUser.hobbies.Intersect(user.hobbies))
-			{ Console.WriteLine(h.displayName); }
+			foreach (Hobby h in user.hobbies)
+			{
+				if (forUser.hobbies.Contains(h))
+				{
+					returnVal++;
+				}
+			}
 
-      return forUser.hobbies.Intersect(user.hobbies).Count();
+      return returnVal;
     }
 
 
