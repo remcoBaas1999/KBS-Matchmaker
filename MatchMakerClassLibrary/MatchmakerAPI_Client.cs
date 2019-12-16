@@ -179,7 +179,7 @@ namespace MatchMakerClassLibrary
         {
             int id = user.id;
             //The contact is saved with the user
-            user.contacts.Add(requestUser.id, false);
+            user.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, false));
             string uri = @"https://145.44.233.207/user/post/update/id={id}";
             //THe request is saved with the other account
             requestUser.requestFrom.Add(user.id);
@@ -193,7 +193,7 @@ namespace MatchMakerClassLibrary
         {
             int id = user.id;
             //The request  is is set to not be a contact
-            user.contacts.Add(requestUser.id, false);
+            user.contacts.Add(new KeyValuePair<int, bool>(id, false));
             user.requestFrom.Remove(user.id);
             string uri = @"https://145.44.233.207/user/post/update/id={id}";
             await Post(uri, requestUser);
@@ -204,12 +204,13 @@ namespace MatchMakerClassLibrary
         {
             int id = user.id;
             //The request  is is set to be a contact
-            user.contacts.Add(requestUser.id, true);
+            user.contacts.Add(new KeyValuePair<int, bool>(id, true));
             user.requestFrom.Remove(user.id);
             string uri = @"https://145.44.233.207/user/post/update/id={id}";
             //Update requesting user account
             id = requestUser.id;
-            requestUser.contacts[id] = true;
+            //requestUser.contacts
+            requestUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
             await Post(uri, requestUser);
             return true;
         }
@@ -230,7 +231,7 @@ namespace MatchMakerClassLibrary
         public string coverImage { get; set; }
         public List<HobbyData> hobbies { get; set; }
         public int[] blockedUsers { get; set; }
-        public Dictionary<int, bool> contacts { get; set; }
+        public List<KeyValuePair<int, bool>> contacts { get; set; }
         public List<int> requestFrom { get; set; }
 
     }

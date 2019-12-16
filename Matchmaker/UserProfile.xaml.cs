@@ -2,18 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static Matchmaker.HomePage;
 
 namespace Matchmaker
 {
@@ -33,17 +28,13 @@ namespace Matchmaker
                 editName.Visibility = Visibility.Visible;
                 btnEditCoverImage.Visibility = Visibility.Visible;
                 addHobby.Visibility = Visibility.Visible;
-                contactRequest.Visibility = Visibility.Collapsed;//I have to get the active userData somehow
+                contactRequest.Visibility = Visibility.Collapsed;
                 string email = User.email;
                 UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-                if (activeUser.contacts != null)
+                if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
                 {
-                    if (activeUser.contacts.ContainsKey(userInView.id))
-                    {
-                        addHobby.Visibility = Visibility.Collapsed;
-                    }
-                }
-                
+                    addHobby.Visibility = Visibility.Collapsed;
+                }                
             }
             else
             {
@@ -403,8 +394,9 @@ namespace Matchmaker
         private async void contactRequest_MouseDown(object sender, MouseButtonEventArgs e)
         {
             contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
+            contactRequest.MouseDown -= contactRequest_MouseDown;
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            await MatchmakerAPI_Client.sendContactRequest(user, userInView ) ;
+            await MatchmakerAPI_Client.sendContactRequest(user, userInView );
         }
     }
 }

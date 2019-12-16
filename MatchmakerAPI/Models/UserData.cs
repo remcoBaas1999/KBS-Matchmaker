@@ -21,7 +21,7 @@ namespace MatchmakerAPI
 		public int id { get; set; }
 		public long birthdate { get; set; }
 		public string coverImage { get; set; }
-        public Dictionary<int, bool> contacts { get; set; }
+        public List<KeyValuePair<int, bool>> contacts { get; set; }
         public List<int> requestFrom { get; set; }
     }
 }
