@@ -33,6 +33,9 @@ namespace MatchmakerAPI
         // Get user data for the user for which the matches are being found
         var forUser = users[forUserId];
 
+				// Remove that user from the pool of potential matches
+				users.Remove(forUser);
+
         // Get a random sample from the users database
         var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
 				// var sample = users.Values.ToList();
