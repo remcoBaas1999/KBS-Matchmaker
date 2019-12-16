@@ -114,6 +114,10 @@ namespace MatchmakerAPI
 
     public static List<UserData> SortByScore(List<KeyValuePair<int, UserData>> scoredUsers, int scoredNum)
     {
+      Console.WriteLine("\t =====");
+      Console.WriteLine("Sorting by score:");
+      Console.WriteLine("\t =====");
+
       var returnVal = new List<UserData>();
 
       // Order the scored users by key and take the top N, where N == scoredNum
@@ -121,6 +125,7 @@ namespace MatchmakerAPI
 
       foreach (KeyValuePair<int, UserData> kvp in returnVal_kvps)
       {
+        Console.WriteLine($"{kvp.Value.realName}: {kvp.Key}");
         returnVal.Add(kvp.Value);
       }
 
