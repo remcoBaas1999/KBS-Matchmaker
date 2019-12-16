@@ -146,9 +146,11 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Height="Auto" Width="Auto">
             <WrapPanel Grid.Row="1" Grid.Column="1" Margin="266, 24,0,0">
                 <!-- placeholder for chosen hobbies -->
-                <WrapPanel x:Name="HobbyWrapper" MaxWidth="600"></WrapPanel>
+                <WrapPanel x:Name="HobbyWrapper" MaxWidth="600">
+                   
+                </WrapPanel>
                 <!-- placeholder for add new hobby -->
-                <Border Background="{x:Null}" Opacity="0.24" BorderThickness="1" CornerRadius="16" BorderBrush="Black" Margin="6 0 0 0" Padding="6,0" x:Name="addHobby" MouseDown="addHobby_MouseDown">
+                <Border Background="{x:Null}" Opacity="0.24" BorderThickness="1" CornerRadius="16" BorderBrush="Black" Margin="6 0 0 0" Padding="6,0" x:Name="addHobby" MouseDown="addHobby_MouseDown" Height="32">
                     <TextBlock Margin="6" TextAlignment="Center" VerticalAlignment="Center" Text="Add New Interest" Foreground="Black" Opacity="0.56" FontSize="14" FontFamily="Roboto"/>
                 </Border>
             </WrapPanel>

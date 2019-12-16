@@ -1,5 +1,4 @@
 ﻿using MatchMakerClassLibrary;
-using MatchMakerClassLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -164,7 +163,6 @@ namespace Matchmaker {
             foreach (string item in locations) {
                 citySelection.Items.Add(item);
             }
-
         }
 
         private void editLocation_Click(object sender, RoutedEventArgs e) {
@@ -198,8 +196,10 @@ namespace Matchmaker {
 
         //Send user back to homescreen
         private void Return(object sender, MouseButtonEventArgs e) {
-            NavigationService.GoBack();
+            HomePage homepage = new HomePage();
+            NavigationService.Navigate(homepage);
         }
+
         private void addHobby_MouseDown(object sender, MouseButtonEventArgs e) {
             AddHobbies.Visibility = Visibility.Visible;
             entryHobbies.Visibility = Visibility.Visible;
