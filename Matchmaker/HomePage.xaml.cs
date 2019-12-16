@@ -18,15 +18,14 @@ using System.Windows.Shapes;
 
 
 namespace Matchmaker {
-    public partial class HomePage : Page
-    {
+    public partial class HomePage : Page {
         private int LoggedInUserID;
         private int FirstProfileID;
         private int SecondProfileID;
         private int ThirdProfileID;
         private int FourthProfileID;
 
-        
+
         public HomePage() {
             //Start application
             InitializeComponent();
@@ -75,7 +74,7 @@ namespace Matchmaker {
             //Create second profile
             rnd = random.Next(0, profiles.Count);
             SecondProfileID = profiles.ElementAt(rnd);
-            while(FirstProfileID == SecondProfileID || SecondProfileID.Equals(LoggedInUserID)) {
+            while (FirstProfileID == SecondProfileID || SecondProfileID.Equals(LoggedInUserID)) {
                 rnd = random.Next(0, profiles.Count);
                 SecondProfileID = profiles.ElementAt(rnd);
             }
@@ -123,14 +122,29 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{user4.coverImage}";
             Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
-       public async void FillEmptyList(UserData getLoggedInUserData) {
+        public async void FillEmptyList(UserData getLoggedInUserData) {
             List<int> temporarilyList = new List<int>();
             getLoggedInUserData.blockedUsers = temporarilyList;
             await MatchmakerAPI_Client.SaveUser(getLoggedInUserData);
-       }
+        }
 
-        //Refresh button
-        private void Button_Click(object sender, RoutedEventArgs e) {
+
+        private void Home_Button(object sender, RoutedEventArgs e) {
+            //Go to homepage
+            HomePage p = new HomePage();
+            p.InitializeComponent();
+            NavigationService.Navigate(p);
+        }
+
+        private void Contacts_Button(object sender, RoutedEventArgs e) {
+            Contacts c = new Contacts();
+            c.InitializeComponent();
+            NavigationService.Navigate(c);
+        }
+
+    
+            //Refresh button
+            private void Button_Click(object sender, RoutedEventArgs e) {
             //Refresh recommended profiles
             HomePage p = new HomePage();
             p.InitializeComponent();
