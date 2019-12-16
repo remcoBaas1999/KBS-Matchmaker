@@ -29,10 +29,10 @@ namespace Matchmaker {
                 UserData aBlockedUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(item));
                 BlockedUsers.Add(aBlockedUser.realName);
             }
-            lvDataBinding.ItemsSource = BlockedUsers;
+            listOfBlockedUsers.ItemsSource = BlockedUsers;
         }
 
-        private void lvDataBinding_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+        private void listOfBlockedUsers_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
             UserProfile profile = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID)),false, LoggedInUserID);
             NavigationService.Navigate(profile);
         }
