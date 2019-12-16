@@ -24,19 +24,19 @@ namespace MatchmakerAPI.Controllers
             {
                 string json = r.ReadToEnd();
                 var chats = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
-                if (chats.ContainsKey(data.ID))
+                if (chats.ContainsKey(data.id))
                 {
-                    List<Message> manipulateChat;
-                    chats.TryGetValue(data.ID, out manipulateChat);
+                    List<message> manipulateChat;
+                    chats.TryGetValue(data.id, out manipulateChat);
                     manipulateChat.Add(data);
                     var text = JsonConvert.SerializeObject(chats);
                     System.IO.File.WriteAllText(fileLocation, text);
                 }
                 else
                 {
-                    var newChat = new List<Message>();
+                    var newChat = new List<message>();
                     newChat.Add(data);
-                    chats.Add(data.ID, newChat);
+                    chats.Add(data.id, newChat);
 
                 }
             }
@@ -52,22 +52,22 @@ namespace MatchmakerAPI.Controllers
             }
         }
         [HttpGet("get/id={id}")]
-        public List<Message> RetrieveMessages(string id)
+        public List<message> RetrieveMessages(string id)
         {
             string fileLocation = "/home/student/data/chats.json";
             using (StreamReader r = new StreamReader(fileLocation))
             {
                 string json = r.ReadToEnd();
-                var chat = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
+                var chat = JsonConvert.DeserializeObject<Dictionary<string, List<message>>>(json);
                 if (chat.ContainsKey(id))
                 {
-                    List<Message> returnChat;
+                    List<message> returnChat;
                     chat.TryGetValue(id, out returnChat);
                     return returnChat;
                 }
                 else
                 {
-                    return new List<Message>();
+                    return new List<message>();
                 }
             }
         }
