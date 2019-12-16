@@ -83,7 +83,7 @@ namespace MatchmakerAPI.Controllers
 		[HttpGet("get/matches/id={id}")]
 		public UserData[] GetMatches(int id) {
 			int firstRandomSelection = 120;
-			int scoredSelection = 12;
+			int scoredSelection = 4;
 			int finalRandomSelection = 4;
 			try {
 				return MatchmakingAlgorithm.FindMatches(id, firstRandomSelection, scoredSelection, finalRandomSelection);
