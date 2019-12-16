@@ -193,10 +193,35 @@
                 <TextBlock FontFamily="Roboto" TextWrapping="Wrap" Width="300" Height="100" x:Name="bioText" Visibility="Visible" Margin="354 36 0 0"/>
             </WrapPanel>
         </StackPanel>
+        
+        <!--Contact request request button-->
+        <Border  HorizontalAlignment="Left" Background="DodgerBlue" CornerRadius="20"  x:Name="contactRequest" Width="100" Height="30" Grid.Column="2" Grid.Row="1" VerticalAlignment="Bottom" MouseDown="contactRequest_MouseDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="70">
+                    </ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                
+                <Canvas  Grid.Column="0" VerticalAlignment="Center"  HorizontalAlignment="Center" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="star" Width="0" Height="10">
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="0" Y="0"/>
+                    </Canvas.RenderTransform>
+                    <Canvas.Resources/>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="star2" Fill="#FFFFFFFF" StrokeThickness="0.178571" Data="m 18.899776 89.983746 c 0 -0.07236 2.381873 -7.451972 5.293051 -16.399138 2.911177 -8.947164 5.394911 -16.59748 5.519408 -17.0007 L 29.938592 55.850783 15.335384 45.244622 0.73217757 34.638464 18.800494 34.59298 36.868808 34.547496 42.382192 17.584051 c 3.032361 -9.3298947 5.561544 -16.96344471 5.620407 -16.96344471 0.05886 0 2.267686 6.64955361 4.908493 14.77678571 2.640807 8.127232 5.121455 15.760782 5.512548 16.963443 l 0.71108 2.186659 18.067859 0.04548 18.067861 0.04549 -14.618286 10.618725 c -8.040057 5.8403 -14.583909 10.708308 -14.541893 10.8178 0.364242 0.949198 11.010199 33.884457 10.966802 33.927853 -0.03137 0.03137 -6.585407 -4.684941 -14.564528 -10.480691 L 48.005044 68.984423 47.157767 69.599181 c -0.914129 0.663263 -26.006773 18.881036 -27.409777 19.900058 -0.466518 0.338839 -0.848214 0.556867 -0.848214 0.484507 z" Height="20"  Stretch="Fill" Width="20" />
+                </Canvas>
+                <TextBlock Grid.Column="1" Text="Match" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White" Margin="15.6,0,15.4,-3.2" FontSize="14"/>
+            </Grid>
+
+        </Border>
         <!--Add hobbies-->
         <Border Grid.RowSpan="3" Grid.ColumnSpan="3" x:Name="AddHobbies"  Background="DimGray" Opacity="0.75" Visibility="Collapsed" />
         <Border Visibility="Collapsed" CornerRadius="5" x:Name="entryHobbies" Background="White" Height="350 " Width="400" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
             <Grid>
+                <!---->
                 <TextBlock Name="addInterests" Height="auto" FontSize="14" FontFamily="Roboto" HorizontalAlignment="Center" Margin="0 18 0 0" Text="Add new interests"  FontWeight="Medium"/>
                 <!--Add hobby suggestions as a tickbox where the V sign turns purple when selected-->
 

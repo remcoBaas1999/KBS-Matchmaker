@@ -3,23 +3,20 @@ using MatchMakerClassLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static Matchmaker.HomePage;
+
 
 namespace Matchmaker {
     public partial class UserProfile : Page {
         private int LoggedInUserID;
         private UserData userInView;
+
         public static List<HobbyData> hobbyData = new List<HobbyData>();
 
         //Create UserProfile as if it is anothers profile
@@ -36,6 +33,13 @@ namespace Matchmaker {
                 addHobby.Visibility = Visibility.Visible;
                 //Hide BlockInformation: You cant block your own profile
                 BlockUser.Visibility = Visibility.Hidden;
+                contactRequest.Visibility = Visibility.Collapsed;
+                string email = User.email;
+                UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
+                if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
+                {
+                    addHobby.Visibility = Visibility.Collapsed;
+                }                
             }
             else {
                 editBio.Visibility = Visibility.Collapsed;
@@ -360,6 +364,7 @@ namespace Matchmaker {
             NavigationService.Navigate(userProfile);
         }
 
+
         private async void BlockUser_MouseDown(object sender, MouseButtonEventArgs e) {
             //Triggers when pressed on the blockimage next to a users profile
             if (MessageBox.Show($"Are you sure you want to ignore {userInView.realName}? His or her profile will never show up again.", $"Ignore {userInView.realName}", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) {
@@ -396,6 +401,14 @@ namespace Matchmaker {
                 HomePage home = new HomePage();
                 NavigationService.Navigate(home);
             }
+        }
+        private async void contactRequest_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
+            contactRequest.MouseDown -= contactRequest_MouseDown;
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            await MatchmakerAPI_Client.sendContactRequest(user, userInView );
+
         }
     }
 }
