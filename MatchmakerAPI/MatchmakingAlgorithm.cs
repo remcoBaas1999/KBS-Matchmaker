@@ -67,7 +67,7 @@ namespace MatchmakerAPI
         List<UserData> returnVal_random = GetRandomUsers(returnVal_list, returnNum);
 
         // Convert the list to the return format (array)
-        var returnVal = returnVal_list.ToArray();
+        var returnVal = returnVal_random.ToArray();
 
         return returnVal;
       } catch (System.Collections.Generic.KeyNotFoundException) {
