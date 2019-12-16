@@ -51,7 +51,8 @@ namespace MatchmakerAPI
           var hobbiesInCommon = CompareHobbies(forUser, user);
           var ageDifference = CompareAge(forUser, user);
 
-					Console.WriteLine($"{user.realName}: {proximity * proximityWt} # {hobbiesInCommon * hobbiesWt} # {ageDifference * ageWt}");
+					Console.WriteLine($"{user.realName}: \t{proximity}");
+					Console.WriteLine($"\t\t{hobbiesInCommon}");
 
           // Calculate total weighted score
           var totalScore = ((proximity * proximityWt) + (hobbiesInCommon * hobbiesWt)) - (ageDifference * ageWt);
@@ -180,6 +181,9 @@ namespace MatchmakerAPI
       }
 
       // Return the number of hobbies that appear in both hobbies fields
+			foreach (Hobby h in forUser.hobbies.Intersect(user.hobbies))
+			{ Console.WriteLine(h); }
+
       return forUser.hobbies.Intersect(user.hobbies).Count();
     }
 
