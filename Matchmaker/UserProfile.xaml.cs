@@ -34,12 +34,6 @@ namespace Matchmaker {
                 //Hide BlockInformation: You cant block your own profile
                 BlockUser.Visibility = Visibility.Hidden;
                 contactRequest.Visibility = Visibility.Collapsed;
-                string email = User.email;
-                UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-                if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
-                {
-                    addHobby.Visibility = Visibility.Collapsed;
-                }                
             }
             else {
                 editBio.Visibility = Visibility.Collapsed;
@@ -47,6 +41,12 @@ namespace Matchmaker {
                 editName.Visibility = Visibility.Collapsed;
                 btnEditCoverImage.Visibility = Visibility.Collapsed;
                 addHobby.Visibility = Visibility.Collapsed;
+                string email = User.email;
+                UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
+                //if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
+                //{
+                //    addHobby.Visibility = Visibility.Collapsed;
+                //}
             }
 
             years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
@@ -337,7 +337,7 @@ namespace Matchmaker {
 
             await MatchmakerAPI_Client.SaveUser(userInView);
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, false, LoggedInUserID);
+            Page userProfile = new UserProfile(user, true, LoggedInUserID);
             NavigationService.Navigate(userProfile);
         }
 
@@ -360,7 +360,7 @@ namespace Matchmaker {
             }
             await MatchmakerAPI_Client.SaveUser(userInView);
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, false, LoggedInUserID);
+            Page userProfile = new UserProfile(user, true, LoggedInUserID);
             NavigationService.Navigate(userProfile);
         }
 
