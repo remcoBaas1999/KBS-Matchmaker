@@ -83,7 +83,7 @@ namespace MatchmakerAPI.Controllers
 		[HttpGet("get/matches/id={id}")]
 		public UserData[] GetMatches(int id) {
 			int firstRandomSelection = 120;
-			int scoredSelection = 4;
+			int scoredSelection = 12;
 			int finalRandomSelection = 4;
 			try {
 				return MatchmakingAlgorithm.FindMatches(id, firstRandomSelection, scoredSelection, finalRandomSelection);
@@ -93,7 +93,7 @@ namespace MatchmakerAPI.Controllers
 		}
 
 
-		// TODO
+		// TODO: refactor code to use the LoadUsers() method
 
 
 		[HttpPost("post/new")]
