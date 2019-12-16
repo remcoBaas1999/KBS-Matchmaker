@@ -23,7 +23,6 @@ namespace MatchmakerAPI
 
     public static UserData[] FindMatches(int forUserId, int sampleNum, int scoredNum, int returnNum)
     {
-      var returnVal = new UserData[returnNum]();
 
       // Retrieve the users database
       var users = UserController.LoadUsers();
@@ -33,7 +32,43 @@ namespace MatchmakerAPI
 
         // Get user data for the user for which the matches are being found
         var forUser = users[forUserId];
+        
+        // Get a random sample from the users database
+        var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
 
+        // Prepare unsorted variant of the return value
+        var returnVal_unsorted = new List<KeyValuePair<int, UserData>>();
+
+
+        // For each user in our sample, calculate a weighted matching score and
+        // add it to a list for sorting
+        foreach (UserData user in sample)
+        {
+
+          // Calculate composite scores
+          var proximity = CompareLocation(forUser, user);
+          var hobbiesInCommon = CompareHobbies(forUser, user);
+          var ageDifference = CompareAge(forUser, user);
+
+          // Calculate total weighted score
+          var totalScore = ((proximity * proximityWt) + (hobbiesInCommon * hobbiesWt)) - (ageDifference * ageWt);
+
+          var scoredUser = new KeyValuePair<int, UserData>(totalScore, user);
+
+          returnVal_unsorted.Add(scoredUser);
+
+        }
+
+        // Sort list by user score
+        List<UserData> returnVal_list = SortByScore(returnVal_unsorted, scoredNum);
+
+        // Prepare a random subset of the scored users to be returned
+        List<UserData> returnVal_random = GetRandomUsers(returnVal_list, returnNum);
+
+        // Convert the list to the return format (array)
+        var returnVal = returnVal_random.ToArray();
+
+        return returnVal;
       } catch (System.Collections.Generic.KeyNotFoundException) {
 
         // Return null if the key (user id) does not exist
@@ -41,43 +76,6 @@ namespace MatchmakerAPI
         return null;
 
       }
-
-      // Get a random sample from the users database
-      var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
-
-      // Prepare unsorted variant of the return value
-      var returnVal_unsorted = new List<KeyValuePair<int, UserData>>();
-
-
-      // For each user in our sample, calculate a weighted matching score and
-      // add it to a list for sorting
-      foreach (UserData user in sample)
-      {
-
-        // Calculate composite scores
-        var proximity = CompareLocation(forUser, user);
-        var hobbiesInCommon = CompareHobbies(forUser, user);
-        var ageDifference = CompareAge(forUser, user);
-
-        // Calculate total weighted score
-        var totalScore = ((proximity * proximityWt) + (hobbiesInCommon * hobbiesWt)) - (ageDifference * ageWt);
-
-        var scoredUser = new KeyValuePair<int, UserData>(totalScore, user);
-
-        returnVal_unsorted.Add(scoredUser);
-
-      }
-
-      // Sort list by user score
-      List<UserData> returnVal_list = SortByScore(returnVal_unsorted, scoredNum);
-
-      // Prepare a random subset of the scored users to be returned
-      List<UserData> returnVal_random = GetRandomUsers(returnVal_list, returnNum);
-
-      // Convert the list to the return format (array)
-      returnVal = returnVal_random.ToArray();
-
-      return returnVal;
     }
 
 
