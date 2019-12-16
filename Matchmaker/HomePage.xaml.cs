@@ -129,15 +129,9 @@ namespace Matchmaker {
         }
 
 
-        private void Home_Button(object sender, RoutedEventArgs e) {
-            //Go to homepage
-            HomePage p = new HomePage();
-            p.InitializeComponent();
-            NavigationService.Navigate(p);
-        }
 
         private void Contacts_Button(object sender, RoutedEventArgs e) {
-            Contacts c = new Contacts();
+            Contacts c = new Contacts(LoggedInUserID);
             c.InitializeComponent();
             NavigationService.Navigate(c);
         }
