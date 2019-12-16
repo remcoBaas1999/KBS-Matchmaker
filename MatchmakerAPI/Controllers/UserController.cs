@@ -177,12 +177,11 @@ namespace MatchmakerAPI.Controllers
 		}
 
 		public UserData[] FindMatches(Dictionary<int, UserData> users, int currentUserID, int firstRandomSelection, int scoredSelection, int finalRandomSelection) {
-			UserData[] userDatas = new UserData[finalRandomSelection];
-
+			
 			//Make a random selection of 120 users
 			Dictionary<int, UserData> profiles = RandomSelection(users, firstRandomSelection);
 
-			Console.Write($"\nAfter selecting random 120 ({profiles.Count} users): ");
+			Console.Write($"\n\nAfter selecting random 120 ({profiles.Count} users): ");
 			foreach (KeyValuePair<int, UserData> profile in profiles) {
 				Console.Write($"{profile.Value.realName}, ");
 			}
@@ -190,34 +189,28 @@ namespace MatchmakerAPI.Controllers
 			//Score each of the users based on hobbies, age and city
 			Dictionary<KeyValuePair<int, UserData>, int> scoredUsers = ScoreUsers(profiles, currentUserID);
 
-			Console.Write($"\nAfter scoring users ({scoredUsers.Count} users): ");
+			Console.Write($"\n\nAfter scoring users ({scoredUsers.Count} users): ");
 			foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
 				Console.Write($"{scoredUser.Key.Value.realName} - {scoredUser.Value}, ");
 			}
 
 			//Sort users from highest to lowest score, throw away the scores and only keep the 12 users with the highest score
-			List<UserData> profileSelection = OrderUsersByScoreDescending(scoredUsers, scoredSelection);
+			UserData[] orderedUsers = OrderUsersByScoreDescending(scoredUsers, scoredSelection);
 
-			Console.Write($"\nAfter ordering users by score (high to low) and only keeping the 12 users with the highest score ({profileSelection.Count} users): ");
-			foreach (UserData profile in profileSelection) {
+			Console.Write($"\n\nAfter ordering users by score (high to low) and only keeping the 12 users with the highest score ({orderedUsers.Length} users): ");
+			foreach (UserData profile in orderedUsers) {
 				Console.Write($"{profile.realName}, ");
 			}
 
 			//Pick 4 users randomly out of the 12 with the highest score
-			profileSelection = RandomSelection(profileSelection, finalRandomSelection);
+			UserData[] profileSelection = RandomSelection(orderedUsers, finalRandomSelection);
 
-			Console.Write($"\nAfter selecting random 4 ({profileSelection.Count} users): ");
+			Console.Write($"\n\nAfter selecting random 4 ({profileSelection.Length} users): ");
 			foreach (UserData profile in profileSelection) {
 				Console.Write($"{profile.realName}, ");
 			}
 
-			//Put the users in a UserData array
-			int count = 0;
-			foreach (UserData user in profileSelection) {
-				userDatas[count] = user;
-				count++;
-			}
-			return userDatas;
+			return profileSelection;
 		}
 
 		private Dictionary<int, UserData> RandomSelection (Dictionary<int, UserData> users, int randomAmountToBeSelected) {
@@ -242,8 +235,8 @@ namespace MatchmakerAPI.Controllers
 			return profiles;
 		}
 
-		private List<UserData> RandomSelection (List<UserData> users, int randomAmountToBeSelected) {
-			List<UserData> profiles = new List<UserData>();
+		private UserData[] RandomSelection (UserData[] users, int randomAmountToBeSelected) {
+			UserData[] profiles = new UserData[randomAmountToBeSelected];
 
 			//Make a list of all the user IDs
 			List<int> userIDs = new List<int>();
@@ -256,7 +249,7 @@ namespace MatchmakerAPI.Controllers
 			Random rnd = new Random();
 
 			//Fill the profiles List with random users from the users Dictionary
-			while (profiles.Count < Math.Min(randomAmountToBeSelected, users.Count)) {
+			while (profiles.Length < Math.Min(randomAmountToBeSelected, users.Length)) {
 
 				//Select a random user from users
 				int userID = userIDs[rnd.Next(userIDs.Count)];
@@ -269,10 +262,10 @@ namespace MatchmakerAPI.Controllers
 					}
 				}
 				//... add it to profiles
-				if (profileIsAlreadyInProfiles) {
+				if (!profileIsAlreadyInProfiles) {
 					foreach (UserData user in users) {
 						if (user.id == userID) {
-							profiles.Add(user);
+							profiles[profiles.Length] = user;
 						}
 					}
 				}
@@ -328,18 +321,19 @@ namespace MatchmakerAPI.Controllers
 			return scoredUsers;
 		}
 
-		private List<UserData> OrderUsersByScoreDescending (Dictionary<KeyValuePair<int, UserData>, int> scoredUsers, int scoredSelection) {
-			List<UserData> profiles = new List<UserData>();
-			List<int> scores = scoredUsers.Values.ToList<int>();
-			int count = 0;
-			while (scores.Count > 0 && count < scoredSelection) {
+		private UserData[] OrderUsersByScoreDescending (Dictionary<KeyValuePair<int, UserData>, int> scoredUsers, int scoredSelection) {
+			UserData[] profiles = new UserData[scoredSelection];
+
+			while (profiles.Length < scoredSelection) {
+				int[] scores = new int[scoredUsers.Count];
+				foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
+					scores[scores.Length] = scoredUser.Value;
+				}
 				foreach (KeyValuePair<KeyValuePair<int, UserData>, int> scoredUser in scoredUsers) {
 					if (scoredUser.Value == scores.Max()) {
-						profiles.Add(scoredUser.Key.Value);
+						profiles[profiles.Length] = scoredUser.Key.Value;
 					}
 				}
-				scores.Remove(scores.Max());
-				count++;
 			}
 			return profiles;
 		}
