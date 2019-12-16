@@ -179,11 +179,14 @@ namespace MatchmakerAPI
       }
 
       // Return the number of hobbies that appear in both hobbies fields
-			foreach (Hobby h in user.hobbies)
+			foreach (Hobby x in user.hobbies)
 			{
-				if (forUser.hobbies.Contains(h))
+				foreach (Hobby y in forUser.hobbies)
 				{
-					returnVal++;
+					if (x.displayName == y.displayName)
+					{
+						returnVal++;
+					}
 				}
 			}
 
