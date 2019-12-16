@@ -16,14 +16,14 @@
                     <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill"/>
                 </Image.OpacityMask>
             </Image>
-            <Image x:Name="RefreshNotificationsButton" Source="Images/refresh.png" Margin="514,181,70,225" MouseDown="RefreshNotificationsButton_MouseDown">
+            <Image x:Name="RefreshNotificationsButton" Source="Images/refresh.png" RenderTransformOrigin="0.5, 0.5" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,180,50,225" Width="40" Height="40" MouseDown="RefreshNotificationsButton_MouseDown">
                 <Image.OpacityMask>
                     <ImageBrush ImageSource="Images/refresh.png" Stretch="UniformToFill"/>
                 </Image.OpacityMask>
             </Image>
-            
+
             <Rectangle HorizontalAlignment="Left" Height="40" Margin="101,181,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="402" Fill="#FFE8E8E8"/>
             <Label Content="You are up to date!" FontFamily="Roboto" HorizontalAlignment="Left" Margin="237,187,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
-            </Grid>
+        </Grid>
     </Grid>
 </Page>
