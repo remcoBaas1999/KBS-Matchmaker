@@ -131,8 +131,38 @@ namespace MatchmakerAPI.Controllers
 
 		}
 
+
+
+		// Retrieve just the hobbies of a user
 		[HttpGet("get/hobbies/id={id}")]
 		public List<Hobby> GetUserHobbies(int id) {
+
+			try
+			{
+				// Load the users database into memory
+				var users = LoadUsers();
+
+				// Pick the specified user
+				var user = users[id];
+
+				// Return the contents of the hobby field
+				return user.hobbies;
+
+			} catch (Exception) {
+
+				// TODO: add specific null exception handlers
+
+				// If something goes wrong, return a nulled List<Hobby> and display
+				// a warning on the server console
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    Exception caught trying to fetch a user's hobbies.");
+
+				return new List<Hobby>();
+
+			}
+
+
 			using (StreamReader r = new StreamReader("/home/student/data/users.json")) {
 				string json = r.ReadToEnd();
 				try {
@@ -142,6 +172,7 @@ namespace MatchmakerAPI.Controllers
 					return null;
 				}
 			}
+
 		}
 
 
