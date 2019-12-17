@@ -19,27 +19,25 @@ namespace MatchmakerAPI.Controllers
 		[HttpGet("get/id={id}")]
 		public UserData UserById(int id) {
 
-			// Open the users.json data file
-			using (StreamReader r = new StreamReader("/home/student/data/users.json")) {
+			// Load the users database into memory
+			var users = LoadUsers();
 
-				// Load the users.json contents into memory
-				string json = r.ReadToEnd();
+			try
+			{
+				// Fetch the specific user we're looking for in a try/catch block
+				// in case the input is not a valid key.
+				var user = users[id];
+				return user;
 
-				try {
+			} catch (System.Collections.Generic.KeyNotFoundException) {
 
-					// Deserialize the json string into a dictionary of ints (the user's id)
-					// and the rest of their data, and take the one where the key is equal to
-					// the requested id in the url.
-					var user = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
-
-
-					user.id = id;
-					return user;
-				} catch (System.Collections.Generic.KeyNotFoundException e) {
-					return new UserData();
-				}
+				// If the requested user id does not exist, return a userdata object
+				// with all fields nulled.
+				return new UserData();
 			}
 		}
+
+		
 
 		[HttpGet("get/email={email}")]
 		public UserData UserByEmail(string email) {
@@ -48,7 +46,7 @@ namespace MatchmakerAPI.Controllers
 				try {
 					var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
 					return UserById(id);
-				} catch (System.Collections.Generic.KeyNotFoundException e) {
+				} catch (System.Collections.Generic.KeyNotFoundException) {
 					return new UserData();
 				}
 			}
@@ -70,7 +68,7 @@ namespace MatchmakerAPI.Controllers
 				try {
 					var user = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
 					return user.hobbies;
-				} catch (System.Collections.Generic.KeyNotFoundException e) {
+				} catch (System.Collections.Generic.KeyNotFoundException) {
 					return null;
 				}
 			}
@@ -80,15 +78,15 @@ namespace MatchmakerAPI.Controllers
 		// TODO
 
 
-		[HttpGet("get/matches/id={id}")]
-		public UserData[] GetMatches(int id) {
-			int firstRandomSelection = 120;
-			int scoredSelection = 12;
-			int finalRandomSelection = 5;
+		[HttpGet("get/matches/id={forUserId}")]
+		public UserData[] GetMatches(int forUserId) {
+			int sampleNum = 120;
+			int scoredNum = 12;
+			int returnNum = 4;
 			try {
-				return MatchmakingAlgorithm.FindMatches(id, firstRandomSelection, scoredSelection, finalRandomSelection);
-			} catch (System.Collections.Generic.KeyNotFoundException e) {
-				return new UserData[finalRandomSelection];
+				return MatchmakingAlgorithm.FindMatches(forUserId, sampleNum, scoredNum, returnNum);
+			} catch (System.Collections.Generic.KeyNotFoundException) {
+				return new UserData[returnNum];
 			}
 		}
 
