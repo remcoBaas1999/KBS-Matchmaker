@@ -206,26 +206,26 @@ namespace MatchmakerAPI.Controllers
 			// Initialize the new user id variable
 			int tmp_key;
 
-			// Initialize a Random object (because it isn't static)
-			var rng = new Random();
-
-			do {
-				// Generate a random user id, and if it's taken, pick a new one
-				// until you find one that isn't.
-
-				tmp_key = rng.Next();
-
-				// The user id is random for security/privacy reasons;
-				// keys are harder to guess and it makes it harder for
-				// potential attackers to download all the records
-			} while (users.ContainsKey(tmp_key));
-
 			// Update the users database
 			try
 			{
 				// Load the users database into memory
 				var users = LoadUsers();
 
+				// Initialize a Random object (because it isn't static)
+				var rng = new Random();
+
+				do {
+					// Generate a random user id, and if it's taken, pick a new one
+					// until you find one that isn't.
+
+					tmp_key = rng.Next();
+
+					// The user id is random for security/privacy reasons;
+					// keys are harder to guess and it makes it harder for
+					// potential attackers to download all the records
+				} while (users.ContainsKey(tmp_key));
+				
 				// Generate some placeholder data
 				var tmp_hobbies = new List<Hobby>();
 				var tmp_cover = $"{rng.Next(5)}.jpg";
