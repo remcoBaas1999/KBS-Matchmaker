@@ -1,5 +1,4 @@
 ﻿using MatchMakerClassLibrary;
-using MatchMakerClassLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +58,11 @@ namespace Matchmaker {
                     //add to list of Hobbies in the Xaml
                     LoadHobbyWrapper(item.displayName, userAccount);
                 }
+                if (addHobby.Visibility == Visibility.Collapsed)
+                {
+                    HobbyWrapper.Width = 742;
+                }
+                else HobbyWrapper.Width = 600;
             }
             userInView = user;
 
@@ -164,7 +168,6 @@ namespace Matchmaker {
             foreach (string item in locations) {
                 citySelection.Items.Add(item);
             }
-
         }
 
         private void editLocation_Click(object sender, RoutedEventArgs e) {
@@ -198,8 +201,10 @@ namespace Matchmaker {
 
         //Send user back to homescreen
         private void Return(object sender, MouseButtonEventArgs e) {
-            NavigationService.GoBack();
+            HomePage homepage = new HomePage();
+            NavigationService.Navigate(homepage);
         }
+
         private void addHobby_MouseDown(object sender, MouseButtonEventArgs e) {
             AddHobbies.Visibility = Visibility.Visible;
             entryHobbies.Visibility = Visibility.Visible;
@@ -280,7 +285,7 @@ namespace Matchmaker {
             hobbyBorder.Child = stackPanel;
             hobbyBorder.CornerRadius = new CornerRadius(16);
             hobbyBorder.Height = 32;
-            hobbyBorder.Margin = new Thickness(6, 0, 6, 0);
+            hobbyBorder.Margin = new Thickness(6);
 
 
             stackPanel.Orientation = Orientation.Horizontal;
@@ -308,8 +313,6 @@ namespace Matchmaker {
             stackPanel.Children.Add(hobbyText);
             stackPanel.Children.Add(remove);
             HobbyWrapper.Children.Add(hobbyBorder);
-
-
         }
 
         private string formatName(string hobby) {
