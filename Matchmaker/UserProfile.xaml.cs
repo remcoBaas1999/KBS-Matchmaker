@@ -58,6 +58,11 @@ namespace Matchmaker {
                     //add to list of Hobbies in the Xaml
                     LoadHobbyWrapper(item.displayName, userAccount);
                 }
+                if (addHobby.Visibility == Visibility.Collapsed)
+                {
+                    HobbyWrapper.Width = 742;
+                }
+                else HobbyWrapper.Width = 600;
             }
             userInView = user;
 
@@ -308,8 +313,6 @@ namespace Matchmaker {
             stackPanel.Children.Add(hobbyText);
             stackPanel.Children.Add(remove);
             HobbyWrapper.Children.Add(hobbyBorder);
-
-
         }
 
         private string formatName(string hobby) {
