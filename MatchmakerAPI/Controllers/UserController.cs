@@ -340,7 +340,7 @@ namespace MatchmakerAPI.Controllers
 			}
 
 			try {
-				return CreatedAtActionResult("UpdateUser", new { success = true });
+				return CreatedAtAction("UpdateUser", new { success = true });
 			} catch (System.InvalidOperationException) {
 				return null;
 			}
