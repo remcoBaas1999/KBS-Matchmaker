@@ -314,7 +314,7 @@ namespace MatchmakerAPI.Controllers
 
 		// Update an exisiting user
 		[HttpPost("post/update")]
-		public ActionResult UpdateUser(UserData data) {
+		public CreatedAtActionResult UpdateUser(UserData data) {
 
 			// Initialize the new user id variable
 			int key;
@@ -340,7 +340,7 @@ namespace MatchmakerAPI.Controllers
 			}
 
 			try {
-				return new ActionResult("UpdateUser", new { success = true });
+				return CreatedAtActionResult("UpdateUser", new { success = true });
 			} catch (System.InvalidOperationException) {
 				return null;
 			}
