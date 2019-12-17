@@ -31,6 +31,7 @@ namespace MatchmakerAPI.Controllers
 				// Fetch the specific user we're looking for in a try/catch block
 				// in case the input is not a valid key.
 				var user = users[id];
+				user.id = id;
 
 				// Return the specified user
 				return user;
@@ -225,7 +226,7 @@ namespace MatchmakerAPI.Controllers
 					// keys are harder to guess and it makes it harder for
 					// potential attackers to download all the records
 				} while (users.ContainsKey(tmp_key));
-				
+
 				// Generate some placeholder data
 				var tmp_hobbies = new List<Hobby>();
 				var tmp_cover = $"{rng.Next(5)}.jpg";
@@ -313,7 +314,9 @@ namespace MatchmakerAPI.Controllers
 
 		// Update an exisiting user
 		[HttpPost("post/update")]
-		public CreatedAtActionResult UpdateUser(UserData data) {
+		public ActionResult UpdateUser(UserData data) {
+
+			// Initialize the new user id variable
 			int key;
 
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json")) {
@@ -337,7 +340,7 @@ namespace MatchmakerAPI.Controllers
 			}
 
 			try {
-				return CreatedAtAction("UpdateUser", new { success = true });
+				return ActionResult("UpdateUser", new { success = true });
 			} catch (System.InvalidOperationException) {
 				return null;
 			}
