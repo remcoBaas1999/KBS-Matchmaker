@@ -119,7 +119,7 @@ namespace MatchmakerAPI.Controllers
 				var userMap = LoadUserMap();
 
 				// Return the userMap
-				return userMap();
+				return userMap;
 
 			} catch (Exception) {
 
