@@ -15,50 +15,120 @@ namespace MatchmakerAPI.Controllers
 	[Route("/user/")]
 	public class UserController : ControllerBase {
 
-		// Retrieving full user data by user id
+
+		// Retrieve full user data by user id
 		[HttpGet("get/id={id}")]
 		public UserData UserById(int id) {
 
-			// Load the users database into memory
-			var users = LoadUsers();
-
 			try
 			{
+
+				// Load the users database into memory
+				var users = LoadUsers();
+
 				// Fetch the specific user we're looking for in a try/catch block
 				// in case the input is not a valid key.
 				var user = users[id];
+
+				// Return the specified user
 				return user;
 
 			} catch (System.Collections.Generic.KeyNotFoundException) {
 
 				// If the requested user id does not exist, return a userdata object
-				// with all fields nulled.
+				// with all fields nulled and display a warning on the server console.
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    An invalid user id was requested.");
+
 				return new UserData();
+
+			} catch (Exception) {
+
+				// If something else goes wrong, return a nulled UserData and display
+				// a warning on the server console
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    Exception caught trying to fetch a user by id.");
+
+				return new UserData();
+
 			}
+
 		}
 
-		
 
+
+		// Retrieve full user data by email
 		[HttpGet("get/email={email}")]
 		public UserData UserByEmail(string email) {
-			using (StreamReader r = new StreamReader("/home/student/data/userMap.json")) {
-				string json = r.ReadToEnd();
-				try {
-					var id = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[email];
-					return UserById(id);
-				} catch (System.Collections.Generic.KeyNotFoundException) {
-					return new UserData();
-				}
+
+			try
+			{
+
+				// Load the userMap into memory to match the given email to a user id
+				// without having to loop through every entry in the entire users.json
+				// database
+				var userMap = LoadUserMap();
+
+				// Fetch the specific user we're looking for in a try/catch block
+				// in case the input is not a valid key.
+				var id = userMap[email];
+
+				// Reuse the UserById() method to prevent code duplication
+				return UserById(id);
+
+			} catch (System.Collections.Generic.KeyNotFoundException) {
+
+				// If the requested email does not exist, return a UserData object
+				// with all fields nulled and display a warning on the server console.
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    An invalid email address was requested.");
+
+				return new UserData();
+
+			} catch (Exception) {
+
+				// If something else goes wrong, return a nulled UserData and display
+				// a warning on the server console
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    Exception caught trying to fetch a user by email.");
+
+				return new UserData();
+
 			}
+
 		}
 
+
+
+		// Retrieve the userMap
 		[HttpGet("get/all")]
 		public Dictionary<string, int> AllUsers() {
-			using (StreamReader r = new StreamReader("/home/student/data/userMap.json")) {
-				string json = r.ReadToEnd();
-				var dict = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
-				return dict;
+
+			try
+			{
+
+				// Load the userMap into memory
+				var userMap = LoadUserMap();
+
+				// Return the userMap
+				return userMap();
+
+			} catch (Exception) {
+
+				// If something goes wrong, return a nulled Dictionary<string, int> and
+				// display a warning on the server console
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    Exception caught trying to fetch all users.");
+
+				return new Dictionary<string, int>();
+
 			}
+
 		}
 
 		[HttpGet("get/hobbies/id={id}")]
@@ -210,6 +280,22 @@ namespace MatchmakerAPI.Controllers
 
 				// Return the deserialized data table
 				return users;
+      }
+		}
+
+		public static Dictionary<string, int> LoadUserMap()
+		{
+			// Open the userMap.json data file
+			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
+      {
+				// Load the contents into memory
+        string json = r.ReadToEnd();
+
+				// Deserialize the json to something C# can do stuff to
+        var userMap = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+
+				// Return the deserialized data table
+				return userMap;
       }
 		}
 
