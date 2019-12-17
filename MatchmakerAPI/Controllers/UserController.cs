@@ -162,17 +162,6 @@ namespace MatchmakerAPI.Controllers
 
 			}
 
-
-			using (StreamReader r = new StreamReader("/home/student/data/users.json")) {
-				string json = r.ReadToEnd();
-				try {
-					var user = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
-					return user.hobbies;
-				} catch (System.Collections.Generic.KeyNotFoundException) {
-					return null;
-				}
-			}
-
 		}
 
 
