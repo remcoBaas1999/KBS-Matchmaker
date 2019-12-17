@@ -209,7 +209,6 @@ namespace MatchMakerClassLibrary
             string uri = @"https://145.44.233.207/user/post/update/id={id}";
             //Update requesting user account
             id = requestUser.id;
-            //requestUser.contacts
             requestUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
             await Post(uri, requestUser);
             return true;
