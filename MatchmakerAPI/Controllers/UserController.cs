@@ -289,6 +289,7 @@ namespace MatchmakerAPI.Controllers
 
 		public static Dictionary<int, UserData> LoadUsers()
 		{
+
 			// Open the users.json data file
 			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
       {
@@ -301,10 +302,12 @@ namespace MatchmakerAPI.Controllers
 				// Return the deserialized data table
 				return users;
       }
+
 		}
 
 		public static Dictionary<string, int> LoadUserMap()
 		{
+
 			// Open the userMap.json data file
 			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
       {
@@ -317,9 +320,8 @@ namespace MatchmakerAPI.Controllers
 				// Return the deserialized data table
 				return userMap;
       }
+
 		}
-
-
 
 	}
 }
