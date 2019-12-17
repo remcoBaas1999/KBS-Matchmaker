@@ -33,12 +33,6 @@ namespace Matchmaker {
                 //Hide BlockInformation: You cant block your own profile or make contact with yourself
                 BlockUser.Visibility = Visibility.Hidden;
                 contactRequest.Visibility = Visibility.Collapsed;
-                string email = User.email;
-                UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-                if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
-                {
-                    addHobby.Visibility = Visibility.Collapsed;
-                }                
             }
             else {
                 //if you are on an other account you cannot edit it
@@ -47,6 +41,12 @@ namespace Matchmaker {
                 editName.Visibility = Visibility.Collapsed;
                 btnEditCoverImage.Visibility = Visibility.Collapsed;
                 addHobby.Visibility = Visibility.Collapsed;
+                string email = User.email;
+                UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
+                //if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
+                //{
+                //    addHobby.Visibility = Visibility.Collapsed;
+                //}
             }
 
             years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
@@ -59,6 +59,11 @@ namespace Matchmaker {
                     //add to list of Hobbies in the Xaml
                     LoadHobbyWrapper(item.displayName, userAccount);
                 }
+                if (addHobby.Visibility == Visibility.Collapsed)
+                {
+                    HobbyWrapper.Width = 742;
+                }
+                else HobbyWrapper.Width = 600;
             }
             userInView = user;
 
@@ -164,7 +169,6 @@ namespace Matchmaker {
             foreach (string item in locations) {
                 citySelection.Items.Add(item);
             }
-
         }
         //Edit the location of the city
         private void editLocation_Click(object sender, RoutedEventArgs e) {
@@ -198,8 +202,10 @@ namespace Matchmaker {
 
         //Send user back to homescreen
         private void Return(object sender, MouseButtonEventArgs e) {
-            NavigationService.GoBack();
+            HomePage homepage = new HomePage();
+            NavigationService.Navigate(homepage);
         }
+
         private void addHobby_MouseDown(object sender, MouseButtonEventArgs e) {
             AddHobbies.Visibility = Visibility.Visible;
             entryHobbies.Visibility = Visibility.Visible;
@@ -281,7 +287,7 @@ namespace Matchmaker {
             hobbyBorder.Child = stackPanel;
             hobbyBorder.CornerRadius = new CornerRadius(16);
             hobbyBorder.Height = 32;
-            hobbyBorder.Margin = new Thickness(6, 0, 6, 0);
+            hobbyBorder.Margin = new Thickness(6);
 
             stackPanel.Orientation = Orientation.Horizontal;
 
@@ -308,8 +314,6 @@ namespace Matchmaker {
             stackPanel.Children.Add(hobbyText);
             stackPanel.Children.Add(remove);
             HobbyWrapper.Children.Add(hobbyBorder);
-
-
         }
         //Make the name of the correct format to allow it to be set as a name
         private string formatName(string hobby) {
@@ -338,7 +342,7 @@ namespace Matchmaker {
             await MatchmakerAPI_Client.SaveUser(userInView);
             //Reload the page
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, false, LoggedInUserID);
+            Page userProfile = new UserProfile(user, true, LoggedInUserID);
             NavigationService.Navigate(userProfile);
         }
         //Add hobbies to an account
@@ -362,7 +366,7 @@ namespace Matchmaker {
             await MatchmakerAPI_Client.SaveUser(userInView);
             //Reload page
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, false, LoggedInUserID);
+            Page userProfile = new UserProfile(user, true, LoggedInUserID);
             NavigationService.Navigate(userProfile);
         }
 

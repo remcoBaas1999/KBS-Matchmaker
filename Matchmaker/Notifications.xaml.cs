@@ -30,15 +30,9 @@ namespace Matchmaker {
             for (int i = 0; i < 360; i+=10) {
                 RotateTransform rotateTransform = new RotateTransform(i);
                 RefreshNotificationsButton.RenderTransform = rotateTransform;
-                Thread.Sleep(20);
+                Thread.Sleep(25);
                 System.Windows.Forms.Application.DoEvents();
             }
-            Refresh();
-        }
-
-        private static void Refresh() {
-            //Get New Notifications for User
-
             
         }
     }
