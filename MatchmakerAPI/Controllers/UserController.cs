@@ -13,12 +13,14 @@ namespace MatchmakerAPI.Controllers
 {
 	[ApiController]
 	[Route("/user/")]
-	public class UserController : ControllerBase {
+	public class UserController : ControllerBase
+	{
 
 
 		// Retrieve full user data by user id
 		[HttpGet("get/id={id}")]
-		public UserData UserById(int id) {
+		public UserData UserById(int id)
+		{
 
 			try
 			{
@@ -61,7 +63,8 @@ namespace MatchmakerAPI.Controllers
 
 		// Retrieve full user data by email
 		[HttpGet("get/email={email}")]
-		public UserData UserByEmail(string email) {
+		public UserData UserByEmail(string email)
+		{
 
 			try
 			{
@@ -106,7 +109,8 @@ namespace MatchmakerAPI.Controllers
 
 		// Retrieve the userMap
 		[HttpGet("get/all")]
-		public Dictionary<string, int> AllUsers() {
+		public Dictionary<string, int> AllUsers()
+		{
 
 			try
 			{
@@ -135,7 +139,8 @@ namespace MatchmakerAPI.Controllers
 
 		// Retrieve just the hobbies of a user
 		[HttpGet("get/hobbies/id={id}")]
-		public List<Hobby> GetUserHobbies(int id) {
+		public List<Hobby> GetUserHobbies(int id)
+		{
 
 			try
 			{
