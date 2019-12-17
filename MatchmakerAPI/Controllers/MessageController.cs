@@ -26,7 +26,6 @@ namespace MatchmakerAPI.Controllers
                 var chats = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
                 if (chats.ContainsKey(data.ID))
                 {
-                    //ff fixen
                     List<Message> manipulateChat;
                     chats.TryGetValue(data.ID, out manipulateChat);
                     manipulateChat.Add(data);
@@ -35,7 +34,7 @@ namespace MatchmakerAPI.Controllers
                 }
                 else
                 {
-                    var newChat = new List<Message>();
+                    var newChat = new List<Message>();  
                     newChat.Add(data);
                     chats.Add(data.ID, newChat);
 

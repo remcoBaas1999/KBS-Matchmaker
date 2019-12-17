@@ -25,11 +25,18 @@ namespace MatchMakerClassLibrary
 
         public static AuthData DeserializeAuthData(string json)
         {
-            return JsonConvert.DeserializeObject<AuthData>(json);
+            return JsonConvert.DeserializeObject<AuthData>(json);   
         }
         public static List<MessageData> DeserializeMessageData(string json)
         {
-            return JsonConvert.DeserializeObject<List<MessageData>>(json);
+            if (json == null)
+            {
+                return new List<MessageData>();
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<List<MessageData>>(json);
+            }
         }
         public static string GetUserData(int id)
         {
@@ -69,14 +76,12 @@ namespace MatchMakerClassLibrary
             }
         }
 
-        public static string GetEventData(int id)
+        public static async Task<string> GetMessageData(string id)
         {
-            //return Get($@"https://145.44.233.207/get/event?id={id}");
-            return null;
-        }
-        public static string GetMessageData(string id)
-        {
-            return Get($@"https://145.44.223.207/messages/get?id={id}");
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            var uri = $@"https://145.44.233.207/messages/get/id={id}";
+            var response = await client.GetAsync(uri);
+            return await response.Content.ReadAsStringAsync();
         }
         public static async Task<bool> AuthenticateAsync(string email, string password)
         {
@@ -158,7 +163,7 @@ namespace MatchMakerClassLibrary
 
         public static async Task<bool> PostNewMessage(MessageData newMessageData)
         {
-            string uri = @"https://145.44.223.207/messages/post/new";
+            string uri = @"https://145.44.233.207/messages/post/new";
             var result = await Post(uri, newMessageData);
             //do something with result?
             return true;
