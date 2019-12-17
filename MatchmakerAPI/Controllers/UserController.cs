@@ -170,95 +170,148 @@ namespace MatchmakerAPI.Controllers
 		}
 
 
-		// TODO
 
-
+		// Retrieve matches for a specific user
 		[HttpGet("get/matches/id={forUserId}")]
 		public UserData[] GetMatches(int forUserId) {
+
+			// Define some parameters for the algorithm
 			int sampleNum = 120;
 			int scoredNum = 12;
 			int returnNum = 4;
+
 			try {
-				return MatchmakingAlgorithm.FindMatches(forUserId, sampleNum, scoredNum, returnNum);
+
+				// Run the algorithm and store the results in an array of UserData
+				var matches = MatchmakingAlgorithm.FindMatches(forUserId, sampleNum, scoredNum, returnNum);
+
+				// Return the matches
+				return matches;
+
 			} catch (System.Collections.Generic.KeyNotFoundException) {
+
+				// If the user does not exist, return an empty array of UserData
 				return new UserData[returnNum];
+
 			}
+
 		}
 
 
-		// TODO: refactor code to use the LoadUsers() method
 
-
+		// Add a new user
 		[HttpPost("post/new")]
 		public CreatedAtActionResult AddNewUser(NewUserData data) {
-			int key;
 
-			using (StreamReader r = new StreamReader("/home/student/data/users.json")) {
-				string json = r.ReadToEnd();
+			// Initialize the new user id variable
+			int tmp_key;
 
-				var users = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json);
+			// Initialize a Random object (because it isn't static)
+			var rng = new Random();
 
-				var rng = new Random();
+			do {
+				// Generate a random user id, and if it's taken, pick a new one
+				// until you find one that isn't.
 
-				do {
-					key = rng.Next();
-				} while (users.ContainsKey(key));
+				tmp_key = rng.Next();
 
-				var udata = new UserData {
-					email = data.email,
-					password = data.password,
-					salt = data.salt,
-					realName = data.realName,
-					birthdate = data.birthdate,
-					profilePicture = "0.jpg"
+				// The user id is random for security/privacy reasons;
+				// keys are harder to guess and it makes it harder for
+				// potential attackers to download all the records
+			} while (users.ContainsKey(tmp_key));
+
+			// Update the users database
+			try
+			{
+				// Load the users database into memory
+				var users = LoadUsers();
+
+				// Generate some placeholder data
+				var tmp_hobbies = new List<Hobby>();
+				var tmp_cover = $"{rng.Next(5)}.jpg";
+
+				// Fill a new UserData object with the supplied data
+				// and some placeholders
+				var newUser = new UserData {
+					email 					= data.email,
+					password 				= data.password,
+					salt 						= data.salt,
+					realName 				= data.realName,
+					birthdate 			= data.birthdate,
+					profilePicture	= "0.jpg",
+					hobbies					= tmp_hobbies,
+					coverImage			= tmp_cover,
+					id							= tmp_key
 				};
 
-				users.Add(key, udata);
+				// Add the new user data to the in-memory users database with
+				// the newly generated key
+				users.Add(tmp_key, newUser);
 
+				// Serialize the in-memory users database in order to efficiently
+				// store the new data
 				var text = JsonConvert.SerializeObject(users);
+
+				// Write the serialized updated users database to the proper file
 				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
+
+			} catch (Exception) {
+
+				// If something goes wrong, throw a fit in the console and
+				// return a failure state
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    An error occurred attempting to add a user to the users database.");
+
+				return CreatedAtAction("AddNewUser", new { success = false });
+
 			}
-			using (StreamReader r = new StreamReader("/home/student/data/userMap.json")) {
-				string json = r.ReadToEnd();
-				var userMap = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
-				userMap.Add(data.email, key);
+
+			// Update the user map
+			try
+			{
+
+				// Load the userMap into memory
+				var userMap = LoadUserMap();
+
+				// Add a new entry mapping the supplied email address to the random
+				// user id
+				userMap.Add(data.email, tmp_key);
+
+				// Serialize the updated mapping
 				var text = JsonConvert.SerializeObject(userMap);
 
+				// Write the serialized updated mapping to the proper file
 				System.IO.File.WriteAllText(@"/home/student/data/userMap.json", text);
+
+			} catch (Exception) {
+
+				// If something goes wrong, throw a fit in the console and
+				// return a failure state
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    An error occurred attempting to add a user to the user map.");
+
+				return CreatedAtAction("AddNewUser", new { success = false });
+
 			}
 
-			try {
+			try
+			{
+
 				return CreatedAtAction("AddNewUser", new { success = true });
+
 			} catch (System.InvalidOperationException) {
-				return null;
+
+				return CreatedAtAction("AddNewUser", new { success = false });
+
 			}
+
 		}
 
-		[HttpPost("post/update/images")]
-		public CreatedAtActionResult UpdateCoverImage(CoverImageData data) {
 
-			// Get the user id
-			int key = data.userid;
 
-			// Read the users data file
-			var users = LoadUsers();
-
-			// Change the specified user's coverImage property
-			users[key].coverImage = data.imageName;
-
-			// Serialize the modified user data for storage
-			var modifiedData = JsonConvert.SerializeObject(users);
-
-			// Write the modified user data to the users data file
-			System.IO.File.WriteAllText(@"/home/student/data/users.json", modifiedData);
-
-			try {
-				return CreatedAtAction("UpdateUser", new { success = true });
-			} catch (System.InvalidOperationException) {
-				return null;
-			}
-		}
-
+		// Update an exisiting user
 		[HttpPost("post/update")]
 		public CreatedAtActionResult UpdateUser(UserData data) {
 			int key;
@@ -289,6 +342,33 @@ namespace MatchmakerAPI.Controllers
 				return null;
 			}
 		}
+
+		[HttpPost("post/update/images")]
+		public CreatedAtActionResult UpdateCoverImage(CoverImageData data) {
+
+			// Get the user id
+			int key = data.userid;
+
+			// Read the users data file
+			var users = LoadUsers();
+
+			// Change the specified user's coverImage property
+			users[key].coverImage = data.imageName;
+
+			// Serialize the modified user data for storage
+			var modifiedData = JsonConvert.SerializeObject(users);
+
+			// Write the modified user data to the users data file
+			System.IO.File.WriteAllText(@"/home/student/data/users.json", modifiedData);
+
+			try {
+				return CreatedAtAction("UpdateUser", new { success = true });
+			} catch (System.InvalidOperationException) {
+				return null;
+			}
+		}
+
+
 
 
 
