@@ -205,5 +205,12 @@ namespace Matchmaker {
         private void Activity4Border_MouseDown(object sender, MouseButtonEventArgs e) {
             System.Diagnostics.Process.Start("https://www.xycletracx.nl/");
         }
+
+        // go to the contacts page
+        private void ContactPage_Click(object sender, RoutedEventArgs e)
+        {
+            ChatListPage chatList = new ChatListPage();
+            NavigationService.Navigate(chatList);
+        }
     }
 }

@@ -25,9 +25,19 @@ namespace MatchMakerClassLibrary
 
         public static AuthData DeserializeAuthData(string json)
         {
-            return JsonConvert.DeserializeObject<AuthData>(json);
+            return JsonConvert.DeserializeObject<AuthData>(json);   
         }
-
+        public static List<MessageData> DeserializeMessageData(string json)
+        {
+            if (json == null)
+            {
+                return new List<MessageData>();
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<List<MessageData>>(json);
+            }
+        }
         public static string GetUserData(int id)
         {
             return Get($@"https://145.44.233.207/user/get/id={id}");
@@ -66,10 +76,12 @@ namespace MatchMakerClassLibrary
             }
         }
 
-        public static string GetEventData(int id)
+        public static async Task<string> GetMessageData(string id)
         {
-            //return Get($@"https://145.44.233.207/get/event?id={id}");
-            return null;
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            var uri = $@"https://145.44.233.207/messages/get/id={id}";
+            var response = await client.GetAsync(uri);
+            return await response.Content.ReadAsStringAsync();
         }
         public static async Task<bool> AuthenticateAsync(string email, string password)
         {
@@ -146,6 +158,14 @@ namespace MatchMakerClassLibrary
             string uri = @"https://145.44.233.207/user/post/new";
             var result = await Post(uri, newUserData);
             //doe wat met result
+            return true;
+        }
+
+        public static async Task<bool> PostNewMessage(MessageData newMessageData)
+        {
+            string uri = @"https://145.44.233.207/messages/post/new";
+            var result = await Post(uri, newMessageData);
+            //do something with result?
             return true;
         }
 
@@ -251,5 +271,12 @@ namespace MatchMakerClassLibrary
     {
         public int userID { get; set; }
         public string imageName { get; set; }
+    }
+    public class MessageData
+    {
+        public string ID { get; set; }
+        public string Text { get; set; }
+        public int Sender { get; set; }
+        public long TimeStamp { get; set; }
     }
 }
