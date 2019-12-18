@@ -16,6 +16,14 @@ namespace MatchmakerAPI.Controllers
 	public class UserController : ControllerBase
 	{
 
+		public static string UsersFile = "/home/student/data/users.json";
+		public static string UserMapFile = "/home/student/data/userMap.json";
+
+
+
+		// // // //  READ THE DATABASE  // // // // // // // // // // // // // // //
+
+
 
 		// Retrieve full user data by user id
 		[HttpGet("get/id={id}")]
@@ -200,6 +208,10 @@ namespace MatchmakerAPI.Controllers
 
 
 
+		// // // //  UPDATE THE DATABASE   // // // // // // // // // // // // // //
+
+
+
 		// Add a new user
 		[HttpPost("post/new")]
 		public CreatedAtActionResult AddNewUser(NewUserData data) {
@@ -254,7 +266,7 @@ namespace MatchmakerAPI.Controllers
 				var text = JsonConvert.SerializeObject(users);
 
 				// Write the serialized updated users database to the proper file
-				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
+				System.IO.File.WriteAllText(UsersFile, text);
 
 			} catch (Exception) {
 
@@ -283,7 +295,7 @@ namespace MatchmakerAPI.Controllers
 				var text = JsonConvert.SerializeObject(userMap);
 
 				// Write the serialized updated mapping to the proper file
-				System.IO.File.WriteAllText(@"/home/student/data/userMap.json", text);
+				System.IO.File.WriteAllText(UserMapFile, text);
 
 			} catch (Exception) {
 
@@ -312,42 +324,99 @@ namespace MatchmakerAPI.Controllers
 
 
 
-		// Update an exisiting user
+		// Update an exisiting user's profile
 		[HttpPost("post/update")]
-		public AcceptedResult UpdateUser(UserData data) {
+		public AcceptedAtActionResult UpdateUser(UserData data) {
 
-			// Initialize the new user id variable
+			// Initialize the user id variable
 			int key;
 
-			using (StreamReader r = new StreamReader("/home/student/data/userMap.json")) {
-				string json = r.ReadToEnd();
-				try {
-					key = JsonConvert.DeserializeObject<Dictionary<string, int>>(json)[data.email];
-				} catch (System.Collections.Generic.KeyNotFoundException e) {
-					key = 0;
+			try
+			{
+
+				// Load the user map into memory
+				var userMap = LoadUserMap();
+
+				key = userMap[data.email];
+
+				// Validate user id integrity
+				if (key != data.key)
+				{
+					// If the new data's user id does not match the key found for the user's
+					// email address, update it
+					data.id = key;
 				}
+
+			} catch (System.Collections.Generic.KeyNotFoundException) {
+
+				// If something goes wrong, throw a fit in the console and
+				// return a failure state
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    An invalid key was specified.");
+
+				return CreatedAtAction("UpdateUser", new { success = false });
+
 			}
 
-			using (StreamReader r = new StreamReader("/home/student/data/users.json")) {
-				string json = r.ReadToEnd();
 
-				var users = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json);
+			try
+			{
 
-				users[key] = data;
+				// Load the users database into memory
+				var users = LoadUsers();
 
+				// Pick the user with the specified key
+				var user = users[key];
+
+				// Compare the passwords to see if they match
+				if (user.password != data.password)
+				{
+
+					// Stop if the passwords don't match
+					return AcceptedAtAction("UpdateUser", new { success = false });
+
+				}
+
+				// Overwrite the old user data with the specified data
+				user = data;
+
+				// Put the updated user data back in the database
+				users[key] = user;
+
+				// Update the database
 				var text = JsonConvert.SerializeObject(users);
-				System.IO.File.WriteAllText(@"/home/student/data/users.json", text);
+				System.IO.File.WriteAllText(UsersFile, text);
+
+			} catch (Exception) {
+
+				// If something goes wrong, throw a fit in the console and
+				// return a failure state
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    An error occurred attempting to update a user in the users database.");
+
+				return CreatedAtAction("UpdateUser", new { success = false });
+
 			}
 
 			try {
-				return Accepted("UpdateUser", new { success = true });
+
+				return AcceptedAtAction("UpdateUser", new { success = true });
+
 			} catch (System.InvalidOperationException) {
-				return null;
+
+				return AcceptedAtAction("UpdateUser", new { success = false });
+
 			}
 		}
 
+
+
+
+		// Update an exisiting user's cover image
 		[HttpPost("post/update/images")]
-		public CreatedAtActionResult UpdateCoverImage(CoverImageData data) {
+		public AcceptedAtActionResult UpdateCoverImage(CoverImageData data) {
 
 			// Get the user id
 			int key = data.userid;
@@ -362,16 +431,22 @@ namespace MatchmakerAPI.Controllers
 			var modifiedData = JsonConvert.SerializeObject(users);
 
 			// Write the modified user data to the users data file
-			System.IO.File.WriteAllText(@"/home/student/data/users.json", modifiedData);
+			System.IO.File.WriteAllText(UsersFile, modifiedData);
 
 			try {
-				return CreatedAtAction("UpdateUser", new { success = true });
+
+				return AcceptedAtAction("UpdateCoverImage", new { success = true });
+
 			} catch (System.InvalidOperationException) {
-				return null;
+
+				return AcceptedAtAction("UpdateCoverImage", new { success = false });
+
 			}
 		}
 
 
+
+		// // // //  STATIC METHODS  // // // // // // // // // // // // // // // //
 
 
 
@@ -379,7 +454,7 @@ namespace MatchmakerAPI.Controllers
 		{
 
 			// Open the users.json data file
-			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
+			using (StreamReader r = new StreamReader(UsersFile))
       {
 				// Load the contents into memory
         string json = r.ReadToEnd();
@@ -397,7 +472,7 @@ namespace MatchmakerAPI.Controllers
 		{
 
 			// Open the userMap.json data file
-			using (StreamReader r = new StreamReader("/home/student/data/userMap.json"))
+			using (StreamReader r = new StreamReader(UserMapFile))
       {
 				// Load the contents into memory
         string json = r.ReadToEnd();
