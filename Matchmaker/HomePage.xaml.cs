@@ -26,33 +26,45 @@ namespace Matchmaker {
         private int ThirdProfileID;
         private int FourthProfileID;
 
+        
         public HomePage() {
             //Start application
             InitializeComponent();
 
             //Gather info about logged-in user
             String email = User.email;
-            UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            LoggedInUserID = activeUser.id;
+            UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
+            LoggedInUserID = getLoggedInUserData.id;
+            User.ID = LoggedInUserID;
 
-            //Get 4 profiles on homepage
+            //Get userprofiles from databases
             Dictionary<String, int> Profiles = new Dictionary<string, int>();
             Profiles = MatchmakerAPI_Client.GetUsers();
             var profiles = Profiles.Values.ToList();
 
-            //Create first profile
+            //Remove blocked user(s) if any
 
+            if (getLoggedInUserData.blockedUsers == null) {
+                FillEmptyList(getLoggedInUserData);
+            }
+
+            foreach (var item in getLoggedInUserData.blockedUsers) {
+                if (profiles.Contains(item)) {
+                    profiles.Remove(item);
+                }
+            }
+
+            //Create first profile
             Random random = new Random();
-            int rnd = random.Next(0, Profiles.Count);
+            int rnd = random.Next(0, profiles.Count);
             FirstProfileID = profiles.ElementAt(rnd);
             while (FirstProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, Profiles.Count);
+                rnd = random.Next(0, profiles.Count);
                 FirstProfileID = profiles.ElementAt(rnd);
             }
             UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID));
             //Set name
             Profile1Tag.Content = user1.realName;
-
             //Set profile picture           
             string pfPic1 = $"https://145.44.233.207/images/users/{user1.profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
@@ -61,10 +73,10 @@ namespace Matchmaker {
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create second profile
-            rnd = random.Next(0, Profiles.Count);
+            rnd = random.Next(0, profiles.Count);
             SecondProfileID = profiles.ElementAt(rnd);
             while(FirstProfileID == SecondProfileID || SecondProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, Profiles.Count);
+                rnd = random.Next(0, profiles.Count);
                 SecondProfileID = profiles.ElementAt(rnd);
             }
             UserData user2 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID));
@@ -78,10 +90,10 @@ namespace Matchmaker {
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
             //Create third profile
-            rnd = random.Next(0, Profiles.Count);
+            rnd = random.Next(0, profiles.Count);
             ThirdProfileID = profiles.ElementAt(rnd);
             while (ThirdProfileID == FirstProfileID || ThirdProfileID == SecondProfileID || ThirdProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, Profiles.Count);
+                rnd = random.Next(0, profiles.Count);
                 ThirdProfileID = profiles.ElementAt(rnd);
             }
             UserData user3 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID));
@@ -94,12 +106,11 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{user3.coverImage}";
             Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-
             //Create fourth profile
-            rnd = random.Next(0, Profiles.Count);
+            rnd = random.Next(0, profiles.Count);
             FourthProfileID = profiles.ElementAt(rnd);
             while (FourthProfileID == FirstProfileID || FourthProfileID == SecondProfileID || FourthProfileID == ThirdProfileID || FourthProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, Profiles.Count);
+                rnd = random.Next(0, profiles.Count);
                 FourthProfileID = profiles.ElementAt(rnd);
             }
             UserData user4 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID));
@@ -112,6 +123,13 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{user4.coverImage}";
             Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
+       public async void FillEmptyList(UserData getLoggedInUserData) {
+            List<int> temporarilyList = new List<int>();
+            getLoggedInUserData.blockedUsers = temporarilyList;
+            await MatchmakerAPI_Client.SaveUser(getLoggedInUserData);
+       }
+
+        //Refresh button
         private void Button_Click(object sender, RoutedEventArgs e) {
             //Refresh recommended profiles
             HomePage p = new HomePage();
@@ -122,57 +140,55 @@ namespace Matchmaker {
         //When clicked on a profile
         private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)));
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)), false, LoggedInUserID);
             NavigationService.Navigate(page);
         }
         private void Profile2BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID)));
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID)), false, LoggedInUserID);
             NavigationService.Navigate(page);
         }
 
         private void Profile3BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID)));
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID)), false, LoggedInUserID);
             NavigationService.Navigate(page);
         }
         private void Profile4BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID)));
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID)), false, LoggedInUserID);
             NavigationService.Navigate(page);
         }
 
 
         //Menu buttons
+        //Go to Notification page
         private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //show notification page
             Notifications notifications = new Notifications();
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
 
+        //Go to Logout page
         private void Logout_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
-            {
-                //do not logout
-            }
-            else
-            {
-                //do logout
+            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes){
+                //Logout current user
                 LoginPage loginPage = new LoginPage();
                 NavigationService.Navigate(loginPage);
             }
         }
 
+        //Go to Settings page
         private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Settings settings = new Settings(LoggedInUserID);
             NavigationService.Navigate(settings);
         }
 
+        //Go to own profilepage
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, User.loggedIn);
+            Page userProfile = new UserProfile(user, true, LoggedInUserID);
             NavigationService.Navigate(userProfile);
         }
 
@@ -180,15 +196,12 @@ namespace Matchmaker {
         private void Activity1Border_MouseDown(object sender, MouseButtonEventArgs e) {
             System.Diagnostics.Process.Start("https://www.workshoppen.nl/workshops/action-painting-abstract-schilderen/");
         }
-
         private void Activity2Border_MouseDown(object sender, MouseButtonEventArgs e) {
             System.Diagnostics.Process.Start("https://gamingweek.info/");
         }
-
         private void Activity3Border_MouseDown(object sender, MouseButtonEventArgs e) {
             System.Diagnostics.Process.Start("http://www.ijsclubvzodkampen.nl/");
         }
-
         private void Activity4Border_MouseDown(object sender, MouseButtonEventArgs e) {
             System.Diagnostics.Process.Start("https://www.xycletracx.nl/");
         }
