@@ -21,7 +21,7 @@ namespace MatchmakerAPI.Controllers
 
 
 
-		// // // //  READ THE DATABASE  // // // // // // // // // // // // // // //
+		// // // //  GET REQUESTS  // // // // // // // // // // // // // // // //
 
 
 
@@ -34,7 +34,7 @@ namespace MatchmakerAPI.Controllers
 			{
 
 				// Load the users database into memory
-				var users = LoadUsers();
+				var users = ReadUsers();
 
 				// Fetch the specific user we're looking for in a try/catch block
 				// in case the input is not a valid key.
@@ -69,7 +69,6 @@ namespace MatchmakerAPI.Controllers
 		}
 
 
-
 		// Retrieve full user data by email
 		[HttpGet("get/email={email}")]
 		public UserData UserByEmail(string email)
@@ -81,7 +80,7 @@ namespace MatchmakerAPI.Controllers
 				// Load the userMap into memory to match the given email to a user id
 				// without having to loop through every entry in the entire users.json
 				// database
-				var userMap = LoadUserMap();
+				var userMap = ReadUserMap();
 
 				// Fetch the specific user we're looking for in a try/catch block
 				// in case the input is not a valid key.
@@ -115,7 +114,6 @@ namespace MatchmakerAPI.Controllers
 		}
 
 
-
 		// Retrieve the userMap
 		[HttpGet("get/all")]
 		public Dictionary<string, int> AllUsers()
@@ -125,7 +123,7 @@ namespace MatchmakerAPI.Controllers
 			{
 
 				// Load the userMap into memory
-				var userMap = LoadUserMap();
+				var userMap = ReadUserMap();
 
 				// Return the userMap
 				return userMap;
@@ -145,7 +143,6 @@ namespace MatchmakerAPI.Controllers
 		}
 
 
-
 		// Retrieve just the hobbies of a user
 		[HttpGet("get/hobbies/id={id}")]
 		public List<Hobby> GetUserHobbies(int id)
@@ -154,7 +151,7 @@ namespace MatchmakerAPI.Controllers
 			try
 			{
 				// Load the users database into memory
-				var users = LoadUsers();
+				var users = ReadUsers();
 
 				// Pick the specified user
 				var user = users[id];
@@ -177,7 +174,6 @@ namespace MatchmakerAPI.Controllers
 			}
 
 		}
-
 
 
 		// Retrieve matches for a specific user
@@ -208,7 +204,7 @@ namespace MatchmakerAPI.Controllers
 
 
 
-		// // // //  UPDATE THE DATABASE   // // // // // // // // // // // // // //
+		// // // //  POST REQUESTS  // // // // // // // // // // // // // // // //
 
 
 
@@ -223,7 +219,7 @@ namespace MatchmakerAPI.Controllers
 			try
 			{
 				// Load the users database into memory
-				var users = LoadUsers();
+				var users = ReadUsers();
 
 				// Initialize a Random object (because it isn't static)
 				var rng = new Random();
@@ -261,12 +257,8 @@ namespace MatchmakerAPI.Controllers
 				// the newly generated key
 				users.Add(tmp_key, newUser);
 
-				// Serialize the in-memory users database in order to efficiently
-				// store the new data
-				var text = JsonConvert.SerializeObject(users);
-
-				// Write the serialized updated users database to the proper file
-				System.IO.File.WriteAllText(UsersFile, text);
+				// Write the updated user data to the database
+				UpdateUsers(users);
 
 			} catch (Exception) {
 
@@ -285,17 +277,13 @@ namespace MatchmakerAPI.Controllers
 			{
 
 				// Load the userMap into memory
-				var userMap = LoadUserMap();
+				var userMap = ReadUserMap();
 
 				// Add a new entry mapping the supplied email address to the random
 				// user id
 				userMap.Add(data.email, tmp_key);
 
-				// Serialize the updated mapping
-				var text = JsonConvert.SerializeObject(userMap);
-
-				// Write the serialized updated mapping to the proper file
-				System.IO.File.WriteAllText(UserMapFile, text);
+				UpdateUserMap(userMap);
 
 			} catch (Exception) {
 
@@ -323,7 +311,6 @@ namespace MatchmakerAPI.Controllers
 		}
 
 
-
 		// Update an exisiting user's profile
 		[HttpPost("post/update")]
 		public AcceptedAtActionResult UpdateUser(UserData data) {
@@ -335,7 +322,7 @@ namespace MatchmakerAPI.Controllers
 			{
 
 				// Load the user map into memory
-				var userMap = LoadUserMap();
+				var userMap = ReadUserMap();
 
 				key = userMap[data.email];
 
@@ -364,7 +351,7 @@ namespace MatchmakerAPI.Controllers
 			{
 
 				// Load the users database into memory
-				var users = LoadUsers();
+				var users = ReadUsers();
 
 				// Pick the user with the specified key
 				var user = users[key];
@@ -385,8 +372,7 @@ namespace MatchmakerAPI.Controllers
 				users[key] = user;
 
 				// Update the database
-				var text = JsonConvert.SerializeObject(users);
-				System.IO.File.WriteAllText(UsersFile, text);
+				UpdateUsers(users);
 
 			} catch (Exception) {
 
@@ -412,8 +398,6 @@ namespace MatchmakerAPI.Controllers
 		}
 
 
-
-
 		// Update an exisiting user's cover image
 		[HttpPost("post/update/images")]
 		public AcceptedAtActionResult UpdateCoverImage(CoverImageData data) {
@@ -422,16 +406,13 @@ namespace MatchmakerAPI.Controllers
 			int key = data.userid;
 
 			// Read the users data file
-			var users = LoadUsers();
+			var users = ReadUsers();
 
 			// Change the specified user's coverImage property
 			users[key].coverImage = data.imageName;
 
-			// Serialize the modified user data for storage
-			var modifiedData = JsonConvert.SerializeObject(users);
-
-			// Write the modified user data to the users data file
-			System.IO.File.WriteAllText(UsersFile, modifiedData);
+			// Update the users database
+			UpdateUsers(users);
 
 			try {
 
@@ -449,8 +430,9 @@ namespace MatchmakerAPI.Controllers
 		// // // //  STATIC METHODS  // // // // // // // // // // // // // // // //
 
 
+		// // // //  READING METHODS
 
-		public static Dictionary<int, UserData> LoadUsers()
+		private static Dictionary<int, UserData> ReadUsers()
 		{
 
 			// Open the users.json data file
@@ -468,7 +450,8 @@ namespace MatchmakerAPI.Controllers
 
 		}
 
-		public static Dictionary<string, int> LoadUserMap()
+
+		private static Dictionary<string, int> ReadUserMap()
 		{
 
 			// Open the userMap.json data file
@@ -483,6 +466,57 @@ namespace MatchmakerAPI.Controllers
 				// Return the deserialized data table
 				return userMap;
       }
+
+		}
+
+
+		// // // //  WRITING METHODS
+
+		private static void UpdateUsers(Dictionary<int, UserData> data)
+		{
+
+			try
+			{
+
+				// Serialize the updated users database
+				var text = JsonConvert.SerializeObject(data);
+
+				// Write the serialized updated database to the proper file
+				System.IO.File.WriteAllText(UserMapFile, text);
+
+			} catch (Exception) {
+
+				// If an exception is caught, throw a fit in the console
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    An error occurred attempting to update the users database.");
+
+			}
+
+		}
+
+
+		private static void UpdateUserMap(Dictionary<string, int> data)
+		{
+
+			try
+			{
+
+				// Serialize the updated mapping
+				var text = JsonConvert.SerializeObject(data);
+
+				// Write the serialized updated mapping to the proper file
+				System.IO.File.WriteAllText(UserMapFile, text);
+
+			} catch (Exception) {
+
+				// If an exception is caught, throw a fit in the console
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    An error occurred attempting to update the user map.");
+
+			}
+
 
 		}
 
