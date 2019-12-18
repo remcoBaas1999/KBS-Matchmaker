@@ -169,7 +169,7 @@ namespace Matchmaker
                     userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
                     TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0) };
 
-                    Button deblock = new Button() { Name = $"{i}", Content = "Unblock", Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Foreground = MediaBrush.Purple, HorizontalAlignment = HorizontalAlignment.Right};
+                    Button deblock = new Button() { Name = $"_{i}", Content = "Unblock", Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Foreground = MediaBrush.Purple, HorizontalAlignment = HorizontalAlignment.Right};
                     deblock.Click += Deblock_Click;
 
                     userWrapper.Children.Add(userProfilePicture);
@@ -188,14 +188,17 @@ namespace Matchmaker
             }
         }
 
-        private void Deblock_Click(object sender, RoutedEventArgs e)
+        private async void Deblock_Click(object sender, RoutedEventArgs e)
         {
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             List<int> blockedUsers = loggedInUser.blockedUsers;
             var number = (Button)sender;
-            int listIndex = int.Parse(number.Name);
+            int listIndex = int.Parse(number.Name.Replace("_", String.Empty));
             blockedUsers.RemoveAt(listIndex);
             loggedInUser.blockedUsers = blockedUsers;
+
+            await MatchmakerAPI_Client.SaveUser(loggedInUser);
+            blockedUserList.UpdateLayout();
         }
 
         private void ContactRequestDecline(object sender, RoutedEventArgs e)
