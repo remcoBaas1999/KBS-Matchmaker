@@ -161,15 +161,15 @@ namespace Matchmaker
         {
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            List <int> contacts = loggedInUser.contacts;
+            List <KeyValuePair<int, bool>> contacts = loggedInUser.contacts;
 
             try
             {
                 if (contacts.Count > 0)
                 {
-                    foreach (int contact in contacts)
+                    foreach (KeyValuePair<int, bool> contact in contacts)
                     {
-                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact));
+                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact.Key));
 
                         StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0) };
                         Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };

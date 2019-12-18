@@ -201,24 +201,27 @@ namespace MatchMakerClassLibrary
             if (userDenying.requestFrom.Contains(requestUser.id)) {
                 userDenying.requestFrom.Remove(requestUser.id);
             }
-            await MatchmakerAPI_Client.SaveUser(userDenying);
+            await SaveUser(userDenying);
             return true;
         }
 
         public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
         {
             if (confirmingUser.contacts == null) {
-                List<int> x = new List<int>();
+                List<KeyValuePair<int, bool>> x = new List<KeyValuePair<int, bool>>();
                 confirmingUser.contacts = x;
+                requestUser.contacts = x;
             }
 
             //Confirm request and add to contacts
             if (confirmingUser.requestFrom.Contains(requestUser.id)) {
-                confirmingUser.contacts.Add(requestUser.id);
+                confirmingUser.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, true));
+                requestUser.contacts.Add(new KeyValuePair<int, bool>(confirmingUser.id, true));
                 confirmingUser.requestFrom.Remove(requestUser.id);
             }
 
-            await MatchmakerAPI_Client.SaveUser(confirmingUser);
+            await SaveUser(confirmingUser);
+            await SaveUser(requestUser);
             return true;
         }
     }
@@ -239,7 +242,7 @@ namespace MatchMakerClassLibrary
         public string coverImage { get; set; }
         public List<HobbyData> hobbies { get; set; }
         public List<int> blockedUsers { get; set; }
-        public List<int> contacts { get; set; }
+        public List<KeyValuePair<int, bool>> contacts { get; set; }
         public List<int> requestFrom { get; set; }
 
     }
