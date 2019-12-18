@@ -197,12 +197,10 @@ namespace MatchMakerClassLibrary
          
         public static async Task<bool> denyContactRequest(UserData userDenying, UserData requestUser)
         {
-            int id = userDenying.id;
-            //The request  is is set to not be a contact
-            userDenying.contacts.Add(new KeyValuePair<int, bool>(id, false));
-            userDenying.requestFrom.Remove(userDenying.id);
-            string uri = @"https://145.44.233.207/user/post/update/id={id}";
-            await Post(uri, requestUser);
+            if (userDenying.requestFrom.Contains(requestUser.id)) {
+                userDenying.requestFrom.Remove(requestUser.id);
+            }
+            await MatchmakerAPI_Client.SaveUser(userDenying);
             return true;
         }
 
