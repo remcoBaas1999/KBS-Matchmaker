@@ -241,18 +241,26 @@ namespace Matchmaker
             NavigationService.Navigate(chatList);
         }
 
-        private void ContactRequestDecline(object sender, RoutedEventArgs e)
+        private async void ContactRequestDecline(object sender, RoutedEventArgs e)
         {
-            var button = (Button)sender;
-            MessageBox.Show(button.Name);
-        }
-
-        private void ContactRequestAccept(object sender, RoutedEventArgs e)
-        {
+            //Get sender ID
             var button = (Button)sender;
             int id = int.Parse(button.Name);
 
-            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // Is not the logged in user.
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
+            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
+            await MatchmakerAPI_Client.declineContactRequest(loggedInUser, userSender);
+        }
+
+        private async void ContactRequestAccept(object sender, RoutedEventArgs e)
+        {
+            //Get sender ID
+            var button = (Button)sender;
+            int id = int.Parse(button.Name);
+
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
+            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
+            await MatchmakerAPI_Client.ConfirmContactRequest(loggedInUser, userSender);
         }
     }
 }
