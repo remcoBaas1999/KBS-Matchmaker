@@ -237,7 +237,9 @@ namespace Matchmaker
         private void ContactRequestAccept(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            MessageBox.Show(button.Name);
+            int id = int.Parse(button.Name);
+
+            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // Is not the logged in user.
         }
     }
 }
