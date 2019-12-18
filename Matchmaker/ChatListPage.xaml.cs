@@ -152,7 +152,11 @@ namespace Matchmaker
         // Display the blocked users
         public void LoadBlockedUsers()
         {
-            if(TestSet().Count > 0)
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+
+            List<int> blockedUsers = loggedInUser.BlockedUsers;
+
+            if (TestSet().Count > 0)
             {
                 foreach (UserData user in TestSet()) 
                 {

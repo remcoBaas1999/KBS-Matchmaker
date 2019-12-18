@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MatchmakerAPI
 {
-    public class UserData
-    {
-        public string email { get; set; }
+	public class UserData
+	{
+		public string email { get; set; }
 		public string password { get; set; }
 		public string salt { get; set; }
 		public string realName { get; set; }
@@ -21,5 +21,8 @@ namespace MatchmakerAPI
 		public int id { get; set; }
 		public long birthdate { get; set; }
 		public string coverImage { get; set; }
-    }
+		public List<int> blockedUsers { get; set; }
+		public List<KeyValuePair<int, bool>> contacts { get; set; }
+		public List<int> requestFrom { get; set; }
+	}
 }
