@@ -194,21 +194,7 @@ namespace MatchMakerClassLibrary
             List<HobbyData> data = JsonConvert.DeserializeObject<List<HobbyData>>(Get(@"https://145.44.233.207/hobbies/get/all"));
             return data;
         }
-
-        public static async Task<bool> sendContactRequest(UserData user, UserData requestUser)
-        {
-            int id = user.id;
-            //The contact is saved with the user
-            user.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, false));
-            string uri = @"https://145.44.233.207/user/post/update/id={id}";
-            //THe request is saved with the other account
-            requestUser.requestFrom.Add(user.id);
-            id = requestUser.id;
-            await Post(uri, requestUser);
-            return true;
-
-        }
-
+         
         public static async Task<bool> denyContactRequest(UserData userDenying, UserData requestUser)
         {
             int id = userDenying.id;

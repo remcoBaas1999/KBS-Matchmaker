@@ -90,7 +90,7 @@ namespace Matchmaker
 
             string id = Convert.ToString(user.id); 
 
-            MatchmakerAPI_Client.DeserializeMessageData(MatchmakerAPI_Client.GetMessageData(id));
+            //MatchmakerAPI_Client.DeserializeMessageData(MatchmakerAPI_Client.GetMessageData(id));
 
             //Make use of data aquired from the chats that the user is in.
             if (false)

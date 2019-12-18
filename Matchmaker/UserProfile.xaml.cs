@@ -412,9 +412,19 @@ namespace Matchmaker {
         private async void contactRequest_MouseDown(object sender, MouseButtonEventArgs e)
         {
             contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
-            contactRequest.MouseDown -= contactRequest_MouseDown;
-            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            await MatchmakerAPI_Client.sendContactRequest(user, userInView );
+
+            //Save userID on others requestList
+
+            //Check if list already exists
+            if (userInView.requestFrom == null || userInView.requestFrom.Count == 0) {
+                List<int> x = new List<int>();
+                userInView.requestFrom = x;
+            }
+            //If there is no contact request yet, add a new contact request
+            if (!userInView.requestFrom.Contains(LoggedInUserID)) {
+                userInView.requestFrom.Add(LoggedInUserID);
+                await MatchmakerAPI_Client.SaveUser(userInView);
+            }
 
         }
     }
