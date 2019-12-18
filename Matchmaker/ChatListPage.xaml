@@ -42,29 +42,27 @@
                 <Border Width="500">
                     <TextBlock Text="Contact Requests" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
                 </Border>
-                <ScrollViewer Margin="0 36 0 60" VerticalScrollBarVisibility="Hidden" Width="500" MaxHeight="210" x:Name="contactRequestList">
-                    <StackPanel x:Name="newRequestList" />
-                </ScrollViewer>
-                <Border Width="500">
+                
+                <StackPanel x:Name="newRequestList" />
+                
+                <Border Width="500" Margin="0 56 0 0">
                     <TextBlock Text="Your Chats" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
                 </Border>
-                <ScrollViewer Margin="0 46 0 0" VerticalScrollBarVisibility="Hidden" MaxHeight="210">
-                    <StackPanel Width="473" x:Name="chatList" />
-                </ScrollViewer>
+                
+                <StackPanel Width="473" x:Name="chatList" />
+
                 <Border Width="520">
-                    <StackPanel>
-                        <TextBlock Text="Your Contacts" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 56 0 0" FontWeight="Heavy"/>
-                        <ScrollViewer Margin="0 46 0 0" VerticalScrollBarVisibility="Hidden" MaxHeight="200">
-                            <WrapPanel x:Name="recentlyAddedChats"/>
-                        </ScrollViewer>
-                    </StackPanel>
+                    <TextBlock Text="Your Contacts" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 56 0 0" FontWeight="Heavy"/>
                 </Border>
+                
+                <WrapPanel x:Name="recentlyAddedChats" MaxWidth="520" HorizontalAlignment="Center"/>
+
                 <Border Width="490">
                     <TextBlock Text="Blocked Users" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 46 0 0" FontWeight="Heavy"/>
                 </Border>
-                <ScrollViewer VerticalScrollBarVisibility="Hidden" MaxHeight="250">
-                    <StackPanel x:Name="blockedUserList"/>
-                </ScrollViewer>
+                
+                <StackPanel x:Name="blockedUserList"/>
+                
             </StackPanel>
         </Grid>
     </ScrollViewer>
