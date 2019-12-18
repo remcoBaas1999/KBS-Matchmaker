@@ -87,14 +87,14 @@ namespace MatchmakerAPI
       // Initialize a new Random object
       var rng = new Random();
 
-      while (returnVal.Count < num)
+      while (returnVal.Count < Math.Min(num, users.Count))
       {
 
         // If the users list is smaller than the number of users to be selected,
         // abort the method when all users have been selected.
-        if (users.Count == returnVal.Count) {
-          return returnVal;
-        }
+        //if (users.Count == returnVal.Count) {
+        //  return returnVal;
+        //}
 
         // Select a random index from the List<UserData>
         var user = users[rng.Next(users.Count)];
