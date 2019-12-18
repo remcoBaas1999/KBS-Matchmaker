@@ -35,7 +35,7 @@ namespace Matchmaker
             this.chatPartner = chatPartner;
             ChatPartnerName.Text = chatPartner.realName;            
             string chatPartnerPicture = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";
-            //ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPicture, UriKind.Absolute)));
+            ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPicture, UriKind.Absolute)));
             this.userInChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             //determines chatid -> id = lowerid + space + higherid
             if (userInChat.id<chatPartner.id)
@@ -66,7 +66,7 @@ namespace Matchmaker
 
             ChatPartnerName.Text = chatPartner.realName;
             string chatPartnerPictureString = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";          
-            //ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPictureString, UriKind.Absolute)));
+            ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPictureString, UriKind.Absolute)));
             if (userInChat.id < chatPartner.id)
             {
                 chatID = $"{userInChat.id}_{chatPartner.id}";
@@ -158,6 +158,17 @@ namespace Matchmaker
             if ((int) e.Key == 6 && e.KeyboardDevice.Modifiers!=ModifierKeys.Shift)
             {
                 e.Handled = true;
+                if (ChatInput.Text != "")
+                {
+                    await SendMessageAsync();
+                    UpdateScrollBox();
+                }
+            }
+        }
+        private async void Send_MouseDown(object sender,EventArgs e)
+        {
+            if (ChatInput.Text!="") 
+            {
                 await SendMessageAsync();
                 UpdateScrollBox();
             }
