@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MatchmakerAPI\MatchmakerAPI.csproj" />
+    <ProjectReference Include="..\MatchMakerClassLibrary\MatchMakerClassLibrary.csproj" />
+    <ProjectReference Include="..\Matchmaker\Matchmaker.csproj" />
   </ItemGroup>
 
 </Project>
