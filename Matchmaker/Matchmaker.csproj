@@ -92,6 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Images\Star_1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\notification.jpg" />
+    <Resource Include="Images\block.png" />
     <Content Include="Images\close.svg">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -242,6 +247,7 @@
     <Resource Include="Images\ic_chevron_left-png-24px.png" />
     <Content Include="Images\maximize.svg" />
     <Content Include="Images\minimize.svg" />
+    <Resource Include="Images\refresh.png" />
     <Content Include="Images\restore.svg" />
     <Content Include="Images\square-shape-outline.svg" />
     <Content Include="Images\substract.svg" />

@@ -184,7 +184,7 @@ namespace MatchMakerClassLibrary
         public static async Task<bool> SaveUser(UserData data)
         {
             string url = @"https://145.44.233.207/user/post/update";
-            var result = await Post(url, data);
+            await Post(url, data);
 
             return true;
         }
@@ -194,7 +194,31 @@ namespace MatchMakerClassLibrary
             List<HobbyData> data = JsonConvert.DeserializeObject<List<HobbyData>>(Get(@"https://145.44.233.207/hobbies/get/all"));
             return data;
         }
+         
+        public static async Task<bool> denyContactRequest(UserData userDenying, UserData requestUser)
+        {
+            if (userDenying.requestFrom.Contains(requestUser.id)) {
+                userDenying.requestFrom.Remove(requestUser.id);
+            }
+            await MatchmakerAPI_Client.SaveUser(userDenying);
+            return true;
+        }
+
+        public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
+        {
+            int id = confirmingUser.id;
+            //The request  is is set to be a contact
+            confirmingUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
+            confirmingUser.requestFrom.Remove(confirmingUser.id);
+            string uri = @"https://145.44.233.207/user/post/update/id={id}";
+            //Update requesting user account
+            id = requestUser.id;
+            requestUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
+            await Post(uri, requestUser);
+            return true;
+        }
     }
+
 
     public class UserData
     {
@@ -212,6 +236,7 @@ namespace MatchMakerClassLibrary
         public List<int> blockedUsers { get; set; }
         public List<KeyValuePair<int, bool>> contacts { get; set; }
         public List<int> requestFrom { get; set; }
+
     }
     public class AuthData
     {
@@ -230,11 +255,6 @@ namespace MatchMakerClassLibrary
     {
         public int userID { get; set; }
         public string imageName { get; set; }
-        public class HobbyData
-        {
-            public string displayName { get; set; }
-            public List<string> assocHobbies { get; set; }
-        }
     }
     public class MessageData
     {
