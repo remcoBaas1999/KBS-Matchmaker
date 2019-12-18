@@ -48,7 +48,7 @@ namespace Matchmaker
                     WrapPanel userRow = new WrapPanel() { Height = 70 };  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
                     Grid pictureBox = new Grid() { Height = 70 };
                     Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0) };
-                    string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+                    string pfPic1 = $"https://145.44.233.207/images/users/{requestSender.profilePicture}";
                     userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
                     Border newUser = new Border()
                     {
