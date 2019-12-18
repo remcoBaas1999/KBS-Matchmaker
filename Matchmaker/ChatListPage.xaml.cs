@@ -152,24 +152,37 @@ namespace Matchmaker
         // Display your contacts
         public void UserContacts()
         {
-            if (false)
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+
+            List <KeyValuePair<int, bool>> contacts = loggedInUser.contacts;
+
+            try
             {
-                //foreach (UserData user in TestSet())
-                //{
-                //    StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0) };
-                //    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
-                //    string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
-                //    userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-                //    TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110 , TextAlignment = TextAlignment.Center, Margin = new Thickness(0,8,0,0) };
+                if (contacts.Count > 0)
+                {
+                    foreach (KeyValuePair<int, bool> contact in contacts)
+                    {
+                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact.Key));
 
-                //    userBlock.Children.Add(userProfilePicture);
-                //    userBlock.Children.Add(userRealName);
+                        StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0) };
+                        Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
+                        string pfPic1 = $"https://145.44.233.207/images/users/{contactUser.profilePicture}";
+                        userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
+                        TextBlock userRealName = new TextBlock() { Text = contactUser.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0) };
 
-                //    recentlyAddedChats.Children.Add(userBlock);
-                //}
+                        userBlock.Children.Add(userProfilePicture);
+                        userBlock.Children.Add(userRealName);
+
+                        recentlyAddedChats.Children.Add(userBlock);
+                    }
+                }
+                else
+                {
+                    recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
+                }
             }
-            else
-            {             
+            catch (NullReferenceException nre)
+            {
                 recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
             }
         }
