@@ -1,5 +1,4 @@
 ﻿using MatchMakerClassLibrary;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,62 +64,57 @@ namespace Matchmaker {
             UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID));
             //Set name
             Profile1Tag.Content = user1.realName;
+            FillHomepageProfiles(GenerateUserDatas());
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            FillHomepageProfiles(GenerateUserDatas());
+        }
+
+        private UserData[] GenerateUserDatas() {
+            UserData[] userDatas = MatchmakerAPI_Client.GetMatches(LoggedInUserID);
+            return userDatas;
+        }
+
+        private void FillHomepageProfiles(UserData[] userDatas) {
+            FirstProfileID = userDatas[0].id;
+            //Set name
+            Profile1Tag.Content = userDatas[0].realName;
             //Set profile picture           
-            string pfPic1 = $"https://145.44.233.207/images/users/{user1.profilePicture}";
+            string pfPic1 = $"https://145.44.233.207/images/users/{userDatas[0].profilePicture}";
             ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
             //Set Cover Image
-            string coverImage = $"https://145.44.233.207/images/covers/{user1.coverImage}";
+            string coverImage = $"https://145.44.233.207/images/covers/{userDatas[0].coverImage}";
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            //Create second profile
-            rnd = random.Next(0, profiles.Count);
-            SecondProfileID = profiles.ElementAt(rnd);
-            while(FirstProfileID == SecondProfileID || SecondProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, profiles.Count);
-                SecondProfileID = profiles.ElementAt(rnd);
-            }
-            UserData user2 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID));
+            SecondProfileID = userDatas[1].id;
             //Set name
-            Profile2Tag.Content = user2.realName;
+            Profile2Tag.Content = userDatas[1].realName;
             //Set profile picture
-            string pfPic2 = $"https://145.44.233.207/images/users/{user2.profilePicture}";
+            string pfPic2 = $"https://145.44.233.207/images/users/{userDatas[1].profilePicture}";
             ProfilePicture2.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic2, UriKind.Absolute)));
             //Set Cover Image
-            coverImage = $"https://145.44.233.207/images/covers/{user2.coverImage}";
+            coverImage = $"https://145.44.233.207/images/covers/{userDatas[1].coverImage}";
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            //Create third profile
-            rnd = random.Next(0, profiles.Count);
-            ThirdProfileID = profiles.ElementAt(rnd);
-            while (ThirdProfileID == FirstProfileID || ThirdProfileID == SecondProfileID || ThirdProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, profiles.Count);
-                ThirdProfileID = profiles.ElementAt(rnd);
-            }
-            UserData user3 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID));
+            ThirdProfileID = userDatas[2].id;
             //Set name
-            Profile3Tag.Content = user3.realName;
+            Profile3Tag.Content = userDatas[2].realName;
             //Set profile picture
-            string pfPic3 = $"https://145.44.233.207/images/users/{user3.profilePicture}";
+            string pfPic3 = $"https://145.44.233.207/images/users/{userDatas[2].profilePicture}";
             ProfilePicture3.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic3, UriKind.Absolute)));
             //Set Cover Image
-            coverImage = $"https://145.44.233.207/images/covers/{user3.coverImage}";
+            coverImage = $"https://145.44.233.207/images/covers/{userDatas[2].coverImage}";
             Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            //Create fourth profile
-            rnd = random.Next(0, profiles.Count);
-            FourthProfileID = profiles.ElementAt(rnd);
-            while (FourthProfileID == FirstProfileID || FourthProfileID == SecondProfileID || FourthProfileID == ThirdProfileID || FourthProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, profiles.Count);
-                FourthProfileID = profiles.ElementAt(rnd);
-            }
-            UserData user4 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID));
+            FourthProfileID = userDatas[3].id;
             //Set name
-            Profile4Tag.Content = user4.realName;
+            Profile4Tag.Content = userDatas[3].realName;
             //Set profile picture
-            string pfPic4 = $"https://145.44.233.207/images/users/{user4.profilePicture}";
+            string pfPic4 = $"https://145.44.233.207/images/users/{userDatas[3].profilePicture}";
             ProfilePicture4.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic4, UriKind.Absolute)));
             //Set Cover Image
-            coverImage = $"https://145.44.233.207/images/covers/{user4.coverImage}";
+            coverImage = $"https://145.44.233.207/images/covers/{userDatas[3].coverImage}";
             Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
        public async void FillEmptyList(UserData getLoggedInUserData) {

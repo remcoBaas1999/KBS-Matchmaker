@@ -44,10 +44,14 @@ namespace MatchMakerClassLibrary
             return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
         }
 
-        public static Dictionary<string, int> GetUsers()
-        {
+        public static Dictionary<string, int> GetUsers() {
             var json = Get($@"https://145.44.233.207/user/get/all");
             return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+        }
+
+        public static UserData[] GetMatches(int id) {
+            var json = Get($@"https://145.44.233.207/user/get/matches/id={id}");
+            return JsonConvert.DeserializeObject<UserData[]>(json);
         }
 
         public static async Task<AuthData> GetAuthDataAsync(string email)
@@ -106,9 +110,6 @@ namespace MatchMakerClassLibrary
             {
                 Console.WriteLine(GetAuthDataAsync(email));
             }
-
-
-
             return false;
         }
         private static string Get(string uri)
@@ -116,7 +117,6 @@ namespace MatchMakerClassLibrary
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
             try
             {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -126,7 +126,7 @@ namespace MatchMakerClassLibrary
                     return reader.ReadToEnd();
                 }
             }
-            catch
+            catch (WebException we)
             {
                 Console.WriteLine("De server reageerde niet of staat uit.");
                 return null;
@@ -226,6 +226,8 @@ namespace MatchMakerClassLibrary
         public string city { get; set; }
         public long birthdate { get; set; }
         public string about { get; set; }
+        public string location { get; set; }
+        public List<int> blockedUsers { get; set; }
         public string profilePicture { get; set; }
         public string coverImage { get; set; }
         public List<HobbyData> hobbies { get; set; }
