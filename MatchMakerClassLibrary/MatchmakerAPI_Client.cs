@@ -207,6 +207,11 @@ namespace MatchMakerClassLibrary
 
         public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
         {
+            if (confirmingUser.contacts == null) {
+                List<int> x = new List<int>();
+                confirmingUser.contacts = x;
+            }
+
             //Confirm request and add to contacts
             if (confirmingUser.requestFrom.Contains(requestUser.id)) {
                 confirmingUser.contacts.Add(requestUser.id);
