@@ -209,7 +209,9 @@ namespace MatchMakerClassLibrary
         public string profilePicture { get; set; }
         public string coverImage { get; set; }
         public List<HobbyData> hobbies { get; set; }
-
+        public List<int> blockedUsers { get; set; }
+        public List<KeyValuePair<int, bool>> contacts { get; set; }
+        public List<int> requestFrom { get; set; }
     }
     public class AuthData
     {
