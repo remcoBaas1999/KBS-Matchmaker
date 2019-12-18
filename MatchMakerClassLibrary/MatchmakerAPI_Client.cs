@@ -252,4 +252,11 @@ namespace MatchMakerClassLibrary
         public int userID { get; set; }
         public string imageName { get; set; }
     }
+    public class MessageData
+    {
+        public string ID { get; set; }
+        public string Text { get; set; }
+        public int Sender { get; set; }
+        public long TimeStamp { get; set; }
+    }
 }
