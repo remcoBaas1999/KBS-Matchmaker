@@ -10,6 +10,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Net.Http;
 using System.Net.Security;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace MatchMakerClassLibrary
 {
@@ -173,6 +175,11 @@ namespace MatchMakerClassLibrary
         {
             List<HobbyData> data = JsonConvert.DeserializeObject<List<HobbyData>>(Get(@"https://145.44.233.207/hobbies/get/all"));
             return data;
+        }
+
+        public static ImageBrush GetProfilePicture(UserData userData) {
+            string pfPic = $"https://145.44.233.207/images/users/{userData.profilePicture}";
+            return new ImageBrush(new BitmapImage(new Uri(pfPic, UriKind.Absolute)));
         }
 
         public static async Task<bool> sendContactRequest(UserData user, UserData requestUser)
