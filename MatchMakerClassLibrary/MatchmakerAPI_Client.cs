@@ -195,8 +195,9 @@ namespace MatchMakerClassLibrary
             return data;
         }
          
-        public static async Task<bool> denyContactRequest(UserData userDenying, UserData requestUser)
+        public static async Task<bool> declineContactRequest(UserData userDenying, UserData requestUser)
         {
+            //Remove contact request
             if (userDenying.requestFrom.Contains(requestUser.id)) {
                 userDenying.requestFrom.Remove(requestUser.id);
             }
@@ -206,15 +207,12 @@ namespace MatchMakerClassLibrary
 
         public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
         {
-            int id = confirmingUser.id;
-            //The request  is is set to be a contact
-            confirmingUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
-            confirmingUser.requestFrom.Remove(confirmingUser.id);
-            string uri = @"https://145.44.233.207/user/post/update/id={id}";
-            //Update requesting user account
-            id = requestUser.id;
-            requestUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
-            await Post(uri, requestUser);
+            //Confirm request and add to contacts
+            if (confirmingUser.requestFrom.Contains(requestUser.id)) {
+                confirmingUser.contacts.Add(requestUser.id);
+            }
+
+            await MatchmakerAPI_Client.SaveUser(confirmingUser);
             return true;
         }
     }
@@ -234,7 +232,7 @@ namespace MatchMakerClassLibrary
         public string coverImage { get; set; }
         public List<HobbyData> hobbies { get; set; }
         public List<int> blockedUsers { get; set; }
-        public List<KeyValuePair<int, bool>> contacts { get; set; }
+        public List<int> contacts { get; set; }
         public List<int> requestFrom { get; set; }
 
     }
