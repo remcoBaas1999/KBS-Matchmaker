@@ -81,8 +81,8 @@ namespace Matchmaker
                         Opacity = 0.87
                     };
 
-                    Button acceptContact = new Button() { VerticalAlignment = VerticalAlignment.Center, Content = acceptSvg, Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Margin = new Thickness(0, 0, 12, 0), Name = $"accept_user_{requestSender.id}" };
-                    Button declineContact = new Button() { VerticalAlignment = VerticalAlignment.Center, Content = declineSvg, Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Name = $"decline_user_{requestSender.id}" };
+                    Button acceptContact = new Button() { VerticalAlignment = VerticalAlignment.Center, Content = acceptSvg, Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Margin = new Thickness(0, 0, 12, 0), Name = $"_{requestSender.id}" };
+                    Button declineContact = new Button() { VerticalAlignment = VerticalAlignment.Center, Content = declineSvg, Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Name = $"_{requestSender.id}" };
 
                     acceptContact.Click += ContactRequestAccept;
                     declineContact.Click += ContactRequestDecline;
@@ -154,15 +154,15 @@ namespace Matchmaker
         {
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            List <KeyValuePair<int, bool>> contacts = loggedInUser.contacts;
+            List <int> contacts = loggedInUser.contacts;
 
             try
             {
                 if (contacts.Count > 0)
                 {
-                    foreach (KeyValuePair<int, bool> contact in contacts)
+                    foreach (int contact in contacts)
                     {
-                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact.Key));
+                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact));
 
                         StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0) };
                         Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
@@ -245,22 +245,28 @@ namespace Matchmaker
         {
             //Get sender ID
             var button = (Button)sender;
-            int id = int.Parse(button.Name);
+            int id = int.Parse(button.Name.Replace("_", String.Empty));
 
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
             UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
             await MatchmakerAPI_Client.declineContactRequest(loggedInUser, userSender);
+
+            ChatListPage chatList = new ChatListPage();
+            NavigationService.Navigate(chatList);
         }
 
         private async void ContactRequestAccept(object sender, RoutedEventArgs e)
         {
             //Get sender ID
             var button = (Button)sender;
-            int id = int.Parse(button.Name);
+            int id = int.Parse(button.Name.Replace("_", String.Empty));
 
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
             UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
             await MatchmakerAPI_Client.ConfirmContactRequest(loggedInUser, userSender);
+
+            
+            NavigationService.Navigate(this);
         }
     }
 }
