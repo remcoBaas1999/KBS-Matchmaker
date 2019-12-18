@@ -432,7 +432,7 @@ namespace MatchmakerAPI.Controllers
 
 		// // // //  READING METHODS
 
-		private static Dictionary<int, UserData> ReadUsers()
+		public static Dictionary<int, UserData> ReadUsers()
 		{
 
 			// Open the users.json data file
@@ -451,7 +451,7 @@ namespace MatchmakerAPI.Controllers
 		}
 
 
-		private static Dictionary<string, int> ReadUserMap()
+		public static Dictionary<string, int> ReadUserMap()
 		{
 
 			// Open the userMap.json data file
@@ -472,7 +472,7 @@ namespace MatchmakerAPI.Controllers
 
 		// // // //  WRITING METHODS
 
-		private static void UpdateUsers(Dictionary<int, UserData> data)
+		public static void UpdateUsers(Dictionary<int, UserData> data)
 		{
 
 			try
@@ -496,7 +496,7 @@ namespace MatchmakerAPI.Controllers
 		}
 
 
-		private static void UpdateUserMap(Dictionary<string, int> data)
+		public static void UpdateUserMap(Dictionary<string, int> data)
 		{
 
 			try
