@@ -482,7 +482,7 @@ namespace MatchmakerAPI.Controllers
 				var text = JsonConvert.SerializeObject(data);
 
 				// Write the serialized updated database to the proper file
-				System.IO.File.WriteAllText(UserMapFile, text);
+				System.IO.File.WriteAllText(UsersFile, text);
 
 			} catch (Exception) {
 
