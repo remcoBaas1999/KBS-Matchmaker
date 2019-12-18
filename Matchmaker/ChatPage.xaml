@@ -11,31 +11,58 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <!--create the purple background-->
-        <Border Grid.Row="0" Grid.Column="1" Width="1008" Height="181" CornerRadius="10, 10,10,10" Background="#673AB7" Margin="0, 46,0,0">
-            <Grid>
-                <Canvas MouseDown="Return" Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15, 15, 0,0">
-                    <Path Canvas.Left="19" Canvas.Top="19" Data="M13.2997 0.710001C12.9097 0.320001 12.2797 0.320001 11.8897 0.710001L6.99973 5.59L2.10973 0.700001C1.71973 0.310001 1.08973 0.310001 0.699727 0.700001C0.309727 1.09 0.309727 1.72 0.699727 2.11L5.58973 7L0.699727 11.89C0.309727 12.28 0.309727 12.91 0.699727 13.3C1.08973 13.69 1.71973 13.69 2.10973 13.3L6.99973 8.41L11.8897 13.3C12.2797 13.69 12.9097 13.69 13.2997 13.3C13.6897 12.91 13.6897 12.28 13.2997 11.89L8.40973 7L13.2997 2.11C13.6797 1.73 13.6797 1.09 13.2997 0.710001Z" Fill="White"/>
-                </Canvas>
-                <Ellipse x:Name="ChatPartnerPicture" Height="85" Width="85" Margin="72,0,766,-30">
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="12">
+            <WrapPanel HorizontalAlignment="Left" Margin="0,1,0,-1">
+                <Rectangle x:Name="ReturnButton" HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" Margin="0,0,5,0"  MouseDown="Return">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="Images/return.png" Stretch="UniformToFill" TileMode="Tile"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Ellipse x:Name="ChatPartnerPicture" Height="36" Stroke="#00000000" VerticalAlignment="Center" Width="36" >
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="Images\ProfilePicture.jpg" Stretch="UniformToFill"/>
+                        <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
                     </Ellipse.Fill>
                 </Ellipse>
-                <TextBlock Foreground="LightGray" Name="ChatPartnerName" Text="Placeholdername" FontFamily="Roboto" Margin="266,109,0,57" FontSize="14" />
-                <WrapPanel Orientation="Horizontal" Margin="266,0,0,0">
-
-                    <!--display the name of the profile-->
-                </WrapPanel>
-            </Grid>
-        </Border>
+                <TextBlock Margin="10,0"  x:Name="ChatPartnerName" FontSize="20" FontFamily="Roboto" VerticalAlignment="Center"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Right">
+                <Ellipse x:Name="Notification" HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" Margin="0,0,5,0" MouseDown="Notification_MouseDown">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse x:Name="MyProfile" HorizontalAlignment="Left" Height="26" Stroke="#00000000" VerticalAlignment="Top" Width="26" MouseDown="MyProfile_MouseDown" Margin="5,3,5,0">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse x:Name="Settings" HorizontalAlignment="Left" Height="29" Stroke="#00000000" VerticalAlignment="Top" Width="29" MouseDown="Settings_MouseDown" Margin="5,2,5,0">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/settings.png"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Rectangle x:Name="Logout" HorizontalAlignment="Left" Height="32" Stroke="#00000000" VerticalAlignment="Top" Width="32" MouseDown="Logout_MouseDown" Margin="5,0">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="Images/exit.png" Stretch="UniformToFill"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </WrapPanel>
+        </Grid>
         <ScrollViewer Grid.Row="1" Margin="160,5,160,10" VerticalScrollBarVisibility="Hidden" Name="ScrollViewer">
             <StackPanel Name="MessageList"/>
         </ScrollViewer>
-        <TextBox Grid.Row="2" Height="40"  x:Name="ChatInput" Margin="240,0,240,10" TextWrapping="Wrap" AcceptsReturn="True" PreviewKeyDown="ChatInput_PreviewKeyDown"/>
+        <Border Grid.Row="2" Padding="0" CornerRadius = "10,0,0,10" Margin="80,20" Background="LightGray">
+            <TextBox Height="40" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" x:Name="ChatInput" Margin="20,10,100,10" TextWrapping="Wrap" FontFamily="Roboto" AcceptsReturn="True" PreviewKeyDown="ChatInput_PreviewKeyDown"/>
+        </Border>
+        <Border Grid.Row="2" Padding="0" CornerRadius = "20,0,0,20" Margin="0,20,80,20" Background="White" Width="85" HorizontalAlignment="Right"/>
+        <Border Grid.Row="2" Padding="0" CornerRadius = "20" Margin="0,25,80,25" Background="BlueViolet" Width="80" HorizontalAlignment="Right" MouseDown="Send_MouseDown">
+            <Canvas Width="0" Height="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Path Canvas.Left="-7" Canvas.Top="-8" VerticalAlignment="Center" Data="M1.4 17.4L18.85 9.91999C19.66 9.56999 19.66 8.42999 18.85 8.07999L1.4 0.599986C0.74 0.309986 0.00999999 0.799987 0.00999999 1.50999L0 6.11999C0 6.61999 0.37 7.04999 0.87 7.10999L15 8.99999L0.87 10.88C0.37 10.95 0 11.38 0 11.88L0.00999999 16.49C0.00999999 17.2 0.74 17.69 1.4 17.4Z" Fill="White" />
+            </Canvas>
+        </Border>
     </Grid>
 </Page>
