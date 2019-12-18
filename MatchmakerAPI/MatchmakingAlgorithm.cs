@@ -25,7 +25,7 @@ namespace MatchmakerAPI
     {
 
       // Retrieve the users database as Dictionary<int, UserData>
-      var users = UserController.LoadUsers();
+      var users = UserController.ReadUsers();
 
       try {
 

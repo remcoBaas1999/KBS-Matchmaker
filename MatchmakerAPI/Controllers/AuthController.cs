@@ -17,22 +17,22 @@ namespace MatchmakerAPI.Controllers
         [HttpGet("get/id={id}")]
         public AuthData AuthById(int id)
         {
-			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
-		    {
-		        string json = r.ReadToEnd();
-				try {
-					var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
-					var data = new AuthData {
-						email = test.email,
-						password = test.password,
-						salt = test.salt
-					};
-					return data;
-				} catch (System.Collections.Generic.KeyNotFoundException e) {
-					return new AuthData();
-				}
+  			using (StreamReader r = new StreamReader("/home/student/data/users.json"))
+  		    {
+  		        string json = r.ReadToEnd();
+  				try {
+  					var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
+  					var data = new AuthData {
+  						email = test.email,
+  						password = test.password,
+  						salt = test.salt
+  					};
+  					return data;
+  				} catch (System.Collections.Generic.KeyNotFoundException e) {
+  					return new AuthData();
+  				}
 
-		    }
+  		    }
         }
 
 		[HttpGet("get/email={email}")]
