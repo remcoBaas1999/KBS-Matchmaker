@@ -215,6 +215,7 @@ namespace MatchMakerClassLibrary
             //Confirm request and add to contacts
             if (confirmingUser.requestFrom.Contains(requestUser.id)) {
                 confirmingUser.contacts.Add(requestUser.id);
+                confirmingUser.requestFrom.Remove(requestUser.id);
             }
 
             await MatchmakerAPI_Client.SaveUser(confirmingUser);
