@@ -86,10 +86,14 @@ namespace Matchmaker
         // Display a list of all the chats that are started by the user.
         public void ChatList()
         {
-            int notification = 1;
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+
+            string id = Convert.ToString(user.id); 
+
+            MatchmakerAPI_Client.DeserializeMessageData(MatchmakerAPI_Client.GetMessageData(id));
 
             //Make use of data aquired from the chats that the user is in.
-            if(false)
+            if (false)
             {
 
                 //foreach (UserData user in TestSet())
@@ -164,10 +168,10 @@ namespace Matchmaker
 
                     Grid blockedUser = new Grid() { Height = 70 };
                     WrapPanel userWrapper = new WrapPanel();
-                    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
+                    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 12, 8, 0)};
                     string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
                     userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-                    TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0) };
+                    TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 16, 0, 0), VerticalAlignment = VerticalAlignment.Center };
 
                     Button deblock = new Button() { Name = $"_{i}", Content = "Unblock", Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Foreground = MediaBrush.Purple, HorizontalAlignment = HorizontalAlignment.Right};
                     deblock.Click += Deblock_Click;
@@ -198,7 +202,9 @@ namespace Matchmaker
             loggedInUser.blockedUsers = blockedUsers;
 
             await MatchmakerAPI_Client.SaveUser(loggedInUser);
-            blockedUserList.UpdateLayout();
+
+            ChatListPage chatList = new ChatListPage();
+            NavigationService.Navigate(chatList);
         }
 
         private void ContactRequestDecline(object sender, RoutedEventArgs e)

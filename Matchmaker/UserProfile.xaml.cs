@@ -366,11 +366,5 @@ namespace Matchmaker
             await MatchmakerAPI_Client.SaveUser(userInView);
             HobbyWrapper.UpdateLayout();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ChatListPage chatList = new ChatListPage();
-            NavigationService.Navigate(chatList);
-        }
     }
 }
