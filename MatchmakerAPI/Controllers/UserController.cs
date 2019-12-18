@@ -327,7 +327,7 @@ namespace MatchmakerAPI.Controllers
 				key = userMap[data.email];
 
 				// Validate user id integrity
-				if (key != data.key)
+				if (key != data.id)
 				{
 					// If the new data's user id does not match the key found for the user's
 					// email address, update it
@@ -342,7 +342,7 @@ namespace MatchmakerAPI.Controllers
 				Console.WriteLine(" !! EXCEPTION:");
 				Console.WriteLine("    An invalid key was specified.");
 
-				return CreatedAtAction("UpdateUser", new { success = false });
+				return AcceptedAtAction("UpdateUser", new { success = false });
 
 			}
 
@@ -382,7 +382,7 @@ namespace MatchmakerAPI.Controllers
 				Console.WriteLine(" !! EXCEPTION:");
 				Console.WriteLine("    An error occurred attempting to update a user in the users database.");
 
-				return CreatedAtAction("UpdateUser", new { success = false });
+				return AcceptedAtAction("UpdateUser", new { success = false });
 
 			}
 
