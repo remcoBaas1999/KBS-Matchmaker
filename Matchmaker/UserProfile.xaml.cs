@@ -363,8 +363,10 @@ namespace Matchmaker {
                     userInView.hobbies.Add(item);
                 }
             }
+            
             await MatchmakerAPI_Client.SaveUser(userInView);
             //Reload page
+            hobbyData = new List<HobbyData>();
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             Page userProfile = new UserProfile(user, true, LoggedInUserID);
             NavigationService.Navigate(userProfile);

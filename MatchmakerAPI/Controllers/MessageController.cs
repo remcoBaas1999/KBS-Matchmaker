@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,21 +24,22 @@ namespace MatchmakerAPI.Controllers
             {
                 string json = r.ReadToEnd();
                 var chats = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
-                if (chats.ContainsKey(data.ID))
+                if (chats.ContainsKey(data.id))
                 {
                     List<Message> manipulateChat;
-                    chats.TryGetValue(data.ID, out manipulateChat);
+                    chats.TryGetValue(data.id, out manipulateChat);
                     manipulateChat.Add(data);
-                    var text = JsonConvert.SerializeObject(chats);
-                    System.IO.File.WriteAllText(fileLocation, text);
+
                 }
                 else
                 {
-                    var newChat = new List<Message>();  
+                    var newChat = new List<Message>();
                     newChat.Add(data);
-                    chats.Add(data.ID, newChat);
+                    chats.Add(data.id, newChat);
 
                 }
+                var text = JsonConvert.SerializeObject(chats);
+                System.IO.File.WriteAllText(fileLocation, text);
             }
 
 

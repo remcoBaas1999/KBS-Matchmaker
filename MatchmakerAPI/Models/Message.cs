@@ -7,9 +7,9 @@ namespace MatchmakerAPI.Models
 {
     public class Message
     {
-        public string ID { get; set; }
-        public string Text { get; set; }
-        public int Sender { get; set; }
-        public long TimeStamp { get; set; }
+        public string id { get; set; }
+        public string text { get; set; }
+        public int sender { get; set; }
+        public long timestamp { get; set; }
     }
 }
