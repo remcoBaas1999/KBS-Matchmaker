@@ -27,7 +27,7 @@ namespace Matchmaker {
         }
 
         private void RefreshNotificationsButton_MouseDown(object sender, MouseButtonEventArgs e) {
-            for (int i = 0; i < 360; i+=10) {
+            for (int i = 0; i < 360; i+=15) {
                 RotateTransform rotateTransform = new RotateTransform(i);
                 RefreshNotificationsButton.RenderTransform = rotateTransform;
                 Thread.Sleep(25);
