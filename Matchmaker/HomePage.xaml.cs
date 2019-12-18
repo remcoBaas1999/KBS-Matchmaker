@@ -53,21 +53,21 @@ namespace Matchmaker {
                 }
             }
 
-            //Create first profile
-            Random random = new Random();
-            int rnd = random.Next(0, profiles.Count);
-            FirstProfileID = profiles.ElementAt(rnd);
-            while (FirstProfileID.Equals(LoggedInUserID)) {
-                rnd = random.Next(0, profiles.Count);
-                FirstProfileID = profiles.ElementAt(rnd);
-            }
-            UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID));
-            //Set name
-            Profile1Tag.Content = user1.realName;
+            ////Create first profile
+            //Random random = new Random();
+            //int rnd = random.Next(0, profiles.Count);
+            //FirstProfileID = profiles.ElementAt(rnd);
+            //while (FirstProfileID.Equals(LoggedInUserID)) {
+            //    rnd = random.Next(0, profiles.Count);
+            //    FirstProfileID = profiles.ElementAt(rnd);
+            //}
+            //UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID));
+            ////Set name
+            //Profile1Tag.Content = user1.realName;
             FillHomepageProfiles(GenerateUserDatas());
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) {
+        private void Button_FillProfiles(object sender, RoutedEventArgs e) {
             FillHomepageProfiles(GenerateUserDatas());
         }
 
