@@ -17,7 +17,8 @@ namespace MatchmakerAPI
     		public long birthdate { get; set; }
     		public string coverImage { get; set; }
     		public List<int> blockedUsers { get; set; }
-        public List<int> requestFrom { get; set; }
-        public List<KeyValuePair<int, bool>> contacts { get; set; }
+        public List<int> incRequest { get; set; }
+        public List<int> outRequest { get; set; }
+        public List<int> contacts { get; set; }
     }
 }
