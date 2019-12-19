@@ -104,7 +104,6 @@ namespace Matchmaker {
 
         // Convert the Unixtime to an object of datetime
         private DateTime UnixTimeToDate(long _bday) {
-
             DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             DateTime bday = start.AddSeconds(_bday).ToLocalTime();
             return bday;
@@ -180,7 +179,7 @@ namespace Matchmaker {
         //Load a list with cities 
         private void citySelection_Loaded(object sender, RoutedEventArgs e) {
             citySelection.Text = city.Text;
-            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Heino", "Raalte", "Arnhem" };
+            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Groningen", "Harderwijk", "Nijkerk", "Elburg", "Baarn", "Arnhem" };
             foreach (string item in locations) {
                 citySelection.Items.Add(item);
             }
