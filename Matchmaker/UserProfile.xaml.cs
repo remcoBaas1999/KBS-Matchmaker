@@ -48,8 +48,8 @@ namespace Matchmaker {
                 //    addHobby.Visibility = Visibility.Collapsed;
                 //}
             }
-
-            years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
+            
+            years.Text = User.CalculateAge(user.birthdate).ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
             city.Text = user.city;
@@ -76,23 +76,6 @@ namespace Matchmaker {
             if (userX.blockedUsers.Contains(userInView.id)) {
                 BlockedFeedback.Visibility = Visibility.Visible;
             }
-        }
-
-        // Calculate the current age of the user.
-        public int CalculateAge(DateTime dob) {
-            DateTime today = DateTime.Today;
-            int age = today.Year - dob.Year;
-            if (today < dob.AddYears(age)) age--;
-
-            return age;
-        }
-
-        // Convert the Unixtime to an object of datetime
-        private DateTime UnixTimeToDate(long _bday) {
-
-            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            DateTime bday = start.AddSeconds(_bday).ToLocalTime();
-            return bday;
         }
 
         private void editName_Click(object sender, RoutedEventArgs e) {
