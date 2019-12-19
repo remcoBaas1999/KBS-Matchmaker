@@ -151,7 +151,6 @@ namespace MatchMakerClassLibrary
         {
             string uri = @"https://145.44.233.207/user/post/update/images";
             var result = await Post(uri, coverImageData);
-            //doe wat met result
             return true;
         }
 
@@ -159,7 +158,6 @@ namespace MatchMakerClassLibrary
         {
             string uri = @"https://145.44.233.207/user/post/new";
             var result = await Post(uri, newUserData);
-            //doe wat met result
             return true;
         }
 
@@ -167,7 +165,6 @@ namespace MatchMakerClassLibrary
         {
             string uri = @"https://145.44.233.207/messages/post/new";
             var result = await Post(uri, newMessageData);
-            //do something with result?
             return true;
         }
 
