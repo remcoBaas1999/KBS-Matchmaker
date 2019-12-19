@@ -50,11 +50,11 @@ namespace Matchmaker {
 
                 try
                 {
-                    if (user.contacts.Contains(new KeyValuePair<int, bool>(activeUser.id, false)))
+                    if (user.incRequest.Contains(activeUser.id));
                     {
                         contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
                     }
-                    if (user.contacts.Contains(new KeyValuePair<int, bool>(activeUser.id, true)))
+                    if (user.contacts.Contains(activeUser.id));
                     {
                         contactRequest.Visibility = Visibility.Collapsed;
                     }
@@ -67,8 +67,10 @@ namespace Matchmaker {
             showName.Text = user.realName;
             city.Text = user.city;
             bioText.Text = user.about;
-            if (user.hobbies != null) {
-                foreach (var item in user.hobbies) {
+            if (user.hobbies != null)
+            {
+                foreach (var item in user.hobbies)
+                {
                     //add to list of Hobbies in the Xaml
                     LoadHobbyWrapper(item.displayName, userAccount);
                 }
@@ -426,23 +428,26 @@ namespace Matchmaker {
         //Send a contact request to an other user
         private async void contactRequest_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(!userInView.contacts.Contains(new KeyValuePair<int, bool>(User.ID,false)))
+            if(!userInView.contacts.Contains(userInView.id))
             {
                 contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
 
                 //Save userID on others requestList
 
                 //Check if list already exists
-                if (userInView.requestFrom == null || userInView.requestFrom.Count == 0)
+                if (userInView.incRequest == null)
                 {
                     List<int> x = new List<int>();
-                    userInView.requestFrom = x;
+                    userInView.incRequest = x;
                 }
                 //If there is no contact request yet, add a new contact request
-                if (!userInView.requestFrom.Contains(LoggedInUserID))
+                if (!userInView.incRequest.Contains(LoggedInUserID))
                 {
-                    userInView.requestFrom.Add(LoggedInUserID);
+                    userInView.incRequest.Add(LoggedInUserID);
+                    UserData userLoggedIn = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID));
+
                     await MatchmakerAPI_Client.SaveUser(userInView);
+                    await MatchmakerAPI_Client.SaveUser(userLoggedIn);
                 }
             }
         }

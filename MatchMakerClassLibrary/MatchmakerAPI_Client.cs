@@ -198,31 +198,38 @@ namespace MatchMakerClassLibrary
         public static async Task<bool> declineContactRequest(UserData userDenying, UserData requestUser)
         {
             //Remove contact request
-            if (userDenying.requestFrom.Contains(requestUser.id)) {
-                userDenying.requestFrom.Remove(requestUser.id);
+            if (userDenying.incRequest.Contains(requestUser.id)) {
+                userDenying.incRequest.Remove(requestUser.id);
+                requestUser.outRequest.Remove(requestUser.id);
             }
-            await SaveUser(userDenying);
+            if(await SaveUser(userDenying))
+            {
+                await SaveUser(requestUser);
+            }
             return true;
         }
 
         public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
         {
+            List<int> contactList;
+
             if (confirmingUser.contacts == null) {
-                List<KeyValuePair<int, bool>> x = new List<KeyValuePair<int, bool>>();
-                List<KeyValuePair<int, bool>> y = new List<KeyValuePair<int, bool>>();
-                confirmingUser.contacts = x;
-                requestUser.contacts = y;
+                contactList = new List<int>();
+                confirmingUser.contacts = contactList;
+                requestUser.contacts = contactList;
             }
 
             //Confirm request and add to contacts
-            if (confirmingUser.contacts.Contains(new KeyValuePair<int, bool>(requestUser.id, false)) && requestUser.contacts.Contains(new KeyValuePair<int, bool>(confirmingUser.id, false))) {
-                confirmingUser.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, true));
-                requestUser.contacts.Add(new KeyValuePair<int, bool>(confirmingUser.id, true));
-                confirmingUser.requestFrom.Remove(requestUser.id);
+            if (confirmingUser.incRequest.Contains(requestUser.id) && requestUser.outRequest.Contains(confirmingUser.id)) {
+                confirmingUser.contacts.Add(requestUser.id);
+                requestUser.contacts.Add(confirmingUser.id);
+                confirmingUser.incRequest.Remove(requestUser.id);
+                requestUser.outRequest.Remove(confirmingUser.id);
+
+                await SaveUser(confirmingUser);
+                await SaveUser(requestUser);
             }
 
-            await SaveUser(confirmingUser);
-            await SaveUser(requestUser);
             return true;
         }
     }
@@ -234,17 +241,17 @@ namespace MatchMakerClassLibrary
         public string password { get; set; }
         public string salt { get; set; }
         public string realName { get; set; }
-        public int id { get; set; }
-        public string city { get; set; }
-        public long birthdate { get; set; }
         public string about { get; set; }
-        public string location { get; set; }
-        public string profilePicture { get; set; }
-        public string coverImage { get; set; }
+        public string city { get; set; }
         public List<HobbyData> hobbies { get; set; }
+        public string profilePicture { get; set; }
+        public int id { get; set; }
+        public long birthdate { get; set; }
+        public string coverImage { get; set; }
         public List<int> blockedUsers { get; set; }
-        public List<KeyValuePair<int, bool>> contacts { get; set; }
-        public List<int> requestFrom { get; set; }
+        public List<int> incRequest { get; set; }
+        public List<int> outRequest { get; set; }
+        public List<int> contacts { get; set; }
 
     }
     public class AuthData

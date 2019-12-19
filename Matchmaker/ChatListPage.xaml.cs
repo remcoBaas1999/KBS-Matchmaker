@@ -36,7 +36,7 @@ namespace Matchmaker
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            List<int> contactRequests = user.requestFrom;
+            List<int> contactRequests = user.incRequest;
 
             try
             {
@@ -161,16 +161,16 @@ namespace Matchmaker
         {
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            List <KeyValuePair<int, bool>> contacts = loggedInUser.contacts;
+            List <int> contacts = loggedInUser.contacts;
 
             try
             {
                 if (contacts.Count > 0)
                 {
-                    foreach (KeyValuePair<int, bool> contact in contacts)
+                    foreach (int contact in contacts)
                     {
-                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact.Key));
-                        if (contact.Value)
+                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact));
+                        if (contactUser != null)
                         {
                             StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0), Width = 120 };
                             Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
