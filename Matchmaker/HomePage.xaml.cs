@@ -36,34 +36,7 @@ namespace Matchmaker {
             LoggedInUserID = getLoggedInUserData.id;
             User.ID = LoggedInUserID;
 
-            //Get userprofiles from databases
-            Dictionary<String, int> Profiles = new Dictionary<string, int>();
-            Profiles = MatchmakerAPI_Client.GetUsers();
-            var profiles = Profiles.Values.ToList();
-
-            //Remove blocked user(s) if any
-
-            if (getLoggedInUserData.blockedUsers == null) {
-                FillEmptyList(getLoggedInUserData);
-            }
-
-            foreach (var item in getLoggedInUserData.blockedUsers) {
-                if (profiles.Contains(item)) {
-                    profiles.Remove(item);
-                }
-            }
-
-            ////Create first profile
-            //Random random = new Random();
-            //int rnd = random.Next(0, profiles.Count);
-            //FirstProfileID = profiles.ElementAt(rnd);
-            //while (FirstProfileID.Equals(LoggedInUserID)) {
-            //    rnd = random.Next(0, profiles.Count);
-            //    FirstProfileID = profiles.ElementAt(rnd);
-            //}
-            //UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID));
-            ////Set name
-            //Profile1Tag.Content = user1.realName;
+                
             FillHomepageProfiles(GenerateUserDatas());
         }
 

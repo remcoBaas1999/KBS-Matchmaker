@@ -27,7 +27,30 @@ namespace MatchmakerAPI
       // Retrieve the users database as Dictionary<int, UserData>
       var users = UserController.ReadUsers();
 
-      try {
+            //Get userprofiles from databases
+             var profiles = users.Values.ToList();
+
+            //Remove blocked user(s) if any
+            UserData getLoggedInUserData = new UserData();
+            foreach (var item in profiles) {
+                if(item.id == forUserId) {
+                    getLoggedInUserData = item;
+                }
+            }
+
+            if (getLoggedInUserData.blockedUsers == null) {
+                List<int> x = new List<int>();
+                getLoggedInUserData.blockedUsers = x;
+            }
+
+            foreach (var item in getLoggedInUserData.blockedUsers) {
+                if (users.Keys.Contains(item)) {
+                    users.Remove(item);
+                }
+            }
+
+
+            try {
 
         // Get user data for the user for which the matches are being found
         var forUser = users[forUserId];
