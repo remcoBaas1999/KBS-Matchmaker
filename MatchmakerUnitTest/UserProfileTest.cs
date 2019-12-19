@@ -1,9 +1,10 @@
 ﻿using NUnit.Framework;
+using Prime.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MatchmakerUnitTest
+namespace MatchmakerUnitTest.UnitTests.Services
 {
     [TestFixture]
     class UserProfileTest
