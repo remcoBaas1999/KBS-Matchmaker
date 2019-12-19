@@ -50,9 +50,13 @@ namespace Matchmaker {
 
                 try
                 {
-                    if (user.contacts.Contains(new KeyValuePair<int, bool>(activeUser.id, true)))
+                    if (user.contacts.Contains(new KeyValuePair<int, bool>(activeUser.id, false)))
                     {
                         contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
+                    }
+                    if (user.contacts.Contains(new KeyValuePair<int, bool>(activeUser.id, true)))
+                    {
+                        contactRequest.Visibility = Visibility.Collapsed;
                     }
                 }
                 catch (NullReferenceException) { };
