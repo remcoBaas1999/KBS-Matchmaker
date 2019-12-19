@@ -428,6 +428,12 @@ namespace Matchmaker {
         //Send a contact request to an other user
         private async void contactRequest_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if(userInView.contacts == null)
+            {
+                List<int> x = new List<int>();
+                userInView.contacts = x;
+            }
+
             if(!userInView.contacts.Contains(userInView.id))
             {
                 contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
@@ -445,6 +451,14 @@ namespace Matchmaker {
                 {
                     userInView.incRequest.Add(LoggedInUserID);
                     UserData userLoggedIn = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID));
+                    
+                    if(userLoggedIn.outRequest == null)
+                    {
+                        List<int> x = new List<int>();
+                        userLoggedIn.outRequest = x;
+                    }
+
+                    userLoggedIn.outRequest.Add(userInView.id);
 
                     await MatchmakerAPI_Client.SaveUser(userInView);
                     await MatchmakerAPI_Client.SaveUser(userLoggedIn);
