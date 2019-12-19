@@ -352,6 +352,10 @@ namespace Matchmaker {
             addInterests.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
             bool inAccount;
+            if (userInView.hobbies==null)
+            {
+                userInView.hobbies = new List<HobbyData>();
+            }
             foreach (var item in hobbyData) {
                 inAccount = false;
                 foreach (var hobby in userInView.hobbies) {
