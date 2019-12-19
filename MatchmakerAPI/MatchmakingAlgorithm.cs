@@ -28,13 +28,13 @@ namespace MatchmakerAPI
       var users = UserController.ReadUsers();
 
             //Get userprofiles from databases
-             var profiles = users.Values.ToList();
+             //var profiles = users.Values.ToList();
 
             //Remove blocked user(s) if any
             UserData getLoggedInUserData = new UserData();
-            foreach (var item in profiles) {
-                if(item.id == forUserId) {
-                    getLoggedInUserData = item;
+            foreach (var item in users) {
+                if(item.Key == forUserId) {
+                    getLoggedInUserData = item.Value;
                 }
             }
 
