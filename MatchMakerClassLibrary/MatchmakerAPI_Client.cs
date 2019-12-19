@@ -209,12 +209,13 @@ namespace MatchMakerClassLibrary
         {
             if (confirmingUser.contacts == null) {
                 List<KeyValuePair<int, bool>> x = new List<KeyValuePair<int, bool>>();
+                List<KeyValuePair<int, bool>> y = new List<KeyValuePair<int, bool>>();
                 confirmingUser.contacts = x;
-                requestUser.contacts = x;
+                requestUser.contacts = y;
             }
 
             //Confirm request and add to contacts
-            if (confirmingUser.requestFrom.Contains(requestUser.id)) {
+            if (confirmingUser.contacts.Contains(new KeyValuePair<int, bool>(requestUser.id, false)) && requestUser.contacts.Contains(new KeyValuePair<int, bool>(confirmingUser.id, false))) {
                 confirmingUser.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, true));
                 requestUser.contacts.Add(new KeyValuePair<int, bool>(confirmingUser.id, true));
                 confirmingUser.requestFrom.Remove(requestUser.id);
