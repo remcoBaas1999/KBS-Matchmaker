@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 
 using WhiteColor = System.Drawing.Brushes;
 using MediaBrush = System.Windows.Media.Brushes;
+using System.Windows.Input;
 
 namespace Matchmaker
 {
@@ -276,6 +277,35 @@ namespace Matchmaker
 
             
             NavigationService.Navigate(this);
+        }
+        //Menu buttons
+        //Go to Notification page
+        private void Notification_MouseDown(object sender, MouseButtonEventArgs e) {
+            Notifications notifications = new Notifications();
+            notifications.Title = "Notifations";
+            NavigationService.Navigate(notifications);
+        }
+
+        //Go to Logout page
+        private void Logout_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) {
+                //Logout current user
+                LoginPage loginPage = new LoginPage();
+                NavigationService.Navigate(loginPage);
+            }
+        }
+
+        //Go to Settings page
+        private void Settings_MouseDown(object sender, MouseButtonEventArgs e) {
+            Settings settings = new Settings(User.ID);
+            NavigationService.Navigate(settings);
+        }
+
+        //Go to own profilepage
+        private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e) {
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            Page userProfile = new UserProfile(user, true, User.ID);
+            NavigationService.Navigate(userProfile);
         }
     }
 }

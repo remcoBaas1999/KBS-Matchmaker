@@ -36,33 +36,55 @@
                     </Grid>
                 </Border>
             </WrapPanel>
+            <WrapPanel HorizontalAlignment="Right" Grid.Column="2" Grid.RowSpan="2">
+                <Ellipse x:Name="Notification" HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" Margin="0,0,5,0" MouseDown="Notification_MouseDown">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse x:Name="MyProfile" HorizontalAlignment="Left" Height="26" Stroke="#00000000" VerticalAlignment="Top" Width="26" MouseDown="MyProfile_MouseDown" Margin="5,3,5,0">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse x:Name="Settings" HorizontalAlignment="Left" Height="29" Stroke="#00000000" VerticalAlignment="Top" Width="29" MouseDown="Settings_MouseDown" Margin="5,2,5,0">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/settings.png"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Rectangle x:Name="Logout" HorizontalAlignment="Left" Height="32" Stroke="#00000000" VerticalAlignment="Top" Width="32" MouseDown="Logout_MouseDown" Margin="5,0">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="Images/exit.png" Stretch="UniformToFill"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </WrapPanel>
 
 
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 56 0 0">
                 <Border Width="500">
                     <TextBlock Text="Contact Requests" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
                 </Border>
-                
+
                 <StackPanel x:Name="newRequestList" />
-                
+
                 <Border Width="500" Margin="0 56 0 0">
                     <TextBlock Text="Your Chats" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
                 </Border>
-                
+
                 <StackPanel Width="473" x:Name="chatList" />
 
                 <Border Width="520">
                     <TextBlock Text="Your Contacts" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 56 0 0" FontWeight="Heavy"/>
                 </Border>
-                
+
                 <WrapPanel x:Name="recentlyAddedChats" MaxWidth="520" HorizontalAlignment="Center"/>
 
                 <Border Width="490">
                     <TextBlock Text="Blocked Users" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 46 0 0" FontWeight="Heavy"/>
                 </Border>
-                
+
                 <StackPanel x:Name="blockedUserList"/>
-                
+
             </StackPanel>
         </Grid>
     </ScrollViewer>
