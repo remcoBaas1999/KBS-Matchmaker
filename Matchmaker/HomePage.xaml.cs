@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
 namespace Matchmaker {
     public partial class HomePage : Page {
         private UserData LoggedInUser;
@@ -45,7 +44,7 @@ namespace Matchmaker {
 
 
         private UserData[] GenerateUserDatas() {
-            UserData[] userDatas = MatchmakerAPI_Client.GetMatches(LoggedInUser.id);
+            UserData[] userDatas = MatchmakerAPI_Client.GetMatches(int.Parse(LoggedInUser.id));
             Console.WriteLine("\nThese are the users:");
             foreach (UserData user in userDatas) {
                 Console.WriteLine($" - {user.id} ({user.realName})");

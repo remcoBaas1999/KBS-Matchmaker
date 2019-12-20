@@ -126,7 +126,7 @@ namespace Matchmaker
                 //The ID will be compared to the sender (0/1) and then the position in the messageID.
                 //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.                
                 Console.WriteLine($"{userInChat.id}=={Int32.Parse(iDS[m.Sender])}");
-                if(int.Parse(userInChat.id)==Int32.Parse(iDS[m.Sender]))
+                if (int.Parse(userInChat.id) == Int32.Parse(iDS[m.Sender]))
                 {
                     if (lastSender!=1)
                     {                    
