@@ -63,7 +63,8 @@ namespace Matchmaker {
                 catch (NullReferenceException) { };
             }
 
-            years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
+            
+            years.Text = (User.CalculateAge(user.birthdate)).ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
             city.Text = user.city;

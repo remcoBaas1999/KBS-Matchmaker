@@ -16,7 +16,7 @@ namespace Matchmaker {
             InitializeComponent();
             NewRequests();
             ChatList();
-            //UserContacts();
+            UserContacts();
             LoadBlockedUsers();
         }
 
@@ -191,7 +191,7 @@ namespace Matchmaker {
             {
                 recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
             }
-        }*/
+        }
 
         private void NewChat_MouseDown(object sender, MouseButtonEventArgs e)
         {
