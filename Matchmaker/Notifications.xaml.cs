@@ -24,7 +24,51 @@ namespace Matchmaker {
 
             this.currentUser = currentUser;
 
-            NotificationList.ItemsSource =  MatchmakerAPI_Client.LoadNotifications(currentUser).Result;
+            LoadNotifications();
+        }
+
+        private async void LoadNotifications() {
+            List<Notification> notifications = new List<Notification>();
+
+            //All users
+            var users = MatchmakerAPI_Client.GetUsers();
+
+            users.Remove(currentUser.email);
+
+            foreach (KeyValuePair<string, int> user in users) {
+                //Convert to UserData
+                UserData userData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(user.Key));
+                
+                //Run through each user and see if the current user has unread messages from them
+                //If so, add a link to that chat to the notification page
+                if (await UserHasNewMessages(currentUser, userData)) {
+                    notifications.Add(new Notification(userData));
+                }
+            }
+            NotificationList.ItemsSource = notifications;
+        }
+
+        private async Task<bool> UserHasNewMessages(UserData currentUser, UserData otherUser) {
+            string chatID;
+            if (currentUser.id < otherUser.id) {
+                chatID = $"{currentUser.id}_{otherUser.id}";
+            } else {
+                chatID = $"{otherUser.id}_{currentUser.id}";
+            }
+
+            var messageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
+
+            Console.WriteLine($"ChatID: {chatID} - with user: {otherUser.realName} - amount of total messages: {messageList.Count}");
+
+            foreach (MessageData message in messageList) {
+                if (!message.seen) {
+
+                    Console.WriteLine($"The following message is unread: \"{message.message}\"");
+
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void goBack_MouseDown(object sender, MouseButtonEventArgs e) {
@@ -33,7 +77,7 @@ namespace Matchmaker {
         }
 
         private void RefreshNotificationsButton_MouseDown(object sender, MouseButtonEventArgs e) {
-            NotificationList.ItemsSource = MatchmakerAPI_Client.LoadNotifications(currentUser).Result;
+            LoadNotifications();
 
             for (int i = 0; i < 360; i += 10) {
                 RotateTransform rotateTransform = new RotateTransform(i);
@@ -51,6 +95,13 @@ namespace Matchmaker {
                 ChatPage chatPage = new ChatPage((user as Notification).user);
                 chatPage.InitializeComponent();
                 NavigationService.Navigate(chatPage);
+            }
+        }
+
+        public class Notification {
+            public UserData user { get; set; }
+            public Notification(UserData user) {
+                this.user = user;
             }
         }
     }

@@ -80,8 +80,6 @@ namespace Matchmaker {
         }
 
         private void FillHomepageProfiles(UserData[] userDatas) {
-            RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
-
             FirstProfile = userDatas[0];
             //Set name
             Profile1Tag.Content = userDatas[0].realName;
@@ -199,21 +197,6 @@ namespace Matchmaker {
         private void ContactPage_Click(object sender, RoutedEventArgs e) {
             ChatListPage chatList = new ChatListPage();
             NavigationService.Navigate(chatList);
-        }
-
-        private void RefreshNotificationCount(int count) {
-            NotificationCountLabel.Content = count;
-            if (count == 0) {
-                NotificationCountCircle.Visibility = Visibility.Collapsed;
-                NotificationCountLabel.Visibility = Visibility.Collapsed;
-                NotificationWithNumber.Visibility = Visibility.Collapsed;
-                NotificationWithoutNumber.Visibility = Visibility.Visible;
-            } else {
-                NotificationCountCircle.Visibility = Visibility.Visible;
-                NotificationCountLabel.Visibility = Visibility.Visible;
-                NotificationWithNumber.Visibility = Visibility.Visible;
-                NotificationWithoutNumber.Visibility = Visibility.Collapsed;
-            }
         }
     }
 }
