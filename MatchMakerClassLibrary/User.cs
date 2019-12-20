@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Matchmaker {
     public static class User {
+        public static int ID { get; set; }
         public static bool wantsNotifications;
         public static bool showInterests;
         public static bool showAttendingActivities;

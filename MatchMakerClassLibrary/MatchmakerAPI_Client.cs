@@ -10,6 +10,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Net.Http;
 using System.Net.Security;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace MatchMakerClassLibrary
 {
@@ -25,9 +27,19 @@ namespace MatchMakerClassLibrary
 
         public static AuthData DeserializeAuthData(string json)
         {
-            return JsonConvert.DeserializeObject<AuthData>(json);
+            return JsonConvert.DeserializeObject<AuthData>(json);   
         }
-
+        public static List<MessageData> DeserializeMessageData(string json)
+        {
+            if (json == null)
+            {
+                return new List<MessageData>();
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<List<MessageData>>(json);
+            }
+        }
         public static string GetUserData(int id)
         {
             return Get($@"https://145.44.233.207/user/get/id={id}");
@@ -44,10 +56,14 @@ namespace MatchMakerClassLibrary
             return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
         }
 
-        public static Dictionary<string, int> GetUsers()
-        {
+        public static Dictionary<string, int> GetUsers() {
             var json = Get($@"https://145.44.233.207/user/get/all");
             return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+        }
+
+        public static UserData[] GetMatches(int id) {
+            var json = Get($@"https://145.44.233.207/user/get/matches/id={id}");
+            return JsonConvert.DeserializeObject<UserData[]>(json);
         }
 
         public static async Task<AuthData> GetAuthDataAsync(string email)
@@ -66,10 +82,12 @@ namespace MatchMakerClassLibrary
             }
         }
 
-        public static string GetEventData(int id)
+        public static async Task<string> GetMessageData(string id)
         {
-            //return Get($@"https://145.44.233.207/get/event?id={id}");
-            return null;
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            var uri = $@"https://145.44.233.207/messages/get/id={id}";
+            var response = await client.GetAsync(uri);
+            return await response.Content.ReadAsStringAsync();
         }
         public static async Task<bool> AuthenticateAsync(string email, string password)
         {
@@ -106,9 +124,6 @@ namespace MatchMakerClassLibrary
             {
                 Console.WriteLine(GetAuthDataAsync(email));
             }
-
-
-
             return false;
         }
         private static string Get(string uri)
@@ -116,7 +131,6 @@ namespace MatchMakerClassLibrary
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
             try
             {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -126,7 +140,7 @@ namespace MatchMakerClassLibrary
                     return reader.ReadToEnd();
                 }
             }
-            catch
+            catch (WebException we)
             {
                 Console.WriteLine("De server reageerde niet of staat uit.");
                 return null;
@@ -149,6 +163,14 @@ namespace MatchMakerClassLibrary
             return true;
         }
 
+        public static async Task<bool> PostNewMessage(MessageData newMessageData)
+        {
+            string uri = @"https://145.44.233.207/messages/post/new";
+            var result = await Post(uri, newMessageData);
+            //do something with result?
+            return true;
+        }
+
         private static async Task<string> Post(string uri, object data)
         {
 
@@ -164,7 +186,7 @@ namespace MatchMakerClassLibrary
         public static async Task<bool> SaveUser(UserData data)
         {
             string url = @"https://145.44.233.207/user/post/update";
-            var result = await Post(url, data);
+            await Post(url, data);
 
             return true;
         }
@@ -174,7 +196,52 @@ namespace MatchMakerClassLibrary
             List<HobbyData> data = JsonConvert.DeserializeObject<List<HobbyData>>(Get(@"https://145.44.233.207/hobbies/get/all"));
             return data;
         }
+
+        public static ImageBrush GetProfilePicture(UserData userData) {
+            string pfPic = $"https://145.44.233.207/images/users/{userData.profilePicture}";
+            return new ImageBrush(new BitmapImage(new Uri(pfPic, UriKind.Absolute)));
+        }
+
+        public static async Task<bool> sendContactRequest(UserData user, UserData requestUser)
+        {
+            int id = user.id;
+            //The contact is saved with the user
+            user.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, false));
+            string uri = @"https://145.44.233.207/user/post/update/id={id}";
+            //THe request is saved with the other account
+            requestUser.requestFrom.Add(user.id);
+            id = requestUser.id;
+            await Post(uri, requestUser);
+            return true;
+
+        }
+
+        public static async Task<bool> denyContactRequest(UserData userDenying, UserData requestUser)
+        {
+            int id = userDenying.id;
+            //The request  is is set to not be a contact
+            userDenying.contacts.Add(new KeyValuePair<int, bool>(id, false));
+            userDenying.requestFrom.Remove(userDenying.id);
+            string uri = @"https://145.44.233.207/user/post/update/id={id}";
+            await Post(uri, requestUser);
+            return true;
+        }
+
+        public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
+        {
+            int id = confirmingUser.id;
+            //The request  is is set to be a contact
+            confirmingUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
+            confirmingUser.requestFrom.Remove(confirmingUser.id);
+            string uri = @"https://145.44.233.207/user/post/update/id={id}";
+            //Update requesting user account
+            id = requestUser.id;
+            requestUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
+            await Post(uri, requestUser);
+            return true;
+        }
     }
+
 
     public class UserData
     {
@@ -186,9 +253,13 @@ namespace MatchMakerClassLibrary
         public string city { get; set; }
         public long birthdate { get; set; }
         public string about { get; set; }
+        public string location { get; set; }
         public string profilePicture { get; set; }
         public string coverImage { get; set; }
         public List<HobbyData> hobbies { get; set; }
+        public List<int> blockedUsers { get; set; }
+        public List<KeyValuePair<int, bool>> contacts { get; set; }
+        public List<int> requestFrom { get; set; }
 
     }
     public class AuthData
@@ -208,11 +279,6 @@ namespace MatchMakerClassLibrary
     {
         public int userID { get; set; }
         public string imageName { get; set; }
-        public class HobbyData
-        {
-            public string displayName { get; set; }
-            public List<string> assocHobbies { get; set; }
-        }
     }
     public class MessageData
     {
