@@ -203,7 +203,7 @@ namespace MatchMakerClassLibrary
         {
             int id = user.id;
             //The contact is saved with the user
-            user.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, false));
+            user.contacts.Add(requestUser.id, false);
             string uri = @"https://145.44.233.207/user/post/update/id={id}";
             //THe request is saved with the other account
             requestUser.requestFrom.Add(user.id);
@@ -217,7 +217,7 @@ namespace MatchMakerClassLibrary
         {
             int id = userDenying.id;
             //The request  is is set to not be a contact
-            userDenying.contacts.Add(new KeyValuePair<int, bool>(id, false));
+            userDenying.contacts.Add(id, false);
             userDenying.requestFrom.Remove(userDenying.id);
             string uri = @"https://145.44.233.207/user/post/update/id={id}";
             await Post(uri, requestUser);
@@ -228,12 +228,12 @@ namespace MatchMakerClassLibrary
         {
             int id = confirmingUser.id;
             //The request  is is set to be a contact
-            confirmingUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
+            confirmingUser.contacts.Add(id, true);
             confirmingUser.requestFrom.Remove(confirmingUser.id);
             string uri = @"https://145.44.233.207/user/post/update/id={id}";
             //Update requesting user account
             id = requestUser.id;
-            requestUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
+            requestUser.contacts.Add(id, true);
             await Post(uri, requestUser);
             return true;
         }
@@ -255,7 +255,7 @@ namespace MatchMakerClassLibrary
         public string coverImage { get; set; }
         public List<HobbyData> hobbies { get; set; }
         public List<int> blockedUsers { get; set; }
-        public List<KeyValuePair<int, bool>> contacts { get; set; }
+        public Dictionary<int, bool> contacts { get; set; }
         public List<int> requestFrom { get; set; }
 
     }
