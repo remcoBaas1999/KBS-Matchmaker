@@ -25,7 +25,7 @@ namespace MatchMakerClassLibrary
 
         public static AuthData DeserializeAuthData(string json)
         {
-            return JsonConvert.DeserializeObject<AuthData>(json);   
+            return JsonConvert.DeserializeObject<AuthData>(json);
         }
         public static List<MessageData> DeserializeMessageData(string json)
         {
@@ -54,12 +54,14 @@ namespace MatchMakerClassLibrary
             return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
         }
 
-        public static Dictionary<string, int> GetUsers() {
+        public static Dictionary<string, int> GetUsers()
+        {
             var json = Get($@"https://145.44.233.207/user/get/all");
             return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
         }
 
-        public static UserData[] GetMatches(int id) {
+        public static UserData[] GetMatches(int id)
+        {
             var json = Get($@"https://145.44.233.207/user/get/matches/id={id}");
             return JsonConvert.DeserializeObject<UserData[]>(json);
         }
@@ -191,24 +193,26 @@ namespace MatchMakerClassLibrary
             List<HobbyData> data = JsonConvert.DeserializeObject<List<HobbyData>>(Get(@"https://145.44.233.207/hobbies/get/all"));
             return data;
         }
-         
+
         public static async Task<bool> declineContactRequest(UserData userDenying, UserData requestUser)
         {
             //Remove contact request
-            if (userDenying.requestFrom.Contains(int.Parse(requestUser.id))) {
+            if (userDenying.requestFrom.Contains(int.Parse(requestUser.id)))
+            {
                 userDenying.requestFrom.Remove(int.Parse(requestUser.id));
                 requestUser.contacts.Remove(userDenying.id);
             }
 
             await SaveUser(userDenying);
             await SaveUser(requestUser);
-            
+
             return true;
         }
 
         public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
         {
-            if (confirmingUser.contacts == null) {
+            if (confirmingUser.contacts == null)
+            {
 
                 Dictionary<string, bool> x = new Dictionary<string, bool>();
                 confirmingUser.contacts = x;
@@ -216,7 +220,8 @@ namespace MatchMakerClassLibrary
             }
 
             //Confirm request and add to contacts
-            if (confirmingUser.requestFrom.Contains(int.Parse(requestUser.id))) {
+            if (confirmingUser.requestFrom.Contains(int.Parse(requestUser.id)))
+            {
                 confirmingUser.contacts.Add(requestUser.id, true);
                 requestUser.contacts[confirmingUser.id] = true;
                 confirmingUser.requestFrom.Remove(int.Parse(requestUser.id));
@@ -227,8 +232,67 @@ namespace MatchMakerClassLibrary
 
             return true;
         }
-    }
 
+
+
+        public static async Task<List<Notification>> LoadNotifications(UserData currentUser)
+        {
+            List<Notification> notifications = new List<Notification>();
+
+            //All users
+            var users = GetUsers();
+
+            users.Remove(currentUser.email);
+
+            foreach (KeyValuePair<string, int> user in users)
+            {
+                //Convert to UserData
+                UserData userData = DeserializeUserData(GetUserData(user.Key));
+
+                //Run through each user and see if the current user has unread messages from them
+                //If so, add a link to that chat to the notification page
+                if (await UserHasNewMessages(currentUser, userData))
+                {
+                    notifications.Add(new Notification(userData));
+                }
+            }
+            return notifications;
+        }
+
+        public static async Task<bool> UserHasNewMessages(UserData currentUser, UserData otherUser)
+        {
+            string chatID;
+            if (int.Parse(currentUser.id) < int.Parse(otherUser.id))
+            {
+                chatID = $"{currentUser.id}_{otherUser.id}";
+            }
+            else
+            {
+                chatID = $"{otherUser.id}_{currentUser.id}";
+            }
+
+            var messageList = DeserializeMessageData(await GetMessageData(chatID));
+
+            Console.WriteLine($"ChatID: {chatID} - with user: {otherUser.realName} - amount of total messages: {messageList.Count}");
+
+            foreach (MessageData message in messageList)
+            {
+                if (message.seen)
+                {
+
+                    Console.WriteLine($"The following message is unread: \"{message.message}\"");
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static int GetNotificationCount(UserData currentUser)
+        {
+            return LoadNotifications(currentUser).Result.Count;
+        }
+    }
 
     public class UserData
     {
@@ -265,11 +329,21 @@ namespace MatchMakerClassLibrary
         public int userID { get; set; }
         public string imageName { get; set; }
     }
+
     public class MessageData
     {
-        public string ID { get; set; }
-        public string Text { get; set; }
-        public int Sender { get; set; }
-        public long TimeStamp { get; set; }
+        public string message { get; set; }
+        public long timestamp { get; set; }
+        public int sender { get; set; }
+        public bool seen { get; set; }
+    }
+
+    public class Notification
+    {
+        public UserData user { get; set; }
+        public Notification(UserData user)
+        {
+            this.user = user;
+        }
     }
 }

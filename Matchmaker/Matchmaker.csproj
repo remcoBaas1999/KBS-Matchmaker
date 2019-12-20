@@ -245,6 +245,7 @@
     </Content>
     <Content Include="Images\full-screen.svg" />
     <Resource Include="Images\ic_chevron_left-png-24px.png" />
+    <Resource Include="Images\Icon_Final.png" />
     <Content Include="Images\maximize.svg" />
     <Content Include="Images\minimize.svg" />
     <Resource Include="Images\refresh.png" />

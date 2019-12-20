@@ -1,5 +1,6 @@
 ﻿using MatchMakerClassLibrary;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,15 +16,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
 namespace Matchmaker {
-    public partial class HomePage : Page
-    {
-        private int LoggedInUserID;
-        private int FirstProfileID;
-        private int SecondProfileID;
-        private int ThirdProfileID;
-        private int FourthProfileID;
+    public partial class HomePage : Page {
+        private UserData LoggedInUser;
+        private UserData FirstProfile;
+        private UserData SecondProfile;
+        private UserData ThirdProfile;
+        private UserData FourthProfile;
+
 
         
         public HomePage() {
@@ -31,24 +31,36 @@ namespace Matchmaker {
             InitializeComponent();
 
             //Gather info about logged-in user
-            String email = User.email;
+            string email = User.email;
             UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            LoggedInUserID = int.Parse(getLoggedInUserData.id);
-            User.ID = LoggedInUserID;
+            //LoggedInUserID = int.Parse(getLoggedInUserData.id);
+            //User.ID = log;
+            LoggedInUser = getLoggedInUserData;
+            User.ID = int.Parse(LoggedInUser.id);
 
-                
+            if (getLoggedInUserData.blockedUsers == null)
+            {
+                FillEmptyList(getLoggedInUserData);
+            }
+
             FillHomepageProfiles(GenerateUserDatas());
         }
 
 
 
         private UserData[] GenerateUserDatas() {
-            UserData[] userDatas = MatchmakerAPI_Client.GetMatches(LoggedInUserID);
+            UserData[] userDatas = MatchmakerAPI_Client.GetMatches(int.Parse(LoggedInUser.id));
+            Console.WriteLine("\nThese are the users:");
+            foreach (UserData user in userDatas) {
+                Console.WriteLine($" - {user.id} ({user.realName})");
+            }
             return userDatas;
         }
 
         private void FillHomepageProfiles(UserData[] userDatas) {
-            FirstProfileID = int.Parse(userDatas[0].id);
+            //RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
+
+            FirstProfile = userDatas[0];
             //Set name
             Profile1Tag.Content = userDatas[0].realName;
             //Set profile picture           
@@ -58,7 +70,7 @@ namespace Matchmaker {
             string coverImage = $"https://145.44.233.207/images/covers/{userDatas[0].coverImage}";
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            SecondProfileID = int.Parse(userDatas[1].id);
+            SecondProfile = userDatas[1];
             //Set name
             Profile2Tag.Content = userDatas[1].realName;
             //Set profile picture
@@ -68,7 +80,7 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[1].coverImage}";
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            ThirdProfileID = int.Parse(userDatas[2].id);
+            ThirdProfile = userDatas[2];
             //Set name
             Profile3Tag.Content = userDatas[2].realName;
             //Set profile picture
@@ -78,7 +90,7 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[2].coverImage}";
             Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            FourthProfileID = int.Parse(userDatas[3].id);
+            FourthProfile = userDatas[3];
             //Set name
             Profile4Tag.Content = userDatas[3].realName;
             //Set profile picture
@@ -111,29 +123,29 @@ namespace Matchmaker {
         //When clicked on a profile
         private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)), false, LoggedInUserID);
-            NavigationService.Navigate(page);
+            ButtonPressed(FirstProfile);
         }
         private void Profile2BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID)), false, LoggedInUserID);
-            NavigationService.Navigate(page);
+            ButtonPressed(SecondProfile);
         }
 
         private void Profile3BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID)), false, LoggedInUserID);
-            NavigationService.Navigate(page);
+            ButtonPressed(ThirdProfile);
         }
         private void Profile4BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID)), false, LoggedInUserID);
+            ButtonPressed(FourthProfile);
+        }
+        private void ButtonPressed(UserData userData) {
+            //Console.WriteLine($"\nUser ID: {userData.id}, name: {userData.realName}, User ID is correct: {id == userData.id}");
+            Page page = new UserProfile(userData, false, int.Parse(LoggedInUser.id));
             NavigationService.Navigate(page);
         }
 
 
         //Menu buttons
         //Go to Notification page
-        private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Notifications notifications = new Notifications();
+        private void Notification_MouseDown(object sender, MouseButtonEventArgs e) {
+            Notifications notifications = new Notifications(LoggedInUser);
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
@@ -149,9 +161,8 @@ namespace Matchmaker {
         }
 
         //Go to Settings page
-        private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Settings settings = new Settings(LoggedInUserID);
+        private void Settings_MouseDown(object sender, MouseButtonEventArgs e) {
+            Settings settings = new Settings(int.Parse(LoggedInUser.id));
             NavigationService.Navigate(settings);
         }
 
@@ -159,7 +170,7 @@ namespace Matchmaker {
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, true, LoggedInUserID);
+            Page userProfile = new UserProfile(user, true, int.Parse(LoggedInUser.id));
             NavigationService.Navigate(userProfile);
         }
 
@@ -182,6 +193,21 @@ namespace Matchmaker {
         {
             ChatListPage chatList = new ChatListPage();
             NavigationService.Navigate(chatList);
+        }
+
+        private void RefreshNotificationCount(int count) {
+            NotificationCountLabel.Content = count;
+            if (count == 0) {
+                NotificationCountCircle.Visibility = Visibility.Collapsed;
+                NotificationCountLabel.Visibility = Visibility.Collapsed;
+                NotificationWithNumber.Visibility = Visibility.Collapsed;
+                NotificationWithoutNumber.Visibility = Visibility.Visible;
+            } else {
+                NotificationCountCircle.Visibility = Visibility.Visible;
+                NotificationCountLabel.Visibility = Visibility.Visible;
+                NotificationWithNumber.Visibility = Visibility.Visible;
+                NotificationWithoutNumber.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
