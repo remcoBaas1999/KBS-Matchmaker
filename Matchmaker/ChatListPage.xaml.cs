@@ -6,18 +6,13 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Drawing;
 using System.Windows.Media.Imaging;
-
-using WhiteColor = System.Drawing.Brushes;
 using MediaBrush = System.Windows.Media.Brushes;
+using System.Windows.Input;
 
-namespace Matchmaker
-{
-    public partial class ChatListPage : Page
-    {
-        public ChatListPage()
-        {
+namespace Matchmaker {
+    public partial class ChatListPage : Page {
+        public ChatListPage() {
             InitializeComponent();
             NewRequests();
             ChatList();
@@ -25,8 +20,7 @@ namespace Matchmaker
             LoadBlockedUsers();
         }
 
-        private void NavigateHome(object sender, RoutedEventArgs e)
-        {
+        private void NavigateHome(object sender, RoutedEventArgs e) {
             HomePage homePage = new HomePage();
             NavigationService.Navigate(homePage);
         }
@@ -34,50 +28,80 @@ namespace Matchmaker
         // Display the incoming request
         public void NewRequests()
         {
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            if (TestSet().Count > 0)
+            List<int> contactRequests = user.requestFrom;
+
+            try
             {
-                foreach (UserData user in TestSet())
+
+                if (contactRequests.Count > 0 && contactRequests != null)
                 {
-                    Grid rowBase = new Grid() { Width = 473 };
-                    WrapPanel userRow = new WrapPanel() { Height = 70 };  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
-                    Grid pictureBox = new Grid() { Height = 70 };
-                    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0) };
-                    string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
-                    userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-                    Border newUser = new Border() { Height = 16, Width = 28, VerticalAlignment = VerticalAlignment.Bottom,
-                        BorderThickness = new Thickness(2), BorderBrush = MediaBrush.White, HorizontalAlignment = HorizontalAlignment.Center, CornerRadius = new CornerRadius(5), Margin = new Thickness(2, 0, 0, 0) };
-                    newUser.Background = MediaBrush.Purple;
-                    newUser.Child = (new TextBlock() { Text = "NEW", FontSize = 10, TextAlignment = TextAlignment.Center, LineHeight = 14, Foreground = MediaBrush.White });
-                    TextBlock profileName = new TextBlock() { Text = user.realName, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(16, 8, 0, 0), FontSize = 16, LineHeight = 20 };
+                    foreach (int request in contactRequests)
+                    {
+                        UserData requestSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(request));
 
-                    StackPanel requestButtons = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right};
+                        Grid rowBase = new Grid() { Width = 473 };
+                        WrapPanel userRow = new WrapPanel() { Height = 70 };  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
+                        Grid pictureBox = new Grid() { Height = 70 };
+                        Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0) };
+                        string pfPic1 = $"https://145.44.233.207/images/users/{requestSender.profilePicture}";
+                        userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
+                        Border newUser = new Border()
+                        {
+                            Height = 16,
+                            Width = 28,
+                            VerticalAlignment = VerticalAlignment.Bottom,
+                            BorderThickness = new Thickness(2),
+                            BorderBrush = MediaBrush.White,
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            CornerRadius = new CornerRadius(5),
+                            Margin = new Thickness(2, 0, 0, 0)
+                        };
+                        newUser.Background = MediaBrush.Purple;
+                        newUser.Child = (new TextBlock() { Text = "NEW", FontSize = 10, TextAlignment = TextAlignment.Center, LineHeight = 14, Foreground = MediaBrush.White });
+                        TextBlock profileName = new TextBlock() { Text = requestSender.realName, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(16, 8, 0, 0), FontSize = 16, LineHeight = 20 };
 
-                    Path acceptSvg = new Path() { Data = Geometry.Parse("M6 10.2L2.5 6.70001C2.11 6.31001 1.49 6.31001 1.1 6.70001C0.709995 7.09001 0.709995 7.71001 1.1 8.10001L5.29 12.29C5.68 12.68 6.31 12.68 6.7 12.29L17.3 1.70001C17.69 1.31001 17.69 0.690007 17.3 0.300007C16.91 -0.0899927 16.29 -0.0899927 15.9 0.300007L6 10.2Z")
-                    , Fill = MediaBrush.Black, Opacity = 0.87};
-                    Path declineSvg = new Path() { Data = Geometry.Parse("M13.3 0.710001C12.91 0.320001 12.28 0.320001 11.89 0.710001L6.99997 5.59L2.10997 0.700001C1.71997 0.310001 1.08997 0.310001 0.699971 0.700001C0.309971 1.09 0.309971 1.72 0.699971 2.11L5.58997 7L0.699971 11.89C0.309971 12.28 0.309971 12.91 0.699971 13.3C1.08997 13.69 1.71997 13.69 2.10997 13.3L6.99997 8.41L11.89 13.3C12.28 13.69 12.91 13.69 13.3 13.3C13.69 12.91 13.69 12.28 13.3 11.89L8.40997 7L13.3 2.11C13.68 1.73 13.68 1.09 13.3 0.710001V0.710001Z"),
-                        Fill = MediaBrush.Black, Opacity = 0.87 };
+                        StackPanel requestButtons = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
 
-                    Button acceptContact = new Button() { VerticalAlignment = VerticalAlignment.Center , Content =  acceptSvg, Background = MediaBrush.Transparent, BorderThickness =  new Thickness(0), Margin = new Thickness(0, 0, 12, 0), Name = $"accept_user_{user.id}" };
-                    Button declineContact = new Button() { VerticalAlignment = VerticalAlignment.Center, Content = declineSvg, Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Name = $"decline_user_{user.id}"};
+                        Path acceptSvg = new Path()
+                        {
+                            Data = Geometry.Parse("M6 10.2L2.5 6.70001C2.11 6.31001 1.49 6.31001 1.1 6.70001C0.709995 7.09001 0.709995 7.71001 1.1 8.10001L5.29 12.29C5.68 12.68 6.31 12.68 6.7 12.29L17.3 1.70001C17.69 1.31001 17.69 0.690007 17.3 0.300007C16.91 -0.0899927 16.29 -0.0899927 15.9 0.300007L6 10.2Z")
+                        ,
+                            Fill = MediaBrush.Black,
+                            Opacity = 0.87
+                        };
+                        Path declineSvg = new Path()
+                        {
+                            Data = Geometry.Parse("M13.3 0.710001C12.91 0.320001 12.28 0.320001 11.89 0.710001L6.99997 5.59L2.10997 0.700001C1.71997 0.310001 1.08997 0.310001 0.699971 0.700001C0.309971 1.09 0.309971 1.72 0.699971 2.11L5.58997 7L0.699971 11.89C0.309971 12.28 0.309971 12.91 0.699971 13.3C1.08997 13.69 1.71997 13.69 2.10997 13.3L6.99997 8.41L11.89 13.3C12.28 13.69 12.91 13.69 13.3 13.3C13.69 12.91 13.69 12.28 13.3 11.89L8.40997 7L13.3 2.11C13.68 1.73 13.68 1.09 13.3 0.710001V0.710001Z"),
+                            Fill = MediaBrush.Black,
+                            Opacity = 0.87
+                        };
 
-                    acceptContact.Click += ContactRequestAccept;
-                    declineContact.Click += ContactRequestDecline;
+                        Button acceptContact = new Button() { VerticalAlignment = VerticalAlignment.Center, Content = acceptSvg, Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Margin = new Thickness(0, 0, 12, 0), Name = $"_{requestSender.id}" };
+                        Button declineContact = new Button() { VerticalAlignment = VerticalAlignment.Center, Content = declineSvg, Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Name = $"_{requestSender.id}" };
 
-                    requestButtons.Children.Add(acceptContact);
-                    requestButtons.Children.Add(declineContact);
+                        acceptContact.Click += ContactRequestAccept;
+                        declineContact.Click += ContactRequestDecline;
+
+                        requestButtons.Children.Add(acceptContact);
+                        requestButtons.Children.Add(declineContact);
 
 
-                    pictureBox.Children.Add(userProfilePicture);
-                    pictureBox.Children.Add(newUser);
-                    userRow.Children.Add(pictureBox);
-                    userRow.Children.Add(profileName);
-                    rowBase.Children.Add(userRow);
-                    rowBase.Children.Add(requestButtons);
-                    newRequestList.Children.Add(rowBase);
+                        pictureBox.Children.Add(userProfilePicture);
+                        pictureBox.Children.Add(newUser);
+                        userRow.Children.Add(pictureBox);
+                        userRow.Children.Add(profileName);
+                        rowBase.Children.Add(userRow);
+                        rowBase.Children.Add(requestButtons);
+                        newRequestList.Children.Add(rowBase);
+                    }
                 }
-            }
-            else
+                else
+                {
+                    newRequestList.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no new contact requests.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
+                }
+            } catch (NullReferenceException nre)
             {
                 newRequestList.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no new contact requests.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
             }
@@ -86,84 +110,124 @@ namespace Matchmaker
         // Display a list of all the chats that are started by the user.
         public void ChatList()
         {
-            int notification = 1;
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+
+            string id = Convert.ToString(user.id); 
 
             //Make use of data aquired from the chats that the user is in.
-            if(TestSet().Count > 0)
+            if (false)
             {
 
-                foreach (UserData user in TestSet())
-                {
-                    Grid rowBase = new Grid() { Width = 473 }; // todo: mousedown event to the chat page.
-                    WrapPanel userRow = new WrapPanel() { Height = 70 };  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
-                    Grid pictureBox = new Grid() { Height = 70 };
-                    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0) };
-                    string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
-                    userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-                    TextBlock profileName = new TextBlock() { Text = user.realName, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0), FontSize = 16, LineHeight = 20, HorizontalAlignment = HorizontalAlignment.Left };
-                    TextBlock latestMessage = new TextBlock() { Text = "Most recent message", VerticalAlignment = VerticalAlignment.Center, FontSize = 16, LineHeight = 20, Opacity = 0.6 , Margin = new Thickness(0, 0, 0, 15)};
-                    StackPanel quickView = new StackPanel() { Margin = new Thickness(16, 8, 0, 0 )};
+                //foreach (UserData user in TestSet())
+                //{
+                //    Grid rowBase = new Grid() { Width = 473 }; // todo: mousedown event to the chat page.
+                //    WrapPanel userRow = new WrapPanel() { Height = 70 };  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
+                //    Grid pictureBox = new Grid() { Height = 70 };
+                //    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0) };
+                //    string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+                //    userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
+                //    TextBlock profileName = new TextBlock() { Text = user.realName, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0), FontSize = 16, LineHeight = 20, HorizontalAlignment = HorizontalAlignment.Left };
+                //    TextBlock latestMessage = new TextBlock() { Text = "Most recent message", VerticalAlignment = VerticalAlignment.Center, FontSize = 16, LineHeight = 20, Opacity = 0.6 , Margin = new Thickness(0, 0, 0, 15)};
+                //    StackPanel quickView = new StackPanel() { Margin = new Thickness(16, 8, 0, 0 )};
 
-                    quickView.Children.Add(profileName);
-                    quickView.Children.Add(latestMessage);
+                //    quickView.Children.Add(profileName);
+                //    quickView.Children.Add(latestMessage);
 
-                    pictureBox.Children.Add(userProfilePicture);
+                //    pictureBox.Children.Add(userProfilePicture);
 
-                    userRow.Children.Add(pictureBox);
-                    userRow.Children.Add(quickView);
+                //    userRow.Children.Add(pictureBox);
+                //    userRow.Children.Add(quickView);
 
-                    rowBase.Children.Add(userRow);
+                //    rowBase.Children.Add(userRow);
 
-                    chatList.Children.Add(rowBase);
+                //    chatList.Children.Add(rowBase);
 
-                }
+                //}
             }
-            else
-            {
-                chatList.Children.Add(new TextBlock() { FontSize = 14, Text = "Sorry, but we could not find your chats." , HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center});
+            else {
+                chatList.Children.Add(new TextBlock() { FontSize = 14, Text = "Sorry, but we could not find your chats.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
             }
         }
 
         // Display your contacts
         public void UserContacts()
         {
-            if (TestSet().Count > 0)
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+
+            Dictionary<string, bool> contacts = loggedInUser.contacts;
+
+            try
             {
-                foreach (UserData user in TestSet())
+                if (contacts.Count > 0 && contacts != null)
                 {
-                    StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0) };
-                    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
-                    string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
-                    userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-                    TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110 , TextAlignment = TextAlignment.Center, Margin = new Thickness(0,8,0,0) };
+                    foreach (var contact in contacts)
+                    {
+                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(contact.Key)));
+                        if (contactUser != null)
+                        {
+                            string panelName = contactUser.id;
+                            StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0), Width = 120, Name = $"_{panelName}" };
+                            Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 , Name = $"_{panelName}" };
+                            string pfPic1 = $"https://145.44.233.207/images/users/{contactUser.profilePicture}";
+                            userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
+                            TextBlock userRealName = new TextBlock() { Text = contactUser.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0), TextWrapping = TextWrapping.Wrap };
 
-                    userBlock.Children.Add(userProfilePicture);
-                    userBlock.Children.Add(userRealName);
+                            userBlock.Children.Add(userProfilePicture);
+                            userBlock.Children.Add(userRealName);
 
-                    recentlyAddedChats.Children.Add(userBlock);
+                            userBlock.MouseDown += NewChat_MouseDown;
+                            
+
+                            recentlyAddedChats.Children.Add(userBlock);
+                        }
+                    }
+                }
+                else
+                {
+                    recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
                 }
             }
-            else
-            {             
+            catch (NullReferenceException)
+            {
                 recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
             }
+        }
+
+        private void NewChat_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // maak een nieuwe chat aan.
+            var clickedContact = e.Source as FrameworkElement;
+            string idOfClick = clickedContact.Name;
+            idOfClick = idOfClick.Replace("_", "");
+
+            UserData newContactChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(idOfClick)));
+
+            ChatPage chat = new ChatPage(newContactChat);
+            NavigationService.Navigate(chat);
         }
 
         // Display the blocked users
         public void LoadBlockedUsers()
         {
-            if(TestSet().Count > 0)
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+
+            List<int> blockedUsers = loggedInUser.blockedUsers;
+
+            if (blockedUsers.Count > 0 && blockedUsers != null)
             {
-                foreach (UserData user in TestSet()) 
+                for (int i = 0; i < blockedUsers.Count; i++) 
                 {
+                    UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(blockedUsers[i]));
+
                     Grid blockedUser = new Grid() { Height = 70 };
                     WrapPanel userWrapper = new WrapPanel();
-                    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
+                    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 12, 8, 0)};
                     string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
                     userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-                    TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0) };
+                    TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 16, 0, 0), VerticalAlignment = VerticalAlignment.Center };
 
-                    Button deblock = new Button() { Content = "Unblock", Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Foreground = MediaBrush.Purple, HorizontalAlignment = HorizontalAlignment.Right};
+                    Button deblock = new Button() { Name = $"_{i}", Content = "Unblock", Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Foreground = MediaBrush.Purple, HorizontalAlignment = HorizontalAlignment.Right};
+                    deblock.Click += Deblock_Click;
 
                     userWrapper.Children.Add(userProfilePicture);
                     userWrapper.Children.Add(userRealName);
@@ -175,36 +239,81 @@ namespace Matchmaker
                     blockedUserList.Children.Add(blockedUser);
                 }
             }
-            else
-            {
+            else {
                 blockedUserList.Children.Add(new TextBlock() { FontSize = 14, Text = "You have blocked no users.", HorizontalAlignment = HorizontalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 490 });
             }
         }
 
-        private List<UserData> TestSet()
+        private async void Deblock_Click(object sender, RoutedEventArgs e)
         {
-            List<UserData> contacts = new List<UserData>();
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            List<int> blockedUsers = loggedInUser.blockedUsers;
+            var number = (Button)sender;
+            int listIndex = int.Parse(number.Name.Replace("_", String.Empty));
+            blockedUsers.RemoveAt(listIndex);
+            loggedInUser.blockedUsers = blockedUsers;
 
-            contacts.Add(new UserData() { profilePicture = "12.jpg", realName = "Test" });
-            contacts.Add(new UserData() { profilePicture = "12.jpg", realName = "Test" });
-            contacts.Add(new UserData() { profilePicture = "12.jpg", realName = "Test" });
-            contacts.Add(new UserData() { profilePicture = "12.jpg", realName = "Test" });
-            contacts.Add(new UserData() { profilePicture = "12.jpg", realName = "Test" });
-            contacts.Add(new UserData() { profilePicture = "12.jpg", realName = "Test" });
+            await MatchmakerAPI_Client.SaveUser(loggedInUser);
 
-            return contacts;
+            ChatListPage chatList = new ChatListPage();
+            NavigationService.Navigate(chatList);
         }
 
-        private void ContactRequestDecline(object sender, RoutedEventArgs e)
+        private async void ContactRequestDecline(object sender, RoutedEventArgs e)
         {
+            //Get sender ID
             var button = (Button)sender;
-            MessageBox.Show(button.Name);
+            int id = int.Parse(button.Name.Replace("_", String.Empty));
+
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
+            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
+            await MatchmakerAPI_Client.declineContactRequest(loggedInUser, userSender);
+
+            ChatListPage chatList = new ChatListPage();
+            NavigationService.Navigate(chatList);
         }
 
-        private void ContactRequestAccept(object sender, RoutedEventArgs e)
+        private async void ContactRequestAccept(object sender, RoutedEventArgs e)
         {
+            //Get sender ID
             var button = (Button)sender;
-            MessageBox.Show(button.Name);
+            int id = int.Parse(button.Name.Replace("_", String.Empty));
+
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
+            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
+            await MatchmakerAPI_Client.ConfirmContactRequest(loggedInUser, userSender);
+
+            
+            NavigationService.Navigate(this);
+        }
+        //Menu buttons
+        //Go to Notification page
+        private void Notification_MouseDown(object sender, MouseButtonEventArgs e) {
+            Notifications notifications = new Notifications();
+            notifications.Title = "Notifations";
+            NavigationService.Navigate(notifications);
+        }
+
+        //Go to Logout page
+        private void Logout_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) {
+                //Logout current user
+                LoginPage loginPage = new LoginPage();
+                NavigationService.Navigate(loginPage);
+            }
+        }
+
+        //Go to Settings page
+        private void Settings_MouseDown(object sender, MouseButtonEventArgs e) {
+            Settings settings = new Settings(User.ID);
+            NavigationService.Navigate(settings);
+        }
+
+        //Go to own profilepage
+        private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e) {
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            Page userProfile = new UserProfile(user, true, User.ID);
+            NavigationService.Navigate(userProfile);
         }
     }
 }

@@ -24,19 +24,56 @@ namespace MatchmakerAPI
     public static UserData[] FindMatches(int forUserId, int sampleNum, int scoredNum, int returnNum)
     {
 
-      // Retrieve the users database as Dictionary<int, UserData>
-      var users = UserController.ReadUsers();
+            // Retrieve the users database as Dictionary<string, UserData>
+            var users = UserController.ReadUsers();
 
-      try {
+            //Get userprofiles from databases
+             //var profiles = users.Values.ToList();
 
-        // Get user data for the user for which the matches are being found
-        var forUser = users[forUserId];
+            //Remove blocked user(s) if any
+            UserData getLoggedInUserData = new UserData();
+            foreach (var item in users) {
+                if(item.Key == forUserId.ToString()) {
+                    getLoggedInUserData = item.Value;
+                }
+            }
+
+            if (getLoggedInUserData.blockedUsers == null) {
+                List<int> x = new List<int>();
+                getLoggedInUserData.blockedUsers = x;
+            }
+
+            foreach (var item in getLoggedInUserData.blockedUsers) {
+                if (users.Keys.Contains(item.ToString())) {
+                    users.Remove(item.ToString());
+                }
+            }
+
+            //Remove contacts, if any
+            if(getLoggedInUserData.contacts == null) {
+                Dictionary<string, bool> x = new Dictionary<string, bool>();
+                getLoggedInUserData.contacts = x;
+            }
+
+            foreach (KeyValuePair<string,bool> item in getLoggedInUserData.contacts) {
+                if (users.Keys.Contains(item.Key)) {
+                    users.Remove(item.Key);
+                }
+            }
+
+
+
+            try {
+
+                // Get user data for the user for which the matches are being found
+                UserData loggedInUser = users[forUserId.ToString()];
 
 				// Remove that user from the pool of potential matches
-				users.Remove(forUserId);
+				users.Remove(loggedInUser.id.ToString());
 
-        // Get a random sample from the users database
-        var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
+                // Get a random sample from the users database
+                List<UserData> sample = GetRandomUsers(users.Values.ToList(), sampleNum);
+
 				// var sample = users.Values.ToList();
 
         // Prepare unsorted variant of the return value
@@ -49,9 +86,9 @@ namespace MatchmakerAPI
         {
 
           // Calculate composite scores
-          var proximity = CompareLocation(forUser, user);
-          var hobbiesInCommon = CompareHobbies(forUser, user);
-          var ageDifference = CompareAge(forUser, user);
+          var proximity = CompareLocation(loggedInUser, user);
+          var hobbiesInCommon = CompareHobbies(loggedInUser, user);
+          var ageDifference = CompareAge(loggedInUser, user);
 
           // Calculate total weighted score
           var totalScore = ((proximity * proximityWt) + (hobbiesInCommon * hobbiesWt)) - (ageDifference * ageWt);
@@ -85,7 +122,7 @@ namespace MatchmakerAPI
 
     public static List<UserData> GetRandomUsers(List<UserData> users, int num)
     {
-      var returnVal = new List<UserData>();
+      List<UserData> returnVal = new List<UserData>();
 
       // Initialize a new Random object
       var rng = new Random();
@@ -93,8 +130,7 @@ namespace MatchmakerAPI
       while (returnVal.Count < num)
       {
 
-        // If the users list is smaller than the number of users to be selected,
-        // abort the method when all users have been selected.
+        // If the users list is smaller than the number of users to be selected, abort the method when all users have been selected.
         if (users.Count == 0) {
           return returnVal;
         }

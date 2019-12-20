@@ -10,8 +10,6 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Net.Http;
 using System.Net.Security;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace MatchMakerClassLibrary
 {
@@ -151,7 +149,6 @@ namespace MatchMakerClassLibrary
         {
             string uri = @"https://145.44.233.207/user/post/update/images";
             var result = await Post(uri, coverImageData);
-            //doe wat met result
             return true;
         }
 
@@ -159,7 +156,6 @@ namespace MatchMakerClassLibrary
         {
             string uri = @"https://145.44.233.207/user/post/new";
             var result = await Post(uri, newUserData);
-            //doe wat met result
             return true;
         }
 
@@ -167,7 +163,6 @@ namespace MatchMakerClassLibrary
         {
             string uri = @"https://145.44.233.207/messages/post/new";
             var result = await Post(uri, newMessageData);
-            //do something with result?
             return true;
         }
 
@@ -196,48 +191,40 @@ namespace MatchMakerClassLibrary
             List<HobbyData> data = JsonConvert.DeserializeObject<List<HobbyData>>(Get(@"https://145.44.233.207/hobbies/get/all"));
             return data;
         }
-
-        public static ImageBrush GetProfilePicture(UserData userData) {
-            string pfPic = $"https://145.44.233.207/images/users/{userData.profilePicture}";
-            return new ImageBrush(new BitmapImage(new Uri(pfPic, UriKind.Absolute)));
-        }
-
-        public static async Task<bool> sendContactRequest(UserData user, UserData requestUser)
+         
+        public static async Task<bool> declineContactRequest(UserData userDenying, UserData requestUser)
         {
-            int id = user.id;
-            //The contact is saved with the user
-            user.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, false));
-            string uri = @"https://145.44.233.207/user/post/update/id={id}";
-            //THe request is saved with the other account
-            requestUser.requestFrom.Add(user.id);
-            id = requestUser.id;
-            await Post(uri, requestUser);
-            return true;
+            //Remove contact request
+            if (userDenying.requestFrom.Contains(int.Parse(requestUser.id))) {
+                userDenying.requestFrom.Remove(int.Parse(requestUser.id));
+                requestUser.contacts.Remove(userDenying.id);
+            }
 
-        }
-
-        public static async Task<bool> denyContactRequest(UserData userDenying, UserData requestUser)
-        {
-            int id = userDenying.id;
-            //The request  is is set to not be a contact
-            userDenying.contacts.Add(new KeyValuePair<int, bool>(id, false));
-            userDenying.requestFrom.Remove(userDenying.id);
-            string uri = @"https://145.44.233.207/user/post/update/id={id}";
-            await Post(uri, requestUser);
+            await SaveUser(userDenying);
+            await SaveUser(requestUser);
+            
             return true;
         }
 
         public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
         {
-            int id = confirmingUser.id;
-            //The request  is is set to be a contact
-            confirmingUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
-            confirmingUser.requestFrom.Remove(confirmingUser.id);
-            string uri = @"https://145.44.233.207/user/post/update/id={id}";
-            //Update requesting user account
-            id = requestUser.id;
-            requestUser.contacts.Add(new KeyValuePair<int, bool>(id, true));
-            await Post(uri, requestUser);
+            if (confirmingUser.contacts == null) {
+
+                Dictionary<string, bool> x = new Dictionary<string, bool>();
+                confirmingUser.contacts = x;
+                requestUser.contacts = x;
+            }
+
+            //Confirm request and add to contacts
+            if (confirmingUser.requestFrom.Contains(int.Parse(requestUser.id))) {
+                confirmingUser.contacts.Add(requestUser.id, true);
+                requestUser.contacts[confirmingUser.id] = true;
+                confirmingUser.requestFrom.Remove(int.Parse(requestUser.id));
+
+                await SaveUser(confirmingUser);
+                await SaveUser(requestUser);
+            }
+
             return true;
         }
     }
@@ -249,18 +236,16 @@ namespace MatchMakerClassLibrary
         public string password { get; set; }
         public string salt { get; set; }
         public string realName { get; set; }
-        public int id { get; set; }
-        public string city { get; set; }
-        public long birthdate { get; set; }
         public string about { get; set; }
-        public string location { get; set; }
-        public string profilePicture { get; set; }
-        public string coverImage { get; set; }
+        public string city { get; set; }
         public List<HobbyData> hobbies { get; set; }
+        public string profilePicture { get; set; }
+        public string id { get; set; }
+        public long birthdate { get; set; }
+        public string coverImage { get; set; }
         public List<int> blockedUsers { get; set; }
-        public List<KeyValuePair<int, bool>> contacts { get; set; }
         public List<int> requestFrom { get; set; }
-
+        public Dictionary<string, bool> contacts { get; set; }
     }
     public class AuthData
     {

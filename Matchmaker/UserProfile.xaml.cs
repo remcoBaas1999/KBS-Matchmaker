@@ -21,7 +21,6 @@ namespace Matchmaker {
         //Create UserProfile as if it is anothers profile
         public UserProfile(UserData user, bool userAccount, int loggedinuser) {
             LoggedInUserID = loggedinuser;
-            userInView = user;
             InitializeComponent();
 
             if (userAccount) {
@@ -44,19 +43,36 @@ namespace Matchmaker {
                 addHobby.Visibility = Visibility.Collapsed;
                 string email = User.email;
                 UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-                //if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
-                //{
-                //    addHobby.Visibility = Visibility.Collapsed;
-                //}
+                /*if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
+                {
+                    addHobby.Visibility = Visibility.Collapsed;
+                }*/
+
+                try
+                {
+                    if (user.contacts.ContainsKey(activeUser.id))
+                    {
+                        contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
+                    }
+                    if(user.contacts.ContainsKey(activeUser.id) && user.contacts.ContainsValue(true))
+                    {
+                        contactRequest.Visibility = Visibility.Hidden;
+                        BlockUser.Visibility = Visibility.Hidden;
+                    }
+                }
+                catch (NullReferenceException) { };
             }
 
-            years.Text = (CalculateAge(UnixTimeToDate(userInView.birthdate))).ToString();
-            name.Text = userInView.realName;
-            showName.Text = userInView.realName;
-            city.Text = userInView.city;
-            bioText.Text = userInView.about;
-            if (userInView.hobbies != null) {
-                foreach (var item in userInView.hobbies) {
+            
+            years.Text = (User.CalculateAge(user.birthdate)).ToString();
+            name.Text = user.realName;
+            showName.Text = user.realName;
+            city.Text = user.city;
+            bioText.Text = user.about;
+            if (user.hobbies != null)
+            {
+                foreach (var item in user.hobbies)
+                {
                     //add to list of Hobbies in the Xaml
                     LoadHobbyWrapper(item.displayName, userAccount);
                 }
@@ -66,32 +82,17 @@ namespace Matchmaker {
                 }
                 else HobbyWrapper.Width = 600;
             }
+            userInView = user;
 
             //Show users profile picture
-            ProfilePicture1.Fill = MatchmakerAPI_Client.GetProfilePicture(userInView);
+            string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
 
             //Show if this user is blocked
             UserData userX = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
-            if (userX.blockedUsers.Contains(userInView.id)) {
+            if (userX.blockedUsers.Contains(int.Parse(userInView.id))) {
                 BlockedFeedback.Visibility = Visibility.Visible;
             }
-        }
-
-        // Calculate the current age of the user.
-        public int CalculateAge(DateTime dob) {
-            DateTime today = DateTime.Today;
-            int age = today.Year - dob.Year;
-            if (today < dob.AddYears(age)) age--;
-
-            return age;
-        }
-
-        // Convert the Unixtime to an object of datetime
-        private DateTime UnixTimeToDate(long _bday) {
-
-            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            DateTime bday = start.AddSeconds(_bday).ToLocalTime();
-            return bday;
         }
 
         private void editName_Click(object sender, RoutedEventArgs e) {
@@ -164,8 +165,7 @@ namespace Matchmaker {
         //Load a list with cities 
         private void citySelection_Loaded(object sender, RoutedEventArgs e) {
             citySelection.Text = city.Text;
-            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Heino", "Raalte", "Arnhem", "Baarn", "Rotterdam", "Den Haag", "Eindhoven", "Breda", "Enschede", "Hengelo", "Almelo", "Leeuwarden", "Groningen", "Assen", "Maastricht", "Alkmaar", "Amersfoort", "Elburg", "Nijkerk", "Harderwijk", "Almere", "Lelystad", "Deventer", "Apeldoorn", "Tilburg", "Middelburg", "Haarlem", "Emmen", "Meppel", "Leiden", "Hoorn", "Den Helder", "Dordrecht", "Delft", "Roermond", "Venlo", "Helmond", "Sneek", "Drachten", "Heerenveen", "Oss", "Nijmegen", "Bergen op Zoom", "Roosendaal", "Vlissingen", "Heerlen", "Sittard", "Doetinchem", "Hilversum" };
-            locations.Sort();
+            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Heino", "Raalte", "Arnhem" };
             foreach (string item in locations) {
                 citySelection.Items.Add(item);
             }
@@ -250,7 +250,7 @@ namespace Matchmaker {
         private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
             CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
             coverImageSelecter.Show();
-            coverImageSelecter.userID = userInView.id;
+            coverImageSelecter.userID = int.Parse(userInView.id);
         }
         //add an hobby button event
         public void addHobbyToList_Click(object sender, RoutedEventArgs e) {
@@ -352,6 +352,10 @@ namespace Matchmaker {
             addInterests.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
             bool inAccount;
+            if (userInView.hobbies==null)
+            {
+                userInView.hobbies = new List<HobbyData>();
+            }
             foreach (var item in hobbyData) {
                 inAccount = false;
                 foreach (var hobby in userInView.hobbies) {
@@ -377,7 +381,7 @@ namespace Matchmaker {
             //Triggers when pressed on the blockimage next to a users profile
             if (MessageBox.Show($"Are you sure you want to ignore {userInView.realName}? His or her profile will never show up again.", $"Ignore {userInView.realName}", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) {
                 //Select USERID that will be blocked         
-                int IWantToBlockThisUserID = userInView.id;
+                int IWantToBlockThisUserID = int.Parse(userInView.id);
                 //Select own userID
                 UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
 
@@ -413,11 +417,44 @@ namespace Matchmaker {
         //Send a contact request to an other user
         private async void contactRequest_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
-            contactRequest.MouseDown -= contactRequest_MouseDown;
-            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            await MatchmakerAPI_Client.sendContactRequest(user, userInView );
+            // check if a list of contacts is not created
+            if(userInView.contacts == null)
+            {
+                Dictionary<string, bool> x = new Dictionary<string, bool>();
+                userInView.contacts = x;
+            }
 
+            // if the user is not in the list of contacts create a new request
+            if((!userInView.contacts.ContainsKey(userInView.id)))
+            {
+                contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
+
+                //Save userID on others requestList
+
+                //Check if list already exists
+                if (userInView.requestFrom == null)
+                {
+                    List<int> x = new List<int>();
+                    userInView.requestFrom = x;
+                }
+                //If there is no contact request yet, add a new contact request
+                if (!userInView.requestFrom.Contains(LoggedInUserID))
+                {
+                    userInView.requestFrom.Add(LoggedInUserID);
+                    UserData userLoggedIn = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID));
+                    
+                    if(userLoggedIn.contacts == null)
+                    {
+                        Dictionary<string, bool> x = new Dictionary<string, bool>();
+                        userLoggedIn.contacts = x;
+                    }
+
+                    userLoggedIn.contacts.Add(userInView.id, false);
+
+                    await MatchmakerAPI_Client.SaveUser(userInView);
+                    await MatchmakerAPI_Client.SaveUser(userLoggedIn);
+                }
+            }
         }
     }
 }

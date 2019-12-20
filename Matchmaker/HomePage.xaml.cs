@@ -17,14 +17,15 @@ using System.Windows.Shapes;
 
 
 namespace Matchmaker {
-    public partial class HomePage : Page {
+    public partial class HomePage : Page
+    {
         private int LoggedInUserID;
-        private UserData FirstProfile;
-        private UserData SecondProfile;
-        private UserData ThirdProfile;
-        private UserData FourthProfile;
+        private int FirstProfileID;
+        private int SecondProfileID;
+        private int ThirdProfileID;
+        private int FourthProfileID;
 
-
+        
         public HomePage() {
             //Start application
             InitializeComponent();
@@ -32,97 +33,74 @@ namespace Matchmaker {
             //Gather info about logged-in user
             String email = User.email;
             UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            LoggedInUserID = getLoggedInUserData.id;
+            LoggedInUserID = int.Parse(getLoggedInUserData.id);
             User.ID = LoggedInUserID;
 
-            //Get userprofiles from databases
-            Dictionary<String, int> Profiles = new Dictionary<string, int>();
-            Profiles = MatchmakerAPI_Client.GetUsers();
-            var profiles = Profiles.Values.ToList();
-
-            //Remove blocked user(s) if any
-
-            if (getLoggedInUserData.blockedUsers == null) {
-                FillEmptyList(getLoggedInUserData);
-            }
-
-            foreach (var item in getLoggedInUserData.blockedUsers) {
-                if (profiles.Contains(item)) {
-                    profiles.Remove(item);
-                }
-            }
-
-            ////Create first profile
-            //Random random = new Random();
-            //int rnd = random.Next(0, profiles.Count);
-            //FirstProfileID = profiles.ElementAt(rnd);
-            //while (FirstProfileID.Equals(LoggedInUserID)) {
-            //    rnd = random.Next(0, profiles.Count);
-            //    FirstProfileID = profiles.ElementAt(rnd);
-            //}
-            //UserData user1 = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID));
-            ////Set name
-            //Profile1Tag.Content = user1.realName;
+                
             FillHomepageProfiles(GenerateUserDatas());
         }
 
-        private void Button_FillProfiles(object sender, RoutedEventArgs e) {
-            FillHomepageProfiles(GenerateUserDatas());
-        }
+
 
         private UserData[] GenerateUserDatas() {
             UserData[] userDatas = MatchmakerAPI_Client.GetMatches(LoggedInUserID);
-            Console.WriteLine("\nThese are the users:");
-            foreach (UserData user in userDatas) {
-                Console.WriteLine($" - {user.id} ({user.realName})");
-            }
             return userDatas;
         }
 
         private void FillHomepageProfiles(UserData[] userDatas) {
-            FirstProfile = userDatas[0];
+            FirstProfileID = int.Parse(userDatas[0].id);
             //Set name
             Profile1Tag.Content = userDatas[0].realName;
-            //Set profile picture    
-            ProfilePicture1.Fill = MatchmakerAPI_Client.GetProfilePicture(userDatas[0]);
+            //Set profile picture           
+            string pfPic1 = $"https://145.44.233.207/images/users/{userDatas[0].profilePicture}";
+            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
             //Set Cover Image
             string coverImage = $"https://145.44.233.207/images/covers/{userDatas[0].coverImage}";
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            SecondProfile = userDatas[1];
+            SecondProfileID = int.Parse(userDatas[1].id);
             //Set name
             Profile2Tag.Content = userDatas[1].realName;
             //Set profile picture
-            ProfilePicture2.Fill = MatchmakerAPI_Client.GetProfilePicture(userDatas[1]);
+            string pfPic2 = $"https://145.44.233.207/images/users/{userDatas[1].profilePicture}";
+            ProfilePicture2.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic2, UriKind.Absolute)));
             //Set Cover Image
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[1].coverImage}";
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            ThirdProfile = userDatas[2];
+            ThirdProfileID = int.Parse(userDatas[2].id);
             //Set name
             Profile3Tag.Content = userDatas[2].realName;
             //Set profile picture
-            ProfilePicture3.Fill = MatchmakerAPI_Client.GetProfilePicture(userDatas[2]);
+            string pfPic3 = $"https://145.44.233.207/images/users/{userDatas[2].profilePicture}";
+            ProfilePicture3.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic3, UriKind.Absolute)));
             //Set Cover Image
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[2].coverImage}";
             Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            FourthProfile = userDatas[3];
+            FourthProfileID = int.Parse(userDatas[3].id);
             //Set name
             Profile4Tag.Content = userDatas[3].realName;
             //Set profile picture
-            ProfilePicture4.Fill = MatchmakerAPI_Client.GetProfilePicture(userDatas[3]);
+            string pfPic4 = $"https://145.44.233.207/images/users/{userDatas[3].profilePicture}";
+            ProfilePicture4.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic4, UriKind.Absolute)));
             //Set Cover Image
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[3].coverImage}";
             Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
-        public async void FillEmptyList(UserData getLoggedInUserData) {
+       public async void FillEmptyList(UserData getLoggedInUserData) {
             List<int> temporarilyList = new List<int>();
             getLoggedInUserData.blockedUsers = temporarilyList;
             await MatchmakerAPI_Client.SaveUser(getLoggedInUserData);
+       }
+
+
+        //Refreshbutton
+        private void Button_FillProfiles(object sender, RoutedEventArgs e) {
+            FillHomepageProfiles(GenerateUserDatas());
         }
 
-        //Refresh button
+        //HomeButton
         private void Button_Click(object sender, RoutedEventArgs e) {
             //Refresh recommended profiles
             HomePage p = new HomePage();
@@ -131,35 +109,39 @@ namespace Matchmaker {
         }
 
         //When clicked on a profile
-        private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            ButtonPressed(FirstProfile);
+        private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)), false, LoggedInUserID);
+            NavigationService.Navigate(page);
         }
         private void Profile2BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            ButtonPressed(SecondProfile);
-        }
-        private void Profile3BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            ButtonPressed(ThirdProfile);
-        }
-        private void Profile4BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            ButtonPressed(FourthProfile);
-        }
-        private void ButtonPressed(UserData userData) {
-            //Console.WriteLine($"\nUser ID: {userData.id}, name: {userData.realName}, User ID is correct: {id == userData.id}");
-            Page page = new UserProfile(userData, false, LoggedInUserID);
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID)), false, LoggedInUserID);
             NavigationService.Navigate(page);
         }
 
+        private void Profile3BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID)), false, LoggedInUserID);
+            NavigationService.Navigate(page);
+        }
+        private void Profile4BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
+            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID)), false, LoggedInUserID);
+            NavigationService.Navigate(page);
+        }
+
+
         //Menu buttons
         //Go to Notification page
-        private void Notification_MouseDown(object sender, MouseButtonEventArgs e) {
+        private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
+        {
             Notifications notifications = new Notifications();
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
 
         //Go to Logout page
-        private void Logout_MouseDown(object sender, MouseButtonEventArgs e) {
-            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) {
+        private void Logout_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes){
                 //Logout current user
                 LoginPage loginPage = new LoginPage();
                 NavigationService.Navigate(loginPage);
@@ -167,13 +149,15 @@ namespace Matchmaker {
         }
 
         //Go to Settings page
-        private void Settings_MouseDown(object sender, MouseButtonEventArgs e) {
+        private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
+        {
             Settings settings = new Settings(LoggedInUserID);
             NavigationService.Navigate(settings);
         }
 
         //Go to own profilepage
-        private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e) {
+        private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
+        {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             Page userProfile = new UserProfile(user, true, LoggedInUserID);
             NavigationService.Navigate(userProfile);
@@ -194,7 +178,8 @@ namespace Matchmaker {
         }
 
         // go to the contacts page
-        private void ContactPage_Click(object sender, RoutedEventArgs e) {
+        private void ContactPage_Click(object sender, RoutedEventArgs e)
+        {
             ChatListPage chatList = new ChatListPage();
             NavigationService.Navigate(chatList);
         }
