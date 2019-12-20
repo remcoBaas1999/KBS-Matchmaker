@@ -54,6 +54,7 @@ namespace Matchmaker
                 userSender = 1;
             }
             UpdateScrollBox();
+            RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(userInChat));
         }        
         //This will return you to the last page. Here it is the ChatListPage.
         private void Return(object sender, MouseButtonEventArgs e)
@@ -211,6 +212,21 @@ namespace Matchmaker
             {
                 UpdateScrollBox();
             });
+        }
+
+        private void RefreshNotificationCount(int count) {
+            NotificationCountLabel.Content = count;
+            if (count == 0) {
+                NotificationCountCircle.Visibility = Visibility.Collapsed;
+                NotificationCountLabel.Visibility = Visibility.Collapsed;
+                NotificationWithNumber.Visibility = Visibility.Collapsed;
+                NotificationWithoutNumber.Visibility = Visibility.Visible;
+            } else {
+                NotificationCountCircle.Visibility = Visibility.Visible;
+                NotificationCountLabel.Visibility = Visibility.Visible;
+                NotificationWithNumber.Visibility = Visibility.Visible;
+                NotificationWithoutNumber.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
