@@ -55,7 +55,7 @@ namespace Matchmaker {
                     {
                         contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
                     }
-                    if (user.contacts.Keys.Contains(activeUser.id) && user.contacts.Values.Contains(true)) // the logged in user is a contact form the user ds
+                    if (user.contacts.Keys.Contains(activeUser.id.ToString()) && user.contacts.Values.Contains(true)) // the logged in user is a contact form the user ds
                     {
                         contactRequest.Visibility = Visibility.Collapsed;
                     }
@@ -429,12 +429,12 @@ namespace Matchmaker {
             // check if a list of contacts is not created
             if(userInView.contacts == null)
             {
-                Dictionary<int, bool> x = new Dictionary<int, bool>();
+                Dictionary<string, bool> x = new Dictionary<string, bool>();
                 userInView.contacts = x;
             }
 
             // if the user is not in the list of contacts create a new request
-            if(!userInView.contacts.Keys.Contains(userInView.id))
+            if(!userInView.contacts.Keys.Contains(userInView.id.ToString()))
             {
                 contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
 
@@ -454,11 +454,11 @@ namespace Matchmaker {
                     
                     if(userLoggedIn.contacts == null)
                     {
-                        Dictionary<int, bool> x = new Dictionary<int, bool>();
+                        Dictionary<string, bool> x = new Dictionary<string, bool>();
                         userLoggedIn.contacts = x;
                     }
 
-                    userLoggedIn.contacts.Add(userInView.id, false);
+                    userLoggedIn.contacts.Add(userInView.id.ToString(), false);
 
                     await MatchmakerAPI_Client.SaveUser(userInView);
                     await MatchmakerAPI_Client.SaveUser(userLoggedIn);

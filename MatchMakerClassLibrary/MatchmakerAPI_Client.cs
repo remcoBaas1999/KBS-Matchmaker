@@ -207,7 +207,7 @@ namespace MatchMakerClassLibrary
             //Remove contact request
             if (userDenying.requestFrom.Contains(requestUser.id)) {
                 userDenying.requestFrom.Remove(requestUser.id);
-                requestUser.contacts.Remove(requestUser.id);
+                requestUser.contacts.Remove(requestUser.id.ToString());
             }
 
             await SaveUser(userDenying);
@@ -218,17 +218,17 @@ namespace MatchMakerClassLibrary
 
         public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
         {
-            Dictionary<int, bool> contactList;
+            Dictionary<string, bool> contactList;
 
             if (confirmingUser.contacts == null) {
-                contactList = new Dictionary<int, bool>();
+                contactList = new Dictionary<string, bool>();
                 confirmingUser.contacts = contactList;
             }
 
             //Confirm request and add to contacts
-            if (confirmingUser.requestFrom.Contains(requestUser.id) && requestUser.contacts.Keys.Contains(confirmingUser.id)) {
-                confirmingUser.contacts.Add(requestUser.id, true);
-                requestUser.contacts[confirmingUser.id] = true;
+            if (confirmingUser.requestFrom.Contains(requestUser.id) && requestUser.contacts.Keys.Contains(confirmingUser.id.ToString())) {
+                confirmingUser.contacts.Add(requestUser.id.ToString(), true);
+                requestUser.contacts[$"{confirmingUser.id}"] = true;
                 confirmingUser.requestFrom.Remove(requestUser.id);
 
                 await SaveUser(confirmingUser);
@@ -255,7 +255,7 @@ namespace MatchMakerClassLibrary
         public string coverImage { get; set; }
         public List<int> blockedUsers { get; set; }
         public List<int> requestFrom { get; set; }
-        public Dictionary<int, bool> contacts { get; set; }
+        public Dictionary<string, bool> contacts { get; set; }
         //public List<int> incRequest { get; set; }
         //public List<int> outRequest { get; set; }
     }
