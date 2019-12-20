@@ -163,7 +163,7 @@ namespace Matchmaker
 
             try
             {
-                if (contacts.Count > 0)
+                if (contacts.Count > 0 && contacts != null)
                 {
                     foreach (var contact in contacts)
                     {
@@ -218,7 +218,7 @@ namespace Matchmaker
 
             List<int> blockedUsers = loggedInUser.blockedUsers;
 
-            if (blockedUsers.Count > 0)
+            if (blockedUsers.Count > 0 && blockedUsers != null)
             {
                 for (int i = 0; i < blockedUsers.Count; i++) 
                 {
