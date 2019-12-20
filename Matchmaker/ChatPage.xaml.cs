@@ -37,13 +37,6 @@ namespace Matchmaker
             string chatPartnerPicture = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";
             ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPicture, UriKind.Absolute)));
             this.userInChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-<<<<<<< HEAD
-
-            //determines chatid -> id = lowerid + underscore + higherid
-            if (int.Parse(userInChat.id) < int.Parse(chatPartner.id))
-
-=======
->>>>>>> parent of 4122ad3... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
             //determines chatid -> id = lowerid + space + higherid
             if (userInChat.id<chatPartner.id)
             {
@@ -131,18 +124,8 @@ namespace Matchmaker
                 //The MatchmakerAPI_Client will deserialize this data
                 //The ID will be compared to the sender (0/1) and then the position in the messageID.
                 //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.                
-<<<<<<< HEAD
-
-                if (int.Parse(userInChat.id) == Int32.Parse(iDS[m.Sender]))
-
-
-                Console.WriteLine($"{userInChat.id}=={Int32.Parse(iDS[m.Sender])}");
-                if (userInChat.id == int.Parse(iDS[m.Sender]))
-
-=======
                 Console.WriteLine($"{userInChat.id}=={Int32.Parse(iDS[m.Sender])}");
                 if(userInChat.id==Int32.Parse(iDS[m.Sender]))
->>>>>>> parent of 4122ad3... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
                 {
                     if (lastSender!=1)
                     {                    
@@ -205,19 +188,15 @@ namespace Matchmaker
         }
         private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Settings settings = new Settings(int.Parse(userInChat.id));
+            Settings settings = new Settings(userInChat.id);
             NavigationService.Navigate(settings);
         }
 
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-<<<<<<< HEAD
 
-            Page userProfile = new UserProfile(user, User.loggedIn, int.Parse(user.id));
-=======
-            Page userProfile = new UserProfile(user, true, user.id);
->>>>>>> parent of 4122ad3... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
+            Page userProfile = new UserProfile(user, User.loggedIn, user.id);
             NavigationService.Navigate(userProfile);
         }
         private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
