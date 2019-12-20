@@ -33,6 +33,8 @@ namespace Matchmaker {
             //All users
             var users = MatchmakerAPI_Client.GetUsers();
 
+            users.Remove(currentUser.email);
+
             foreach (KeyValuePair<string, int> user in users) {
                 //Convert to UserData
                 UserData userData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(user.Key));
@@ -56,8 +58,13 @@ namespace Matchmaker {
 
             var messageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
 
+            Console.WriteLine($"ChatID: {chatID} - with user: {otherUser.realName} - amount of total messages: {messageList.Count}");
+
             foreach (MessageData message in messageList) {
                 if (!message.seen) {
+
+                    Console.WriteLine($"The following message is unread: \"{message.message}\"");
+
                     return true;
                 }
             }
