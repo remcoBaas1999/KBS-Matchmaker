@@ -280,10 +280,11 @@ namespace MatchMakerClassLibrary
         public int userID { get; set; }
         public string imageName { get; set; }
     }
-    public class MessageData {
-        public string message { get; set; }
-        public long timestamp { get; set; }
-        public int sender { get; set; }
-        public bool seen { get; set; }
+    public class MessageData
+    {
+        public string ID { get; set; }
+        public string Text { get; set; }
+        public int Sender { get; set; }
+        public long TimeStamp { get; set; }
     }
 }

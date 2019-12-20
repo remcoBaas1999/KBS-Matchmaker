@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 
 namespace Matchmaker {
     public partial class HomePage : Page {
-        private UserData LoggedInUser;
+        private int LoggedInUserID;
         private UserData FirstProfile;
         private UserData SecondProfile;
         private UserData ThirdProfile;
@@ -32,8 +32,8 @@ namespace Matchmaker {
             //Gather info about logged-in user
             String email = User.email;
             UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            LoggedInUser = getLoggedInUserData;
-            User.ID = LoggedInUser.id;
+            LoggedInUserID = getLoggedInUserData.id;
+            User.ID = LoggedInUserID;
 
             //Get userprofiles from databases
             Dictionary<String, int> Profiles = new Dictionary<string, int>();
@@ -71,7 +71,7 @@ namespace Matchmaker {
         }
 
         private UserData[] GenerateUserDatas() {
-            UserData[] userDatas = MatchmakerAPI_Client.GetMatches(LoggedInUser.id);
+            UserData[] userDatas = MatchmakerAPI_Client.GetMatches(LoggedInUserID);
             Console.WriteLine("\nThese are the users:");
             foreach (UserData user in userDatas) {
                 Console.WriteLine($" - {user.id} ({user.realName})");
@@ -145,14 +145,14 @@ namespace Matchmaker {
         }
         private void ButtonPressed(UserData userData) {
             //Console.WriteLine($"\nUser ID: {userData.id}, name: {userData.realName}, User ID is correct: {id == userData.id}");
-            Page page = new UserProfile(userData, false, LoggedInUser.id);
+            Page page = new UserProfile(userData, false, LoggedInUserID);
             NavigationService.Navigate(page);
         }
 
         //Menu buttons
         //Go to Notification page
         private void Notification_MouseDown(object sender, MouseButtonEventArgs e) {
-            Notifications notifications = new Notifications(LoggedInUser);
+            Notifications notifications = new Notifications();
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
@@ -168,14 +168,14 @@ namespace Matchmaker {
 
         //Go to Settings page
         private void Settings_MouseDown(object sender, MouseButtonEventArgs e) {
-            Settings settings = new Settings(LoggedInUser.id);
+            Settings settings = new Settings(LoggedInUserID);
             NavigationService.Navigate(settings);
         }
 
         //Go to own profilepage
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e) {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, true, LoggedInUser.id);
+            Page userProfile = new UserProfile(user, true, LoggedInUserID);
             NavigationService.Navigate(userProfile);
         }
 
