@@ -51,7 +51,7 @@ namespace Matchmaker {
 
                 try
                 {
-                    if (user.requestFrom.Contains(activeUser.id)) // pending request
+                    if (user.requestFrom.Contains(int.Parse(activeUser.id))) // pending request
                     {
                         contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
                     }
@@ -85,7 +85,7 @@ namespace Matchmaker {
 
             //Show if this user is blocked
             UserData userX = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
-            if (userX.blockedUsers.Contains(userInView.id)) {
+            if (userX.blockedUsers.Contains(int.Parse(userInView.id))) {
                 BlockedFeedback.Visibility = Visibility.Visible;
             }
         }
@@ -263,7 +263,7 @@ namespace Matchmaker {
         private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
             CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
             coverImageSelecter.Show();
-            coverImageSelecter.userID = userInView.id;
+            coverImageSelecter.userID = int.Parse(userInView.id);
         }
         //add an hobby button event
         public void addHobbyToList_Click(object sender, RoutedEventArgs e) {
@@ -390,7 +390,7 @@ namespace Matchmaker {
             //Triggers when pressed on the blockimage next to a users profile
             if (MessageBox.Show($"Are you sure you want to ignore {userInView.realName}? His or her profile will never show up again.", $"Ignore {userInView.realName}", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) {
                 //Select USERID that will be blocked         
-                int IWantToBlockThisUserID = userInView.id;
+                int IWantToBlockThisUserID = int.Parse(userInView.id);
                 //Select own userID
                 UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
 

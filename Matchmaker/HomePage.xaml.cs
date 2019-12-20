@@ -32,7 +32,7 @@ namespace Matchmaker {
             //Gather info about logged-in user
             String email = User.email;
             UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            LoggedInUserID = getLoggedInUserData.id;
+            LoggedInUserID = int.Parse(getLoggedInUserData.id);
             User.ID = LoggedInUserID;
 
                 

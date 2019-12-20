@@ -39,7 +39,7 @@ namespace MatchmakerAPI.Controllers
 				// Fetch the specific user we're looking for in a try/catch block
 				// in case the input is not a valid key.
 				var user = users[id.ToString()];
-				user.id = id;
+				user.id = id.ToString();
 
 				// Return the specified user
 				return user;
@@ -250,7 +250,7 @@ namespace MatchmakerAPI.Controllers
 					profilePicture	= "0.jpg",
 					hobbies					= tmp_hobbies,
 					coverImage			= tmp_cover,
-					id							= tmp_key,
+					id							= tmp_key.ToString(),
 				};
 
 				// Add the new user data to the in-memory users database with
@@ -327,11 +327,11 @@ namespace MatchmakerAPI.Controllers
 				key = userMap[data.email];
 
 				// Validate user id integrity
-				if (key != data.id)
+				if (key != int.Parse(data.id))
 				{
 					// If the new data's user id does not match the key found for the user's
 					// email address, update it
-					data.id = key;
+					data.id = key.ToString();
 				}
 
 			} catch (System.Collections.Generic.KeyNotFoundException) {
