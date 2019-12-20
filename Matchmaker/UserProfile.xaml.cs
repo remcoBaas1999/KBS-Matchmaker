@@ -164,7 +164,7 @@ namespace Matchmaker {
         //Load a list with cities 
         private void citySelection_Loaded(object sender, RoutedEventArgs e) {
             citySelection.Text = city.Text;
-            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Heino", "Raalte", "Arnhem", "Baarn", "Rotterdam", "Den Haag", "Eindhoven", "Breda", "Enschede", "Hengelo", "Almelo", "Leeuwarden", "Groningen", "Assen", "Maastricht", "Alkmaar", "Amersfoort", "Elburg", "Nijkerk", "Harderwijk", "Almere", "Lelystad", "Deventer", "Apeldoorn", "Tilburg", "Middelburg", "Haarlem", "Emmen", "Meppel", "Leiden", "Hoorn", "Den Helder", "Dordrecht", "Delft", "Roermond", "Venlo", "Helmond", "Sneek", "Drachten", "Heerenveen", "Oss", "Nijmegen", "Bergen op Zoom", "Roosendaal", "Vlissingen", "Heerlen", "Sittard", "Doetinchem", "Hilversum" };
+            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Heino", "Raalte", "Arnhem", "Baarn", "Rotterdam", "Den Haag", "Eindhoven", "Breda", "Enschede", "Hengelo", "Almelo", "Leeuwarden", "Groningen", "Assen", "Maastricht", "Alkmaar", "Amersfoort", "Elburg", "Nijkerk", "Harderwijk", "Almere", "Lelystad", "Deventer", "Apeldoorn", "Tilburg", "Middelburg", "Haarlem", "Emmen", "Meppel", "Leiden", "Hoorn", "Den Helder", "Dordrecht", "Delft", "Roermond", "Venlo", "Helmond", "Sneek", "Drachten", "Heerenveen", "Oss", "Nijmegen", "Bergen op Zoom", "Roosendaal", "Vlissingen", "Heerlen", "Sittard", "Doetinchem", "Hilversum", "Zaanstad", "'s Hertogenbosch", "Zoetermeer", "Ede", "Alphen aan den Rijn" };
             locations.Sort();
             foreach (string item in locations) {
                 citySelection.Items.Add(item);

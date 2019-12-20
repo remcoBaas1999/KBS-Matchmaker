@@ -3,27 +3,48 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"   
       WindowTitle="Notifications"
       Height="auto" Width="auto">
-    <Grid>
-        <Grid HorizontalAlignment="Center" Height="446" VerticalAlignment="Top" Width="624">
-            <Rectangle x:Name="goBack" HorizontalAlignment="Left" Height="32" Stroke="#00000000" VerticalAlignment="Top" Width="34" MouseDown="goBack_MouseDown">
-                <Rectangle.Fill>
-                    <ImageBrush ImageSource="Images/return.png" Stretch="Uniform"/>
-                </Rectangle.Fill>
-            </Rectangle>
-            <Label Content="Notifications" HorizontalAlignment="Center" FontFamily="Roboto" Margin="233,117,262,292" Height="37" Width="129" FontSize="20" FontWeight="Bold"/>
-            <Image HorizontalAlignment="Left" Height="42" Margin="351,112,0,0" VerticalAlignment="Top" Width="42" Source="Images/notification.jpg">
-                <Image.OpacityMask>
-                    <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill"/>
-                </Image.OpacityMask>
-            </Image>
-            <Image x:Name="RefreshNotificationsButton" Source="Images/refresh.png" RenderTransformOrigin="0.5, 0.5" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,180,50,225" Width="40" Height="40" MouseDown="RefreshNotificationsButton_MouseDown">
-                <Image.OpacityMask>
-                    <ImageBrush ImageSource="Images/refresh.png" Stretch="UniformToFill"/>
-                </Image.OpacityMask>
-            </Image>
 
-            <Rectangle HorizontalAlignment="Left" Height="40" Margin="101,181,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="402" Fill="#FFE8E8E8"/>
-            <Label Content="You are up to date!" FontFamily="Roboto" HorizontalAlignment="Left" Margin="237,187,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
-        </Grid>
+
+    <Grid HorizontalAlignment="Center" Height="446" VerticalAlignment="Top" Width="624">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="34"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0" Grid.Column="0" x:Name="goBack" HorizontalAlignment="Left" Height="32" Stroke="#00000000" VerticalAlignment="Top" Width="34" MouseDown="goBack_MouseDown">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Images/return.png" Stretch="Uniform"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Label Grid.Row="1" Grid.Column="1" Content="Notifications" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontFamily="Roboto" Margin="0,50,0,0" Height="37" Width="140" FontSize="20" FontWeight="Bold"/>
+        <Image Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="42" Margin="150,0,0,0" Width="42" Source="Images/notification.jpg">
+            <Image.OpacityMask>
+                <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill"/>
+            </Image.OpacityMask>
+        </Image>
+        <Image Grid.Row="1" Grid.Column="1" x:Name="RefreshNotificationsButton" Source="Images/refresh.png" RenderTransformOrigin="0.5, 0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="350,0,0,0" Width="40" Height="40" MouseDown="RefreshNotificationsButton_MouseDown">
+            <Image.OpacityMask>
+                <ImageBrush ImageSource="Images/refresh.png" Stretch="UniformToFill"/>
+            </Image.OpacityMask>
+        </Image>
+        <ListBox Margin="0,30,0,0" Height="230" Width="300" Name="NotificationList" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <!--Image Height="150" Width="150" Stretch="UniformToFill" Source="{Binding Src.Value}"/-->
+                    <Grid>
+                        <Rectangle Height="30" Fill="LightGray"/>
+                        <Label Height="30" Width="150" FontFamily="Roboto" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Content="You have new messages from: "/>
+                        <Label Margin="150,0,0,0" Height="30" Width="100" FontFamily="Roboto" FontSize="10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="{Binding user.realName}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Column="1" Grid.Row="3" x:Name="btnGoToChat" Click="btnGoToChat_Click" Content="Go to chat" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0" Width="160" Height="30" BorderThickness="0" Background="{x:Null}" Foreground="#673AB3"/>
     </Grid>
 </Page>
