@@ -35,12 +35,12 @@ namespace Matchmaker
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             InitializeComponent();
             this.chatPartner = chatPartner;
-            ChatPartnerName.Text = chatPartner.realName;            
+            ChatPartnerName.Text = chatPartner.realName;
             string chatPartnerPicture = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";
             ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPicture, UriKind.Absolute)));
             this.userInChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             //determines chatid -> id = lowerid + space + higherid
-            if (int.Parse(userInChat.id)<int.Parse(chatPartner.id))
+            if (int.Parse(userInChat.id) < int.Parse(chatPartner.id))
             {
                 chatID = $"{userInChat.id}_{chatPartner.id}";
                 userSender = 0;
@@ -50,7 +50,7 @@ namespace Matchmaker
                 chatID = $"{chatPartner.id}_{userInChat.id}";
                 userSender = 1;
             }
-            UpdateScrollBox(); 
+            UpdateScrollBox();
         }
         //with sample data for testing purposes
         public ChatPage()
@@ -112,14 +112,15 @@ namespace Matchmaker
         {
             var messageList = new List<MessageData>();
             //get message list from server
-            messageList= MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
+            messageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
             messageList = messageList.OrderBy(msg => msg.timestamp).ToList();
             string[] iDS = chatID.Split('_');
             int lastSender = -1;
             foreach (MessageData m in messageList)
             {
+                Console.WriteLine(m.message);
                 //Changes alignment and colour to represent if it was sent or received
-                var tB = new TextBlock() { TextWrapping=TextWrapping.Wrap, Text = m.message, FontFamily = new FontFamily("Roboto"), Foreground = Brushes.White };
+                var tB = new TextBlock() { TextWrapping = TextWrapping.Wrap, Text = m.message, FontFamily = new FontFamily("Roboto"), Foreground = Brushes.White };
                 var bTB = new Border() { Child = tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin = new Thickness(5) };
 
                 //Step by step breakdown of if-statement:
@@ -130,8 +131,8 @@ namespace Matchmaker
                 Console.WriteLine($"{userInChat.id}=={Int32.Parse(iDS[m.sender])}");
                 if (int.Parse(userInChat.id) == Int32.Parse(iDS[m.sender]))
                 {
-                    if (lastSender!=1)
-                    {                    
+                    if (lastSender != 1)
+                    {
                         System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                         dtDateTime = dtDateTime.AddSeconds(m.timestamp).ToLocalTime();
                         MessageList.Children.Add(new TextBlock() { Text = $"{userInChat.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily = new FontFamily("Roboto"), FontSize = 10, HorizontalAlignment = HorizontalAlignment.Right });
@@ -142,7 +143,7 @@ namespace Matchmaker
                 }
                 else
                 {
-                    if (lastSender!=0)
+                    if (lastSender != 0)
                     {
                         System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                         dtDateTime = dtDateTime.AddSeconds(m.timestamp).ToLocalTime();
@@ -153,7 +154,7 @@ namespace Matchmaker
                     bTB.Background = Brushes.Gray;
                 }
                 MessageList.Children.Add(bTB);
-            }            
+            }
         }
         private async void ChatInput_PreviewKeyDown(object sender, KeyEventArgs e)
         {

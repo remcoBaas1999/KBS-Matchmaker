@@ -33,12 +33,16 @@ namespace Matchmaker {
             //Gather info about logged-in user
             string email = User.email;
             UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            LoggedInUserID = getLoggedInUserData;
-            User.ID = LoggedInUserID.id;
-            //LoggedInUser = getLoggedInUserData;
-            //User.ID = LoggedInUser.id;
+            //LoggedInUserID = int.Parse(getLoggedInUserData.id);
+            //User.ID = log;
+            LoggedInUser = getLoggedInUserData;
+            User.ID = int.Parse(LoggedInUser.id);
 
-                
+            if (getLoggedInUserData.blockedUsers == null)
+            {
+                FillEmptyList(getLoggedInUserData);
+            }
+
             FillHomepageProfiles(GenerateUserDatas());
         }
 
@@ -54,7 +58,7 @@ namespace Matchmaker {
         }
 
         private void FillHomepageProfiles(UserData[] userDatas) {
-            RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
+            //RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
 
             FirstProfile = userDatas[0];
             //Set name
@@ -66,7 +70,7 @@ namespace Matchmaker {
             string coverImage = $"https://145.44.233.207/images/covers/{userDatas[0].coverImage}";
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            SecondProfileID = int.Parse(userDatas[1].id);
+            SecondProfile = userDatas[1];
             //Set name
             Profile2Tag.Content = userDatas[1].realName;
             //Set profile picture
@@ -76,7 +80,7 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[1].coverImage}";
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            ThirdProfileID = int.Parse(userDatas[2].id);
+            ThirdProfile = userDatas[2];
             //Set name
             Profile3Tag.Content = userDatas[2].realName;
             //Set profile picture
@@ -86,7 +90,7 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[2].coverImage}";
             Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            FourthProfileID = int.Parse(userDatas[3].id);
+            FourthProfile = userDatas[3];
             //Set name
             Profile4Tag.Content = userDatas[3].realName;
             //Set profile picture
@@ -119,24 +123,21 @@ namespace Matchmaker {
         //When clicked on a profile
         private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FirstProfileID)), false, LoggedInUserID);
-            NavigationService.Navigate(page);
+            ButtonPressed(FirstProfile);
         }
         private void Profile2BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(SecondProfileID)), false, LoggedInUserID);
-            NavigationService.Navigate(page);
+            ButtonPressed(SecondProfile);
         }
 
         private void Profile3BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(ThirdProfileID)), false, LoggedInUserID);
-            NavigationService.Navigate(page);
+            ButtonPressed(ThirdProfile);
         }
         private void Profile4BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
             ButtonPressed(FourthProfile);
         }
         private void ButtonPressed(UserData userData) {
             //Console.WriteLine($"\nUser ID: {userData.id}, name: {userData.realName}, User ID is correct: {id == userData.id}");
-            Page page = new UserProfile(userData, false, LoggedInUser.id);
+            Page page = new UserProfile(userData, false, int.Parse(LoggedInUser.id));
             NavigationService.Navigate(page);
         }
 
@@ -161,7 +162,7 @@ namespace Matchmaker {
 
         //Go to Settings page
         private void Settings_MouseDown(object sender, MouseButtonEventArgs e) {
-            Settings settings = new Settings(LoggedInUser.id);
+            Settings settings = new Settings(int.Parse(LoggedInUser.id));
             NavigationService.Navigate(settings);
         }
 
@@ -169,7 +170,7 @@ namespace Matchmaker {
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, true, LoggedInUser.id);
+            Page userProfile = new UserProfile(user, true, int.Parse(LoggedInUser.id));
             NavigationService.Navigate(userProfile);
         }
 

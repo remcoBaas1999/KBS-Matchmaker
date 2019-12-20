@@ -289,7 +289,7 @@ namespace Matchmaker {
         //Menu buttons
         //Go to Notification page
         private void Notification_MouseDown(object sender, MouseButtonEventArgs e) {
-            Notifications notifications = new Notifications();
+            Notifications notifications = new Notifications(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)));
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
