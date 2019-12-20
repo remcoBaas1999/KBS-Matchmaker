@@ -21,7 +21,6 @@ namespace Matchmaker {
         //Create UserProfile as if it is anothers profile
         public UserProfile(UserData user, bool userAccount, int loggedinuser) {
             LoggedInUserID = loggedinuser;
-            userInView = user;
             InitializeComponent();
 
             if (userAccount) {
@@ -63,13 +62,15 @@ namespace Matchmaker {
                 catch (NullReferenceException) { };
             }
 
-            years.Text = (CalculateAge(UnixTimeToDate(userInView.birthdate))).ToString();
-            name.Text = userInView.realName;
-            showName.Text = userInView.realName;
-            city.Text = userInView.city;
-            bioText.Text = userInView.about;
-            if (userInView.hobbies != null) {
-                foreach (var item in userInView.hobbies) {
+            years.Text = (CalculateAge(UnixTimeToDate(user.birthdate))).ToString();
+            name.Text = user.realName;
+            showName.Text = user.realName;
+            city.Text = user.city;
+            bioText.Text = user.about;
+            if (user.hobbies != null)
+            {
+                foreach (var item in user.hobbies)
+                {
                     //add to list of Hobbies in the Xaml
                     LoadHobbyWrapper(item.displayName, userAccount);
                 }
@@ -79,9 +80,11 @@ namespace Matchmaker {
                 }
                 else HobbyWrapper.Width = 600;
             }
+            userInView = user;
 
             //Show users profile picture
-            ProfilePicture1.Fill = MatchmakerAPI_Client.GetProfilePicture(userInView);
+            string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
 
             //Show if this user is blocked
             UserData userX = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
@@ -177,8 +180,7 @@ namespace Matchmaker {
         //Load a list with cities 
         private void citySelection_Loaded(object sender, RoutedEventArgs e) {
             citySelection.Text = city.Text;
-            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Heino", "Raalte", "Arnhem", "Baarn", "Rotterdam", "Den Haag", "Eindhoven", "Breda", "Enschede", "Hengelo", "Almelo", "Leeuwarden", "Groningen", "Assen", "Maastricht", "Alkmaar", "Amersfoort", "Elburg", "Nijkerk", "Harderwijk", "Almere", "Lelystad", "Deventer", "Apeldoorn", "Tilburg", "Middelburg", "Haarlem", "Emmen", "Meppel", "Leiden", "Hoorn", "Den Helder", "Dordrecht", "Delft", "Roermond", "Venlo", "Helmond", "Sneek", "Drachten", "Heerenveen", "Oss", "Nijmegen", "Bergen op Zoom", "Roosendaal", "Vlissingen", "Heerlen", "Sittard", "Doetinchem", "Hilversum" };
-            locations.Sort();
+            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Heino", "Raalte", "Arnhem" };
             foreach (string item in locations) {
                 citySelection.Items.Add(item);
             }
