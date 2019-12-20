@@ -198,9 +198,9 @@ namespace MatchMakerClassLibrary
         public static async Task<bool> declineContactRequest(UserData userDenying, UserData requestUser)
         {
             //Remove contact request
-            if (userDenying.requestFrom.Contains(requestUser.id)) {
-                userDenying.requestFrom.Remove(requestUser.id);
-                requestUser.contacts.Remove(new KeyValuePair<int, bool>(userDenying.id, false));
+            if (userDenying.requestFrom.Contains(int.Parse(requestUser.id))) {
+                userDenying.requestFrom.Remove(int.Parse(requestUser.id));
+                requestUser.contacts.Remove(requestUser.id.ToString());
             }
 
             await SaveUser(userDenying);
@@ -211,8 +211,23 @@ namespace MatchMakerClassLibrary
 
         public static async Task<bool> ConfirmContactRequest(UserData confirmingUser, UserData requestUser)
         {
-            if (confirmingUser.contacts == null) {
+            Dictionary<string, bool> contactList;
 
+            if (confirmingUser.contacts == null) {
+<<<<<<< HEAD
+                contactList = new Dictionary<string, bool>();
+                confirmingUser.contacts = contactList;
+            }
+
+            //Confirm request and add to contacts
+            if (confirmingUser.requestFrom.Contains(int.Parse(requestUser.id)) && requestUser.contacts.Keys.Contains(confirmingUser.id.ToString())) {
+                confirmingUser.contacts.Add(requestUser.id.ToString(), true);
+                requestUser.contacts[$"{confirmingUser.id}"] = true;
+                confirmingUser.requestFrom.Remove(int.Parse(requestUser.id));
+
+                await SaveUser(confirmingUser);
+                await SaveUser(requestUser);
+=======
                 List<KeyValuePair<int, bool>> x = new List<KeyValuePair<int, bool>>();
                 confirmingUser.contacts = x;
                 requestUser.contacts = x;
@@ -223,6 +238,7 @@ namespace MatchMakerClassLibrary
                 confirmingUser.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, true));
                 requestUser.contacts.Add(new KeyValuePair<int, bool>(confirmingUser.id, true));
                 confirmingUser.requestFrom.Remove(requestUser.id);
+>>>>>>> parent of ea075d5... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
             }
 
             return true;
@@ -240,12 +256,12 @@ namespace MatchMakerClassLibrary
         public string city { get; set; }
         public List<HobbyData> hobbies { get; set; }
         public string profilePicture { get; set; }
-        public int id { get; set; }
+        public string id { get; set; }
         public long birthdate { get; set; }
         public string coverImage { get; set; }
         public List<int> blockedUsers { get; set; }
         public List<int> requestFrom { get; set; }
-        public List<KeyValuePair<int, bool>> contacts { get; set; }
+        public Dictionary<string, bool> contacts { get; set; }
     }
     public class AuthData
     {

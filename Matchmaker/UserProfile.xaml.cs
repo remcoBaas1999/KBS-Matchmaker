@@ -50,8 +50,15 @@ namespace Matchmaker {
 
                 try
                 {
-
+<<<<<<< HEAD
+                    if (user.requestFrom.Contains(int.Parse(activeUser.id))) // pending request
+                    {
+                        contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
+                    }
+                    if (user.contacts.Keys.Contains(activeUser.id.ToString()) && user.contacts.Values.Contains(true)) // the logged in user is a contact form the user ds
+=======
                     if (user.contacts.Contains(new KeyValuePair<int, bool>(activeUser.id, true)))
+>>>>>>> parent of ea075d5... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
                     {
                         contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
                     }
@@ -85,7 +92,7 @@ namespace Matchmaker {
 
             //Show if this user is blocked
             UserData userX = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
-            if (userX.blockedUsers.Contains(userInView.id)) {
+            if (userX.blockedUsers.Contains(int.Parse(userInView.id))) {
                 BlockedFeedback.Visibility = Visibility.Visible;
             }
         }
@@ -262,7 +269,7 @@ namespace Matchmaker {
         private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
             CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
             coverImageSelecter.Show();
-            coverImageSelecter.userID = userInView.id;
+            coverImageSelecter.userID = int.Parse(userInView.id);
         }
         //add an hobby button event
         public void addHobbyToList_Click(object sender, RoutedEventArgs e) {
@@ -389,7 +396,7 @@ namespace Matchmaker {
             //Triggers when pressed on the blockimage next to a users profile
             if (MessageBox.Show($"Are you sure you want to ignore {userInView.realName}? His or her profile will never show up again.", $"Ignore {userInView.realName}", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) {
                 //Select USERID that will be blocked         
-                int IWantToBlockThisUserID = userInView.id;
+                int IWantToBlockThisUserID = int.Parse(userInView.id);
                 //Select own userID
                 UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
 
@@ -428,12 +435,12 @@ namespace Matchmaker {
             // check if a list of contacts is not created
             if(userInView.contacts == null)
             {
-                List<KeyValuePair<int, bool>> x = new List<KeyValuePair<int, bool>>();
+                Dictionary<string, bool> x = new Dictionary<string, bool>();
                 userInView.contacts = x;
             }
 
             // if the user is not in the list of contacts create a new request
-            if (!userInView.contacts.Contains(new KeyValuePair<int, bool>(userInView.id, false)))
+            if(!userInView.contacts.Keys.Contains(userInView.id.ToString()))
             {
                 contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
 
@@ -453,11 +460,11 @@ namespace Matchmaker {
                     
                     if(userLoggedIn.contacts == null)
                     {
-                        List<KeyValuePair<int, bool>> x = new List<KeyValuePair<int, bool>>();
+                        Dictionary<string, bool> x = new Dictionary<string, bool>();
                         userLoggedIn.contacts = x;
                     }
 
-                    userLoggedIn.contacts.Add(new KeyValuePair<int, bool>(userInView.id, false));
+                    userLoggedIn.contacts.Add(userInView.id.ToString(), false);
 
                     await MatchmakerAPI_Client.SaveUser(userInView);
                     await MatchmakerAPI_Client.SaveUser(userLoggedIn);
