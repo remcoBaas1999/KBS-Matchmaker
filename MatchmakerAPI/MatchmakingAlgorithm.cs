@@ -24,8 +24,8 @@ namespace MatchmakerAPI
     public static UserData[] FindMatches(int forUserId, int sampleNum, int scoredNum, int returnNum)
     {
 
-      // Retrieve the users database as Dictionary<int, UserData>
-      var users = UserController.ReadUsers();
+            // Retrieve the users database as Dictionary<int, UserData>
+            var users = UserController.ReadUsers();
 
             //Get userprofiles from databases
              //var profiles = users.Values.ToList();
@@ -52,14 +52,15 @@ namespace MatchmakerAPI
 
             try {
 
-        // Get user data for the user for which the matches are being found
-        var forUser = users[forUserId];
+                // Get user data for the user for which the matches are being found
+                UserData loggedInUser = users[forUserId];
 
 				// Remove that user from the pool of potential matches
-				users.Remove(forUserId);
+				users.Remove(loggedInUser.id);
 
-        // Get a random sample from the users database
-        var sample = GetRandomUsers(users.Values.ToList(), sampleNum);
+                // Get a random sample from the users database
+                List<UserData> sample = GetRandomUsers(users.Values.ToList(), sampleNum);
+
 				// var sample = users.Values.ToList();
 
         // Prepare unsorted variant of the return value
@@ -72,9 +73,9 @@ namespace MatchmakerAPI
         {
 
           // Calculate composite scores
-          var proximity = CompareLocation(forUser, user);
-          var hobbiesInCommon = CompareHobbies(forUser, user);
-          var ageDifference = CompareAge(forUser, user);
+          var proximity = CompareLocation(loggedInUser, user);
+          var hobbiesInCommon = CompareHobbies(loggedInUser, user);
+          var ageDifference = CompareAge(loggedInUser, user);
 
           // Calculate total weighted score
           var totalScore = ((proximity * proximityWt) + (hobbiesInCommon * hobbiesWt)) - (ageDifference * ageWt);
@@ -108,7 +109,7 @@ namespace MatchmakerAPI
 
     public static List<UserData> GetRandomUsers(List<UserData> users, int num)
     {
-      var returnVal = new List<UserData>();
+      List<UserData> returnVal = new List<UserData>();
 
       // Initialize a new Random object
       var rng = new Random();
@@ -116,8 +117,7 @@ namespace MatchmakerAPI
       while (returnVal.Count < num)
       {
 
-        // If the users list is smaller than the number of users to be selected,
-        // abort the method when all users have been selected.
+        // If the users list is smaller than the number of users to be selected, abort the method when all users have been selected.
         if (users.Count == 0) {
           return returnVal;
         }
