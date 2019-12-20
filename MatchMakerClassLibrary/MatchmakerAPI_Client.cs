@@ -214,6 +214,7 @@ namespace MatchMakerClassLibrary
             Dictionary<string, bool> contactList;
 
             if (confirmingUser.contacts == null) {
+<<<<<<< HEAD
                 contactList = new Dictionary<string, bool>();
                 confirmingUser.contacts = contactList;
             }
@@ -226,6 +227,18 @@ namespace MatchMakerClassLibrary
 
                 await SaveUser(confirmingUser);
                 await SaveUser(requestUser);
+=======
+                List<KeyValuePair<int, bool>> x = new List<KeyValuePair<int, bool>>();
+                confirmingUser.contacts = x;
+                requestUser.contacts = x;
+            }
+
+            //Confirm request and add to contacts
+            if (confirmingUser.requestFrom.Contains(requestUser.id)) {
+                confirmingUser.contacts.Add(new KeyValuePair<int, bool>(requestUser.id, true));
+                requestUser.contacts.Add(new KeyValuePair<int, bool>(confirmingUser.id, true));
+                confirmingUser.requestFrom.Remove(requestUser.id);
+>>>>>>> parent of ea075d5... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
             }
 
             return true;

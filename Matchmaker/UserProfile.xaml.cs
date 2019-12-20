@@ -50,13 +50,17 @@ namespace Matchmaker {
 
                 try
                 {
+<<<<<<< HEAD
                     if (user.requestFrom.Contains(int.Parse(activeUser.id))) // pending request
                     {
                         contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
                     }
                     if (user.contacts.Keys.Contains(activeUser.id.ToString()) && user.contacts.Values.Contains(true)) // the logged in user is a contact form the user ds
+=======
+                    if (user.contacts.Contains(new KeyValuePair<int, bool>(activeUser.id, true)))
+>>>>>>> parent of ea075d5... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
                     {
-                        contactRequest.Visibility = Visibility.Collapsed;
+                        contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
                     }
                 }
                 catch (NullReferenceException) { };

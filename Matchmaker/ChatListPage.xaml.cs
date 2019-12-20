@@ -168,6 +168,7 @@ namespace Matchmaker
                     foreach (var contact in contacts)
                     {
                         UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact.Key));
+<<<<<<< HEAD
                         if (contactUser != null)
                         {
                             StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0), Width = 120 };
@@ -175,12 +176,19 @@ namespace Matchmaker
                             string pfPic1 = $"https://145.44.233.207/images/users/{contactUser.profilePicture}";
                             userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
                             TextBlock userRealName = new TextBlock() { Text = contactUser.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0), TextWrapping = TextWrapping.Wrap };
+=======
+>>>>>>> parent of ea075d5... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
 
-                            userBlock.Children.Add(userProfilePicture);
-                            userBlock.Children.Add(userRealName);
+                        StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0) };
+                        Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
+                        string pfPic1 = $"https://145.44.233.207/images/users/{contactUser.profilePicture}";
+                        userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
+                        TextBlock userRealName = new TextBlock() { Text = contactUser.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0) };
 
-                            recentlyAddedChats.Children.Add(userBlock);
-                        }
+                        userBlock.Children.Add(userProfilePicture);
+                        userBlock.Children.Add(userRealName);
+
+                        recentlyAddedChats.Children.Add(userBlock);
                     }
                 }
                 else
@@ -188,7 +196,7 @@ namespace Matchmaker
                     recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
                 }
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException nre)
             {
                 recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
             }
@@ -252,7 +260,7 @@ namespace Matchmaker
         {
             //Get sender ID
             var button = (Button)sender;
-            int id = int.Parse(button.Name.Replace("_", string.Empty));
+            int id = int.Parse(button.Name.Replace("_", String.Empty));
 
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
             UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
@@ -266,7 +274,7 @@ namespace Matchmaker
         {
             //Get sender ID
             var button = (Button)sender;
-            int id = int.Parse(button.Name.Replace("_", string.Empty));
+            int id = int.Parse(button.Name.Replace("_", String.Empty));
 
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
             UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
