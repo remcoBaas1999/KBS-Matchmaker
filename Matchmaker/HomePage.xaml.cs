@@ -1,5 +1,6 @@
 ﻿using MatchMakerClassLibrary;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,10 +31,10 @@ namespace Matchmaker {
             InitializeComponent();
 
             //Gather info about logged-in user
-            String email = User.email;
+            string email = User.email;
             UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            LoggedInUserID = int.Parse(getLoggedInUserData.id);
-            User.ID = LoggedInUserID;
+            LoggedInUserID = getLoggedInUserData;
+            User.ID = LoggedInUserID.id;
             //LoggedInUser = getLoggedInUserData;
             //User.ID = LoggedInUser.id;
 

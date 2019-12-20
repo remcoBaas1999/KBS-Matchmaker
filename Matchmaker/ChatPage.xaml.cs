@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,6 +25,7 @@ namespace Matchmaker
     {
         private UserData chatPartner;
         private UserData userInChat;
+        int timerTime = 1500;
         int userSender;
         private string chatID;
         //Creates a page with a chatpartner. Own data to be retrieved via User.
@@ -111,7 +113,7 @@ namespace Matchmaker
             var messageList = new List<MessageData>();
             //get message list from server
             messageList= MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
-            messageList = messageList.OrderBy(msg => msg.TimeStamp).ToList();
+            messageList = messageList.OrderBy(msg => msg.timestamp).ToList();
             string[] iDS = chatID.Split('_');
             int lastSender = -1;
             foreach (MessageData m in messageList)
@@ -125,8 +127,8 @@ namespace Matchmaker
                 //The MatchmakerAPI_Client will deserialize this data
                 //The ID will be compared to the sender (0/1) and then the position in the messageID.
                 //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.                
-                Console.WriteLine($"{userInChat.id}=={Int32.Parse(iDS[m.Sender])}");
-                if (int.Parse(userInChat.id) == Int32.Parse(iDS[m.Sender]))
+                Console.WriteLine($"{userInChat.id}=={Int32.Parse(iDS[m.sender])}");
+                if (int.Parse(userInChat.id) == Int32.Parse(iDS[m.sender]))
                 {
                     if (lastSender!=1)
                     {                    
