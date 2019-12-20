@@ -24,7 +24,7 @@ namespace MatchmakerAPI
     public static UserData[] FindMatches(int forUserId, int sampleNum, int scoredNum, int returnNum)
     {
 
-            // Retrieve the users database as Dictionary<int, UserData>
+            // Retrieve the users database as Dictionary<string, UserData>
             var users = UserController.ReadUsers();
 
             //Get userprofiles from databases
@@ -33,7 +33,7 @@ namespace MatchmakerAPI
             //Remove blocked user(s) if any
             UserData getLoggedInUserData = new UserData();
             foreach (var item in users) {
-                if(item.Key == forUserId) {
+                if(item.Key == forUserId.ToString()) {
                     getLoggedInUserData = item.Value;
                 }
             }
@@ -44,8 +44,8 @@ namespace MatchmakerAPI
             }
 
             foreach (var item in getLoggedInUserData.blockedUsers) {
-                if (users.Keys.Contains(item)) {
-                    users.Remove(item);
+                if (users.Keys.Contains(item.ToString())) {
+                    users.Remove(item.ToString());
                 }
             }
 
@@ -53,10 +53,10 @@ namespace MatchmakerAPI
             try {
 
                 // Get user data for the user for which the matches are being found
-                UserData loggedInUser = users[forUserId];
+                UserData loggedInUser = users[forUserId.ToString()];
 
 				// Remove that user from the pool of potential matches
-				users.Remove(loggedInUser.id);
+				users.Remove(loggedInUser.id.ToString());
 
                 // Get a random sample from the users database
                 List<UserData> sample = GetRandomUsers(users.Values.ToList(), sampleNum);
