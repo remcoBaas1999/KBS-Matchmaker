@@ -170,14 +170,18 @@ namespace Matchmaker
                         UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(contact.Key)));
                         if (contactUser != null)
                         {
-                            StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0), Width = 120 };
-                            Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
+                            string panelName = contactUser.id;
+                            StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0), Width = 120, Name = $"_{panelName}" };
+                            Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 , Name = $"_{panelName}" };
                             string pfPic1 = $"https://145.44.233.207/images/users/{contactUser.profilePicture}";
                             userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
                             TextBlock userRealName = new TextBlock() { Text = contactUser.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0), TextWrapping = TextWrapping.Wrap };
 
                             userBlock.Children.Add(userProfilePicture);
                             userBlock.Children.Add(userRealName);
+
+                            userBlock.MouseDown += NewChat_MouseDown;
+                            
 
                             recentlyAddedChats.Children.Add(userBlock);
                         }
@@ -192,6 +196,19 @@ namespace Matchmaker
             {
                 recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
             }
+        }
+
+        private void NewChat_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // maak een nieuwe chat aan.
+            var clickedContact = e.Source as FrameworkElement;
+            string idOfClick = clickedContact.Name;
+            idOfClick = idOfClick.Replace("_", "");
+
+            UserData newContactChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(idOfClick)));
+
+            ChatPage chat = new ChatPage(newContactChat);
+            NavigationService.Navigate(chat);
         }
 
         // Display the blocked users
