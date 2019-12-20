@@ -7,85 +7,102 @@
 	  mc:Ignorable="d" 
 	  d:DesignHeight="720" d:DesignWidth="1280"
 	  Title="Chatlist" FontFamily="Roboto">
-    <ScrollViewer VerticalScrollBarVisibility="Hidden">
-        <Grid>
+   <ScrollViewer VerticalScrollBarVisibility="Hidden">
+      <Grid>
+         <!-- Grid definitions -->
+         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto"  MaxWidth="1008" />
+            <ColumnDefinition Width="*" />
+         </Grid.ColumnDefinitions>
 
-            <!-- Grid definitions -->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto"  MaxWidth="1008" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
-
-            <WrapPanel Grid.Row="0" Margin="0 18 0 0" HorizontalAlignment="Center" Grid.Column="1">
-                <Border HorizontalAlignment="Center" Width="127">
-                    <Button Background="{x:Null}" BorderThickness="0" Click="NavigateHome">
-                        <TextBlock FontWeight="Heavy" Text="HOME" FontSize="18" LineHeight="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
-                </Border>
-                <Border HorizontalAlignment="Center" Width="127" Height="48">
-                    <Grid>
-                        <Button Height="48" FontWeight="Heavy" Background="{x:Null}" BorderThickness="0 0 0 0" Content="CONTACTS" FontSize="18" TextBlock.LineHeight="16" VerticalAlignment="Center"/>
-                        <Border Height="4" Width="73" Background="#673AB7" VerticalAlignment="Bottom" CornerRadius="5 5 0 0"/>
-                    </Grid>
-                </Border>
-            </WrapPanel>
-            <WrapPanel HorizontalAlignment="Right" Grid.Column="2" Grid.RowSpan="2">
-                <Ellipse x:Name="Notification" HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" Margin="0,0,5,0" MouseDown="Notification_MouseDown">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <Ellipse x:Name="MyProfile" HorizontalAlignment="Left" Height="26" Stroke="#00000000" VerticalAlignment="Top" Width="26" MouseDown="MyProfile_MouseDown" Margin="5,3,5,0">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <Ellipse x:Name="Settings" HorizontalAlignment="Left" Height="29" Stroke="#00000000" VerticalAlignment="Top" Width="29" MouseDown="Settings_MouseDown" Margin="5,2,5,0">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="Images/settings.png"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <Rectangle x:Name="Logout" HorizontalAlignment="Left" Height="32" Stroke="#00000000" VerticalAlignment="Top" Width="32" MouseDown="Logout_MouseDown" Margin="5,0">
-                    <Rectangle.Fill>
-                        <ImageBrush ImageSource="Images/exit.png" Stretch="UniformToFill"/>
-                    </Rectangle.Fill>
-                </Rectangle>
-            </WrapPanel>
+         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+         </Grid.RowDefinitions>
+         
+         <WrapPanel Grid.Row="0" Margin="0 18 0 0" HorizontalAlignment="Center" Grid.Column="1">
+            <Border HorizontalAlignment="Center" Width="127">
+               <Button Background="{x:Null}" BorderThickness="0" Click="NavigateHome">
+                  <TextBlock FontWeight="Heavy" Text="HOME" FontSize="18" LineHeight="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+               </Button>
+            </Border>
+            <Border HorizontalAlignment="Center" Width="127" Height="48">
+               <Grid>
+                  <Button Height="48" FontWeight="Heavy" Background="{x:Null}" BorderThickness="0 0 0 0" Content="CONTACTS" FontSize="18" TextBlock.LineHeight="16" VerticalAlignment="Center"/>
+                  <Border Height="4" Width="73" Background="#673AB7" VerticalAlignment="Bottom" CornerRadius="5 5 0 0"/>
+               </Grid>
+            </Border>
+         </WrapPanel>
+         <WrapPanel HorizontalAlignment="Right" Grid.Column="2" Grid.RowSpan="2">
+            <Ellipse x:Name="Notification" HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" Margin="0,0,5,0" MouseDown="Notification_MouseDown">
+               <Ellipse.Fill>
+                  <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
+               </Ellipse.Fill>
+            </Ellipse>
+            <Ellipse x:Name="MyProfile" HorizontalAlignment="Left" Height="26" Stroke="#00000000" VerticalAlignment="Top" Width="26" MouseDown="MyProfile_MouseDown" Margin="5,3,5,0">
+               <Ellipse.Fill>
+                  <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
+               </Ellipse.Fill>
+            </Ellipse>
+            <Ellipse x:Name="Settings" HorizontalAlignment="Left" Height="29" Stroke="#00000000" VerticalAlignment="Top" Width="29" MouseDown="Settings_MouseDown" Margin="5,2,5,0">
+               <Ellipse.Fill>
+                  <ImageBrush ImageSource="Images/settings.png"/>
+               </Ellipse.Fill>
+            </Ellipse>
+            <Rectangle x:Name="Logout" HorizontalAlignment="Left" Height="32" Stroke="#00000000" VerticalAlignment="Top" Width="32" MouseDown="Logout_MouseDown" Margin="5,0">
+               <Rectangle.Fill>
+                  <ImageBrush ImageSource="Images/exit.png" Stretch="UniformToFill"/>
+               </Rectangle.Fill>
+            </Rectangle>
+         </WrapPanel>
 
 
-            <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 56 0 0">
-                <Border Width="500">
-                    <TextBlock Text="Contact Requests" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
-                </Border>
+         <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 56 0 0">
+            <Border Width="500">
+               <TextBlock Text="Contact Requests" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
+            </Border>
 
-                <StackPanel x:Name="newRequestList" />
+            <StackPanel x:Name="newRequestList" />
 
-                <Border Width="500" Margin="0 56 0 0">
-                    <TextBlock Text="Your Chats" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
-                </Border>
+            <Border Width="500" Margin="0 56 0 0">
+               <TextBlock Text="Your Chats" HorizontalAlignment="Center" FontWeight="Heavy" FontSize="20" LineHeight="28"/>
+            </Border>
 
-                <StackPanel Width="473" x:Name="chatList" />
+            <StackPanel Width="473" x:Name="chatList" />
 
-                <Border Width="520">
-                    <TextBlock Text="Your Contacts" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 56 0 0" FontWeight="Heavy"/>
-                </Border>
+            <Border Width="520">
+               <TextBlock Text="Your Contacts" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 56 0 0" FontWeight="Heavy"/>
+            </Border>
 
-                <WrapPanel x:Name="recentlyAddedChats" MaxWidth="520" HorizontalAlignment="Center"/>
+            <WrapPanel x:Name="recentlyAddedChats" MaxWidth="520" HorizontalAlignment="Center"/>
 
-                <Border Width="490">
-                    <TextBlock Text="Blocked Users" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 46 0 0" FontWeight="Heavy"/>
-                </Border>
+            <Border Width="490">
+               <TextBlock Text="Blocked Users" TextAlignment="Center" FontSize="20" LineHeight="28" Margin="0 46 0 0" FontWeight="Heavy"/>
+            </Border>
 
-                <StackPanel x:Name="blockedUserList"/>
+            <StackPanel x:Name="blockedUserList"/>
 
-            </StackPanel>
-        </Grid>
-    </ScrollViewer>
+         </StackPanel>
+
+         <Border Grid.RowSpan="4" Grid.ColumnSpan="3" x:Name="overlay" Background="DimGray" Opacity="0.75" Visibility="Collapsed" />
+         <Border x:Name="decideOnProfile" Background="White" CornerRadius="5" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1">
+            <Grid>
+               <StackPanel Margin="16">
+                  <TextBlock x:Name="decideText" FontSize="16" FontWeight="Heavy" Text="Create a chat or Checkout your friends profile" HorizontalAlignment="Center" Margin="0 8" Width="125" TextWrapping="Wrap"/>
+                  <WrapPanel>
+                     <Border Margin="8" CornerRadius="6" Background="#673AB7" MouseDown="CreateChat_MouseDown">
+                        <TextBlock Text="Create chat" Margin="8" Foreground="White" FontSize="14" LineHeight="18"/>
+                     </Border>
+                     <Border Margin="8" CornerRadius="6" Background="#673AB7" MouseDown="CheckoutProfile_MouseDown">
+                        <TextBlock Text="See profile" Margin="8" Foreground="White" FontSize="14" LineHeight="18"/>
+                     </Border>
+                  </WrapPanel>
+               </StackPanel>
+            </Grid>
+         </Border>
+      </Grid>
+   </ScrollViewer>
 </Page>

@@ -207,7 +207,7 @@
 
         </Border>
         <!--Add hobbies-->
-        <Border Grid.RowSpan="3" Grid.ColumnSpan="3" x:Name="AddHobbies"  Background="DimGray" Opacity="0.75" Visibility="Collapsed" />
+        <Border Grid.RowSpan="4" Grid.ColumnSpan="3" x:Name="AddHobbies"  Background="DimGray" Opacity="0.75" Visibility="Collapsed" />
         <Border Visibility="Collapsed" CornerRadius="5" x:Name="entryHobbies" Background="White" Height="350 " Width="400" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
             <Grid>
 
