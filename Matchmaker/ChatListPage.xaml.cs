@@ -159,7 +159,7 @@ namespace Matchmaker
         {
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            Dictionary<string,bool> contacts = loggedInUser.contacts;
+            List<KeyValuePair<int,bool>> contacts = loggedInUser.contacts;
 
             try
             {
@@ -168,7 +168,6 @@ namespace Matchmaker
                     foreach (var contact in contacts)
                     {
                         UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact.Key));
-<<<<<<< HEAD
                         if (contactUser != null)
                         {
                             StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0), Width = 120 };
@@ -176,19 +175,12 @@ namespace Matchmaker
                             string pfPic1 = $"https://145.44.233.207/images/users/{contactUser.profilePicture}";
                             userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
                             TextBlock userRealName = new TextBlock() { Text = contactUser.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0), TextWrapping = TextWrapping.Wrap };
-=======
->>>>>>> parent of ea075d5... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
 
-                        StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0) };
-                        Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54 };
-                        string pfPic1 = $"https://145.44.233.207/images/users/{contactUser.profilePicture}";
-                        userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-                        TextBlock userRealName = new TextBlock() { Text = contactUser.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, Width = 110, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0) };
+                            userBlock.Children.Add(userProfilePicture);
+                            userBlock.Children.Add(userRealName);
 
-                        userBlock.Children.Add(userProfilePicture);
-                        userBlock.Children.Add(userRealName);
-
-                        recentlyAddedChats.Children.Add(userBlock);
+                            recentlyAddedChats.Children.Add(userBlock);
+                        }
                     }
                 }
                 else
@@ -196,7 +188,7 @@ namespace Matchmaker
                     recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
                 }
             }
-            catch (NullReferenceException nre)
+            catch (NullReferenceException)
             {
                 recentlyAddedChats.Children.Add(new TextBlock() { FontSize = 14, Text = "You have no contacts.", HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 520 });
             }
