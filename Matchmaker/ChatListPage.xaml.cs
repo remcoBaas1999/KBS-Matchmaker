@@ -6,10 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Drawing;
 using System.Windows.Media.Imaging;
-
-using WhiteColor = System.Drawing.Brushes;
 using MediaBrush = System.Windows.Media.Brushes;
 using System.Windows.Input;
 
@@ -37,7 +34,7 @@ namespace Matchmaker
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            List<int> contactRequests = user.incRequest;
+            List<int> contactRequests = user.requestFrom;
 
             try
             {
@@ -162,15 +159,15 @@ namespace Matchmaker
         {
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            List <int> contacts = loggedInUser.contacts;
+            Dictionary<int,bool> contacts = loggedInUser.contacts;
 
             try
             {
                 if (contacts.Count > 0)
                 {
-                    foreach (int contact in contacts)
+                    foreach (var contact in contacts)
                     {
-                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact));
+                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact.Key));
                         if (contactUser != null)
                         {
                             StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0), Width = 120 };

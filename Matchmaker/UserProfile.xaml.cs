@@ -50,11 +50,11 @@ namespace Matchmaker {
 
                 try
                 {
-                    if (user.incRequest.Contains(activeUser.id));
+                    if (user.requestFrom.Contains(activeUser.id)) // pending request
                     {
                         contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
                     }
-                    if (user.contacts.Contains(activeUser.id));
+                    if (user.contacts.Keys.Contains(activeUser.id) && user.contacts.Values.Contains(true)) // the logged in user is a contact form the user ds
                     {
                         contactRequest.Visibility = Visibility.Collapsed;
                     }
@@ -104,6 +104,7 @@ namespace Matchmaker {
 
         // Convert the Unixtime to an object of datetime
         private DateTime UnixTimeToDate(long _bday) {
+
             DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             DateTime bday = start.AddSeconds(_bday).ToLocalTime();
             return bday;
@@ -179,7 +180,7 @@ namespace Matchmaker {
         //Load a list with cities 
         private void citySelection_Loaded(object sender, RoutedEventArgs e) {
             citySelection.Text = city.Text;
-            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Groningen", "Harderwijk", "Nijkerk", "Elburg", "Baarn", "Arnhem" };
+            List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Heino", "Raalte", "Arnhem" };
             foreach (string item in locations) {
                 citySelection.Items.Add(item);
             }
@@ -427,37 +428,39 @@ namespace Matchmaker {
         //Send a contact request to an other user
         private async void contactRequest_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            // check if a list of contacts is not created
             if(userInView.contacts == null)
             {
-                List<int> x = new List<int>();
+                Dictionary<int, bool> x = new Dictionary<int, bool>();
                 userInView.contacts = x;
             }
 
-            if(!userInView.contacts.Contains(userInView.id))
+            // if the user is not in the list of contacts create a new request
+            if(!userInView.contacts.Keys.Contains(userInView.id))
             {
                 contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
 
                 //Save userID on others requestList
 
                 //Check if list already exists
-                if (userInView.incRequest == null)
+                if (userInView.requestFrom == null)
                 {
                     List<int> x = new List<int>();
-                    userInView.incRequest = x;
+                    userInView.requestFrom = x;
                 }
                 //If there is no contact request yet, add a new contact request
-                if (!userInView.incRequest.Contains(LoggedInUserID))
+                if (!userInView.requestFrom.Contains(LoggedInUserID))
                 {
-                    userInView.incRequest.Add(LoggedInUserID);
+                    userInView.requestFrom.Add(LoggedInUserID);
                     UserData userLoggedIn = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID));
                     
-                    if(userLoggedIn.outRequest == null)
+                    if(userLoggedIn.contacts == null)
                     {
-                        List<int> x = new List<int>();
-                        userLoggedIn.outRequest = x;
+                        Dictionary<int, bool> x = new Dictionary<int, bool>();
+                        userLoggedIn.contacts = x;
                     }
 
-                    userLoggedIn.outRequest.Add(userInView.id);
+                    userLoggedIn.contacts.Add(userInView.id, false);
 
                     await MatchmakerAPI_Client.SaveUser(userInView);
                     await MatchmakerAPI_Client.SaveUser(userLoggedIn);
