@@ -38,8 +38,8 @@ namespace MatchmakerAPI.Controllers
 
 				// Fetch the specific user we're looking for in a try/catch block
 				// in case the input is not a valid key.
-				var user = users[id];
-				user.id = id;
+				var user = users[id.ToString()];
+				user.id = id.ToString();
 
 				// Return the specified user
 				return user;
@@ -154,7 +154,7 @@ namespace MatchmakerAPI.Controllers
 				var users = ReadUsers();
 
 				// Pick the specified user
-				var user = users[id];
+				var user = users[id.ToString()];
 
 				// Return the contents of the hobby field
 				return user.hobbies;
@@ -233,7 +233,7 @@ namespace MatchmakerAPI.Controllers
 					// The user id is random for security/privacy reasons;
 					// keys are harder to guess and it makes it harder for
 					// potential attackers to download all the records
-				} while (users.ContainsKey(tmp_key));
+				} while (users.ContainsKey(tmp_key.ToString()));
 
 				// Generate some placeholder data
 				var tmp_hobbies = new List<Hobby>();
@@ -250,12 +250,12 @@ namespace MatchmakerAPI.Controllers
 					profilePicture	= "0.jpg",
 					hobbies					= tmp_hobbies,
 					coverImage			= tmp_cover,
-					id							= tmp_key
+					id							= tmp_key.ToString(),
 				};
 
 				// Add the new user data to the in-memory users database with
 				// the newly generated key
-				users.Add(tmp_key, newUser);
+				users.Add(tmp_key.ToString(), newUser);
 
 				// Write the updated user data to the database
 				UpdateUsers(users);
@@ -327,11 +327,11 @@ namespace MatchmakerAPI.Controllers
 				key = userMap[data.email];
 
 				// Validate user id integrity
-				if (key != data.id)
+				if (key != int.Parse(data.id))
 				{
 					// If the new data's user id does not match the key found for the user's
 					// email address, update it
-					data.id = key;
+					data.id = key.ToString();
 				}
 
 			} catch (System.Collections.Generic.KeyNotFoundException) {
@@ -354,7 +354,7 @@ namespace MatchmakerAPI.Controllers
 				var users = ReadUsers();
 
 				// Pick the user with the specified key
-				var user = users[key];
+				var user = users[key.ToString()];
 
 				// Compare the passwords to see if they match
 				if (user.password != data.password)
@@ -369,7 +369,7 @@ namespace MatchmakerAPI.Controllers
 				user = data;
 
 				// Put the updated user data back in the database
-				users[key] = user;
+				users[key.ToString()] = user;
 
 				// Update the database
 				UpdateUsers(users);
@@ -409,7 +409,7 @@ namespace MatchmakerAPI.Controllers
 			var users = ReadUsers();
 
 			// Change the specified user's coverImage property
-			users[key].coverImage = data.imageName;
+			users[key.ToString()].coverImage = data.imageName;
 
 			// Update the users database
 			UpdateUsers(users);
@@ -432,7 +432,7 @@ namespace MatchmakerAPI.Controllers
 
 		// // // //  READING METHODS
 
-		public static Dictionary<int, UserData> ReadUsers()
+		public static Dictionary<string, UserData> ReadUsers()
 		{
 
 			// Open the users.json data file
@@ -442,7 +442,7 @@ namespace MatchmakerAPI.Controllers
         string json = r.ReadToEnd();
 
 				// Deserialize the json to something C# can do stuff to
-        var users = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json);
+        var users = JsonConvert.DeserializeObject<Dictionary<string, UserData>>(json);
 
 				// Return the deserialized data table
 				return users;
@@ -472,7 +472,7 @@ namespace MatchmakerAPI.Controllers
 
 		// // // //  WRITING METHODS
 
-		public static void UpdateUsers(Dictionary<int, UserData> data)
+		public static void UpdateUsers(Dictionary<string, UserData> data)
 		{
 
 			try
@@ -480,7 +480,7 @@ namespace MatchmakerAPI.Controllers
 
 				// Serialize the updated users database
 				var text = JsonConvert.SerializeObject(data);
-
+				
 				// Write the serialized updated database to the proper file
 				System.IO.File.WriteAllText(UsersFile, text);
 

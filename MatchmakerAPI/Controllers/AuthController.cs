@@ -21,11 +21,11 @@ namespace MatchmakerAPI.Controllers
   		    {
   		        string json = r.ReadToEnd();
   				try {
-  					var test = JsonConvert.DeserializeObject<Dictionary<int, UserData>>(json)[id];
+  					UserData user = JsonConvert.DeserializeObject<Dictionary<string, UserData>>(json)[id.ToString()];
   					var data = new AuthData {
-  						email = test.email,
-  						password = test.password,
-  						salt = test.salt
+  						email = user.email,
+  						password = user.password,
+  						salt = user.salt
   					};
   					return data;
   				} catch (System.Collections.Generic.KeyNotFoundException e) {
