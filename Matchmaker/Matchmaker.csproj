@@ -249,6 +249,7 @@
     <Content Include="Images\minimize.svg" />
     <Resource Include="Images\refresh.png" />
     <Content Include="Images\restore.svg" />
+    <Content Include="Images\send.svg" />
     <Content Include="Images\square-shape-outline.svg" />
     <Content Include="Images\substract.svg" />
   </ItemGroup>
