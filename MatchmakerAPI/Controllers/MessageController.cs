@@ -16,7 +16,7 @@ namespace MatchmakerAPI.Controllers
     public class MessageController : ControllerBase
     {
         [HttpPost("post/new")]
-        public CreatedAtActionResult AddNewMessage(Message data)
+        public CreatedAtActionResult AddNewMessage(NewMessage data)
         {
             //data misschien veranderen
             string fileLocation = "/home/student/data/chats.json";
@@ -24,24 +24,21 @@ namespace MatchmakerAPI.Controllers
             {
                 string json = r.ReadToEnd();
                 var chats = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
-                if (chats.ContainsKey(data.id))
+                if (chats.ContainsKey(data.chat))
                 {
                     List<Message> manipulateChat;
-                    chats.TryGetValue(data.id, out manipulateChat);
-                    manipulateChat.Add(data);
-
+                    chats.TryGetValue(data.chat, out manipulateChat);
+                    manipulateChat.Add(data.content);
                 }
                 else
                 {
                     var newChat = new List<Message>();
-                    newChat.Add(data);
-                    chats.Add(data.id, newChat);
-
+                    newChat.Add(data.content);
+                    chats.Add(data.chat, newChat);
                 }
                 var text = JsonConvert.SerializeObject(chats);
                 System.IO.File.WriteAllText(fileLocation, text);
             }
-
 
             try
             {
@@ -52,6 +49,7 @@ namespace MatchmakerAPI.Controllers
                 return null;
             }
         }
+
         [HttpGet("get/id={id}")]
         public List<Message> RetrieveMessages(string id)
         {
@@ -59,11 +57,11 @@ namespace MatchmakerAPI.Controllers
             using (StreamReader r = new StreamReader(fileLocation))
             {
                 string json = r.ReadToEnd();
-                var chat = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
-                if (chat.ContainsKey(id))
+                var chats = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
+                if (chats.ContainsKey(id))
                 {
                     List<Message> returnChat;
-                    chat.TryGetValue(id, out returnChat);
+                    chats.TryGetValue(id, out returnChat);
                     return returnChat;
                 }
                 else

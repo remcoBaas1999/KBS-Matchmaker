@@ -17,13 +17,13 @@ using System.Windows.Shapes;
 
 
 namespace Matchmaker {
-    public partial class HomePage : Page
-    {
-        private int LoggedInUserID;
-        private int FirstProfileID;
-        private int SecondProfileID;
-        private int ThirdProfileID;
-        private int FourthProfileID;
+    public partial class HomePage : Page {
+        private UserData LoggedInUser;
+        private UserData FirstProfile;
+        private UserData SecondProfile;
+        private UserData ThirdProfile;
+        private UserData FourthProfile;
+
 
         
         public HomePage() {
@@ -35,6 +35,8 @@ namespace Matchmaker {
             UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
             LoggedInUserID = int.Parse(getLoggedInUserData.id);
             User.ID = LoggedInUserID;
+            //LoggedInUser = getLoggedInUserData;
+            //User.ID = LoggedInUser.id;
 
                 
             FillHomepageProfiles(GenerateUserDatas());
@@ -43,12 +45,18 @@ namespace Matchmaker {
 
 
         private UserData[] GenerateUserDatas() {
-            UserData[] userDatas = MatchmakerAPI_Client.GetMatches(LoggedInUserID);
+            UserData[] userDatas = MatchmakerAPI_Client.GetMatches(LoggedInUser.id);
+            Console.WriteLine("\nThese are the users:");
+            foreach (UserData user in userDatas) {
+                Console.WriteLine($" - {user.id} ({user.realName})");
+            }
             return userDatas;
         }
 
         private void FillHomepageProfiles(UserData[] userDatas) {
-            FirstProfileID = int.Parse(userDatas[0].id);
+            RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
+
+            FirstProfile = userDatas[0];
             //Set name
             Profile1Tag.Content = userDatas[0].realName;
             //Set profile picture           
@@ -124,16 +132,19 @@ namespace Matchmaker {
             NavigationService.Navigate(page);
         }
         private void Profile4BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e) {
-            Page page = new UserProfile(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(FourthProfileID)), false, LoggedInUserID);
+            ButtonPressed(FourthProfile);
+        }
+        private void ButtonPressed(UserData userData) {
+            //Console.WriteLine($"\nUser ID: {userData.id}, name: {userData.realName}, User ID is correct: {id == userData.id}");
+            Page page = new UserProfile(userData, false, LoggedInUser.id);
             NavigationService.Navigate(page);
         }
 
 
         //Menu buttons
         //Go to Notification page
-        private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Notifications notifications = new Notifications();
+        private void Notification_MouseDown(object sender, MouseButtonEventArgs e) {
+            Notifications notifications = new Notifications(LoggedInUser);
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
@@ -149,9 +160,8 @@ namespace Matchmaker {
         }
 
         //Go to Settings page
-        private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Settings settings = new Settings(LoggedInUserID);
+        private void Settings_MouseDown(object sender, MouseButtonEventArgs e) {
+            Settings settings = new Settings(LoggedInUser.id);
             NavigationService.Navigate(settings);
         }
 
@@ -159,7 +169,7 @@ namespace Matchmaker {
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-            Page userProfile = new UserProfile(user, true, LoggedInUserID);
+            Page userProfile = new UserProfile(user, true, LoggedInUser.id);
             NavigationService.Navigate(userProfile);
         }
 
@@ -182,6 +192,21 @@ namespace Matchmaker {
         {
             ChatListPage chatList = new ChatListPage();
             NavigationService.Navigate(chatList);
+        }
+
+        private void RefreshNotificationCount(int count) {
+            NotificationCountLabel.Content = count;
+            if (count == 0) {
+                NotificationCountCircle.Visibility = Visibility.Collapsed;
+                NotificationCountLabel.Visibility = Visibility.Collapsed;
+                NotificationWithNumber.Visibility = Visibility.Collapsed;
+                NotificationWithoutNumber.Visibility = Visibility.Visible;
+            } else {
+                NotificationCountCircle.Visibility = Visibility.Visible;
+                NotificationCountLabel.Visibility = Visibility.Visible;
+                NotificationWithNumber.Visibility = Visibility.Visible;
+                NotificationWithoutNumber.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

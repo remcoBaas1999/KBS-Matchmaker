@@ -13,27 +13,45 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
+using MatchMakerClassLibrary;
+
 namespace Matchmaker {
 
     public partial class Notifications : Page {
-        public Notifications() {
+        private UserData currentUser;
+        public Notifications(UserData currentUser) {
             InitializeComponent();
+
+            this.currentUser = currentUser;
+
+            NotificationList.ItemsSource =  MatchmakerAPI_Client.LoadNotifications(currentUser).Result;
         }
 
         private void goBack_MouseDown(object sender, MouseButtonEventArgs e) {
             //Go back to homepage
             NavigationService.GoBack();
-            
         }
 
         private void RefreshNotificationsButton_MouseDown(object sender, MouseButtonEventArgs e) {
-            for (int i = 0; i < 360; i+=15) {
+            NotificationList.ItemsSource = MatchmakerAPI_Client.LoadNotifications(currentUser).Result;
+
+            for (int i = 0; i < 360; i += 10) {
                 RotateTransform rotateTransform = new RotateTransform(i);
                 RefreshNotificationsButton.RenderTransform = rotateTransform;
                 Thread.Sleep(25);
                 System.Windows.Forms.Application.DoEvents();
             }
-            
+        }
+
+        private void btnGoToChat_Click(object sender, RoutedEventArgs e) {
+            object user = NotificationList.SelectedItem;
+            if (user == null) {
+                MessageBox.Show("Please select a notification!", "");
+            } else {
+                ChatPage chatPage = new ChatPage((user as Notification).user);
+                chatPage.InitializeComponent();
+                NavigationService.Navigate(chatPage);
+            }
         }
     }
 }

@@ -78,7 +78,8 @@ namespace Matchmaker
                 userSender = 1;
             }
             UpdateScrollBox();
-        }
+            RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(userInChat));
+        }        
         //This will return you to the last page. Here it is the ChatListPage.
         private void Return(object sender, MouseButtonEventArgs e)
         {
@@ -92,7 +93,7 @@ namespace Matchmaker
             long now = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             //creates message and sends it to the server. Clears inputfield afterwards
             //MessageData msgD = new MessageData() { ID = chatID, Sender=userSender, TimeStamp=now, Text=ChatInput.Text };
-            MessageData msgD = new MessageData() { ID = chatID, Sender = userSender, TimeStamp = now, Text = ChatInput.Text };
+            MessageData msgD = new MessageData() { message = ChatInput.Text, timestamp = now, sender = userSender, seen = false };
             await MatchmakerAPI_Client.PostNewMessage(msgD);
             ChatInput.Clear();
             return true;
@@ -116,8 +117,8 @@ namespace Matchmaker
             foreach (MessageData m in messageList)
             {
                 //Changes alignment and colour to represent if it was sent or received
-                var tB = new TextBlock() { Text = m.Text, FontFamily= new FontFamily("Roboto"), Foreground=Brushes.White};                
-                var bTB = new Border() { Child=tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin=new Thickness(5)};
+                var tB = new TextBlock() { TextWrapping=TextWrapping.Wrap, Text = m.message, FontFamily = new FontFamily("Roboto"), Foreground = Brushes.White };
+                var bTB = new Border() { Child = tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin = new Thickness(5) };
 
                 //Step by step breakdown of if-statement:
                 //The MatchmakerAPI_Client will get the user data of the current user to get its ID.
@@ -130,8 +131,8 @@ namespace Matchmaker
                     if (lastSender!=1)
                     {                    
                         System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                        dtDateTime = dtDateTime.AddSeconds(m.TimeStamp).ToLocalTime();
-                        MessageList.Children.Add(new TextBlock() { Text=$"{userInChat.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily=new FontFamily("Roboto"), FontSize=10, HorizontalAlignment=HorizontalAlignment.Right});
+                        dtDateTime = dtDateTime.AddSeconds(m.timestamp).ToLocalTime();
+                        MessageList.Children.Add(new TextBlock() { Text = $"{userInChat.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily = new FontFamily("Roboto"), FontSize = 10, HorizontalAlignment = HorizontalAlignment.Right });
                     }
                     lastSender = 1;
                     bTB.HorizontalAlignment = HorizontalAlignment.Right;
@@ -142,7 +143,7 @@ namespace Matchmaker
                     if (lastSender!=0)
                     {
                         System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                        dtDateTime = dtDateTime.AddSeconds(m.TimeStamp).ToLocalTime();
+                        dtDateTime = dtDateTime.AddSeconds(m.timestamp).ToLocalTime();
                         MessageList.Children.Add(new TextBlock() { Text = $"{chatPartner.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily = new FontFamily("Roboto"), FontSize = 10, HorizontalAlignment = HorizontalAlignment.Left });
                     }
                     lastSender = 0;
@@ -202,9 +203,38 @@ namespace Matchmaker
         private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //show notification page
-            Notifications notifications = new Notifications();
+            Notifications notifications = new Notifications(userInChat);
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
+        }
+        private void SetTimer()
+        {
+            var timer = new System.Timers.Timer(timerTime);
+            timer.Elapsed += Update;
+            timer.AutoReset = true;
+            timer.Enabled = true;
+        }
+        private void Update(object sender, ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                UpdateScrollBox();
+            });
+        }
+
+        private void RefreshNotificationCount(int count) {
+            NotificationCountLabel.Content = count;
+            if (count == 0) {
+                NotificationCountCircle.Visibility = Visibility.Collapsed;
+                NotificationCountLabel.Visibility = Visibility.Collapsed;
+                NotificationWithNumber.Visibility = Visibility.Collapsed;
+                NotificationWithoutNumber.Visibility = Visibility.Visible;
+            } else {
+                NotificationCountCircle.Visibility = Visibility.Visible;
+                NotificationCountLabel.Visibility = Visibility.Visible;
+                NotificationWithNumber.Visibility = Visibility.Visible;
+                NotificationWithoutNumber.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
