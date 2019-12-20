@@ -38,7 +38,7 @@ namespace Matchmaker
             ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPicture, UriKind.Absolute)));
             this.userInChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             //determines chatid -> id = lowerid + space + higherid
-            if (userInChat.id<chatPartner.id)
+            if (int.Parse(userInChat.id)<int.Parse(chatPartner.id))
             {
                 chatID = $"{userInChat.id}_{chatPartner.id}";
                 userSender = 0;
@@ -67,7 +67,7 @@ namespace Matchmaker
             ChatPartnerName.Text = chatPartner.realName;
             string chatPartnerPictureString = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";          
             ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPictureString, UriKind.Absolute)));
-            if (userInChat.id < chatPartner.id)
+            if (int.Parse(userInChat.id) < int.Parse(chatPartner.id))
             {
                 chatID = $"{userInChat.id}_{chatPartner.id}";
                 userSender = 0;
@@ -125,7 +125,7 @@ namespace Matchmaker
                 //The ID will be compared to the sender (0/1) and then the position in the messageID.
                 //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.                
                 Console.WriteLine($"{userInChat.id}=={Int32.Parse(iDS[m.Sender])}");
-                if(userInChat.id==Int32.Parse(iDS[m.Sender]))
+                if(int.Parse(userInChat.id)==Int32.Parse(iDS[m.Sender]))
                 {
                     if (lastSender!=1)
                     {                    
@@ -188,7 +188,7 @@ namespace Matchmaker
         }
         private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Settings settings = new Settings(userInChat.id);
+            Settings settings = new Settings(int.Parse(userInChat.id));
             NavigationService.Navigate(settings);
         }
 
@@ -196,7 +196,7 @@ namespace Matchmaker
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            Page userProfile = new UserProfile(user, User.loggedIn, user.id);
+            Page userProfile = new UserProfile(user, User.loggedIn, int.Parse(user.id));
             NavigationService.Navigate(userProfile);
         }
         private void Notification_MouseDown(object sender, MouseButtonEventArgs e)

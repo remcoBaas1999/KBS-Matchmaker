@@ -33,7 +33,7 @@ namespace Matchmaker {
             //Gather info about logged-in user
             String email = User.email;
             UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            LoggedInUserID = getLoggedInUserData.id;
+            LoggedInUserID = int.Parse(getLoggedInUserData.id);
             User.ID = LoggedInUserID;
 
                 
@@ -48,7 +48,7 @@ namespace Matchmaker {
         }
 
         private void FillHomepageProfiles(UserData[] userDatas) {
-            FirstProfileID = userDatas[0].id;
+            FirstProfileID = int.Parse(userDatas[0].id);
             //Set name
             Profile1Tag.Content = userDatas[0].realName;
             //Set profile picture           
@@ -58,7 +58,7 @@ namespace Matchmaker {
             string coverImage = $"https://145.44.233.207/images/covers/{userDatas[0].coverImage}";
             Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            SecondProfileID = userDatas[1].id;
+            SecondProfileID = int.Parse(userDatas[1].id);
             //Set name
             Profile2Tag.Content = userDatas[1].realName;
             //Set profile picture
@@ -68,7 +68,7 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[1].coverImage}";
             Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            ThirdProfileID = userDatas[2].id;
+            ThirdProfileID = int.Parse(userDatas[2].id);
             //Set name
             Profile3Tag.Content = userDatas[2].realName;
             //Set profile picture
@@ -78,7 +78,7 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[2].coverImage}";
             Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
 
-            FourthProfileID = userDatas[3].id;
+            FourthProfileID = int.Parse(userDatas[3].id);
             //Set name
             Profile4Tag.Content = userDatas[3].realName;
             //Set profile picture

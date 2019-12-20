@@ -159,7 +159,7 @@ namespace Matchmaker
         {
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-            List<KeyValuePair<int,bool>> contacts = loggedInUser.contacts;
+            Dictionary<string, bool> contacts = loggedInUser.contacts;
 
             try
             {
