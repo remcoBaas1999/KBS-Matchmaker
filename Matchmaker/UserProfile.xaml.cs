@@ -43,10 +43,10 @@ namespace Matchmaker {
                 addHobby.Visibility = Visibility.Collapsed;
                 string email = User.email;
                 UserData activeUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-                //if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
-                //{
-                //    addHobby.Visibility = Visibility.Collapsed;
-                //}
+                /*if (activeUser.contacts.All(x => x.Key.Equals(userInView.id)))
+                {
+                    addHobby.Visibility = Visibility.Collapsed;
+                }*/
 
                 try
                 {
