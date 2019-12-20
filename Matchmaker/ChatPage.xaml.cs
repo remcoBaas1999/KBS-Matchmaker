@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Timers;
 
 namespace Matchmaker
 {
@@ -25,25 +24,55 @@ namespace Matchmaker
     {
         private UserData chatPartner;
         private UserData userInChat;
-        //timer for chatrefresh
-        int timerTime = 1500;
         int userSender;
         private string chatID;
-        private List<MessageData> messageListStored = new List<MessageData>();
         //Creates a page with a chatpartner. Own data to be retrieved via User.
         public ChatPage(UserData chatPartner)
-        {            
-            SetTimer();
+        {
             //fix selfcert error
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             InitializeComponent();
             this.chatPartner = chatPartner;
-            ChatPartnerName.Text = chatPartner.realName;
+            ChatPartnerName.Text = chatPartner.realName;            
             string chatPartnerPicture = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";
             ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPicture, UriKind.Absolute)));
             this.userInChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+<<<<<<< HEAD
             //determines chatid -> id = lowerid + underscore + higherid
             if (int.Parse(userInChat.id) < int.Parse(chatPartner.id))
+=======
+            //determines chatid -> id = lowerid + space + higherid
+            if (userInChat.id<chatPartner.id)
+            {
+                chatID = $"{userInChat.id}_{chatPartner.id}";
+                userSender = 0;
+            }
+            else
+            {
+                chatID = $"{chatPartner.id}_{userInChat.id}";
+                userSender = 1;
+            }
+            UpdateScrollBox(); 
+        }
+        //with sample data for testing purposes
+        public ChatPage()
+        {
+            //fix selfcert error
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            InitializeComponent();
+            //Claudia Alvarez
+                int u1= 744779591;
+                //Folkert
+                int u2 = 1838179466;
+            chatPartner = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(u1));
+            chatID = $"{u1}_{u2}";
+            userInChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(u2));
+
+            ChatPartnerName.Text = chatPartner.realName;
+            string chatPartnerPictureString = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";          
+            ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPictureString, UriKind.Absolute)));
+            if (userInChat.id < chatPartner.id)
+>>>>>>> parent of 4122ad3... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
             {
                 chatID = $"{userInChat.id}_{chatPartner.id}";
                 userSender = 0;
@@ -54,7 +83,7 @@ namespace Matchmaker
                 userSender = 1;
             }
             UpdateScrollBox();
-        }        
+        }
         //This will return you to the last page. Here it is the ChatListPage.
         private void Return(object sender, MouseButtonEventArgs e)
         {
@@ -74,44 +103,44 @@ namespace Matchmaker
             return true;
         }
         //This method Updates the scrollable chatbox and scrolls to the bottom.
-        private async void UpdateScrollBox()
+        private void UpdateScrollBox()
         {
-            var messageList = new List<MessageData>();
-            //get message list from server and compares it to already shown messagelist. Compares on messagecount.
-            messageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
-            if (messageList.Count!=messageListStored.Count)
-            {
-                Console.WriteLine("YES");
-                messageListStored = messageList;
-                MessageList.Children.Clear();
-                FillScrollBox();
-                ScrollViewer.ScrollToEnd();
-            }
+            MessageList.Children.Clear();
+            FillScrollBox();
+            ScrollViewer.ScrollToEnd();
         }
         //Fills contents of scrollable chatbox. Used inside UpdateScrollBox and initialisation.
-        private void FillScrollBox()
-        {            
-            messageListStored = messageListStored.OrderBy(msg => msg.TimeStamp).ToList();
+        private async void FillScrollBox()
+        {
+            var messageList = new List<MessageData>();
+            //get message list from server
+            messageList= MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
+            messageList = messageList.OrderBy(msg => msg.TimeStamp).ToList();
             string[] iDS = chatID.Split('_');
             int lastSender = -1;
-            foreach (MessageData m in messageListStored)
+            foreach (MessageData m in messageList)
             {
                 //Changes alignment and colour to represent if it was sent or received
-                var tB = new TextBlock() { TextWrapping=TextWrapping.Wrap, Text = m.Text, FontFamily = new FontFamily("Roboto"), Foreground = Brushes.White };
-                var bTB = new Border() { Child = tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin = new Thickness(5) };
+                var tB = new TextBlock() { Text = m.Text, FontFamily= new FontFamily("Roboto"), Foreground=Brushes.White};                
+                var bTB = new Border() { Child=tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin=new Thickness(5)};
 
                 //Step by step breakdown of if-statement:
                 //The MatchmakerAPI_Client will get the user data of the current user to get its ID.
                 //The MatchmakerAPI_Client will deserialize this data
                 //The ID will be compared to the sender (0/1) and then the position in the messageID.
                 //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.                
+<<<<<<< HEAD
                 if (int.Parse(userInChat.id) == Int32.Parse(iDS[m.Sender]))
+=======
+                Console.WriteLine($"{userInChat.id}=={Int32.Parse(iDS[m.Sender])}");
+                if(userInChat.id==Int32.Parse(iDS[m.Sender]))
+>>>>>>> parent of 4122ad3... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
                 {
-                    if (lastSender != 1)
-                    {
+                    if (lastSender!=1)
+                    {                    
                         System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                         dtDateTime = dtDateTime.AddSeconds(m.TimeStamp).ToLocalTime();
-                        MessageList.Children.Add(new TextBlock() { Text = $"{userInChat.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily = new FontFamily("Roboto"), FontSize = 10, HorizontalAlignment = HorizontalAlignment.Right });
+                        MessageList.Children.Add(new TextBlock() { Text=$"{userInChat.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily=new FontFamily("Roboto"), FontSize=10, HorizontalAlignment=HorizontalAlignment.Right});
                     }
                     lastSender = 1;
                     bTB.HorizontalAlignment = HorizontalAlignment.Right;
@@ -119,7 +148,7 @@ namespace Matchmaker
                 }
                 else
                 {
-                    if (lastSender != 0)
+                    if (lastSender!=0)
                     {
                         System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                         dtDateTime = dtDateTime.AddSeconds(m.TimeStamp).ToLocalTime();
@@ -130,40 +159,27 @@ namespace Matchmaker
                     bTB.Background = Brushes.Gray;
                 }
                 MessageList.Children.Add(bTB);
-            }
+            }            
         }
         private async void ChatInput_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            char[] spaceEnter = new char[3] { ' ', '\n', '\r' };
             //if keypress is enter it sends the message
-            if ((int)e.Key == 6 && e.KeyboardDevice.Modifiers != ModifierKeys.Shift)
+            if ((int) e.Key == 6 && e.KeyboardDevice.Modifiers!=ModifierKeys.Shift)
             {
                 e.Handled = true;
-                if (ChatInput.Text.ToArray().Except(spaceEnter).Count() > 0)
-                {                    
-                    if (ChatInput.Text != "")
-                    {
-                        await SendMessageAsync();
-                        UpdateScrollBox();
-                    }
-                }
-                else
+                if (ChatInput.Text != "")
                 {
-                    ChatInput.Clear();
+                    await SendMessageAsync();
+                    UpdateScrollBox();
                 }
             }
         }
-        private async void Send_MouseDown(object sender, EventArgs e)
+        private async void Send_MouseDown(object sender,EventArgs e)
         {
-            char[] spaceEnter = new char[3] { ' ', '\n','\r' };
-            if (ChatInput.Text != "" && (ChatInput.Text.ToArray().Except(spaceEnter).Count() > 0))
+            if (ChatInput.Text!="") 
             {
                 await SendMessageAsync();
                 UpdateScrollBox();
-            }
-            else
-            {
-                ChatInput.Clear();
             }
         }
         private void Logout_MouseDown(object sender, MouseButtonEventArgs e)
@@ -188,7 +204,11 @@ namespace Matchmaker
         private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+<<<<<<< HEAD
             Page userProfile = new UserProfile(user, User.loggedIn, int.Parse(user.id));
+=======
+            Page userProfile = new UserProfile(user, true, user.id);
+>>>>>>> parent of 4122ad3... Merge branch 'ChatListFeature' of https://github.com/remcoBaas1999/KBS-Matchmaker into ChatListFeature
             NavigationService.Navigate(userProfile);
         }
         private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
@@ -197,20 +217,6 @@ namespace Matchmaker
             Notifications notifications = new Notifications();
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
-        }
-        private void SetTimer()
-        {
-            var timer = new System.Timers.Timer(timerTime);
-            timer.Elapsed += Update;
-            timer.AutoReset = true;
-            timer.Enabled = true;
-        }
-        private void Update(object sender, ElapsedEventArgs e)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                UpdateScrollBox();
-            });
         }
     }
 }
