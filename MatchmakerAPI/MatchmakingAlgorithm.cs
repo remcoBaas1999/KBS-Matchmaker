@@ -55,9 +55,9 @@ namespace MatchmakerAPI
                 getLoggedInUserData.contacts = x;
             }
 
-            foreach (var item in getLoggedInUserData.contacts) {
-                if (users.Keys.Contains(item.ToString())) {
-                    users.Remove(item.ToString());
+            foreach (KeyValuePair<string,bool> item in getLoggedInUserData.contacts) {
+                if (users.Keys.Contains(item.Key)) {
+                    users.Remove(item.Key);
                 }
             }
 
