@@ -40,9 +40,7 @@ namespace Matchmaker {
             FillHomepageProfiles(GenerateUserDatas());
         }
 
-        private void Button_FillProfiles(object sender, RoutedEventArgs e) {
-            FillHomepageProfiles(GenerateUserDatas());
-        }
+
 
         private UserData[] GenerateUserDatas() {
             UserData[] userDatas = MatchmakerAPI_Client.GetMatches(LoggedInUserID);
@@ -96,7 +94,13 @@ namespace Matchmaker {
             await MatchmakerAPI_Client.SaveUser(getLoggedInUserData);
        }
 
-        //Refresh button
+
+        //Refreshbutton
+        private void Button_FillProfiles(object sender, RoutedEventArgs e) {
+            FillHomepageProfiles(GenerateUserDatas());
+        }
+
+        //HomeButton
         private void Button_Click(object sender, RoutedEventArgs e) {
             //Refresh recommended profiles
             HomePage p = new HomePage();
