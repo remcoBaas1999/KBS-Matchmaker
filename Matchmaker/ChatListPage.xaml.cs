@@ -167,7 +167,7 @@ namespace Matchmaker
                 {
                     foreach (var contact in contacts)
                     {
-                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(contact.Key));
+                        UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(contact.Key)));
                         if (contactUser != null)
                         {
                             StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0), Width = 120 };

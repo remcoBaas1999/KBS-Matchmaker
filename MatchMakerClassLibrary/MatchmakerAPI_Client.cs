@@ -221,8 +221,11 @@ namespace MatchMakerClassLibrary
             //Confirm request and add to contacts
             if (confirmingUser.requestFrom.Contains(int.Parse(requestUser.id))) {
                 confirmingUser.contacts.Add(requestUser.id, true);
-                requestUser.contacts.Add(confirmingUser.id, true);
+                requestUser.contacts[confirmingUser.id] = true;
                 confirmingUser.requestFrom.Remove(int.Parse(requestUser.id));
+
+                await SaveUser(confirmingUser);
+                await SaveUser(requestUser);
             }
 
             return true;
