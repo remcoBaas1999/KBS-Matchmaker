@@ -250,7 +250,7 @@ namespace MatchmakerAPI.Controllers
 					profilePicture	= "0.jpg",
 					hobbies					= tmp_hobbies,
 					coverImage			= tmp_cover,
-					id							= tmp_key
+					id							= tmp_key,
 				};
 
 				// Add the new user data to the in-memory users database with
@@ -480,7 +480,7 @@ namespace MatchmakerAPI.Controllers
 
 				// Serialize the updated users database
 				var text = JsonConvert.SerializeObject(data);
-
+				
 				// Write the serialized updated database to the proper file
 				System.IO.File.WriteAllText(UsersFile, text);
 
