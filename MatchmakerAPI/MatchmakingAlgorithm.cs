@@ -49,6 +49,19 @@ namespace MatchmakerAPI
                 }
             }
 
+            //Remove contacts, if any
+            if(getLoggedInUserData.contacts == null) {
+                Dictionary<string, bool> x = new Dictionary<string, bool>();
+                getLoggedInUserData.contacts = x;
+            }
+
+            foreach (var item in getLoggedInUserData.contacts) {
+                if (users.Keys.Contains(item.ToString())) {
+                    users.Remove(item.ToString());
+                }
+            }
+
+
 
             try {
 
