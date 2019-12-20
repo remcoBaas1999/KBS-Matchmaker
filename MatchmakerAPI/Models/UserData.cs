@@ -19,7 +19,5 @@ namespace MatchmakerAPI
         public List<int> blockedUsers { get; set; }
         public List<int> requestFrom { get; set; }
         public Dictionary<int, bool> contacts { get; set; }
-        //public List<int> incRequest { get; set; }
-        //public List<int> outRequest { get; set; }
     }
 }
