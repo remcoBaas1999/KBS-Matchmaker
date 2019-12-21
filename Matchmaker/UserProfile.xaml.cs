@@ -50,7 +50,7 @@ namespace Matchmaker {
 
                 try
                 {
-                    if (user.contacts.ContainsKey(activeUser.id))
+                    if (user.contacts.ContainsKey(activeUser.id) || user.requestFrom.Contains(User.ID))
                     {
                         contactRequest.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#b3aead"));
                     }
@@ -392,7 +392,18 @@ namespace Matchmaker {
                     List<int> x = new List<int>();
                     user.blockedUsers = x;
                     user.blockedUsers.Add(IWantToBlockThisUserID);
+                    if (user.requestFrom.Contains(IWantToBlockThisUserID)) // if there is a pending request remove this when user is going te be blocked.
+                    {
+                        userInView.contacts.Remove(user.id);
+                        user.requestFrom.Remove(IWantToBlockThisUserID);
+                    }
+                    if (user.contacts.ContainsKey(IWantToBlockThisUserID.ToString()))
+                    {
+                        userInView.requestFrom.Remove(int.Parse(user.id));
+                        user.contacts.Remove(IWantToBlockThisUserID.ToString());
+                    }
                     await MatchmakerAPI_Client.SaveUser(user);
+                    await MatchmakerAPI_Client.SaveUser(userInView);
                     BlockedFeedback.Visibility = Visibility.Visible;
                 }
                 bool duplicateUser = false;
@@ -406,7 +417,18 @@ namespace Matchmaker {
                 //Block user when not duplicate
                 if (!duplicateUser) {
                     user.blockedUsers.Add(IWantToBlockThisUserID);
+                    if(user.requestFrom.Contains(IWantToBlockThisUserID)) // if there is a pending request remove this when user is going te be blocked.
+                    {
+                        userInView.contacts.Remove(user.id);
+                        user.requestFrom.Remove(IWantToBlockThisUserID);
+                    }
+                    if(user.contacts.ContainsKey(IWantToBlockThisUserID.ToString()))
+                    {
+                        userInView.requestFrom.Remove(int.Parse(user.id));
+                        user.contacts.Remove(IWantToBlockThisUserID.ToString());
+                    }
                     await MatchmakerAPI_Client.SaveUser(user);
+                    await MatchmakerAPI_Client.SaveUser(userInView);
                     BlockedFeedback.Content = "Blocked";
                     BlockedFeedback.Visibility = Visibility.Visible;
                 }

@@ -159,7 +159,7 @@ namespace Matchmaker
                         UserData chatContact = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(chatPartner)));
 
 
-                        Border rowBase = new Border() { Width = 473 }; // todo: mousedown event to the chat page.
+                        Border rowBase = new Border() { Width = 473 , Background = MediaBrush.Transparent}; // todo: mousedown event to the chat page.
                         WrapPanel userRow = new WrapPanel() { Height = 70, Name = $"_{chatContact.id}" };  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
                         Grid pictureBox = new Grid() { Height = 70 };
                         Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0) };
@@ -169,8 +169,8 @@ namespace Matchmaker
                         //TextBlock latestMessage = new TextBlock() { Text = "Most recent message", VerticalAlignment = VerticalAlignment.Center, FontSize = 16, LineHeight = 20, Opacity = 0.6, Margin = new Thickness(0, 0, 0, 15) };
                         StackPanel quickView = new StackPanel() { Margin = new Thickness(16, 8, 0, 0) };
 
-                        userRow.Name = $"_{chatContact.id}";
-                        userProfilePicture.Name = $"_{chatContact.id}";
+                        //userRow.Name = $"_{chatContact.id}";
+                        //userProfilePicture.Name = $"_{chatContact.id}";
 
                         quickView.Children.Add(profileName);
                         //quickView.Children.Add(latestMessage);
@@ -222,7 +222,7 @@ namespace Matchmaker
                     foreach (var contact in contacts)
                     {
                         UserData contactUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(contact.Key)));
-                        if (contactUser != null)
+                        if (contactUser != null && contact.Value == true)
                         {
                             string panelName = contactUser.id;
                             StackPanel userBlock = new StackPanel() { Margin = new Thickness(0, 20, 0, 0), Width = 120, Name = $"_{panelName}" };
