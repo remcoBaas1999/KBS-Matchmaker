@@ -125,21 +125,22 @@ namespace Matchmaker
 
 
             string chatId;
-
-            foreach (string contactID in user.contacts.Keys)
+            if (user.contacts != null)
             {
-                if (int.Parse(user.id) < int.Parse(contactID))
+                foreach (string contactID in user.contacts.Keys)
                 {
-                    chatId = $"{user.id}_{contactID}";
-                }
-                else
-                {
-                    chatId = $"{contactID}_{user.id}";
-                }
+                    if (int.Parse(user.id) < int.Parse(contactID))
+                    {
+                        chatId = $"{user.id}_{contactID}";
+                    }
+                    else
+                    {
+                        chatId = $"{contactID}_{user.id}";
+                    }
 
-                allUsers.Add(chatId);
+                    allUsers.Add(chatId);
+                }
             }
-
 
             //Make use of data aquired from the chats that the user is in.
             if (allUsers.Count > 0)

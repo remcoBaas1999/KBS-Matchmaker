@@ -386,16 +386,25 @@ namespace Matchmaker {
                 //Select own userID
                 UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(LoggedInUserID));
 
-
                 //If it's the first time one blocking someone, create blockList
                 if (user.blockedUsers == null || user.blockedUsers.Count == 0) {
                     List<int> x = new List<int>();
                     user.blockedUsers = x;
                     user.blockedUsers.Add(IWantToBlockThisUserID);
+                    //stops emptly list error from happening
+                    if (user.requestFrom == null)
+                    {
+                        user.requestFrom = new List<int>();
+                    }
                     if (user.requestFrom.Contains(IWantToBlockThisUserID)) // if there is a pending request remove this when user is going te be blocked.
                     {
                         userInView.contacts.Remove(user.id);
                         user.requestFrom.Remove(IWantToBlockThisUserID);
+                    }
+                    //stops emptly dict error from happening
+                    if (user.contacts == null)
+                    {
+                        user.contacts =new Dictionary<string, bool>();
                     }
                     if (user.contacts.ContainsKey(IWantToBlockThisUserID.ToString()))
                     {
