@@ -28,6 +28,7 @@ namespace Matchmaker
         int timerTime = 1500;
         int userSender;
         private string chatID;
+        List<MessageData> messageList = new List<MessageData>();
         //Creates a page with a chatpartner. Own data to be retrieved via User.
         public ChatPage(UserData chatPartner)
         {
@@ -51,37 +52,8 @@ namespace Matchmaker
                 userSender = 1;
             }
             UpdateScrollBox();
+            SetTimer();
         }
-        //with sample data for testing purposes
-        public ChatPage()
-        {
-            //fix selfcert error
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            InitializeComponent();
-            //Claudia Alvarez
-                int u1= 744779591;
-                //Folkert
-                int u2 = 1838179466;
-            chatPartner = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(u1));
-            chatID = $"{u1}_{u2}";
-            userInChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(u2));
-
-            ChatPartnerName.Text = chatPartner.realName;
-            string chatPartnerPictureString = $"https://145.44.233.207/images/users/{chatPartner.profilePicture}";          
-            ChatPartnerPicture.Fill = new ImageBrush(new BitmapImage(new Uri(chatPartnerPictureString, UriKind.Absolute)));
-            if (int.Parse(userInChat.id) < int.Parse(chatPartner.id))
-            {
-                chatID = $"{userInChat.id}_{chatPartner.id}";
-                userSender = 0;
-            }
-            else
-            {
-                chatID = $"{chatPartner.id}_{userInChat.id}";
-                userSender = 1;
-            }
-            UpdateScrollBox();
-            RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(userInChat));
-        }        
         //This will return you to the last page. Here it is the ChatListPage.
         private void Return(object sender, MouseButtonEventArgs e)
         {
@@ -101,19 +73,21 @@ namespace Matchmaker
             return true;
         }
         //This method Updates the scrollable chatbox and scrolls to the bottom.
-        private void UpdateScrollBox()
+        private async void UpdateScrollBox()
         {
-            MessageList.Children.Clear();
-            FillScrollBox();
-            ScrollViewer.ScrollToEnd();
+            var newMessageList = new List<MessageData>();
+            newMessageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
+            newMessageList = newMessageList.OrderBy(msg => msg.timestamp).ToList();
+            if (messageList!=newMessageList) {
+                messageList = newMessageList;
+                MessageList.Children.Clear();
+                FillScrollBox();
+                ScrollViewer.ScrollToEnd();
+            }
         }
         //Fills contents of scrollable chatbox. Used inside UpdateScrollBox and initialisation.
         private async void FillScrollBox()
         {
-            var messageList = new List<MessageData>();
-            //get message list from server
-            messageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
-            messageList = messageList.OrderBy(msg => msg.timestamp).ToList();
             string[] iDS = chatID.Split('_');
             int lastSender = -1;
             foreach (MessageData m in messageList)

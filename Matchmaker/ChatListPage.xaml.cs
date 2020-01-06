@@ -261,51 +261,36 @@ namespace Matchmaker
             string idOfClick = clickedContact.Name;
             idOfClick = idOfClick.Replace("_", "");
 
-
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-
-            List<string> allUsers = new List<string>();
 
 
             string chatId;
 
-            foreach (string contactID in user.contacts.Keys)
+            if (int.Parse(user.id) < int.Parse(idOfClick))
             {
-                if (int.Parse(user.id) < int.Parse(contactID))
-                {
-                    chatId = $"{user.id}_{contactID}";
-                }
-                else
-                {
-                    chatId = $"{contactID}_{user.id}";
-                }
-
-                allUsers.Add(chatId);
+                chatId = $"{user.id}_{idOfClick}";
             }
-            if (allUsers.Count > 0)
+            else
             {
-                foreach (string chat in allUsers)
-                {
-                    var messageList = new List<MessageData>();
-                    //get message list from server
-                    messageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chat));
-                    UserData newContactChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(idOfClick)));
-                    ClickedUser = newContactChat;
+                chatId = $"{idOfClick}_{user.id}";
+            }
 
-                    if (messageList.Count <= 0)
-                    {
-                        overlay.Visibility = Visibility.Visible;
-                        decideOnProfile.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        UserProfile contactProfile = new UserProfile(newContactChat, false,User.ID);
-                        NavigationService.Navigate(contactProfile);
-                    }
+            
+            var messageList = new List<MessageData>();
+            //get message list from server
+            messageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatId));
+            UserData newContactChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(idOfClick)));
+            ClickedUser = newContactChat;
 
-
-                    
-                }
+            if (messageList.Count <= 0)
+            {
+                overlay.Visibility = Visibility.Visible;
+                decideOnProfile.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                UserProfile contactProfile = new UserProfile(newContactChat, false,User.ID);
+                NavigationService.Navigate(contactProfile);
             }
         }
 
