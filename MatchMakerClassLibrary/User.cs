@@ -4,57 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatchMakerClassLibrary
-{
-    public class User : AAccount
-    //What needs to be done: Dismiss/Confirm Match
-    //Update Pictures/Interests
-    //ShowUserData
-    {
-        //properties
-        public int Age { get; set; }
-        public string PostalCode { get; set; }
-        public string Address { get; set; }
-        public string ProfilePicture { get; set; }
-        public string Country { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        //attributes
-        private List<string> interests = new List<string>();
-        private List<string> pictures = new List<string>();
-        private List<User> matches = new List<User>();
-        private List<User> matchesDeclinedOrPending = new List<User>();
-        private List<Comment> comments = new List<Comment>();
-        //methods
-        public User FindPotentialMatch()
+namespace Matchmaker {
+    public static class User {
+        public static int ID { get; set; }
+        public static bool wantsNotifications;
+        public static bool showInterests;
+        public static bool showAttendingActivities;
+
+        public static string email;
+        public static bool loggedIn;
+
+        // Calculate the current age of the user.
+        public static int CalculateAge(long _bday)
         {
-            return null;
+            DateTime dob = UnixTimeToDate(_bday);
+            DateTime today = DateTime.Today;
+            int age = today.Year - dob.Year;
+            if (today < dob.AddYears(age)) age--;
+
+            return age;
         }
-        public void DismissPotentialMatch(User user)
+
+        // Convert the Unixtime to an object of datetime
+        private static DateTime UnixTimeToDate(long _bday)
         {
 
-        }
-        public void ConfirmMatch(User user)
-        {
-
-        }
-        //get
-        public List<string> getInterests()
-        {
-            return interests;
-        }
-        public List<string> getPictures()
-        {
-            return pictures;
-        }
-        //update
-        public void UpdateInterests()
-        {
-
-        }
-        public void UpdatePictures()
-        {
-
+            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime bday = start.AddSeconds(_bday).ToLocalTime();
+            return bday;
         }
     }
 }

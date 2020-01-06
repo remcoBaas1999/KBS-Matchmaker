@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matchmaker", "Matchmaker\Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchMakerClassLibrary", "MatchMakerClassLibrary\MatchMakerClassLibrary.csproj", "{B3030DD6-895A-40C5-B619-8DDFC3FDCCB7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchmakerAPI", "MatchmakerAPI\MatchmakerAPI.csproj", "{53977B66-5989-4EAF-8784-A2C0DC1B5C45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchmakerUnitTest", "MatchmakerUnitTest\MatchmakerUnitTest.csproj", "{3736125D-301A-41F1-A5C0-38A39A102650}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{B3030DD6-895A-40C5-B619-8DDFC3FDCCB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3030DD6-895A-40C5-B619-8DDFC3FDCCB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3030DD6-895A-40C5-B619-8DDFC3FDCCB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53977B66-5989-4EAF-8784-A2C0DC1B5C45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53977B66-5989-4EAF-8784-A2C0DC1B5C45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53977B66-5989-4EAF-8784-A2C0DC1B5C45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53977B66-5989-4EAF-8784-A2C0DC1B5C45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3736125D-301A-41F1-A5C0-38A39A102650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3736125D-301A-41F1-A5C0-38A39A102650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3736125D-301A-41F1-A5C0-38A39A102650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3736125D-301A-41F1-A5C0-38A39A102650}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
