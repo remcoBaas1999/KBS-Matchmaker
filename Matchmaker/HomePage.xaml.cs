@@ -50,10 +50,6 @@ namespace Matchmaker {
 
         private UserData[] GenerateUserDatas() {
             UserData[] userDatas = MatchmakerAPI_Client.GetMatches(int.Parse(LoggedInUser.id));
-            Console.WriteLine("\nThese are the users:");
-            foreach (UserData user in userDatas) {
-                Console.WriteLine($" - {user.id} ({user.realName})");
-            }
             return userDatas;
         }
 
