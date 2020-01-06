@@ -280,7 +280,7 @@ namespace MatchMakerClassLibrary
                 if (message.seen)
                 {
 
-                    Console.WriteLine($"The following message is unread: \"{message.message}\"");
+                    Console.WriteLine($"The following text is unread: \"{message.text}\"");
 
                     return true;
                 }
@@ -333,7 +333,8 @@ namespace MatchMakerClassLibrary
 
     public class MessageData
     {
-        public string message { get; set; }
+        public string ID { get; set; }
+        public string text { get; set; }
         public long timestamp { get; set; }
         public int sender { get; set; }
         public bool seen { get; set; }
