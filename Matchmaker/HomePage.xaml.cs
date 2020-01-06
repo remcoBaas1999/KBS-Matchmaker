@@ -59,46 +59,75 @@ namespace Matchmaker {
 
         private void FillHomepageProfiles(UserData[] userDatas) {
             //RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
+            string coverImage;
+            if (userDatas.Count() > 0)
+            {
+                FirstProfile = userDatas[0];
+                //Set name
+                Profile1Tag.Content = userDatas[0].realName;
+                //Set profile picture           
+                string pfPic1 = $"https://145.44.233.207/images/users/{userDatas[0].profilePicture}";
+                ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
+                //Set Cover Image
+                coverImage = $"https://145.44.233.207/images/covers/{userDatas[0].coverImage}";
+                Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
+            }
+            else
+            {
+                Profile4BackgroundPicture.MouseDown -= Profile1BackgroundPicture_MouseDown;
+            }
 
-            FirstProfile = userDatas[0];
-            //Set name
-            Profile1Tag.Content = userDatas[0].realName;
-            //Set profile picture           
-            string pfPic1 = $"https://145.44.233.207/images/users/{userDatas[0].profilePicture}";
-            ProfilePicture1.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-            //Set Cover Image
-            string coverImage = $"https://145.44.233.207/images/covers/{userDatas[0].coverImage}";
-            Profile1BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
+            if (userDatas.Count() > 1)
+            {
+                SecondProfile = userDatas[1];
+                //Set name
+                Profile2Tag.Content = userDatas[1].realName;
+                //Set profile picture
+                string pfPic2 = $"https://145.44.233.207/images/users/{userDatas[1].profilePicture}";
+                ProfilePicture2.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic2, UriKind.Absolute)));
+                //Set Cover Image
+                coverImage = $"https://145.44.233.207/images/covers/{userDatas[1].coverImage}";
+                Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
+            }
+            else
+            {
+                Profile4BackgroundPicture.MouseDown -= Profile2BackgroundPicture_MouseDown;
+            }
 
-            SecondProfile = userDatas[1];
-            //Set name
-            Profile2Tag.Content = userDatas[1].realName;
-            //Set profile picture
-            string pfPic2 = $"https://145.44.233.207/images/users/{userDatas[1].profilePicture}";
-            ProfilePicture2.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic2, UriKind.Absolute)));
-            //Set Cover Image
-            coverImage = $"https://145.44.233.207/images/covers/{userDatas[1].coverImage}";
-            Profile2BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
+            if (userDatas.Count() > 2)
+            {
+                ThirdProfile = userDatas[2];
+                //Set name
+                Profile3Tag.Content = userDatas[2].realName;
+                //Set profile picture
+                string pfPic3 = $"https://145.44.233.207/images/users/{userDatas[2].profilePicture}";
+                ProfilePicture3.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic3, UriKind.Absolute)));
+                //Set Cover Image
+                coverImage = $"https://145.44.233.207/images/covers/{userDatas[2].coverImage}";
+                Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
+            }
+            else
+            {
+                Profile4BackgroundPicture.MouseDown -= Profile3BackgroundPicture_MouseDown;
+            }
 
-            ThirdProfile = userDatas[2];
-            //Set name
-            Profile3Tag.Content = userDatas[2].realName;
-            //Set profile picture
-            string pfPic3 = $"https://145.44.233.207/images/users/{userDatas[2].profilePicture}";
-            ProfilePicture3.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic3, UriKind.Absolute)));
-            //Set Cover Image
-            coverImage = $"https://145.44.233.207/images/covers/{userDatas[2].coverImage}";
-            Profile3BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
-
-            FourthProfile = userDatas[3];
-            //Set name
-            Profile4Tag.Content = userDatas[3].realName;
-            //Set profile picture
-            string pfPic4 = $"https://145.44.233.207/images/users/{userDatas[3].profilePicture}";
-            ProfilePicture4.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic4, UriKind.Absolute)));
-            //Set Cover Image
-            coverImage = $"https://145.44.233.207/images/covers/{userDatas[3].coverImage}";
-            Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
+            if (userDatas.Count() > 3)
+            {
+                FourthProfile = userDatas[3];
+                //Set name
+                Profile4Tag.Content = userDatas[3].realName;
+                //Set profile picture
+                string pfPic4 = $"https://145.44.233.207/images/users/{userDatas[3].profilePicture}";
+                ProfilePicture4.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic4, UriKind.Absolute)));
+                //Set Cover Image
+                coverImage = $"https://145.44.233.207/images/covers/{userDatas[3].coverImage}";
+                Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
+            }
+            else
+            {
+                Profile4BackgroundPicture.MouseDown -= Profile4BackgroundPicture_MouseDown;
+            }
+            
         }
        public async void FillEmptyList(UserData getLoggedInUserData) {
             List<int> temporarilyList = new List<int>();
