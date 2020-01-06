@@ -58,7 +58,7 @@ namespace Matchmaker {
         }
 
         private void FillHomepageProfiles(UserData[] userDatas) {
-            //RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
+            RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
 
             FirstProfile = userDatas[0];
             //Set name
@@ -191,7 +191,7 @@ namespace Matchmaker {
         // go to the contacts page
         private void ContactPage_Click(object sender, RoutedEventArgs e)
         {
-            ChatListPage chatList = new ChatListPage();
+            ChatListPage chatList = new ChatListPage(LoggedInUser);
             NavigationService.Navigate(chatList);
         }
 

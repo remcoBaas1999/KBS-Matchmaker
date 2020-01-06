@@ -17,14 +17,17 @@ namespace Matchmaker
     {
 
         private UserData ClickedUser;
+        private UserData LoggedInUser;
 
-        public ChatListPage()
+        public ChatListPage(UserData user)
         {
+            LoggedInUser = user;
             InitializeComponent();
             NewRequests();
             ChatList();
             UserContacts();
             LoadBlockedUsers();
+            RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
         }
 
         private void NavigateHome(object sender, RoutedEventArgs e)
@@ -345,7 +348,7 @@ namespace Matchmaker
 
                     await MatchmakerAPI_Client.SaveUser(loggedInUser);
 
-                    ChatListPage chatList = new ChatListPage();
+                    ChatListPage chatList = new ChatListPage(loggedInUser);
                     NavigationService.Navigate(chatList);
                 }
 
@@ -359,7 +362,7 @@ namespace Matchmaker
                     UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
                     await MatchmakerAPI_Client.declineContactRequest(loggedInUser, userSender);
 
-                    ChatListPage chatList = new ChatListPage();
+                    ChatListPage chatList = new ChatListPage(loggedInUser);
                     NavigationService.Navigate(chatList);
                 }
 
@@ -427,6 +430,21 @@ namespace Matchmaker
 
                     ChatPage chat = new ChatPage(ClickedUser);
                     NavigationService.Navigate(chat);
+                }
+
+                private void RefreshNotificationCount(int count) {
+                    NotificationCountLabel.Content = count;
+                    if (count == 0) {
+                        NotificationCountCircle.Visibility = Visibility.Collapsed;
+                        NotificationCountLabel.Visibility = Visibility.Collapsed;
+                        NotificationWithNumber.Visibility = Visibility.Collapsed;
+                        NotificationWithoutNumber.Visibility = Visibility.Visible;
+                    } else {
+                        NotificationCountCircle.Visibility = Visibility.Visible;
+                        NotificationCountLabel.Visibility = Visibility.Visible;
+                        NotificationWithNumber.Visibility = Visibility.Visible;
+                        NotificationWithoutNumber.Visibility = Visibility.Collapsed;
+                    }
                 }
             }
         }

@@ -276,7 +276,7 @@ namespace MatchMakerClassLibrary
 
             foreach (MessageData message in messageList)
             {
-                if (message.seen)
+                if (!message.seen && message.sender != int.Parse(currentUser.id))
                 {
 
                     Console.WriteLine($"The following text is unread: \"{message.text}\"");
