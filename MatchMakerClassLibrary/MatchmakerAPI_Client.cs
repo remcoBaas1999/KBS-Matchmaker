@@ -295,7 +295,7 @@ namespace MatchMakerClassLibrary
 
         public static void SetToRead(string chatID, int sender)
         {
-            string url = $@"https://145.44.233.207/messages/read/id={chatID}?u={sender}";
+            string url = $@"https://145.44.233.207/messages/read/id={chatID}/u={sender}";
             Get(url);
         }
     }
