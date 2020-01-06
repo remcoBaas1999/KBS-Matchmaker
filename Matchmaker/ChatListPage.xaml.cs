@@ -384,7 +384,7 @@ namespace Matchmaker
                 private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
                 {
                     Notifications notifications = new Notifications(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)));
-                    notifications.Title = "Notifations";
+                    notifications.Title = "Notifications";
                     NavigationService.Navigate(notifications);
                 }
 
