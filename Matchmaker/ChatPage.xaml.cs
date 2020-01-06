@@ -184,7 +184,7 @@ namespace Matchmaker
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
-        /*
+        
         private void SetTimer()
         {
             var timer = new System.Timers.Timer(timerTime);
@@ -199,7 +199,7 @@ namespace Matchmaker
                 UpdateScrollBox();
             });
         }
-        */
+        
         private void RefreshNotificationCount(int count) {
             NotificationCountLabel.Content = count;
             if (count == 0) {

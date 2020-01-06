@@ -82,11 +82,10 @@ namespace MatchMakerClassLibrary
             }
         }
 
-        public static async Task<string> GetMessageData(string id)
-        {
+        public static async Task<string> GetMessageData(string id) {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             var uri = $@"https://145.44.233.207/messages/get/id={id}";
-            var response = await client.GetAsync(uri);
+            var response = client.GetAsync(uri).Result;
             return await response.Content.ReadAsStringAsync();
         }
         public static async Task<bool> AuthenticateAsync(string email, string password)
