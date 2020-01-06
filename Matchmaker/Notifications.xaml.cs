@@ -35,6 +35,7 @@ namespace Matchmaker {
         private void RefreshNotificationsButton_MouseDown(object sender, MouseButtonEventArgs e) {
             NotificationList.ItemsSource = MatchmakerAPI_Client.LoadNotifications(currentUser).Result;
 
+            //Display animation for refresh
             for (int i = 0; i < 360; i += 10) {
                 RotateTransform rotateTransform = new RotateTransform(i);
                 RefreshNotificationsButton.RenderTransform = rotateTransform;
@@ -44,6 +45,7 @@ namespace Matchmaker {
         }
 
         private void btnGoToChat_Click(object sender, RoutedEventArgs e) {
+            //Go to the chat where the notification is at
             object user = NotificationList.SelectedItem;
             if (user == null) {
                 MessageBox.Show("Please select a notification!", "");

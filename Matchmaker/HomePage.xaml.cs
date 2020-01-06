@@ -192,6 +192,7 @@ namespace Matchmaker {
         }
 
         private void RefreshNotificationCount(int count) {
+            //Displays the total count of notifications
             NotificationCountLabel.Content = count;
             if (count == 0) {
                 NotificationCountCircle.Visibility = Visibility.Collapsed;
