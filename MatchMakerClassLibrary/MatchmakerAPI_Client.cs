@@ -260,6 +260,7 @@ namespace MatchMakerClassLibrary
 
         public static async Task<bool> UserHasNewMessages(UserData currentUser, UserData otherUser)
         {
+            bool returnValue = false;
             string chatID;
             if (int.Parse(currentUser.id) < int.Parse(otherUser.id))
             {
@@ -274,16 +275,14 @@ namespace MatchMakerClassLibrary
 
             Console.WriteLine($"ChatID: {chatID} - with user: {otherUser.realName} - amount of total messages: {messageList.Count}");
 
-            foreach (MessageData message in messageList)
-            {
-                if (((int.Parse(currentUser.id) < int.Parse(otherUser.id) && message.sender == 1) || (int.Parse(currentUser.id) >= int.Parse(otherUser.id) && message.sender == 0)) && !message.seen) 
-                {
+            foreach (MessageData message in messageList) {
+                if (((int.Parse(currentUser.id) < int.Parse(otherUser.id) && message.sender == 1) || (int.Parse(currentUser.id) >= int.Parse(otherUser.id) && message.sender == 0)) && !message.seen) {
                     Console.WriteLine($"The following text is unread: \"{message.text}\"");
 
-                    return true;
+                    returnValue = true;
                 }
             }
-            return false;
+            return returnValue;
         }
 
         public static int GetNotificationCount(UserData currentUser)
