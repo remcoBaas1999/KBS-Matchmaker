@@ -159,8 +159,8 @@ namespace Matchmaker
                         UserData chatContact = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(chatPartner)));
 
 
-                        Border rowBase = new Border() { Width = 473 , Background = MediaBrush.Transparent}; // todo: mousedown event to the chat page.
-                        WrapPanel userRow = new WrapPanel() { Height = 70, Name = $"_{chatContact.id}" };  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
+                        Border rowBase = new Border() { Width = 473 , Background = MediaBrush.Transparent, Name = $"_{chatContact.id}" }; // todo: mousedown event to the chat page.
+                        WrapPanel userRow = new WrapPanel() { Height = 70, Name = $"_{chatContact.id}"};  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
                         Grid pictureBox = new Grid() { Height = 70 };
                         Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0) };
                         string pfPic1 = $"https://145.44.233.207/images/users/{chatContact.profilePicture}";
