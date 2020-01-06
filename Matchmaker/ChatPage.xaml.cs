@@ -76,12 +76,14 @@ namespace Matchmaker
         private async void UpdateScrollBox()
         {
             var newMessageList = new List<MessageData>();
-            newMessageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));            
-            if (newMessageList.Count()!=messageList.Count()) {
-                messageList = newMessageList.OrderBy(msg => msg.timestamp).ToList();
+            newMessageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
+            if (newMessageList.Count()!=messageList.Count()) {                
+                newMessageList = newMessageList.OrderBy(msg => msg.timestamp).ToList();
+                messageList = newMessageList;
                 MessageList.Children.Clear();
                 FillScrollBox();
                 ScrollViewer.ScrollToEnd();
+                MatchmakerAPI_Client.SetToRead(chatID,userSender);
             }
         }
         //Fills contents of scrollable chatbox. Used inside UpdateScrollBox and initialisation.

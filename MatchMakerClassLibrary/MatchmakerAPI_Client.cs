@@ -290,6 +290,12 @@ namespace MatchMakerClassLibrary
         {
             return LoadNotifications(currentUser).Result.Count;
         }
+
+        public static void SetToRead(string chatID, int sender)
+        {
+            string url = $@"https://145.44.233.207/messages/read/id={chatID}?u={sender}";
+            Get(url);
+        }
     }
 
     public class UserData
