@@ -162,7 +162,7 @@ namespace Matchmaker
                         Border rowBase = new Border() { Width = 473 , Background = MediaBrush.Transparent, Name = $"_{chatContact.id}" }; // todo: mousedown event to the chat page.
                         WrapPanel userRow = new WrapPanel() { Height = 70, Name = $"_{chatContact.id}"};  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
                         Grid pictureBox = new Grid() { Height = 70 };
-                        Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0) };
+                        Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0), Name = $"_{chatContact.id}" };
                         string pfPic1 = $"https://145.44.233.207/images/users/{chatContact.profilePicture}";
                         userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
                         TextBlock profileName = new TextBlock() { Text = chatContact.realName, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 8, 0, 0), FontSize = 16, LineHeight = 20, HorizontalAlignment = HorizontalAlignment.Left, Name = $"_{chatPartner}" };
