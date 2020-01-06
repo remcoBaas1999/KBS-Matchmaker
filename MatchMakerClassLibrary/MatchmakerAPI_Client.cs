@@ -160,7 +160,7 @@ namespace MatchMakerClassLibrary
             return true;
         }
 
-        public static async Task<bool> PostNewMessage(MessageData newMessageData)
+        public static async Task<bool> PostNewMessage(NewMessageData newMessageData)
         {
             string uri = @"https://145.44.233.207/messages/post/new";
             var result = await Post(uri, newMessageData);
@@ -341,7 +341,11 @@ namespace MatchMakerClassLibrary
         public int sender { get; set; }
         public bool seen { get; set; }
     }
-
+    public class NewMessageData
+    {
+        public string chat { get; set; }
+        public MessageData content { get; set; }
+    }
     public class Notification
     {
         public UserData user { get; set; }

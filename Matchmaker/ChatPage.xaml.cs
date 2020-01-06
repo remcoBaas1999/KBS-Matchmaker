@@ -68,7 +68,8 @@ namespace Matchmaker
             //creates message and sends it to the server. Clears inputfield afterwards
             //MessageData msgD = new MessageData() { ID = chatID, Sender=userSender, TimeStamp=now, Text=ChatInput.Text };
             MessageData msgD = new MessageData() { ID=chatID, message = ChatInput.Text, timestamp = now, sender = userSender, seen = false };
-            await MatchmakerAPI_Client.PostNewMessage(msgD);
+            NewMessageData nMsgD = new NewMessageData() {chat=chatID,content=msgD };
+            await MatchmakerAPI_Client.PostNewMessage(nMsgD);
             ChatInput.Clear();
             return true;
         }
