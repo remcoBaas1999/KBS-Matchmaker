@@ -76,10 +76,9 @@ namespace Matchmaker
         private async void UpdateScrollBox()
         {
             var newMessageList = new List<MessageData>();
-            newMessageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
-            newMessageList = newMessageList.OrderBy(msg => msg.timestamp).ToList();
-            if (messageList!=newMessageList) {
-                messageList = newMessageList;
+            newMessageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));            
+            if (newMessageList.Count()!=messageList.Count()) {
+                messageList = newMessageList.OrderBy(msg => msg.timestamp).ToList();
                 MessageList.Children.Clear();
                 FillScrollBox();
                 ScrollViewer.ScrollToEnd();
@@ -92,7 +91,6 @@ namespace Matchmaker
             int lastSender = -1;
             foreach (MessageData m in messageList)
             {
-                Console.WriteLine(m.text);
                 //Changes alignment and colour to represent if it was sent or received
                 var tB = new TextBlock() { TextWrapping = TextWrapping.Wrap, Text = m.text, FontFamily = new FontFamily("Roboto"), Foreground = Brushes.White };
                 var bTB = new Border() { Child = tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin = new Thickness(5) };
@@ -102,7 +100,6 @@ namespace Matchmaker
                 //The MatchmakerAPI_Client will deserialize this data
                 //The ID will be compared to the sender (0/1) and then the position in the messageID.
                 //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.                
-                Console.WriteLine($"{userInChat.id}=={Int32.Parse(iDS[m.sender])}");
                 if (int.Parse(userInChat.id) == Int32.Parse(iDS[m.sender]))
                 {
                     if (lastSender != 1)
