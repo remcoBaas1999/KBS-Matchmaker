@@ -67,8 +67,9 @@ namespace Matchmaker
             long now = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             //creates message and sends it to the server. Clears inputfield afterwards
             //MessageData msgD = new MessageData() { ID = chatID, Sender=userSender, TimeStamp=now, Text=ChatInput.Text };
-            MessageData msgD = new MessageData() { ID=chatID, text = ChatInput.Text, timestamp = now, sender = userSender, seen = false };
-            await MatchmakerAPI_Client.PostNewMessage(msgD);
+            MessageData msgD = new MessageData() { ID=chatID, message = ChatInput.Text, timestamp = now, sender = userSender, seen = false };
+            NewMessageData nMsgD = new NewMessageData() {chat=chatID,content=msgD };
+            await MatchmakerAPI_Client.PostNewMessage(nMsgD);
             ChatInput.Clear();
             return true;
         }
@@ -76,12 +77,14 @@ namespace Matchmaker
         private async void UpdateScrollBox()
         {
             var newMessageList = new List<MessageData>();
-            newMessageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));            
-            if (newMessageList.Count()!=messageList.Count()) {
-                messageList = newMessageList.OrderBy(msg => msg.timestamp).ToList();
+            newMessageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatID));
+            if (newMessageList.Count()!=messageList.Count()) {                
+                newMessageList = newMessageList.OrderBy(msg => msg.timestamp).ToList();
+                messageList = newMessageList;
                 MessageList.Children.Clear();
                 FillScrollBox();
                 ScrollViewer.ScrollToEnd();
+                MatchmakerAPI_Client.SetToRead(chatID,userSender);
             }
         }
         //Fills contents of scrollable chatbox. Used inside UpdateScrollBox and initialisation.
@@ -91,40 +94,43 @@ namespace Matchmaker
             int lastSender = -1;
             foreach (MessageData m in messageList)
             {
-                //Changes alignment and colour to represent if it was sent or received
-                var tB = new TextBlock() { TextWrapping = TextWrapping.Wrap, Text = m.text, FontFamily = new FontFamily("Roboto"), Foreground = Brushes.White };
-                var bTB = new Border() { Child = tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin = new Thickness(5) };
+                if (m.message != null)
+                {
+                    //Changes alignment and colour to represent if it was sent or received
+                    var tB = new TextBlock() { TextWrapping = TextWrapping.Wrap, Text = m.message, FontFamily = new FontFamily("Roboto"), Foreground = Brushes.White };
+                    var bTB = new Border() { Child = tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin = new Thickness(5) };
 
-                //Step by step breakdown of if-statement:
-                //The MatchmakerAPI_Client will get the user data of the current user to get its ID.
-                //The MatchmakerAPI_Client will deserialize this data
-                //The ID will be compared to the sender (0/1) and then the position in the messageID.
-                //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.                
-                if (int.Parse(userInChat.id) == Int32.Parse(iDS[m.sender]))
-                {
-                    if (lastSender != 1)
+                    //Step by step breakdown of if-statement:
+                    //The MatchmakerAPI_Client will get the user data of the current user to get its ID.
+                    //The MatchmakerAPI_Client will deserialize this data
+                    //The ID will be compared to the sender (0/1) and then the position in the messageID.
+                    //If they match the user is the sender. Send messages align right and are purple. Received messages are gray and aligned to the left.                
+                    if (int.Parse(userInChat.id) == Int32.Parse(iDS[m.sender]))
                     {
-                        System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                        dtDateTime = dtDateTime.AddSeconds(m.timestamp).ToLocalTime();
-                        MessageList.Children.Add(new TextBlock() { Text = $"{userInChat.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily = new FontFamily("Roboto"), FontSize = 10, HorizontalAlignment = HorizontalAlignment.Right });
+                        if (lastSender != 1)
+                        {
+                            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                            dtDateTime = dtDateTime.AddSeconds(m.timestamp).ToLocalTime();
+                            MessageList.Children.Add(new TextBlock() { Text = $"{userInChat.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily = new FontFamily("Roboto"), FontSize = 10, HorizontalAlignment = HorizontalAlignment.Right });
+                        }
+                        lastSender = 1;
+                        bTB.HorizontalAlignment = HorizontalAlignment.Right;
+                        bTB.Background = Brushes.BlueViolet;
                     }
-                    lastSender = 1;
-                    bTB.HorizontalAlignment = HorizontalAlignment.Right;
-                    bTB.Background = Brushes.BlueViolet;
-                }
-                else
-                {
-                    if (lastSender != 0)
+                    else
                     {
-                        System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                        dtDateTime = dtDateTime.AddSeconds(m.timestamp).ToLocalTime();
-                        MessageList.Children.Add(new TextBlock() { Text = $"{chatPartner.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily = new FontFamily("Roboto"), FontSize = 10, HorizontalAlignment = HorizontalAlignment.Left });
+                        if (lastSender != 0)
+                        {
+                            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                            dtDateTime = dtDateTime.AddSeconds(m.timestamp).ToLocalTime();
+                            MessageList.Children.Add(new TextBlock() { Text = $"{chatPartner.realName} · {dtDateTime.ToString("HH:mm")}", FontFamily = new FontFamily("Roboto"), FontSize = 10, HorizontalAlignment = HorizontalAlignment.Left });
+                        }
+                        lastSender = 0;
+                        bTB.HorizontalAlignment = HorizontalAlignment.Left;
+                        bTB.Background = Brushes.Gray;
                     }
-                    lastSender = 0;
-                    bTB.HorizontalAlignment = HorizontalAlignment.Left;
-                    bTB.Background = Brushes.Gray;
+                    MessageList.Children.Add(bTB);
                 }
-                MessageList.Children.Add(bTB);
             }
         }
         private async void ChatInput_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -181,6 +187,7 @@ namespace Matchmaker
             notifications.Title = "Notifations";
             NavigationService.Navigate(notifications);
         }
+        
         private void SetTimer()
         {
             var timer = new System.Timers.Timer(timerTime);
@@ -195,7 +202,7 @@ namespace Matchmaker
                 UpdateScrollBox();
             });
         }
-
+        
         private void RefreshNotificationCount(int count) {
             NotificationCountLabel.Content = count;
             if (count == 0) {
@@ -210,6 +217,7 @@ namespace Matchmaker
                 NotificationWithoutNumber.Visibility = Visibility.Collapsed;
             }
         }
+        
     }
 }
     

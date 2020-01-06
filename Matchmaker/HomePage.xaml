@@ -16,6 +16,41 @@
 
       <Grid Grid.Row="0" Grid.Column="0">
 
+<!--<<<<<<<<< Temporary merge branch 1
+            <WrapPanel HorizontalAlignment="Center" Margin="504,1,301,-1">
+                <Button x:Name="HomeButton" Content="Home" Height="34" VerticalAlignment="Top" Width="86" Click="Button_FillProfiles" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="0"/>
+                <Button x:Name="ContactsButton" Content="Contacts" Height="34" VerticalAlignment="Top" Width="111" Click="ContactPage_Click" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" Grid.Column="0" Visibility="Visible"/>
+                <Button x:Name="ActivitiesButton" Content="Activities" HorizontalAlignment="Center" Height="34" VerticalAlignment="Top" Width="94" Click="Button_FillProfiles" FontFamily="Roboto" Foreground="Black" BorderBrush="{x:Null}" Background="{x:Null}" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.044,-2.382" Grid.Column="1" Visibility="Hidden"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Right">
+                <Ellipse x:Name="NotificationWithoutNumber" Visibility="Visible" HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" Margin="0,0,0,0" MouseDown="Notification_MouseDown">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse x:Name="NotificationWithNumber" Visibility="Collapsed" HorizontalAlignment="Left" Height="36" Stroke="#00000000" VerticalAlignment="Top" Width="35" RenderTransformOrigin="1.303,0.032" Margin="0,0,-15,0" MouseDown="Notification_MouseDown">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/notification.jpg" Stretch="UniformToFill" TileMode="Tile"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse Visibility="Collapsed" x:Name="NotificationCountCircle" Fill="Red" Width="20" Height="20" VerticalAlignment="Bottom" Margin="0,0,-15,-5" />
+                <Label Visibility="Collapsed" x:Name="NotificationCountLabel" Content="1" FontSize="15" FontWeight="Bold" FontFamily="Roboto" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="-4,0,0,-9" />
+                <Ellipse x:Name="MyProfile" HorizontalAlignment="Left" Height="26" Stroke="#00000000" VerticalAlignment="Top" Width="26" MouseDown="MyProfile_MouseDown" Margin="5,3,5,0">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse x:Name="Settings" HorizontalAlignment="Left" Height="29" Stroke="#00000000" VerticalAlignment="Top" Width="29" MouseDown="Settings_MouseDown" Margin="5,2,5,0">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="Images/settings.png"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Rectangle x:Name="Logout" HorizontalAlignment="Left" Height="32" Stroke="#00000000" VerticalAlignment="Top" Width="32" MouseDown="Logout_MouseDown" Margin="5,0">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="Images/exit.png" Stretch="UniformToFill"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+=========-->
             <WrapPanel Grid.Row="0" Margin="0 18 0 0" HorizontalAlignment="Center" Grid.Column="1">
                <Border HorizontalAlignment="Center" Width="127">
                   <Grid>

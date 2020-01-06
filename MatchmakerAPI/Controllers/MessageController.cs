@@ -18,7 +18,6 @@ namespace MatchmakerAPI.Controllers
         [HttpPost("post/new")]
         public CreatedAtActionResult AddNewMessage(NewMessage data)
         {
-            //data misschien veranderen
             string fileLocation = "/home/student/data/chats.json";
             using (StreamReader r = new StreamReader(fileLocation))
             {
@@ -47,6 +46,25 @@ namespace MatchmakerAPI.Controllers
             catch (System.InvalidOperationException)
             {
                 return null;
+            }
+        }
+        //set msg to read
+        [HttpGet("read/id={id}/u={u}")]
+        public void SetToRead(string id,string u)
+        {
+            int i = Int32.Parse(u);
+            string fileLocation = "/home/student/data/chats.json";
+            using (StreamReader r = new StreamReader(fileLocation))
+            {
+                string json = r.ReadToEnd();
+                var chats = JsonConvert.DeserializeObject<Dictionary<string, List<Message>>>(json);
+                List<Message> mList = chats[id];
+                foreach (var m in mList.Where(x=>x.sender!=i&&!x.seen))
+                {
+                    m.seen = true;
+                }                                 
+                var text = JsonConvert.SerializeObject(chats);
+                System.IO.File.WriteAllText(fileLocation, text);
             }
         }
 

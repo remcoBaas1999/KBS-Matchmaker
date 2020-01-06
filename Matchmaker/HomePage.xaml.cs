@@ -50,15 +50,12 @@ namespace Matchmaker {
 
         private UserData[] GenerateUserDatas() {
             UserData[] userDatas = MatchmakerAPI_Client.GetMatches(int.Parse(LoggedInUser.id));
-            Console.WriteLine("\nThese are the users:");
-            foreach (UserData user in userDatas) {
-                Console.WriteLine($" - {user.id} ({user.realName})");
-            }
             return userDatas;
         }
 
         private void FillHomepageProfiles(UserData[] userDatas) {
-            //RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
+
+            RefreshNotificationCount(MatchmakerAPI_Client.GetNotificationCount(LoggedInUser));
             string coverImage;
             if (userDatas.Count() > 0)
             {
@@ -93,6 +90,7 @@ namespace Matchmaker {
             {
                 Profile4BackgroundPicture.MouseDown -= Profile2BackgroundPicture_MouseDown;
             }
+
 
             if (userDatas.Count() > 2)
             {
@@ -220,7 +218,7 @@ namespace Matchmaker {
         // go to the contacts page
         private void ContactPage_Click(object sender, RoutedEventArgs e)
         {
-            ChatListPage chatList = new ChatListPage();
+            ChatListPage chatList = new ChatListPage(LoggedInUser);
             NavigationService.Navigate(chatList);
         }
 

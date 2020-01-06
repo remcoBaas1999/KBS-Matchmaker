@@ -82,11 +82,10 @@ namespace MatchMakerClassLibrary
             }
         }
 
-        public static async Task<string> GetMessageData(string id)
-        {
+        public static async Task<string> GetMessageData(string id) {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             var uri = $@"https://145.44.233.207/messages/get/id={id}";
-            var response = await client.GetAsync(uri);
+            var response = client.GetAsync(uri).Result;
             return await response.Content.ReadAsStringAsync();
         }
         public static async Task<bool> AuthenticateAsync(string email, string password)
@@ -161,7 +160,7 @@ namespace MatchMakerClassLibrary
             return true;
         }
 
-        public static async Task<bool> PostNewMessage(MessageData newMessageData)
+        public static async Task<bool> PostNewMessage(NewMessageData newMessageData)
         {
             string uri = @"https://145.44.233.207/messages/post/new";
             var result = await Post(uri, newMessageData);
@@ -273,15 +272,8 @@ namespace MatchMakerClassLibrary
 
             var messageList = DeserializeMessageData(await GetMessageData(chatID));
 
-            Console.WriteLine($"ChatID: {chatID} - with user: {otherUser.realName} - amount of total messages: {messageList.Count}");
-
-            foreach (MessageData message in messageList)
-            {
-                if (message.seen)
-                {
-
-                    Console.WriteLine($"The following text is unread: \"{message.text}\"");
-
+            foreach (MessageData message in messageList) {
+                if (((int.Parse(currentUser.id) < int.Parse(otherUser.id) && message.sender == 1) || (int.Parse(currentUser.id) >= int.Parse(otherUser.id) && message.sender == 0)) && !message.seen) {
                     return true;
                 }
             }
@@ -291,6 +283,12 @@ namespace MatchMakerClassLibrary
         public static int GetNotificationCount(UserData currentUser)
         {
             return LoadNotifications(currentUser).Result.Count;
+        }
+
+        public static void SetToRead(string chatID, int sender)
+        {
+            string url = $@"https://145.44.233.207/messages/read/id={chatID}/u={sender}";
+            Get(url);
         }
     }
 
@@ -311,7 +309,6 @@ namespace MatchMakerClassLibrary
         public List<int> requestFrom { get; set; }
         public Dictionary<string, bool> contacts { get; set; }
     }
-
     public class AuthData
     {
         public string email { get; set; }
@@ -334,12 +331,16 @@ namespace MatchMakerClassLibrary
     public class MessageData
     {
         public string ID { get; set; }
-        public string text { get; set; }
+        public string message { get; set; }
         public long timestamp { get; set; }
         public int sender { get; set; }
         public bool seen { get; set; }
     }
-
+    public class NewMessageData
+    {
+        public string chat { get; set; }
+        public MessageData content { get; set; }
+    }
     public class Notification
     {
         public UserData user { get; set; }

@@ -29,7 +29,7 @@ namespace Matchmaker {
 
         private void goBack_MouseDown(object sender, MouseButtonEventArgs e) {
             //Go back to homepage
-            NavigationService.GoBack();
+            NavigationService.Navigate(new HomePage());
         }
 
         private void RefreshNotificationsButton_MouseDown(object sender, MouseButtonEventArgs e) {

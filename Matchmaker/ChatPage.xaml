@@ -41,7 +41,7 @@
                     </Ellipse.Fill>
                 </Ellipse>
                 <Ellipse Visibility="Collapsed" x:Name="NotificationCountCircle" Fill="Red" Width="20" Height="20" VerticalAlignment="Bottom" Margin="0,0,-15,-5" />
-                <Label Visibility="Collapsed" x:Name="NotificationCountLabel" Content="0" FontSize="15" FontWeight="Bold" FontFamily="Roboto" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="-4,0,0,-9" />
+                <Label Visibility="Collapsed" x:Name="NotificationCountLabel" Content="1" FontSize="15" FontWeight="Bold" FontFamily="Roboto" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="-4,0,0,-9" />
                 <Ellipse x:Name="MyProfile" HorizontalAlignment="Left" Height="26" Stroke="#00000000" VerticalAlignment="Top" Width="26" MouseDown="MyProfile_MouseDown" Margin="5,3,5,0">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="Images/MyProfile.png" Stretch="UniformToFill"/>
