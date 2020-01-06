@@ -49,7 +49,7 @@ namespace MatchmakerAPI.Controllers
             }
         }
         //set msg to read
-        [HttpGet("read/id={id}?u={u}")]
+        [HttpGet("read/id={id}/u={u}")]
         public void SetToRead(string id,string u)
         {
             int i = Int32.Parse(u);
