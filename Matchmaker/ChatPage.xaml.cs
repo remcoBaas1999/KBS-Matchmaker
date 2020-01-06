@@ -67,7 +67,7 @@ namespace Matchmaker
             long now = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             //creates message and sends it to the server. Clears inputfield afterwards
             //MessageData msgD = new MessageData() { ID = chatID, Sender=userSender, TimeStamp=now, Text=ChatInput.Text };
-            MessageData msgD = new MessageData() { ID=chatID, text = ChatInput.Text, timestamp = now, sender = userSender, seen = false };
+            MessageData msgD = new MessageData() { ID=chatID, message = ChatInput.Text, timestamp = now, sender = userSender, seen = false };
             await MatchmakerAPI_Client.PostNewMessage(msgD);
             ChatInput.Clear();
             return true;
@@ -94,7 +94,7 @@ namespace Matchmaker
             foreach (MessageData m in messageList)
             {
                 //Changes alignment and colour to represent if it was sent or received
-                var tB = new TextBlock() { TextWrapping = TextWrapping.Wrap, Text = m.text, FontFamily = new FontFamily("Roboto"), Foreground = Brushes.White };
+                var tB = new TextBlock() { TextWrapping = TextWrapping.Wrap, Text = m.message, FontFamily = new FontFamily("Roboto"), Foreground = Brushes.White };
                 var bTB = new Border() { Child = tB, Padding = new Thickness(10), CornerRadius = new CornerRadius(10), Margin = new Thickness(5) };
 
                 //Step by step breakdown of if-statement:
