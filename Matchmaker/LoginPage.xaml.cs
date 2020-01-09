@@ -44,11 +44,11 @@ namespace Matchmaker
         }
 
 
-
+        // This is the login process
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
             RegistrationComplete.Text = "";
-            //bool containsMail = false;
+            // check if there is any error text visible, if so remove these from the elements
             if (LoginErrorText.Children.Count > 0)
             {
                 LoginErrorText.Children.RemoveAt(0);
@@ -66,7 +66,6 @@ namespace Matchmaker
             {
                 Email = AccountEmail.Text
             };
-            //account.LogIn(AccountPassBox.Password);
 
             try
             {
@@ -137,7 +136,7 @@ namespace Matchmaker
             }
         }
 
-
+        // 
         private void CreateAccBtn_Click(object sender, RoutedEventArgs e)
         {
             RegisterPage registerPage = new RegisterPage();
@@ -159,6 +158,7 @@ namespace Matchmaker
             return brushes;
         }
 
+        // Check if the text in the textbox is changed.
         private void AccountEmail_TextChanged(object sender, TextChangedEventArgs e)
         {
             LoginErrorText.Children.Remove(GeneralError[0]);
@@ -185,6 +185,7 @@ namespace Matchmaker
             }
         }
 
+        // Check if the password in the passwordbox is changed.
         private void AccountPassBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             LoginErrorText.Children.Remove(GeneralError[0]);
