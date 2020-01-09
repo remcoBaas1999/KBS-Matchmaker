@@ -59,7 +59,7 @@ namespace Matchmaker {
                 catch (NullReferenceException) { };
             }
 
-            
+            //Set information from account
             years.Text = (User.CalculateAge(user.birthdate)).ToString();
             name.Text = user.realName;
             showName.Text = user.realName;
@@ -106,6 +106,7 @@ namespace Matchmaker {
                 MessageBox.Show("The new name cannot be empty");
                 name.Text = userInView.realName;
             }
+            //Safe the name change
             else if (name.Text != null && name.Text.Trim() != "") {
                 userInView.realName = name.Text;
                 showName.Text = name.Text;
@@ -137,6 +138,7 @@ namespace Matchmaker {
             accountText.Visibility = Visibility.Collapsed;
             bioText.Visibility = Visibility.Visible;
             editBio.Visibility = Visibility.Visible;
+            //save the change in the biography
             await MatchmakerAPI_Client.SaveUser(userInView);
 
         }
@@ -161,8 +163,10 @@ namespace Matchmaker {
         //Load a list with cities 
         private void citySelection_Loaded(object sender, RoutedEventArgs e) {
             citySelection.Text = city.Text;
+            //The list of cities currently available.
             List<string> locations = new List<string> { "Zwolle", "Amsterdam", "Utrecht", "Emmeloord", "Heino", "Raalte", "Arnhem", "Baarn", "Rotterdam", "Den Haag", "Eindhoven", "Breda", "Enschede", "Hengelo", "Almelo", "Leeuwarden", "Groningen", "Assen", "Maastricht", "Alkmaar", "Amersfoort", "Elburg", "Nijkerk", "Harderwijk", "Almere", "Lelystad", "Deventer", "Apeldoorn", "Tilburg", "Middelburg", "Haarlem", "Emmen", "Meppel", "Leiden", "Hoorn", "Den Helder", "Dordrecht", "Delft", "Roermond", "Venlo", "Helmond", "Sneek", "Drachten", "Heerenveen", "Oss", "Nijmegen", "Bergen op Zoom", "Roosendaal", "Vlissingen", "Heerlen", "Sittard", "Doetinchem", "Hilversum", "Zaanstad", "'s Hertogenbosch", "Zoetermeer", "Ede", "Alphen aan den Rijn" };
             locations.Sort();
+            //Add the cities as options to the combobox
             foreach (string item in locations) {
                 citySelection.Items.Add(item);
             }
@@ -185,6 +189,7 @@ namespace Matchmaker {
             editLocation.Visibility = Visibility.Visible;
             citySelection.Visibility = Visibility.Collapsed;
             city.Visibility = Visibility.Visible;
+            //Save the new location
             await MatchmakerAPI_Client.SaveUser(userInView);
         }
 
@@ -208,7 +213,7 @@ namespace Matchmaker {
             entryHobbies.Visibility = Visibility.Visible;
             addInterests.Visibility = Visibility.Visible;
             listPossibleInterests.Visibility = Visibility.Visible;
-
+            //Open the screen from where new hobbies can be added.
             LoadHobbies();
         }
         //lead a list with hobbies
@@ -264,7 +269,7 @@ namespace Matchmaker {
             }
 
         }
-        //Cancel adding hobbies event.
+        //Cancel adding hobbies event
         private void Cancel_Click(object sender, RoutedEventArgs e) {
             AddHobbies.Visibility = Visibility.Collapsed;
             entryHobbies.Visibility = Visibility.Collapsed;
@@ -279,7 +284,7 @@ namespace Matchmaker {
             TextBlock hobbyText = new TextBlock();
             Canvas remove = new Canvas();
             Path path = new Path();
-
+            //Make the box to add the hobby in
             hobbyBorder.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673AB7"));
             hobbyBorder.Child = stackPanel;
             hobbyBorder.CornerRadius = new CornerRadius(16);
@@ -287,7 +292,7 @@ namespace Matchmaker {
             hobbyBorder.Margin = new Thickness(6);
 
             stackPanel.Orientation = Orientation.Horizontal;
-
+            //Attributes of the text of the hobby
             hobbyText.Text = hobby;
             hobbyText.FontSize = 14;
             hobbyText.Foreground = new SolidColorBrush(Colors.White);
@@ -349,10 +354,12 @@ namespace Matchmaker {
             addInterests.Visibility = Visibility.Collapsed;
             listPossibleInterests.Visibility = Visibility.Collapsed;
             bool inAccount;
+            //Check if the user has a list of hobbies
             if (userInView.hobbies==null)
             {
                 userInView.hobbies = new List<HobbyData>();
             }
+            //Check if the new hobby is in the list of hobbies
             foreach (var item in hobbyData) {
                 inAccount = false;
                 foreach (var hobby in userInView.hobbies) {
@@ -360,11 +367,12 @@ namespace Matchmaker {
                         inAccount = true;
                     }
                 }
+                //Add the new hobby to the account
                 if (inAccount == false) {
                     userInView.hobbies.Add(item);
                 }
             }
-            
+            //Save the hobbies
             await MatchmakerAPI_Client.SaveUser(userInView);
             //Reload page
             hobbyData = new List<HobbyData>();
