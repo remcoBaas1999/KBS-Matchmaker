@@ -16,24 +16,29 @@ using MatchMakerClassLibrary;
 
 namespace Matchmaker
 {
-    public partial class MainWindow : Window {
-        public MainWindow() {
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
             InitializeComponent();
 
             LoginPage login = new LoginPage();
             MainFrame.Navigate(login);
         }
 
+        // Custom close click event.
         private void CloseAppClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
+        // Custom minimize click event.
         private void MinimizeClick(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
+        // Custom maxmimize click event
         private void MaximizeClick(object sender, RoutedEventArgs e)
         {
             switch (WindowState)
@@ -61,13 +66,5 @@ namespace Matchmaker
                 ChangeScreen.Data = Geometry.Parse("M58.152,58.152H0V0h58.152V58.152z M3,55.152h52.152V3H3V55.152z");
             }
         }
-        private void MoveWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                this.DragMove();
-            }
-        }
-
     }
 }
