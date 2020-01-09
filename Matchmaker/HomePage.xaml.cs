@@ -24,8 +24,6 @@ namespace Matchmaker {
         private UserData ThirdProfile;
         private UserData FourthProfile;
 
-
-        
         public HomePage() {
             //Start application
             InitializeComponent();
@@ -33,8 +31,6 @@ namespace Matchmaker {
             //Gather info about logged-in user
             string email = User.email;
             UserData getLoggedInUserData = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(email));
-            //LoggedInUserID = int.Parse(getLoggedInUserData.id);
-            //User.ID = log;
             LoggedInUser = getLoggedInUserData;
             User.ID = int.Parse(LoggedInUser.id);
 
@@ -43,10 +39,9 @@ namespace Matchmaker {
                 FillEmptyList(getLoggedInUserData);
             }
 
+            //Display the recommended users
             FillHomepageProfiles(GenerateUserDatas());
         }
-
-
 
         private UserData[] GenerateUserDatas() {
             UserData[] userDatas = MatchmakerAPI_Client.GetMatches(int.Parse(LoggedInUser.id));
@@ -96,19 +91,19 @@ namespace Matchmaker {
             coverImage = $"https://145.44.233.207/images/covers/{userDatas[3].coverImage}";
             Profile4BackgroundPicture.Background = new ImageBrush(new BitmapImage(new Uri(coverImage, UriKind.Absolute)));
         }
-       public async void FillEmptyList(UserData getLoggedInUserData) {
+
+        public async void FillEmptyList(UserData getLoggedInUserData) {
             List<int> temporarilyList = new List<int>();
             getLoggedInUserData.blockedUsers = temporarilyList;
             await MatchmakerAPI_Client.SaveUser(getLoggedInUserData);
-       }
+        }
 
-
-        //Refreshbutton
+        //Refresh button
         private void Button_FillProfiles(object sender, RoutedEventArgs e) {
             FillHomepageProfiles(GenerateUserDatas());
         }
 
-        //HomeButton
+        //Home button
         private void Button_Click(object sender, RoutedEventArgs e) {
             //Refresh recommended profiles
             HomePage p = new HomePage();
@@ -116,7 +111,7 @@ namespace Matchmaker {
             NavigationService.Navigate(p);
         }
 
-        //When clicked on a profile
+        //When clicked on a profile, go to the profile page of the user
         private void Profile1BackgroundPicture_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ButtonPressed(FirstProfile);
@@ -136,7 +131,6 @@ namespace Matchmaker {
             Page page = new UserProfile(userData, false, int.Parse(LoggedInUser.id));
             NavigationService.Navigate(page);
         }
-
 
         //Menu buttons
         //Go to Notification page
@@ -191,6 +185,7 @@ namespace Matchmaker {
             NavigationService.Navigate(chatList);
         }
 
+        //Refreshes the notification count
         private void RefreshNotificationCount(int count) {
             NotificationCountLabel.Content = count;
             if (count == 0) {

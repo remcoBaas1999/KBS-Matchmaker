@@ -24,14 +24,16 @@ namespace Matchmaker {
 
             this.currentUser = currentUser;
 
+            //Load notifications (chats with unread messages)
             NotificationList.ItemsSource =  MatchmakerAPI_Client.LoadNotifications(currentUser).Result;
         }
 
+
         private void goBack_MouseDown(object sender, MouseButtonEventArgs e) {
-            //Go back to homepage
             NavigationService.Navigate(new HomePage());
         }
 
+        //Refresh the notifications and animate the refresh button
         private void RefreshNotificationsButton_MouseDown(object sender, MouseButtonEventArgs e) {
             NotificationList.ItemsSource = MatchmakerAPI_Client.LoadNotifications(currentUser).Result;
 
@@ -43,6 +45,7 @@ namespace Matchmaker {
             }
         }
 
+        //When a chat is selected and the go-to-chat-button is pressed, go to the chat
         private void btnGoToChat_Click(object sender, RoutedEventArgs e) {
             object user = NotificationList.SelectedItem;
             if (user == null) {

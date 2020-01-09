@@ -243,12 +243,14 @@ namespace Matchmaker {
                 listPossibleInterests.Children.Add(hobbyLane);
             }
         }
-        //edit cover images
+
+        //Show cover image edit window
         private void btnEditCoverImage_Click(object sender, RoutedEventArgs e) {
             CoverImageSelecter coverImageSelecter = new CoverImageSelecter();
             coverImageSelecter.Show();
             coverImageSelecter.userID = int.Parse(userInView.id);
         }
+
         //add an hobby button event
         public void addHobbyToList_Click(object sender, RoutedEventArgs e) {
             List<HobbyData> listAllHobbies = MatchmakerAPI_Client.getAllHobbies();

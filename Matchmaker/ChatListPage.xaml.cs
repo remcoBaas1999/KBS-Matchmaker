@@ -428,6 +428,7 @@ namespace Matchmaker
             NavigationService.Navigate(chat);
         }
 
+        //Refresh the notification count
         private void RefreshNotificationCount(int count)
         {
             NotificationCountLabel.Content = count;

@@ -242,15 +242,15 @@ namespace MatchmakerAPI.Controllers
 				// Fill a new UserData object with the supplied data
 				// and some placeholders
 				var newUser = new UserData {
-					email 					= data.email,
-					password 				= data.password,
-					salt 						= data.salt,
-					realName 				= data.realName,
-					birthdate 			= data.birthdate,
+					email 			= data.email,
+					password 		= data.password,
+					salt 			= data.salt,
+					realName 		= data.realName,
+					birthdate 		= data.birthdate,
 					profilePicture	= "0.jpg",
-					hobbies					= tmp_hobbies,
-					coverImage			= tmp_cover,
-					id							= tmp_key.ToString(),
+					hobbies			= tmp_hobbies,
+					coverImage		= tmp_cover,
+					id				= tmp_key.ToString(),
 				};
 
 				// Add the new user data to the in-memory users database with
@@ -495,13 +495,10 @@ namespace MatchmakerAPI.Controllers
 
 		}
 
-
 		public static void UpdateUserMap(Dictionary<string, int> data)
 		{
-
 			try
 			{
-
 				// Serialize the updated mapping
 				var text = JsonConvert.SerializeObject(data);
 
@@ -514,11 +511,7 @@ namespace MatchmakerAPI.Controllers
 
 				Console.WriteLine(" !! EXCEPTION:");
 				Console.WriteLine("    An error occurred attempting to update the user map.");
-
 			}
-
-
 		}
-
 	}
 }
