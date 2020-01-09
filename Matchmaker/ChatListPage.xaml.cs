@@ -163,8 +163,8 @@ namespace Matchmaker
                         UserData chatContact = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(chatPartner)));
 
 
-                        Border rowBase = new Border() { Width = 473 , Background = MediaBrush.Transparent, Name = $"_{chatContact.id}" }; // todo: mousedown event to the chat page.
-                        WrapPanel userRow = new WrapPanel() { Height = 70, Name = $"_{chatContact.id}"};  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
+                        Border rowBase = new Border() { Width = 473, Background = MediaBrush.Transparent, Name = $"_{chatContact.id}" }; // todo: mousedown event to the chat page.
+                        WrapPanel userRow = new WrapPanel() { Height = 70, Name = $"_{chatContact.id}" };  // Inside the panel the userprofilepicture, name and the buttons to accept or decline.
                         Grid pictureBox = new Grid() { Height = 70 };
                         Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 8, 0, 0), Name = $"_{chatContact.id}" };
                         string pfPic1 = $"https://145.44.233.207/images/users/{chatContact.profilePicture}";
@@ -173,11 +173,7 @@ namespace Matchmaker
                         //TextBlock latestMessage = new TextBlock() { Text = "Most recent message", VerticalAlignment = VerticalAlignment.Center, FontSize = 16, LineHeight = 20, Opacity = 0.6, Margin = new Thickness(0, 0, 0, 15) };
                         StackPanel quickView = new StackPanel() { Margin = new Thickness(16, 8, 0, 0) };
 
-                        //userRow.Name = $"_{chatContact.id}";
-                        //userProfilePicture.Name = $"_{chatContact.id}";
-
                         quickView.Children.Add(profileName);
-                        //quickView.Children.Add(latestMessage);
 
                         pictureBox.Children.Add(userProfilePicture);
 
@@ -278,7 +274,7 @@ namespace Matchmaker
                 chatId = $"{idOfClick}_{user.id}";
             }
 
-            
+
             var messageList = new List<MessageData>();
             //get message list from server
             messageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatId));
@@ -292,159 +288,163 @@ namespace Matchmaker
             }
             else
             {
-                UserProfile contactProfile = new UserProfile(newContactChat, false,User.ID);
+                UserProfile contactProfile = new UserProfile(newContactChat, false, User.ID);
                 NavigationService.Navigate(contactProfile);
             }
         }
 
 
-                // Display the blocked users
-                public void LoadBlockedUsers()
+        // Display the blocked users
+        public void LoadBlockedUsers()
+        {
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+
+            List<int> blockedUsers = loggedInUser.blockedUsers;
+
+            if (blockedUsers.Count > 0 && blockedUsers != null)
+            {
+                for (int i = 0; i < blockedUsers.Count; i++)
                 {
-                    UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+                    UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(blockedUsers[i]));
 
-                    List<int> blockedUsers = loggedInUser.blockedUsers;
+                    Grid blockedUser = new Grid() { Height = 70 };
+                    WrapPanel userWrapper = new WrapPanel();
+                    Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 12, 8, 0) };
+                    string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
+                    userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
+                    TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 16, 0, 0), VerticalAlignment = VerticalAlignment.Center };
 
-                    if (blockedUsers.Count > 0 && blockedUsers != null)
-                    {
-                        for (int i = 0; i < blockedUsers.Count; i++)
-                        {
-                            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(blockedUsers[i]));
+                    Button deblock = new Button() { Name = $"_{i}", Content = "Unblock", Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Foreground = MediaBrush.Purple, HorizontalAlignment = HorizontalAlignment.Right };
+                    deblock.Click += Deblock_Click;
 
-                            Grid blockedUser = new Grid() { Height = 70 };
-                            WrapPanel userWrapper = new WrapPanel();
-                            Ellipse userProfilePicture = new Ellipse() { Height = 54, Width = 54, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 12, 8, 0) };
-                            string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
-                            userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
-                            TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 16, 0, 0), VerticalAlignment = VerticalAlignment.Center };
-
-                            Button deblock = new Button() { Name = $"_{i}", Content = "Unblock", Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Foreground = MediaBrush.Purple, HorizontalAlignment = HorizontalAlignment.Right };
-                            deblock.Click += Deblock_Click;
-
-                            userWrapper.Children.Add(userProfilePicture);
-                            userWrapper.Children.Add(userRealName);
+                    userWrapper.Children.Add(userProfilePicture);
+                    userWrapper.Children.Add(userRealName);
 
 
-                            blockedUser.Children.Add(userWrapper);
-                            blockedUser.Children.Add(deblock);
+                    blockedUser.Children.Add(userWrapper);
+                    blockedUser.Children.Add(deblock);
 
-                            blockedUserList.Children.Add(blockedUser);
-                        }
-                    }
-                    else
-                    {
-                        blockedUserList.Children.Add(new TextBlock() { FontSize = 14, Text = "You have blocked no users.", HorizontalAlignment = HorizontalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 490 });
-                    }
-                }
-
-                private async void Deblock_Click(object sender, RoutedEventArgs e)
-                {
-                    UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-                    List<int> blockedUsers = loggedInUser.blockedUsers;
-                    var number = (Button)sender;
-                    int listIndex = int.Parse(number.Name.Replace("_", String.Empty));
-                    blockedUsers.RemoveAt(listIndex);
-                    loggedInUser.blockedUsers = blockedUsers;
-
-                    await MatchmakerAPI_Client.SaveUser(loggedInUser);
-
-                    ChatListPage chatList = new ChatListPage(loggedInUser);
-                    NavigationService.Navigate(chatList);
-                }
-
-                private async void ContactRequestDecline(object sender, RoutedEventArgs e)
-                {
-                    //Get sender ID
-                    var button = (Button)sender;
-                    int id = int.Parse(button.Name.Replace("_", String.Empty));
-
-                    UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
-                    UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
-                    await MatchmakerAPI_Client.declineContactRequest(loggedInUser, userSender);
-
-                    ChatListPage chatList = new ChatListPage(loggedInUser);
-                    NavigationService.Navigate(chatList);
-                }
-
-                private async void ContactRequestAccept(object sender, RoutedEventArgs e)
-                {
-                    //Get sender ID
-                    var button = (Button)sender;
-                    int id = int.Parse(button.Name.Replace("_", String.Empty));
-
-                    UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
-                    UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
-                    await MatchmakerAPI_Client.ConfirmContactRequest(loggedInUser, userSender);
-
-
-                    NavigationService.Navigate(this);
-                }
-                //Menu buttons
-                //Go to Notification page
-                private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
-                {
-                    Notifications notifications = new Notifications(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)));
-                    notifications.Title = "Notifications";
-                    NavigationService.Navigate(notifications);
-                }
-
-                //Go to Logout page
-                private void Logout_MouseDown(object sender, MouseButtonEventArgs e)
-                {
-                    if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                    {
-                        //Logout current user
-                        LoginPage loginPage = new LoginPage();
-                        NavigationService.Navigate(loginPage);
-                    }
-                }
-
-                //Go to Settings page
-                private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
-                {
-                    Settings settings = new Settings(User.ID);
-                    NavigationService.Navigate(settings);
-                }
-
-                //Go to own profilepage
-                private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
-                {
-                    UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-                    Page userProfile = new UserProfile(user, true, User.ID);
-                    NavigationService.Navigate(userProfile);
-                }
-
-                private void CheckoutProfile_MouseDown(object sender, MouseButtonEventArgs e)
-                {
-                    overlay.Visibility = Visibility.Collapsed;
-                    decideOnProfile.Visibility = Visibility.Collapsed;
-
-                    UserProfile userProfile = new UserProfile(ClickedUser, false, User.ID);
-                    NavigationService.Navigate(userProfile);
-                }
-
-                private void CreateChat_MouseDown(object sender, MouseButtonEventArgs e)
-                {
-                    overlay.Visibility = Visibility.Collapsed;
-                    decideOnProfile.Visibility = Visibility.Collapsed;
-
-                    ChatPage chat = new ChatPage(ClickedUser);
-                    NavigationService.Navigate(chat);
-                }
-
-                private void RefreshNotificationCount(int count) {
-                    NotificationCountLabel.Content = count;
-                    if (count == 0) {
-                        NotificationCountCircle.Visibility = Visibility.Collapsed;
-                        NotificationCountLabel.Visibility = Visibility.Collapsed;
-                        NotificationWithNumber.Visibility = Visibility.Collapsed;
-                        NotificationWithoutNumber.Visibility = Visibility.Visible;
-                    } else {
-                        NotificationCountCircle.Visibility = Visibility.Visible;
-                        NotificationCountLabel.Visibility = Visibility.Visible;
-                        NotificationWithNumber.Visibility = Visibility.Visible;
-                        NotificationWithoutNumber.Visibility = Visibility.Collapsed;
-                    }
+                    blockedUserList.Children.Add(blockedUser);
                 }
             }
+            else
+            {
+                blockedUserList.Children.Add(new TextBlock() { FontSize = 14, Text = "You have blocked no users.", HorizontalAlignment = HorizontalAlignment.Center, TextAlignment = TextAlignment.Center, Width = 490 });
+            }
         }
+
+        private async void Deblock_Click(object sender, RoutedEventArgs e)
+        {
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            List<int> blockedUsers = loggedInUser.blockedUsers;
+            var number = (Button)sender;
+            int listIndex = int.Parse(number.Name.Replace("_", String.Empty));
+            blockedUsers.RemoveAt(listIndex);
+            loggedInUser.blockedUsers = blockedUsers;
+
+            await MatchmakerAPI_Client.SaveUser(loggedInUser);
+
+            ChatListPage chatList = new ChatListPage(loggedInUser);
+            NavigationService.Navigate(chatList);
+        }
+
+        private async void ContactRequestDecline(object sender, RoutedEventArgs e)
+        {
+            //Get sender ID
+            var button = (Button)sender;
+            int id = int.Parse(button.Name.Replace("_", String.Empty));
+
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
+            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
+            await MatchmakerAPI_Client.declineContactRequest(loggedInUser, userSender);
+
+            ChatListPage chatList = new ChatListPage(loggedInUser);
+            NavigationService.Navigate(chatList);
+        }
+
+        private async void ContactRequestAccept(object sender, RoutedEventArgs e)
+        {
+            //Get sender ID
+            var button = (Button)sender;
+            int id = int.Parse(button.Name.Replace("_", String.Empty));
+
+            UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
+            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
+            await MatchmakerAPI_Client.ConfirmContactRequest(loggedInUser, userSender);
+
+
+            NavigationService.Navigate(this);
+        }
+        //Menu buttons
+        //Go to Notification page
+        private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Notifications notifications = new Notifications(MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)));
+            notifications.Title = "Notifications";
+            NavigationService.Navigate(notifications);
+        }
+
+        //Go to Logout page
+        private void Logout_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to logout? All unsaved changes will be permanently lost.", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                //Logout current user
+                LoginPage loginPage = new LoginPage();
+                NavigationService.Navigate(loginPage);
+            }
+        }
+
+        //Go to Settings page
+        private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Settings settings = new Settings(User.ID);
+            NavigationService.Navigate(settings);
+        }
+
+        //Go to own profilepage
+        private void MyProfile_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
+            Page userProfile = new UserProfile(user, true, User.ID);
+            NavigationService.Navigate(userProfile);
+        }
+
+        private void CheckoutProfile_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            overlay.Visibility = Visibility.Collapsed;
+            decideOnProfile.Visibility = Visibility.Collapsed;
+
+            UserProfile userProfile = new UserProfile(ClickedUser, false, User.ID);
+            NavigationService.Navigate(userProfile);
+        }
+
+        private void CreateChat_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            overlay.Visibility = Visibility.Collapsed;
+            decideOnProfile.Visibility = Visibility.Collapsed;
+
+            ChatPage chat = new ChatPage(ClickedUser);
+            NavigationService.Navigate(chat);
+        }
+
+        private void RefreshNotificationCount(int count)
+        {
+            NotificationCountLabel.Content = count;
+            if (count == 0)
+            {
+                NotificationCountCircle.Visibility = Visibility.Collapsed;
+                NotificationCountLabel.Visibility = Visibility.Collapsed;
+                NotificationWithNumber.Visibility = Visibility.Collapsed;
+                NotificationWithoutNumber.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NotificationCountCircle.Visibility = Visibility.Visible;
+                NotificationCountLabel.Visibility = Visibility.Visible;
+                NotificationWithNumber.Visibility = Visibility.Visible;
+                NotificationWithoutNumber.Visibility = Visibility.Collapsed;
+            }
+        }
+    }
+}
