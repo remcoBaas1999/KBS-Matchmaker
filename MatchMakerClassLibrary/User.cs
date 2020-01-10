@@ -9,6 +9,7 @@ namespace Matchmaker {
         public static int ID { get; set; }
         public static bool wantsNotifications;
         public static bool showInterests;
+        public static bool showAttendingActivities;
 
         public static string email;
         public static bool loggedIn;
