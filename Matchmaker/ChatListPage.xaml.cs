@@ -196,13 +196,14 @@ namespace Matchmaker
             }
         }
 
+        // Receives the id of the user and opens a new chat page
         private void OpenChat_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var clickedChat = e.Source as FrameworkElement;
+            var clickedChat = e.Source as FrameworkElement; // get the element that is clicked on and store this in the temp var
             string idOfClick = clickedChat.Name;
-            idOfClick = idOfClick.Replace("_", "");
+            idOfClick = idOfClick.Replace("_", ""); // _ is removed from the string
 
-            UserData chatPartner = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(idOfClick)));
+            UserData chatPartner = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(idOfClick))); // get the userdata from the database
             ChatPage chat = new ChatPage(chatPartner);
             NavigationService.Navigate(chat);
         }
@@ -212,12 +213,11 @@ namespace Matchmaker
         public void UserContacts()
         {
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
-
             Dictionary<string, bool> contacts = loggedInUser.contacts;
 
             try
             {
-                if (contacts.Count > 0 && contacts != null)
+                if (contacts.Count > 0 && contacts != null) // check if there are contacts in the dictionary
                 {
                     foreach (var contact in contacts)
                     {
@@ -233,10 +233,7 @@ namespace Matchmaker
 
                             userBlock.Children.Add(userProfilePicture);
                             userBlock.Children.Add(userRealName);
-
                             userBlock.MouseDown += NewChat_MouseDown;
-
-
                             recentlyAddedChats.Children.Add(userBlock);
                         }
                     }
@@ -262,8 +259,7 @@ namespace Matchmaker
 
             UserData user = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
 
-
-            string chatId;
+            string chatId; // the id for every chat. this is a combination of the user id of the logged in user and the selected user to chat with.
 
             if (int.Parse(user.id) < int.Parse(idOfClick))
             {
@@ -274,14 +270,13 @@ namespace Matchmaker
                 chatId = $"{idOfClick}_{user.id}";
             }
 
-
             var messageList = new List<MessageData>();
             //get message list from server
             messageList = MatchmakerAPI_Client.DeserializeMessageData(await MatchmakerAPI_Client.GetMessageData(chatId));
             UserData newContactChat = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(int.Parse(idOfClick)));
             ClickedUser = newContactChat;
 
-            if (messageList.Count <= 0)
+            if (messageList.Count <= 0) // open the overlay if there is no messagedata or go to the profile of the selected user.
             {
                 overlay.Visibility = Visibility.Visible;
                 decideOnProfile.Visibility = Visibility.Visible;
@@ -301,7 +296,7 @@ namespace Matchmaker
 
             List<int> blockedUsers = loggedInUser.blockedUsers;
 
-            if (blockedUsers.Count > 0 && blockedUsers != null)
+            if (blockedUsers.Count > 0 && blockedUsers != null) // check if the there are any blocked users
             {
                 for (int i = 0; i < blockedUsers.Count; i++)
                 {
@@ -313,17 +308,13 @@ namespace Matchmaker
                     string pfPic1 = $"https://145.44.233.207/images/users/{user.profilePicture}";
                     userProfilePicture.Fill = new ImageBrush(new BitmapImage(new Uri(pfPic1, UriKind.Absolute)));
                     TextBlock userRealName = new TextBlock() { Text = user.realName, FontSize = 16, LineHeight = 20, Opacity = 0.87, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 16, 0, 0), VerticalAlignment = VerticalAlignment.Center };
-
                     Button deblock = new Button() { Name = $"_{i}", Content = "Unblock", Background = MediaBrush.Transparent, BorderThickness = new Thickness(0), Foreground = MediaBrush.Purple, HorizontalAlignment = HorizontalAlignment.Right };
                     deblock.Click += Deblock_Click;
 
                     userWrapper.Children.Add(userProfilePicture);
                     userWrapper.Children.Add(userRealName);
-
-
                     blockedUser.Children.Add(userWrapper);
                     blockedUser.Children.Add(deblock);
-
                     blockedUserList.Children.Add(blockedUser);
                 }
             }
@@ -333,35 +324,39 @@ namespace Matchmaker
             }
         }
 
+        // This method is the activation for deblocking the user.
         private async void Deblock_Click(object sender, RoutedEventArgs e)
         {
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.email));
             List<int> blockedUsers = loggedInUser.blockedUsers;
-            var number = (Button)sender;
-            int listIndex = int.Parse(number.Name.Replace("_", String.Empty));
+            var number = (Button)sender; // get the name of the button that is clicked
+            int listIndex = int.Parse(number.Name.Replace("_", string.Empty));
             blockedUsers.RemoveAt(listIndex);
             loggedInUser.blockedUsers = blockedUsers;
 
             await MatchmakerAPI_Client.SaveUser(loggedInUser);
 
+            // after the await the page is updated and the user is not in the blocked list anymore.
             ChatListPage chatList = new ChatListPage(loggedInUser);
             NavigationService.Navigate(chatList);
         }
 
+        // Decline the contact request
         private async void ContactRequestDecline(object sender, RoutedEventArgs e)
         {
             //Get sender ID
             var button = (Button)sender;
-            int id = int.Parse(button.Name.Replace("_", String.Empty));
+            int id = int.Parse(button.Name.Replace("_", string.Empty));
 
             UserData loggedInUser = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(User.ID)); // This person received a contact request.
-            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person has send a contact request.
-            await MatchmakerAPI_Client.declineContactRequest(loggedInUser, userSender);
+            UserData userSender = MatchmakerAPI_Client.DeserializeUserData(MatchmakerAPI_Client.GetUserData(id)); // This person that send a contact request.
+            await MatchmakerAPI_Client.declineContactRequest(loggedInUser, userSender); // contact request is declined
 
             ChatListPage chatList = new ChatListPage(loggedInUser);
             NavigationService.Navigate(chatList);
         }
 
+        // The contact request is accepted
         private async void ContactRequestAccept(object sender, RoutedEventArgs e)
         {
             //Get sender ID
@@ -375,6 +370,7 @@ namespace Matchmaker
 
             NavigationService.Navigate(this);
         }
+
         //Menu buttons
         //Go to Notification page
         private void Notification_MouseDown(object sender, MouseButtonEventArgs e)
@@ -410,6 +406,7 @@ namespace Matchmaker
             NavigationService.Navigate(userProfile);
         }
 
+        // Open the profile page 
         private void CheckoutProfile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             overlay.Visibility = Visibility.Collapsed;
@@ -419,6 +416,7 @@ namespace Matchmaker
             NavigationService.Navigate(userProfile);
         }
 
+        // Go to a new chatpage
         private void CreateChat_MouseDown(object sender, MouseButtonEventArgs e)
         {
             overlay.Visibility = Visibility.Collapsed;
@@ -428,6 +426,7 @@ namespace Matchmaker
             NavigationService.Navigate(chat);
         }
 
+        // Check if there are any new notifications and if so display the red dot with the notification count
         private void RefreshNotificationCount(int count)
         {
             NotificationCountLabel.Content = count;

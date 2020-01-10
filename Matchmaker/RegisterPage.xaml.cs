@@ -139,7 +139,7 @@ namespace Matchmaker
             {
                 //Make Errorgrid go away
                 ErrorGrid.Visibility = Visibility.Collapsed;
-                //Do Something With User
+                //Hash and salt the password
                 string[] hashAndSalt = Password.HashPassword(pw);
                 DateTime dtBd = new DateTime();
                 DateTime.TryParse($"{dOBM}/{dOBD}/{dOBY}", out dtBd); ;
@@ -208,6 +208,7 @@ namespace Matchmaker
                 ErrorGrid.Visibility = Visibility.Visible;
             }
         }
+
         public static bool ValidDate(int day, int month, int year)
         {
             int[] days31 = new int[] { 1, 3, 5, 7, 8, 10, 12 };
@@ -232,6 +233,7 @@ namespace Matchmaker
                 return (day <= 30 && day > 0);
             }
         }
+
         public bool ValidDateChecker(int day, int month, int year)
         {
             int currentYear = Int32.Parse(DateTime.Now.ToString("yyyy"));
@@ -240,6 +242,7 @@ namespace Matchmaker
             //returns true if date is in between 1880 and now
             return ValidDate(day, month, year) && !(year <= 1880 || year > currentYear || (currentYear == year && month > currentMonth) || (currentYear == year && currentMonth == month && day > currentDay));
         }
+
         public bool EmailExists(string email)
         {
             MatchmakerAPI_Client.GetUserData(email);

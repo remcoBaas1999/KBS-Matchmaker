@@ -10,6 +10,7 @@ namespace MatchMakerClassLibrary {
         private const int saltSize = 16;
         private const int hashSize = 16;
         private const int iterations = 100000;
+
         public static string[] HashPassword(string password) {
             //Generate salt
             byte[] salt = GenerateSalt();
@@ -32,12 +33,16 @@ namespace MatchMakerClassLibrary {
             hashAndSalt[1] = saltString;
             return hashAndSalt;
         }
+
+        //Generate the salt
         private static byte[] GenerateSalt() {
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             byte[] salt = new byte[saltSize];
             provider.GetBytes(salt);
             return salt;
         }
+
+        //Generate the hash
         public static byte[] GenerateHash(string passAndSalt, byte[] salt) {
             Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(passAndSalt, salt, iterations);
             byte[] hash = PBKDF2.GetBytes(hashSize);
