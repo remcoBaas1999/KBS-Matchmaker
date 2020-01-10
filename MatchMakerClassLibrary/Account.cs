@@ -43,6 +43,10 @@ namespace MatchMakerClassLibrary
 		}
 
         public void LogOut() => LoggedIn = false;
+        public void RequestPasswordChange()
+        {
+
+        }
     }
 
     
