@@ -141,6 +141,7 @@ namespace MatchmakerAPI.Controllers
 		public AcceptedAtActionResult AddUserToClub(int userid, int clubid) {
 
 			ClubData cdata;
+			var clubs = ReadClubs();
 
 			try {
 
@@ -148,10 +149,10 @@ namespace MatchmakerAPI.Controllers
 
 				if (udata.email == null)
 				{
-					throw new KeyNotFoundException();
+					throw new System.Collections.Generic.KeyNotFoundException();
 				}
 
-			} catch (System.Collections.KeyNotFoundException) {
+			} catch (System.Collections.Generic.KeyNotFoundException) {
 
 				return AcceptedAtAction("AddUserToClub", new { success = false });
 
@@ -159,14 +160,14 @@ namespace MatchmakerAPI.Controllers
 
 			try {
 
-				cdata = ClubById(userid);
+				cdata = clubs[clubid];
 
 				if (cdata.name == null)
 				{
-					throw new KeyNotFoundException();
+					throw new System.Collections.Generic.KeyNotFoundException();
 				}
 
-			} catch (System.Collections.KeyNotFoundException) {
+			} catch (System.Collections.Generic.KeyNotFoundException) {
 
 				return AcceptedAtAction("AddUserToClub", new { success = false });
 
@@ -175,9 +176,10 @@ namespace MatchmakerAPI.Controllers
 			try {
 
 				cdata.members.Add(userid);
-				UpdateClubs();
 
-			} catch (System.Collections.KeyNotFoundException) {
+				UpdateClubs(clubs);
+
+			} catch (System.Collections.Generic.KeyNotFoundException) {
 
 				return AcceptedAtAction("AddUserToClub", new { success = false });
 

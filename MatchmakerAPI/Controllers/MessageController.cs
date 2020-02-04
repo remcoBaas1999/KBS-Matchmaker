@@ -16,7 +16,7 @@ namespace MatchmakerAPI.Controllers
     public class MessageController : ControllerBase
     {
         [HttpPost("post/new")]
-        public CreatedAtActionResult AddNewMessage(Message data)
+        public CreatedAtActionResult AddNewMessage(NewMessage data)
         {
             string fileLocation = "/home/student/data/chats.json";
             using (StreamReader r = new StreamReader(fileLocation))
