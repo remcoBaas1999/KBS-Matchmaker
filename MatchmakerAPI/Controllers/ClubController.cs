@@ -160,7 +160,7 @@ namespace MatchmakerAPI.Controllers
 
 			try {
 
-				cdata = clubs[clubid];
+				cdata = clubs[clubid.ToString()];
 
 				if (cdata.name == null)
 				{
