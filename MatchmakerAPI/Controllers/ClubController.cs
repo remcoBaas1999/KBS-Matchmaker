@@ -26,7 +26,7 @@ namespace MatchmakerAPI.Controllers
 
 
 
-		// Retrieve full user data by user id
+		// Retrieve full club data by club id
 		[HttpGet("get/id={id}")]
 		public ClubData ClubById(int id)
 		{
@@ -34,19 +34,19 @@ namespace MatchmakerAPI.Controllers
 			try
 			{
 
-				// Load the users database into memory
+				// Load the clubs database into memory
 				var clubs = ReadClubs();
 
-				// Fetch the specific user we're looking for in a try/catch block
+				// Fetch the specific club we're looking for in a try/catch block
 				// in case the input is not a valid key.
 				var club = clubs[id.ToString()];
 
-				// Return the specified user
+				// Return the specified club
 				return club;
 
 			} catch (System.Collections.Generic.KeyNotFoundException) {
 
-				// If the requested user id does not exist, return a userdata object
+				// If the requested club id does not exist, return a clubdata object
 				// with all fields nulled and display a warning on the server console.
 
 				Console.WriteLine(" !! EXCEPTION:");
@@ -56,7 +56,7 @@ namespace MatchmakerAPI.Controllers
 
 			} catch (Exception) {
 
-				// If something else goes wrong, return a nulled UserData and display
+				// If something else goes wrong, return a nulled ClubData and display
 				// a warning on the server console
 
 				Console.WriteLine(" !! EXCEPTION:");
@@ -206,17 +206,17 @@ namespace MatchmakerAPI.Controllers
 		public static Dictionary<string, ClubData> ReadClubs()
 		{
 
-			// Open the users.json data file
+			// Open the clubs.json data file
 			using (StreamReader r = new StreamReader(ClubsFile))
 		    {
 				// Load the contents into memory
 		        string json = r.ReadToEnd();
 
 				// Deserialize the json to something C# can do stuff to
-		        var users = JsonConvert.DeserializeObject<Dictionary<string, UserData>>(json);
+		        var clubs = JsonConvert.DeserializeObject<Dictionary<string, ClubData>>(json);
 
 				// Return the deserialized data table
-				return users;
+				return clubs;
 		    }
 
 		}

@@ -27,7 +27,7 @@ namespace MatchmakerAPI.Controllers
 
 		// Retrieve full user data by user id
 		[HttpGet("get/id={id}")]
-		public UserData UserById(int id)
+		public static UserData UserById(int id)
 		{
 
 			try
@@ -480,7 +480,7 @@ namespace MatchmakerAPI.Controllers
 
 				// Serialize the updated users database
 				var text = JsonConvert.SerializeObject(data);
-				
+
 				// Write the serialized updated database to the proper file
 				System.IO.File.WriteAllText(UsersFile, text);
 
