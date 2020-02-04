@@ -16,7 +16,7 @@ namespace MatchmakerAPI.Controllers
     public class MessageController : ControllerBase
     {
         [HttpPost("post/new")]
-        public CreatedAtActionResult AddNewMessage(NewMessage data)
+        public CreatedAtActionResult AddNewMessage(Message data)
         {
             string fileLocation = "/home/student/data/chats.json";
             using (StreamReader r = new StreamReader(fileLocation))
@@ -62,7 +62,7 @@ namespace MatchmakerAPI.Controllers
                 foreach (var m in mList.Where(x=>x.sender!=i&&!x.seen))
                 {
                     m.seen = true;
-                }                                 
+                }
                 var text = JsonConvert.SerializeObject(chats);
                 System.IO.File.WriteAllText(fileLocation, text);
             }
