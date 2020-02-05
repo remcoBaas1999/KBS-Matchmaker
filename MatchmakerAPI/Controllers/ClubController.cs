@@ -125,7 +125,7 @@ namespace MatchmakerAPI.Controllers
 			try
 			{
 
-				return CreatedAtAction("AddNewClub", new { success = true });
+				return CreatedAtAction("AddNewClub", new { success = true, id = tmp_key });
 
 			} catch (System.InvalidOperationException) {
 
