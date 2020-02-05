@@ -137,8 +137,8 @@ namespace MatchmakerAPI.Controllers
 
 
 		// Update an exisiting user's profile
-		[HttpPost("post/update")]
-		public AcceptedAtActionResult AddUserToClub(int userid, int clubid) {
+		[HttpPost("post/add/id={clubid}")]
+		public AcceptedAtActionResult AddUserToClub(int clubid, [FromBody] int userid) {
 
 			ClubData cdata;
 			var clubs = ReadClubs();
