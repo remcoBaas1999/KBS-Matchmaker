@@ -27,7 +27,7 @@ namespace MatchmakerAPI.Controllers
 
 		// Retrieve full user data by user id
 		[HttpGet("get/id={id}")]
-		public static UserData UserById(int id)
+		public UserData UserById(int id)
 		{
 
 			try

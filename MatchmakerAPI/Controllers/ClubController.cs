@@ -145,7 +145,7 @@ namespace MatchmakerAPI.Controllers
 
 			try {
 
-				var udata = UserController.UserById(userid);
+				var udata = UserById(userid);
 
 				if (udata.email == null)
 				{
@@ -245,6 +245,47 @@ namespace MatchmakerAPI.Controllers
 
 				Console.WriteLine(" !! EXCEPTION:");
 				Console.WriteLine("    An error occurred attempting to update the clubs database.");
+
+			}
+
+		}
+
+		public static UserData UserById(int id)
+		{
+
+			try
+			{
+
+				// Load the users database into memory
+				var users = ReadUsers();
+
+				// Fetch the specific user we're looking for in a try/catch block
+				// in case the input is not a valid key.
+				var user = users[id.ToString()];
+				user.id = id.ToString();
+
+				// Return the specified user
+				return user;
+
+			} catch (System.Collections.Generic.KeyNotFoundException) {
+
+				// If the requested user id does not exist, return a userdata object
+				// with all fields nulled and display a warning on the server console.
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    An invalid user id was requested.");
+
+				return new UserData();
+
+			} catch (Exception) {
+
+				// If something else goes wrong, return a nulled UserData and display
+				// a warning on the server console
+
+				Console.WriteLine(" !! EXCEPTION:");
+				Console.WriteLine("    Exception caught trying to fetch a user by id.");
+
+				return new UserData();
 
 			}
 
