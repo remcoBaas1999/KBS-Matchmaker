@@ -257,7 +257,7 @@ namespace MatchmakerAPI.Controllers
 			{
 
 				// Load the users database into memory
-				var users = ReadUsers();
+				var users = UserController.ReadUsers();
 
 				// Fetch the specific user we're looking for in a try/catch block
 				// in case the input is not a valid key.
